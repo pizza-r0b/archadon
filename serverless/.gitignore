@@ -1,0 +1,8 @@
+# package directories
+node_modules
+jspm_packages
+CERT.crt
+KEY.key
+
+# Serverless directories
+.serverless

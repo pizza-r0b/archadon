@@ -1,0 +1,22 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: FavoriteTable-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: UserID
+      KeyType: HASH
+    -
+      AttributeName: ProductID
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: UserID
+      AttributeType: S
+    -
+      AttributeName: ProductID
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.32.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "jsonwebtoken": "^7.3.0",
+    "uuid": "^3.0.1"
+  }
+}

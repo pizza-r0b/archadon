@@ -1,0 +1,53 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: archadon # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  profile: archadon
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+        - "s3:*"
+      Resource: "*"
+custom:
+  env: ${opt:env, self:provider.stage}
+
+package:
+ include:
+  - node_modules/**
+  - functions/utils/**
+
+functions:
+  createUser:
+    handler: functions/handlers.createUser
+    events:
+      - http:
+          path: user/v1/create
+          method: post
+          integration: lambda
+    environment:
+      TABLE_NAME: UserTable-${self:service}-${self:custom.env}
+resources:
+  Resources:
+    ProductTable: ${file(./resources/ProductTable.yml)}
+    ChargeTable: ${file(./resources/ChargeTable.yml)}
+    FavoriteTable: ${file(./resources/FavoriteTable.yml)}
+    ProductMediaTable: ${file(./resources/ProductMediaTable.yml)}
+    TaggedProductTable: ${file(./resources/TaggedProductTable.yml)}
+    TagTable: ${file(./resources/TagTable.yml)}
+    UserProfileTable: ${file(./resources/UserProfileTable.yml)}
+    UserTable: ${file(./resources/UserTable.yml)}

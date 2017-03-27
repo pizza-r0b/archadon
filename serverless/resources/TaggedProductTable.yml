@@ -1,0 +1,22 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: TaggedProductTable-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: TagID
+      KeyType: HASH
+    -
+      AttributeName: ProductID
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: TagID
+      AttributeType: S
+    -
+      AttributeName: ProductID
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY

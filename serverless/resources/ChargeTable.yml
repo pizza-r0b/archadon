@@ -1,0 +1,50 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ChargeTable-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: UserID
+      KeyType: HASH
+    -
+      AttributeName: UserEmail
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: UserID
+      AttributeType: S
+    -
+      AttributeName: UserEmail
+      AttributeType: S
+    -
+      AttributeName: Refunded
+      AttributeType: N
+    -
+      AttributeName: GrandTotal
+      AttributeType: N
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY
+  GlobalSecondaryIndexes:
+    -
+      IndexName: chargeTableGsi1
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: Refunded
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+    -
+      IndexName: chargeTableGsi2
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: GrandTotal
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+
