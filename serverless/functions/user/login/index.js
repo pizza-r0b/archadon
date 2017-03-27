@@ -22,10 +22,10 @@ function login(event, context, callback) {
         const token = createJwt({ ID });
         callback(null, { authToken: token });
       } else {
-        callback('[Forbidden]');
+        callback('Forbidden');
       }
     } else {
-      callback('[NotFound] User does not exist');
+      callback('NotFound User does not exist');
     }
   });
 }

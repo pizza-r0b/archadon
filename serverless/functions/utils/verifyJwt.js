@@ -11,7 +11,7 @@ const verifyJwt = (token, id) => new Promise((resolve, reject) => {
     if (err) {
       reject(err);
     } else if (decoded.ID === id) {
-      resolve();
+      resolve(decoded.ID);
     } else {
       reject();
     }
