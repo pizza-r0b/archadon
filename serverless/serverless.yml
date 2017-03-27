@@ -25,6 +25,8 @@ provider:
       Resource: "*"
 custom:
   env: ${opt:env, self:provider.stage}
+  userTable: UserTable-${self:service}-${self:custom.env}
+  userProfileTable: UserProfileTable-${self:service}-${self:custom.env}
 
 package:
  include:
@@ -32,6 +34,18 @@ package:
   - functions/utils/**
 
 functions:
+  listenToCreateUserStream:
+    handler: functions/handlers.createUserProfile
+    events:
+       - stream:
+          type: dynamodb
+          startingPosition: LATEST
+          arn:
+            Fn::GetAtt:
+              - UserTable
+              - StreamArn
+    environment:
+      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
   createUser:
     handler: functions/handlers.createUser
     events:
@@ -40,7 +54,15 @@ functions:
           method: post
           integration: lambda
     environment:
-      TABLE_NAME: UserTable-${self:service}-${self:custom.env}
+      TABLE_NAME: ${self:custom.userTable}
+  loginUser:
+    handler: functions/handlers.loginUser
+    events:
+      - http:
+          path: user/v1/login
+          method: post
+    environment:
+      TABLE_NAME: ${self:custom.userTable}
 resources:
   Resources:
     ProductTable: ${file(./resources/ProductTable.yml)}

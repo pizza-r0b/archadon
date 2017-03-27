@@ -27,4 +27,4 @@ Properties:
     ReadCapacityUnits: 5
     WriteCapacityUnits: 5
   StreamSpecification:
-    StreamViewType: KEYS_ONLY
+    StreamViewType: NEW_IMAGE

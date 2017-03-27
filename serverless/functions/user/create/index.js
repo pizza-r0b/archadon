@@ -3,10 +3,11 @@
 const FindOne = require('../../utils/findOne');
 const findOneUser = FindOne(process.env.TABLE_NAME);
 const createUserUtils = require('../../utils/createUser');
+const createUserProfile = require('../../utils/createUserProfile');
 const createJwt = require('../../utils/createJwt');
 
 function createUser(event, context, callback) {
-  const data = event.body;
+  const data = event.body || {};
   const email = data.email;
   const password = data.password;
   // TODO: Add email validation
@@ -33,4 +34,21 @@ function createUser(event, context, callback) {
   });
 }
 
-module.exports = createUser;
+function listenToStreamAndcreateUserProfile(event, context, callback) {
+  event.Records.forEach(record => {
+    if (record.eventName === 'INSERT') {
+      const UserID = record.dynamodb.Keys.ID.S;
+      createUserProfile(UserID).then(() => {
+        callback(null, JSON.stringify({ success: true }));
+      }).catch(e => {
+        callback(e);
+      });
+    }
+  });
+  callback(null, `Successfully processed ${event.Records.length} records.`);
+}
+
+module.exports = {
+  createUserProfile: listenToStreamAndcreateUserProfile,
+  createUser,
+};

@@ -3,5 +3,7 @@
 const user = require('./user');
 
 module.exports = {
-  createUser: user.create,
+  createUser: user.createUser,
+  createUserProfile: user.createUserProfile,
+  loginUser: user.login,
 };

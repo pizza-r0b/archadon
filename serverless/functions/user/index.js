@@ -1,7 +1,10 @@
 'use strict';
 
 const create = require('./create');
+const login = require('./login');
 
 module.exports = {
-  create,
+  createUser: create.createUser,
+  createUserProfile: create.createUserProfile,
+  login,
 };
