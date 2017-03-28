@@ -6,7 +6,7 @@ const comparePassword = require('../../utils/comparePassword');
 const createJwt = require('../../utils/createJwt');
 
 function login(event, context, callback) {
-  const data = event.body;
+  const data = JSON.parse(event.body);
   const email = data.email;
   const password = data.password;
   if (!email || !password) {
@@ -20,12 +20,16 @@ function login(event, context, callback) {
       const isMatch = comparePassword(password, hash);
       if (isMatch) {
         const token = createJwt({ ID });
-        callback(null, { authToken: token });
+        const response = {
+          statusCode: 200,
+          body: JSON.stringify({ authToken: token }),
+        };
+        callback(null, response);
       } else {
-        callback('Forbidden');
+        callback('[401]');
       }
     } else {
-      callback('NotFound User does not exist');
+      callback('[404] User does not exist');
     }
   });
 }

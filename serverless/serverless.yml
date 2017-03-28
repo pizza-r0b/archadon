@@ -46,13 +46,27 @@ functions:
               - StreamArn
     environment:
       USER_PROFILE_TABLE: ${self:custom.userProfileTable}
+  getUserData:
+    handler: functions/handlers.getUserData
+    events:
+      - http:
+          path: user/v1/read/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+          integration: lambda-proxy
+    environment:
+      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
+      USER_TABLE: ${self:custom.userTable}
   createUser:
     handler: functions/handlers.createUser
     events:
       - http:
           path: user/v1/create
           method: post
-          integration: lambda
+          integration: lambda-proxy
     environment:
       TABLE_NAME: ${self:custom.userTable}
   loginUser:
@@ -61,6 +75,7 @@ functions:
       - http:
           path: user/v1/login
           method: post
+          integration: lambda-proxy
     environment:
       TABLE_NAME: ${self:custom.userTable}
 resources:

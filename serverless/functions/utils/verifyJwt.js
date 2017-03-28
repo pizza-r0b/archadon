@@ -13,7 +13,7 @@ const verifyJwt = (token, id) => new Promise((resolve, reject) => {
     } else if (decoded.ID === id) {
       resolve(decoded.ID);
     } else {
-      reject();
+      reject('Not a match');
     }
   });
 });

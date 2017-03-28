@@ -7,7 +7,7 @@ const createUserProfile = require('../../utils/createUserProfile');
 const createJwt = require('../../utils/createJwt');
 
 function createUser(event, context, callback) {
-  const data = event.body || {};
+  const data = JSON.parse(event.body);
   const email = data.email;
   const password = data.password;
   // TODO: Add email validation
