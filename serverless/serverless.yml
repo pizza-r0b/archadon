@@ -56,17 +56,42 @@ functions:
             parameters:
               paths:
                 id: true
-          integration: lambda-proxy
     environment:
       USER_PROFILE_TABLE: ${self:custom.userProfileTable}
       USER_TABLE: ${self:custom.userTable}
+
+  updateUserPassword:
+    handler: functions/handlers.updateUserPassword
+    events:
+      - http:
+          path: user/v1/update/password/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_TABLE: ${self:custom.userTable}
+
+  updateUserEmail:
+    handler: functions/handlers.updateUserEmail
+    events:
+      - http:
+          path: user/v1/update/email/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_TABLE: ${self:custom.userTable}
+
   createUser:
     handler: functions/handlers.createUser
     events:
       - http:
           path: user/v1/create
           method: post
-          integration: lambda-proxy
     environment:
       TABLE_NAME: ${self:custom.userTable}
   loginUser:
@@ -75,7 +100,6 @@ functions:
       - http:
           path: user/v1/login
           method: post
-          integration: lambda-proxy
     environment:
       TABLE_NAME: ${self:custom.userTable}
 resources:

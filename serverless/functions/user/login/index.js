@@ -22,7 +22,7 @@ function login(event, context, callback) {
         const token = createJwt({ ID });
         const response = {
           statusCode: 200,
-          body: JSON.stringify({ authToken: token }),
+          body: JSON.stringify({ authToken: token, ID }),
         };
         callback(null, response);
       } else {

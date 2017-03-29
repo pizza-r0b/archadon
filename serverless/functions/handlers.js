@@ -7,4 +7,6 @@ module.exports = {
   createUserProfile: user.createUserProfile,
   loginUser: user.login,
   getUserData: user.getUserData,
+  updateUserPassword: user.updateUserPassword,
+  updateUserEmail: user.updateUserEmail,
 };

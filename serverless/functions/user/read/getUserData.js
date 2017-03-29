@@ -1,9 +1,10 @@
 'use strict';
+
 const verifyJwt = require('../../utils/verifyJwt');
 const getUserByID = require('../../utils/getUserById');
 const getUserProfile = require('../../utils/getUserProfile');
 
-function getUserInformation(event, context, callback) {
+function getUserData(event, context, callback) {
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
   const userID = params.id;
@@ -38,4 +39,4 @@ function getUserInformation(event, context, callback) {
     .catch(e => callback(new Error(`[401] Unauthorized ${JSON.stringify(e)}`)));
 }
 
-module.exports = getUserInformation;
+module.exports = getUserData;
