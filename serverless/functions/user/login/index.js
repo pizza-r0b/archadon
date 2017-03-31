@@ -26,10 +26,10 @@ function login(event, context, callback) {
         };
         callback(null, response);
       } else {
-        callback('[401]');
+        callback(null, { statusCode: 401 });
       }
     } else {
-      callback('[404] User does not exist');
+      callback(null, { statusCode: 404 });
     }
   });
 }

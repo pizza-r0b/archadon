@@ -60,6 +60,19 @@ functions:
       USER_PROFILE_TABLE: ${self:custom.userProfileTable}
       USER_TABLE: ${self:custom.userTable}
 
+  updateUserProfile:
+    handler: functions/handlers.updateUserProfile
+    events:
+      - http:
+          path: user/v1/update/profile/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
+
   updateUserPassword:
     handler: functions/handlers.updateUserPassword
     events:

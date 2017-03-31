@@ -9,4 +9,5 @@ module.exports = {
   getUserData: user.getUserData,
   updateUserPassword: user.updateUserPassword,
   updateUserEmail: user.updateUserEmail,
+  updateUserProfile: user.updateUserProfile,
 };

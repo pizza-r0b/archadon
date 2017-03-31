@@ -12,13 +12,15 @@ function createUser(event, context, callback) {
   const password = data.password;
   // TODO: Add email validation
   if (!email || !password) {
-    callback(new Error('[BadRequest]'));
+    callback(null, {
+      statusCode: 400,
+    });
     return;
   }
 
   findOneUser('Email', email, { IndexName: 'userGsi1' }).then(user => {
     if (user) {
-      return Promise.reject(JSON.stringify({ success: false, message: 'User already exists' }));
+      return Promise.reject(JSON.stringify({ message: 'User already exists' }));
     } else {
       return createUserUtils.create(email, password);
     }
@@ -27,10 +29,13 @@ function createUser(event, context, callback) {
     const token = createJwt({ ID });
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({ authToken: token }),
+      body: JSON.stringify({ authToken: token, ID }),
     });
   }).catch(e => {
-    callback(e);
+    callback(null, {
+      statusCode: 409,
+      body: e,
+    });
   });
 }
 
