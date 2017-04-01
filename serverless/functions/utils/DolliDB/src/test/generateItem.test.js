@@ -6,6 +6,7 @@ describe('DolliDB', () => {
     it('takes an object and returns a DolliDb Item', () => {
       const input = {
         ItemID: '1234',
+
         Address: {
           Street1: '1925 Jefferson St',
           Street2: '202',
@@ -17,19 +18,15 @@ describe('DolliDB', () => {
             },
           },
         },
+
         Images: ['One', 'Two', {
           Path: '/',
           Src: 'image.jpg',
-          Obj: {
-            Foo: 'Bar',
-          },
         }],
         Name: 'Sean',
       };
 
       const output = generateItem(input);
-
-      console.log('OUTPUT', output);
 
       const AddressID = output['Address:Object'];
       const ImagesID = output['Images:Array'];
