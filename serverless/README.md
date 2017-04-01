@@ -1,5 +1,40 @@
 ## API Endpoint Reference
 
+### `user/v1/create`
+
+Updates a users email address
+
+**POST**
+
+**Body**
+
+Required
+
+```
+{
+  "email": string,
+  "password": string,
+}
+```
+
+**Success Response**
+
+Code: 200
+
+`{ authToken: JWT, ID: UserID }`
+
+**Error Response**
+
+Code: 400
+
+Missing required fields
+
+Code: 409
+
+User already exists
+
+---
+
 ### `user/v1/read/{id}`
 
 Gets user profile information
@@ -105,41 +140,6 @@ Code: 401
 
 ---
 
-### `user/v1/create`
-
-Updates a users email address
-
-**POST**
-
-**Body**
-
-Required
-
-```
-{
-  "email": string,
-  "password": string,
-}
-```
-
-**Success Response**
-
-Code: 200
-
-`{ authToken: JWT, ID: UserID }`
-
-**Error Response**
-
-Code: 400
-
-Missing required fields
-
-Code: 409
-
-User already exists
-
----
-
 ### `user/v1/login`
 
 Authenticates a user and returns a JWT
@@ -213,3 +213,39 @@ Code: 200
 Code: 401
 
 `{ message: 'Unauthorized' }`
+
+---
+
+### `user/v1/favorite/{id}`
+
+Toggles a users favorited it
+
+**POST**
+
+**Headers**
+
+authtoken - JWT - required
+
+**Body**
+
+Required
+
+```
+{
+  "productID": string,
+}
+```
+
+**Success Response**
+
+Code: 200
+
+**Error Response**
+
+Code: 400
+
+Missing required fields
+
+Code: 409
+
+User already exists

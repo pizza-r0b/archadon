@@ -107,7 +107,7 @@ function updateUserProfile(event, context, callback) {
           ':m': {},
         },
       });
-      console.log('CHECK IF EXIST:', mapAttrsQuery);
+      console.log('CHECK IF EXIST:', mapAttrsQuery); // eslint-disable-line
       return updateProfile(mapAttrsQuery);
     } else {
       Promise.resolve();
@@ -118,7 +118,7 @@ function updateUserProfile(event, context, callback) {
         statusCode: 200,
       });
     }).catch(e => {
-      console.log('ERROR', e);
+      console.log('ERROR', e); // eslint-disable-line
       callback(null, {
         statusCode: 500,
         message: JSON.stringify(e),
