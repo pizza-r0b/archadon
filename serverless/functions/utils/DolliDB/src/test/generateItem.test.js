@@ -28,8 +28,8 @@ describe('DolliDB', () => {
 
       const output = generateItem(input);
 
-      const AddressID = output['Address:Object'];
-      const ImagesID = output['Images:Array'];
+      const AddressID = output['Root:Address:Object'];
+      const ImagesID = output['Root:Images:Array'];
       const EntitiesID = output[`${AddressID}:Entities:Object`];
       const OneID = output[`${EntitiesID}:One:Object`];
       const TwoID = output[`${OneID}:Two:Object`];
@@ -37,20 +37,20 @@ describe('DolliDB', () => {
 
       expect(output).to.deep.equal({
         ItemID: '1234',
-        'Address:Object': AddressID,
+        'Root:Address:Object': AddressID,
         [`${AddressID}:Street1:String`]: '1925 Jefferson St',
         [`${AddressID}:Street2:String`]: '202',
         [`${AddressID}:Entities:Object`]: EntitiesID,
         [`${EntitiesID}:One:Object`]: OneID,
         [`${OneID}:Two:Object`]: TwoID,
         [`${TwoID}:Three:String`]: 'Foo',
-        'Images:Array': ImagesID,
+        'Root:Images:Array': ImagesID,
         [`${ImagesID}:0:String`]: 'One',
         [`${ImagesID}:1:String`]: 'Two',
         [`${ImagesID}:2:Object`]: ImageObjectID,
         [`${ImageObjectID}:Path:String`]: '/',
         [`${ImageObjectID}:Src:String`]: 'image.jpg',
-        'Name:String': 'Sean',
+        'Root:Name:String': 'Sean',
       });
     });
   });

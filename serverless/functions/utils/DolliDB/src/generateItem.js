@@ -38,16 +38,16 @@ export default function generateItem(input) {
       switch (type) {
         case 'object':
           ObjectID = uuid();
-          output[`${key}:Object`] = ObjectID;
+          output[`Root:${key}:Object`] = ObjectID;
           Object.assign(output, parseInputObject(input[key], ObjectID));
           break;
         case 'array':
           ObjectID = uuid();
-          output[`${key}:Array`] = ObjectID;
+          output[`Root:${key}:Array`] = ObjectID;
           Object.assign(output, parseInputObject(input[key], ObjectID));
           break;
         default:
-          parsePrimitive(output, `${key}:${capitalize(type)}`, input[key]);
+          parsePrimitive(output, `Root:${key}:${capitalize(type)}`, input[key]);
       }
     });
 
