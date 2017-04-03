@@ -8,6 +8,7 @@ const createJwt = require('../../utils/createJwt');
 
 function createUser(event, context, callback) {
   const data = JSON.parse(event.body);
+
   const email = data.email;
   const password = data.password;
   // TODO: Add email validation
@@ -25,13 +26,14 @@ function createUser(event, context, callback) {
       return createUserUtils.create(email, password);
     }
   }).then(res => {
-    const ID = res.meta.ID;
-    const token = createJwt({ ID });
+    const ItemID = res.meta.ItemID;
+    const token = createJwt({ ItemID });
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({ authToken: token, ID }),
+      body: JSON.stringify({ authToken: token, ItemID }),
     });
   }).catch(e => {
+    console.log(e);
     callback(null, {
       statusCode: 409,
       body: e,
@@ -42,7 +44,7 @@ function createUser(event, context, callback) {
 function listenToStreamAndcreateUserProfile(event, context, callback) {
   event.Records.forEach(record => {
     if (record.eventName === 'INSERT') {
-      const UserID = record.dynamodb.Keys.ID.S;
+      const UserID = record.dynamodb.Keys.ItemID.S;
       createUserProfile(UserID).then(() => {
         callback(null, JSON.stringify({ success: true }));
       }).catch(e => {

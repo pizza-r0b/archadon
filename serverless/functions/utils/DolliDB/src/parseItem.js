@@ -1,29 +1,9 @@
+import { deeepExtend } from './utils';
+
 const setProperty = (output, name, type, value) => {
   output[name] = type === 'Object' ? {} : type === 'Array' ? [] : value; //eslint-disable-line
   return output;
 };
-
-function deeepExtend(destination, source) {
-  for (const property in source) {
-    if (source.hasOwnProperty(property)) {
-      if (source[property] && source[property].constructor &&
-        source[property].constructor === Object) {
-        destination[property] = typeof destination[property] === 'object' ? destination[property] : {};
-        deeepExtend(destination[property], source[property]);
-      } else if (source[property] && Array.isArray(source[property])) {
-        destination[property] = Array.isArray(destination[property]) ? destination[property] : [];
-        for (let i = 0; i < source[property].length; i += 1) {
-          if (source[property][i] !== void 0) {
-            destination[property][i] = source[property][i];
-          }
-        }
-      } else {
-        destination[property] = source[property];
-      }
-    }
-    return destination;
-  }
-}
 
 function getParentAndSet(item, [entryKey, entryValue], previousValue) {
   const [parentID, name] = entryKey.split(':');
@@ -44,8 +24,14 @@ function getParentAndSet(item, [entryKey, entryValue], previousValue) {
 export default function parseItem(item) {
   const output = {};
   Object.entries(item).forEach(([key, value]) => {
-    const [ID, name, type] = key.split(':');
+    const entities = key.split(':');
+    if (entities.length === 1) {
+      output[key] = value;
+      delete item[key];
+      return;
+    }
 
+    const [ID, name, type] = entities;
     if (ID === 'Root') {
       setProperty(output, name, type, value);
       return;

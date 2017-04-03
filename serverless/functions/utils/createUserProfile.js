@@ -8,7 +8,7 @@ const PutUserProfile = putItem(table);
 function createUserProfile(ID) {
   return PutUserProfile({
     Item: {
-      UserID: ID,
+      ItemID: ID,
     },
   });
 }

@@ -1,46 +1,49 @@
-import { expect } from 'chai';
+import { assert } from 'chai';
 import { parseItem, generateItem } from '../index';
 
 describe('parseItem', () => {
   it('takes a DolliDB Item and returns a JS Object', () => {
     const originalObject = {
-      Password: 'hi',
+      ItemID: 1,
+      Email: 'chester@example.com',
+      Password: 'something',
       Address: {
-        Street1: '1925 Jefferson St',
-        Street2: '202',
-        Images: ['1', 2, { yo: 'a', b: ['something'] }],
-        Foo: {
-          Bar: '1',
-          1: {
-            'hey': {
-              'you': {
-                'how': {
-                  'you': {
-                    'doing': {
-                      answer: 'good',
-                      deeepArray: [1, 2, 3, {
-                        deep: {
-                          real: {
-                            deep: {
-                              bar: 1
-                            }
-                          }
-                        }
-                      }]
-                    }
-                  }
-                }
-              }
-            }
-          }
+        Street1: '1925 Jefferson',
+        Zip: 94123,
+      },
+      Foo: {
+        Bar: {
+          MyArray: [
+            1,
+            2,
+            3,
+            {
+              Foo: 'Bar',
+              Hello: {
+                World: ':)',
+                arr: [
+                  1,
+                  2,
+                  {
+                    a: 1,
+                    b: 2,
+                  },
+                ],
+              },
+            },
+          ],
         },
       },
     };
 
-    const generatedItem = generateItem(originalObject);
+    const p1 = Date.now();
+    const generatedItem = generateItem(originalObject, ['Email']);
+    console.log(`TOOK ${Date.now() - p1}ms to generate the item`);
+
+    const p2 = Date.now();
     const parsedItem = parseItem(generatedItem);
+    console.log(`TOOK ${Date.now() - p2}ms to parse the item`);
 
-    console.log(JSON.stringify(parsedItem));
-
+    assert.deepEqual(parsedItem, originalObject);
   });
 });

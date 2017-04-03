@@ -6,6 +6,7 @@ describe('DolliDB', () => {
     it('takes an object and returns a DolliDb Item', () => {
       const input = {
         ItemID: '1234',
+        Email: 'chester@example.com',
 
         Address: {
           Street1: '1925 Jefferson St',
@@ -26,7 +27,7 @@ describe('DolliDB', () => {
         Name: 'Sean',
       };
 
-      const output = generateItem(input);
+      const output = generateItem(input, ['Email']);
 
       const AddressID = output['Root:Address:Object'];
       const ImagesID = output['Root:Images:Array'];
@@ -37,6 +38,7 @@ describe('DolliDB', () => {
 
       expect(output).to.deep.equal({
         ItemID: '1234',
+        Email: 'chester@example.com',
         'Root:Address:Object': AddressID,
         [`${AddressID}:Street1:String`]: '1925 Jefferson St',
         [`${AddressID}:Street2:String`]: '202',

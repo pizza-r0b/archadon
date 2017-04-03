@@ -21,14 +21,14 @@ function parseInputObject(input, ID) {
   return output;
 }
 
-export default function generateItem(input) {
+export default function generateItem(input, indexKeys = []) {
   if (typeof input !== 'object' || typeof input === 'object' && Array.isArray(input)) {
     throw new Error('DolliDB: generateItem(input): input must be an object');
   }
   const output = {};
   Object.entries(input)
     .forEach(([key, value]) => {
-      if (key === 'ItemID') {
+      if (key === 'ItemID' || indexKeys.includes(key)) {
         output[key] = value;
         return;
       }

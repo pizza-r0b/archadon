@@ -3,14 +3,14 @@ Properties:
   TableName: TaggedProductTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: TagID
+      AttributeName: ItemID
       KeyType: HASH
     -
       AttributeName: ProductID
       KeyType: RANGE
   AttributeDefinitions:
     -
-      AttributeName: TagID
+      AttributeName: ItemID
       AttributeType: S
     -
       AttributeName: ProductID

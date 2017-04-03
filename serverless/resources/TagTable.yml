@@ -3,14 +3,14 @@ Properties:
   TableName: TagTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: ID
+      AttributeName: ItemID
       KeyType: HASH
     -
       AttributeName: Name
       KeyType: RANGE
   AttributeDefinitions:
     -
-      AttributeName: ID
+      AttributeName: ItemID
       AttributeType: S
     -
       AttributeName: Name

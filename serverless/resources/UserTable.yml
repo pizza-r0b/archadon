@@ -3,11 +3,11 @@ Properties:
   TableName: UserTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: ID
+      AttributeName: ItemID
       KeyType: HASH
   AttributeDefinitions:
     -
-      AttributeName: ID
+      AttributeName: ItemID
       AttributeType: S
     -
       AttributeName: Email

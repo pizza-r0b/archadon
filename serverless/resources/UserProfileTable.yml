@@ -3,11 +3,11 @@ Properties:
   TableName: UserProfileTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: UserID
+      AttributeName: ItemID
       KeyType: HASH
   AttributeDefinitions:
     -
-      AttributeName: UserID
+      AttributeName: ItemID
       AttributeType: S
   ProvisionedThroughput:
     ReadCapacityUnits: 5

@@ -3,14 +3,14 @@ Properties:
   TableName: ChargeTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: UserID
+      AttributeName: ItemID
       KeyType: HASH
     -
       AttributeName: UserEmail
       KeyType: RANGE
   AttributeDefinitions:
     -
-      AttributeName: UserID
+      AttributeName: ItemID
       AttributeType: S
     -
       AttributeName: UserEmail

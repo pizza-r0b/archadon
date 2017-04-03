@@ -3,14 +3,14 @@ Properties:
   TableName: ProductMediaTable-${self:service}-${self:custom.env}
   KeySchema:
     -
-      AttributeName: ProductID
+      AttributeName: ItemID
       KeyType: HASH
     -
       AttributeName: FileName
       KeyType: RANGE
   AttributeDefinitions:
     -
-      AttributeName: ProductID
+      AttributeName: ItemID
       AttributeType: S
     -
       AttributeName: FileName
