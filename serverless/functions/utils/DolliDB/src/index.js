@@ -1,3 +1,2 @@
-export { default as generateItem } from './generateItem';
-export { default as updateItem } from './updateItem';
-export { default as parseItem } from './parseItem';
+export { default as fromPaths } from './fromPaths';
+export { default as toPaths } from './toPaths';

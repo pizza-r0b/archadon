@@ -25,8 +25,8 @@ provider:
       Resource: "*"
 custom:
   env: ${opt:env, self:provider.stage}
-  userTable: UserTable-${self:service}-${self:custom.env}
-  userProfileTable: UserProfileTable-${self:service}-${self:custom.env}
+  UserDataTable: ${self:resources.Resources.UserDataTable.Properties.TableName}
+  UserItemTable: ${self:resources.Resources.UserItemTable.Properties.TableName}
 
 package:
  include:
@@ -42,62 +42,62 @@ functions:
           startingPosition: LATEST
           arn:
             Fn::GetAtt:
-              - UserTable
+              - UserItemTable
               - StreamArn
     environment:
-      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
-  getUserData:
-    handler: functions/handlers.getUserData
-    events:
-      - http:
-          path: user/v1/read/{id}
-          method: get
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
-      USER_TABLE: ${self:custom.userTable}
+      USER_DATA_TABLE: ${self:custom.UserDataTable}
+  # getUserData:
+  #   handler: functions/handlers.getUserData
+  #   events:
+  #     - http:
+  #         path: user/v1/read/{id}
+  #         method: get
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     USER_PROFILE_TABLE: ${self:custom.userProfileTable}
+  #     USER_TABLE: ${self:custom.userTable}
 
-  updateUserProfile:
-    handler: functions/handlers.updateUserProfile
-    events:
-      - http:
-          path: user/v1/update/profile/{id}
-          method: post
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_PROFILE_TABLE: ${self:custom.userProfileTable}
+  # updateUserProfile:
+  #   handler: functions/handlers.updateUserProfile
+  #   events:
+  #     - http:
+  #         path: user/v1/update/profile/{id}
+  #         method: post
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     USER_PROFILE_TABLE: ${self:custom.userProfileTable}
 
-  updateUserPassword:
-    handler: functions/handlers.updateUserPassword
-    events:
-      - http:
-          path: user/v1/update/password/{id}
-          method: post
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_TABLE: ${self:custom.userTable}
+  # updateUserPassword:
+  #   handler: functions/handlers.updateUserPassword
+  #   events:
+  #     - http:
+  #         path: user/v1/update/password/{id}
+  #         method: post
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     USER_TABLE: ${self:custom.userTable}
 
-  updateUserEmail:
-    handler: functions/handlers.updateUserEmail
-    events:
-      - http:
-          path: user/v1/update/email/{id}
-          method: post
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_TABLE: ${self:custom.userTable}
+  # updateUserEmail:
+    # handler: functions/handlers.updateUserEmail
+    # events:
+    #   - http:
+    #       path: user/v1/update/email/{id}
+    #       method: post
+    #       request:
+    #         parameters:
+    #           paths:
+    #             id: true
+    # environment:
+    #   USER_TABLE: ${self:custom.userTable}
 
   createUser:
     handler: functions/handlers.createUser
@@ -106,7 +106,7 @@ functions:
           path: user/v1/create
           method: post
     environment:
-      TABLE_NAME: ${self:custom.userTable}
+      TABLE_NAME: ${self:custom.UserItemTable}
   loginUser:
     handler: functions/handlers.loginUser
     events:
@@ -114,14 +114,19 @@ functions:
           path: user/v1/login
           method: post
     environment:
-      TABLE_NAME: ${self:custom.userTable}
+      TABLE_NAME: ${self:custom.UserItemTable}
 resources:
   Resources:
-    ProductTable: ${file(./resources/ProductTable.yml)}
-    ChargeTable: ${file(./resources/ChargeTable.yml)}
-    FavoriteTable: ${file(./resources/FavoriteTable.yml)}
-    ProductMediaTable: ${file(./resources/ProductMediaTable.yml)}
-    TaggedProductTable: ${file(./resources/TaggedProductTable.yml)}
-    TagTable: ${file(./resources/TagTable.yml)}
-    UserProfileTable: ${file(./resources/UserProfileTable.yml)}
-    UserTable: ${file(./resources/UserTable.yml)}
+    UserItemTable: ${file(./resources/User/Item.yml)}
+    UserDataTable: ${file(./resources/User/Data.yml)}
+    ProductItemTable: ${file(./resources/Product/Item.yml)}
+    ProductDataTable: ${file(./resources/Product/Data.yml)}
+
+    # ProductTable: ${file(./resources/ProductTable.yml)}
+    # ChargeTable: ${file(./resources/ChargeTable.yml)}
+    # FavoriteTable: ${file(./resources/FavoriteTable.yml)}
+    # ProductMediaTable: ${file(./resources/ProductMediaTable.yml)}
+    # TaggedProductTable: ${file(./resources/TaggedProductTable.yml)}
+    # TagTable: ${file(./resources/TagTable.yml)}
+    # UserProfileTable: ${file(./resources/UserProfileTable.yml)}
+    # UserTable: ${file(./resources/UserTable.yml)}

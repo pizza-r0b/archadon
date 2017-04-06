@@ -1,0 +1,22 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ProductData-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: ItemID
+      KeyType: HASH
+    -
+      AttributeName: Path
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: ItemID
+      AttributeType: S
+    -
+      AttributeName: Path
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: NEW_IMAGE

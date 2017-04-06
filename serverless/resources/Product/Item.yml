@@ -1,0 +1,16 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ProductItem-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: ID
+      KeyType: HASH
+  AttributeDefinitions:
+    -
+      AttributeName: ID
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: NEW_IMAGE

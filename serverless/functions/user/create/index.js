@@ -19,18 +19,18 @@ function createUser(event, context, callback) {
     return;
   }
 
-  findOneUser('Email', email, { IndexName: 'userGsi1' }).then(user => {
+  findOneUser('Email', email, { IndexName: 'gsi1' }).then(user => {
     if (user) {
       return Promise.reject(JSON.stringify({ message: 'User already exists' }));
     } else {
       return createUserUtils.create(email, password);
     }
   }).then(res => {
-    const ItemID = res.meta.ItemID;
-    const token = createJwt({ ItemID });
+    const ID = res.meta.ID;
+    const token = createJwt({ ID });
     callback(null, {
       statusCode: 200,
-      body: JSON.stringify({ authToken: token, ItemID }),
+      body: JSON.stringify({ authToken: token, ID }),
     });
   }).catch(e => {
     console.log(e);
@@ -44,12 +44,8 @@ function createUser(event, context, callback) {
 function listenToStreamAndcreateUserProfile(event, context, callback) {
   event.Records.forEach(record => {
     if (record.eventName === 'INSERT') {
-      const UserID = record.dynamodb.Keys.ItemID.S;
-      createUserProfile(UserID).then(() => {
-        callback(null, JSON.stringify({ success: true }));
-      }).catch(e => {
-        callback(e);
-      });
+      const Email = record.dynamodb.NewImage.Email.S;
+      // TODO: send welcome email  via SES
     }
   });
   callback(null, `Successfully processed ${event.Records.length} records.`);
