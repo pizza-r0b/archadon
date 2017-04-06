@@ -13,7 +13,7 @@ function login(event, context, callback) {
     callback(new Error('[BadRequest]'));
     return;
   }
-  findOneUser('Email', email, { IndexName: 'userGsi1' }).then(user => {
+  findOneUser('Email', email, { IndexName: 'gsi1' }).then(user => {
     if (user) {
       const hash = user.Password;
       const ID = user.ID;

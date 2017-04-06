@@ -3,7 +3,6 @@
 const FindOne = require('../../utils/findOne');
 const findOneUser = FindOne(process.env.TABLE_NAME);
 const createUserUtils = require('../../utils/createUser');
-const createUserProfile = require('../../utils/createUserProfile');
 const createJwt = require('../../utils/createJwt');
 
 function createUser(event, context, callback) {

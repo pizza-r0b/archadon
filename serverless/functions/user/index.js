@@ -5,7 +5,7 @@ const login = require('./login');
 const getUserData = require('./read/getUserData');
 const updateUserPassword = require('./update/updateUserPassword');
 const updateUserEmail = require('./update/updateUserEmail');
-const updateUserProfile = require('./update/updateUserProfile').updateUserProfile;
+const updateUserProfile = require('./update/updateUserProfile');
 
 module.exports = {
   createUser: create.createUser,
