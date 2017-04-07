@@ -27,6 +27,7 @@ const base = extend => {
       filename: '[name].js',
     },
     devtool: 'source-map',
+    target: 'node',
     resolve: {
       extensions: ['.js'],
       modules: [src, 'node_modules'],

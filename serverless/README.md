@@ -61,7 +61,7 @@ Code: 200
 
 Code: 401
 
-`{ message: 'Unauthorized' }`
+`{ body: 'Unauthorized' }`
 
 ---
 
@@ -99,7 +99,7 @@ Code: 200
 
 Code: 401
 
-`{ message: 'Unauthorized' }`
+`{ body: 'Unauthorized' }`
 
 ---
 
@@ -136,7 +136,7 @@ Code: 200
 
 Code: 401
 
-`{ message: 'Unauthorized' }`
+`{ body: 'Unauthorized' }`
 
 ---
 
@@ -212,7 +212,7 @@ Code: 200
 
 Code: 401
 
-`{ message: 'Unauthorized' }`
+`{ body: 'Unauthorized' }`
 
 ---
 

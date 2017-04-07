@@ -1,8 +1,7 @@
 'use strict';
 
 const verifyJwt = require('../../utils/verifyJwt');
-const getUserByID = require('../../utils/getUserById');
-const getUserProfile = require('../../utils/getUserProfile');
+const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 
 function getUserData(event, context, callback) {
   const token = event.headers.authtoken;
@@ -16,7 +15,7 @@ function getUserData(event, context, callback) {
     if (ID !== userID) {
       Promise.reject('Token decoded, not a match');
     } else {
-      return getUserByID(userID, {
+      return DolliDB.GetItem(process.env.USER_TABLE, 'ID', userID, {
         ProjectionExpression: 'Email',
       });
       // TODO:
@@ -25,7 +24,7 @@ function getUserData(event, context, callback) {
     }
   }).then(responseFromGetUserByID => {
     Object.assign(data, responseFromGetUserByID);
-    return getUserProfile(userID);
+    return DolliDB.GetData(process.env.USER_PROFILE_TABLE, userID);
   }).then(responseFromGetUserProfile => {
     Object.assign(data, responseFromGetUserProfile);
     const response = {
@@ -36,7 +35,7 @@ function getUserData(event, context, callback) {
     };
     callback(null, response);
   })
-    .catch(e => callback(new Error(`[401] Unauthorized ${JSON.stringify(e)}`)));
+    .catch(e => callback(null, { statusCode: 401 }));
 }
 
 module.exports = getUserData;

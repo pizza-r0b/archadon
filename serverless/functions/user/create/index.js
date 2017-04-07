@@ -1,7 +1,6 @@
 'use strict';
 
-const FindOne = require('../../utils/findOne');
-const findOneUser = FindOne(process.env.TABLE_NAME);
+const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 const createUserUtils = require('../../utils/createUser');
 const createJwt = require('../../utils/createJwt');
 
@@ -18,9 +17,9 @@ function createUser(event, context, callback) {
     return;
   }
 
-  findOneUser('Email', email, { IndexName: 'gsi1' }).then(user => {
+  DolliDB.GetItem(process.env.TABLE_NAME, 'Email', email, { IndexName: 'gsi1' }).then(user => {
     if (user) {
-      return Promise.reject(JSON.stringify({ message: 'User already exists' }));
+      return Promise.reject(JSON.stringify({ body: 'User already exists' }));
     } else {
       return createUserUtils.create(email, password);
     }

@@ -16,6 +16,7 @@ function Put(TableName, key, data) {
 
   const promises = [];
 
+  // TODO: use batch write
   data.forEach((item) => {
     const path = item[0];
     const value = item[1];

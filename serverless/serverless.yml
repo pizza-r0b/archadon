@@ -46,19 +46,19 @@ functions:
               - StreamArn
     environment:
       USER_DATA_TABLE: ${self:custom.UserDataTable}
-  # getUserData:
-  #   handler: functions/handlers.getUserData
-  #   events:
-  #     - http:
-  #         path: user/v1/read/{id}
-  #         method: get
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
-  #   environment:
-  #     USER_PROFILE_TABLE: ${self:custom.userProfileTable}
-  #     USER_TABLE: ${self:custom.userTable}
+  getUserData:
+    handler: functions/handlers.getUserData
+    events:
+      - http:
+          path: user/v1/read/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_PROFILE_TABLE: ${self:custom.UserDataTable}
+      USER_TABLE: ${self:custom.UserItemTable}
 
   updateUserProfile:
     handler: functions/handlers.updateUserProfile

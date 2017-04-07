@@ -42,7 +42,7 @@ function updateUserProfile(event, context, callback) {
       console.log('ERROR', e); // eslint-disable-line
       callback(null, {
         statusCode: 500,
-        message: JSON.stringify(e),
+        body: JSON.stringify(e),
       });
     });
 }

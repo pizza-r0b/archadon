@@ -2,10 +2,11 @@
 
 const update = require('../../utils/updateItem');
 const comparePassword = require('../../utils/comparePassword');
-const getUserById = require('../../utils/getUserById');
 const verifyJwt = require('../../utils/verifyJwt');
 const bcrypt = require('bcrypt-nodejs');
 const updateUser = update(process.env.USER_TABLE);
+const DolliDB = require('../../utils/DolliDB/build/main.min.js');
+
 
 function updateUserPassword(event, context, callback) {
   const data = JSON.parse(event.body);
@@ -20,7 +21,7 @@ function updateUserPassword(event, context, callback) {
     };
     return callback(null, response);
   }
-  verifyJwt(token, userID).then(ID => getUserById(ID))
+  verifyJwt(token, userID).then(ID => DolliDB.GetItem(process.env.USER_TABLE, 'ID', ID))
     .then(user => {
       if (candidatePassword && newPassword && comparePassword(candidatePassword, user.Password)) {
         return updateUser({
