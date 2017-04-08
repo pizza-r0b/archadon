@@ -1,4 +1,4 @@
-import docClient from './docClient';
+import docClient from './utils/docClient';
 
 function GetItem(tableName, attribute, value, extend) {
   const params = {

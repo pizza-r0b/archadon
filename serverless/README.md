@@ -65,6 +65,51 @@ Code: 401
 
 ---
 
+### `user/v1/update/profile/{id}`
+
+Updates a users profile information
+
+**POST**
+
+
+**Path Parameters**
+
+id - User ID - required
+
+**Headers**
+
+authtoken - JWT - required
+
+**Body**
+
+Required
+
+The `data` property is required and must contain an object. The key names within the `data` object are arbitrary, with one exception, key names cannot be numbers.
+
+```
+data: {
+  {
+    Address: {
+      ...
+    },
+    StripeCustomerID: string,
+    otherStuff: {},
+  }
+}
+```
+
+**Success Response**
+
+Code: 200
+
+**Error Response**
+
+Code: 401
+
+`{ body: 'Unauthorized' }`
+
+---
+
 ### `user/v1/update/password/{id}`
 
 Updates a users password
@@ -172,47 +217,6 @@ Unauthorized
 Code: 404
 
 User doesn't exist
-
----
-
-### `user/v1/update/profile/{id}`
-
-Updates a users profile information
-
-**POST**
-
-
-**Path Parameters**
-
-id - User ID - required
-
-**Headers**
-
-authtoken - JWT - required
-
-**Body**
-
-Required
-
-```
-{
-  Address: {
-    ...
-  },
-  StripeCustomerID: string,
-  otherStuff: {},
-}
-```
-
-**Success Response**
-
-Code: 200
-
-**Error Response**
-
-Code: 401
-
-`{ body: 'Unauthorized' }`
 
 ---
 

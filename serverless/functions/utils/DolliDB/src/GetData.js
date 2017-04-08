@@ -1,5 +1,5 @@
-import docClient from './docClient';
-import fromPaths from '../fromPaths';
+import docClient from './utils/docClient';
+import fromPaths from './utils/fromPaths';
 
 const ITEM_ID_VALUE_ALIAS = ':idvalue';
 const PATH_VALUE_ALIAS = ':pvalue';

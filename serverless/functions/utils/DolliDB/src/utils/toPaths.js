@@ -1,4 +1,4 @@
-import { isObject, isNumber } from './utils';
+import { isObject, isNumber } from './index';
 
 function arrayToPaths(arr, prefix) {
   const output = [];

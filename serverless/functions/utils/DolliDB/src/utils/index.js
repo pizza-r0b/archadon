@@ -3,7 +3,7 @@ export const isNumber = val => /^\d+$/.test(val);
 
 export { default as docClient } from './docClient';
 export { default as CreateDocClient } from './CreateDocClient';
-export { default as GetData } from './GetData';
-export { default as GetItem } from './GetItem';
+export { default as toPaths } from './toPaths';
+export { default as fromPaths } from './fromPaths';
 
 

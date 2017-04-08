@@ -1,4 +1,4 @@
-import { isNumber } from './utils';
+import { isNumber } from './index';
 
 const getRef = (key) => isNumber(key) ? [] : {}; //eslint-disable-line
 

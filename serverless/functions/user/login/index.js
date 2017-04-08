@@ -18,7 +18,7 @@ function login(event, context, callback) {
   const email = data.email;
   const password = data.password;
   if (!email || !password) {
-    callback(new Error('[BadRequest]'));
+    callback(null, { statusCode: 400, body: JSON.stringify({ code: 400, message: 'Bad request' }) });
     return;
   }
   DolliDB.GetItem(process.env.TABLE_NAME, 'Email', email, { IndexName: 'gsi1' })

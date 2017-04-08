@@ -1,8 +1,8 @@
 'use strict';
 
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-const createUserUtils = require('../../utils/createUser');
 const createJwt = require('../../utils/createJwt');
+const getUserItemData = require('../../utils/getUserItemData');
 
 function createUser(event, context, callback) {
   const data = JSON.parse(event.body);
@@ -17,11 +17,13 @@ function createUser(event, context, callback) {
     return;
   }
 
+  // TODO: possibly make gsi1 an environment variable in serverless config
   DolliDB.GetItem(process.env.TABLE_NAME, 'Email', email, { IndexName: 'gsi1' }).then(user => {
     if (user) {
       return Promise.reject(JSON.stringify({ body: 'User already exists' }));
     } else {
-      return createUserUtils.create(email, password);
+      const userItemData = getUserItemData(email, password);
+      return DolliDB.PutItem(process.env.TABLE_NAME, userItemData, null, { ID: userItemData.ID });
     }
   }).then(res => {
     const ID = res.meta.ID;
