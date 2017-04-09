@@ -73,31 +73,31 @@ functions:
     environment:
       USER_PROFILE_TABLE: ${self:custom.UserDataTable}
 
-  # updateUserPassword:
-  #   handler: functions/handlers.updateUserPassword
-  #   events:
-  #     - http:
-  #         path: user/v1/update/password/{id}
-  #         method: post
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
-  #   environment:
-  #     USER_TABLE: ${self:custom.userTable}
+  updateUserPassword:
+    handler: functions/handlers.updateUserPassword
+    events:
+      - http:
+          path: user/v1/update/password/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_TABLE: ${self:custom.UserItemTable}
 
-  # updateUserEmail:
-    # handler: functions/handlers.updateUserEmail
-    # events:
-    #   - http:
-    #       path: user/v1/update/email/{id}
-    #       method: post
-    #       request:
-    #         parameters:
-    #           paths:
-    #             id: true
-    # environment:
-    #   USER_TABLE: ${self:custom.userTable}
+  updateUserEmail:
+    handler: functions/handlers.updateUserEmail
+    events:
+      - http:
+          path: user/v1/update/email/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      USER_TABLE: ${self:custom.UserItemTable}
 
   createUser:
     handler: functions/handlers.createUser

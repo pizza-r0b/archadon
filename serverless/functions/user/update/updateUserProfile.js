@@ -1,7 +1,7 @@
 'use strict';
 
 const verifyJwt = require('../../utils/verifyJwt');
-const Put = require('../../utils/Put');
+const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 
 function updateUserProfile(event, context, callback) {
   let body;
@@ -33,7 +33,7 @@ function updateUserProfile(event, context, callback) {
     return callback(null, response);
   }
   verifyJwt(token, userID)
-    .then(ID => Put(process.env.USER_PROFILE_TABLE, ['ItemID', ID], data))
+    .then(ID => DolliDB.PutData(process.env.USER_PROFILE_TABLE, ['ItemID', ID], data))
     .then(() => {
       callback(null, {
         statusCode: 200,

@@ -1,0 +1,12 @@
+{
+  "body": {
+    "password": "Password1!",
+    "newPassword": "test"
+  },
+  "headers": {
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5MTc2MTY3MiwiZXhwIjoxNDkxNzY4ODcyfQ.l9TOuS_pQyBrFRQf8MJirwExRA_qpTRO0M6rj0MQSD0"
+  },
+  "pathParameters": {
+    "id": "62eb6cb0-1c8a-11e7-a50d-c7630e7e878a"
+  }
+}

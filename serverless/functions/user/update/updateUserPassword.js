@@ -1,15 +1,17 @@
 'use strict';
 
-const update = require('../../utils/updateItem');
 const comparePassword = require('../../utils/comparePassword');
 const verifyJwt = require('../../utils/verifyJwt');
 const bcrypt = require('bcrypt-nodejs');
-const updateUser = update(process.env.USER_TABLE);
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 
-
 function updateUserPassword(event, context, callback) {
-  const data = JSON.parse(event.body);
+  let data;
+  try {
+    data = JSON.parse(event.body);
+  } catch (e) {
+    data = event.body;
+  }
   const candidatePassword = data.password;
   const newPassword = data.newPassword;
   const token = event.headers.authtoken;
@@ -24,17 +26,26 @@ function updateUserPassword(event, context, callback) {
   verifyJwt(token, userID).then(ID => DolliDB.GetItem(process.env.USER_TABLE, 'ID', ID))
     .then(user => {
       if (candidatePassword && newPassword && comparePassword(candidatePassword, user.Password)) {
-        return updateUser({
-          Key: {
-            ID: user.ID,
-          },
-          ExpressionAttributeNames: {
-            '#p': 'Password',
-          },
-          ExpressionAttributeValues: {
-            ':p': bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10)),
-          },
-          UpdateExpression: 'SET #p = :p',
+        return new Promise((resolve, reject) => {
+          DolliDB.docClient.update({
+            TableName: process.env.USER_TABLE,
+            Key: {
+              ID: user.ID,
+            },
+            ExpressionAttributeNames: {
+              '#p': 'Password',
+            },
+            ExpressionAttributeValues: {
+              ':p': bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10)),
+            },
+            UpdateExpression: 'SET #p = :p',
+          }, (err, res) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(res);
+            }
+          });
         });
       } else {
         Promise.reject();
@@ -46,11 +57,11 @@ function updateUserPassword(event, context, callback) {
       };
       callback(null, response);
     })
-    .catch(() => {
+    .catch((e) => {
       const response = {
         statusCode: 401,
         body: JSON.stringify({
-          message: 'Unauthorized',
+          message: e,
         }),
       };
       callback(null, response);
