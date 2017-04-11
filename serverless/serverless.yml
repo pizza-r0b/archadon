@@ -27,6 +27,8 @@ custom:
   env: ${opt:env, self:provider.stage}
   UserDataTable: ${self:resources.Resources.UserDataTable.Properties.TableName}
   UserItemTable: ${self:resources.Resources.UserItemTable.Properties.TableName}
+  ProductDataTable: ${self:resources.Resources.ProductDataTable.Properties.TableName}
+  ProductItemTable: ${self:resources.Resources.ProductItemTable.Properties.TableName}
 
 package:
  include:
@@ -115,6 +117,17 @@ functions:
           method: post
     environment:
       TABLE_NAME: ${self:custom.UserItemTable}
+
+  createProduct:
+    handler: functions/handlers.createProduct
+    events:
+      - http:
+          path: product/v1/create
+          method: post
+    environment:
+      PRODUCT_TABLE: ${self:custom.ProductItemTable}
+      USER_TABLE: ${self:custom.UserItemTable}
+
 resources:
   Resources:
     UserItemTable: ${file(./resources/User/Item.yml)}

@@ -1,0 +1,9 @@
+{
+  "body": {
+    "name": "p1",
+    "price": 100
+  },
+  "headers": {
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5MTg3NDk4NywiZXhwIjoxNDkxODgyMTg3fQ.rnNz_8Pip1sNgAceo66mCh_j_LVmMCaW-RhVUVEZ0mA"
+  }
+}

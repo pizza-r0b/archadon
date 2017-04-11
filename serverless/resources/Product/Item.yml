@@ -9,6 +9,16 @@ Properties:
     -
       AttributeName: ID
       AttributeType: S
+    -
+      AttributeName: Price
+      AttributeType: N
+  GlobalSecondaryIndexes:
+    -
+      IndexName: gsi1
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: Price
   ProvisionedThroughput:
     ReadCapacityUnits: 5
     WriteCapacityUnits: 5

@@ -1,6 +1,7 @@
 'use strict';
 
 const user = require('./user');
+const product = require('./product');
 
 module.exports = {
   createUser: user.createUser,
@@ -10,4 +11,6 @@ module.exports = {
   updateUserPassword: user.updateUserPassword,
   updateUserEmail: user.updateUserEmail,
   updateUserProfile: user.updateUserProfile,
+
+  createProduct: product.create,
 };
