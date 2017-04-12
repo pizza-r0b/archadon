@@ -66,7 +66,7 @@ functions:
     handler: functions/handlers.updateUserProfile
     events:
       - http:
-          path: user/v1/update/profile/{id}
+          path: user/v1/update/data/{id}
           method: post
           request:
             parameters:
@@ -79,7 +79,7 @@ functions:
     handler: functions/handlers.updateUserPassword
     events:
       - http:
-          path: user/v1/update/password/{id}
+          path: user/v1/update/item/password/{id}
           method: post
           request:
             parameters:
@@ -92,7 +92,7 @@ functions:
     handler: functions/handlers.updateUserEmail
     events:
       - http:
-          path: user/v1/update/email/{id}
+          path: user/v1/update/item/email/{id}
           method: post
           request:
             parameters:
@@ -127,6 +127,34 @@ functions:
     environment:
       PRODUCT_TABLE: ${self:custom.ProductItemTable}
       USER_TABLE: ${self:custom.UserItemTable}
+
+  updateProductData:
+    handler: functions/handlers.updateProductData
+    events:
+      - http:
+          path: product/v1/update/data/{id}
+          method: post
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+      USER_TABLE: ${self:custom.UserItemTable}
+
+  getProductData:
+    handler: functions/handlers.getProductData
+    events:
+      - http:
+          path: product/v1/data/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+    environment:
+      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
 resources:
   Resources:

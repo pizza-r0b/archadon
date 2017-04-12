@@ -13,8 +13,8 @@ function createProduct(event, context, callback) {
   } catch (e) {
     data = event.body;
   }
-  const name = data.name;
-  const price = data.price;
+  const name = data.Name;
+  const price = data.Price;
   const token = event.headers.authtoken;
 
   if (!token) {

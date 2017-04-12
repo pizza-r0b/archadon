@@ -2,9 +2,8 @@
 
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 const verifyGodMode = require('../../utils/verifyGodMode');
-const uuid = require('uuid/v1');
 
-const PRODUCT_TABLE = process.env.PRODUCT_TABLE;
+const PRODUCT_DATA_TABLE = process.env.PRODUCT_DATA_TABLE;
 
 function updateProductData(event, context, callback) {
   let data;
@@ -13,9 +12,10 @@ function updateProductData(event, context, callback) {
   } catch (e) {
     data = event.body;
   }
-  const name = data.name;
-  const price = data.price;
+
   const token = event.headers.authtoken;
+  const params = event.pathParameters || {};
+  const productID = params.id;
 
   if (!token) {
     callback(null, {
@@ -26,13 +26,23 @@ function updateProductData(event, context, callback) {
 
   verifyGodMode(token).then(item => {
     if (!item.GodMode) {
-
+      return Promise.reject({
+        statusCode: 401,
+      });
     }
-  }).catch(e => {
-    callback(null, {
-      statusCode: e.statusCode || 500,
+    return DolliDB.PutData(PRODUCT_DATA_TABLE, ['ItemID', productID], data);
+  })
+    .then(() => {
+      callback(null, {
+        statusCode: 200,
+      });
+    })
+    .catch(e => {
+      console.log(e);
+      callback(null, {
+        statusCode: e.statusCode || 500,
+      });
     });
-  });
 }
 
 module.exports = updateProductData;
