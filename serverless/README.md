@@ -253,3 +253,94 @@ Missing required fields
 Code: 409
 
 User already exists
+
+---
+
+### `product/v1/create`
+
+Creates a product item with Name, Price, CreatedAt, CreatedBy, and ID fields. You need to specify Name and Price. The JWT used in the authtoken header must correlate to a user that has GodMode.
+
+**POST**
+
+**Headers**
+
+authtoken - JWT - required (GodMode user)
+
+**Body**
+
+Required
+
+```
+{
+  "Name": string,
+  "Price": number
+}
+```
+
+**Success Response**
+
+Code: 200
+
+A successful response will return the ID for the newly created product.
+
+```
+{
+  "ID": string
+}
+```
+
+---
+
+### `product/v1/update/data/{id}`
+
+Update a products data. GodMode user required to make successful request.
+
+**POST**
+
+**Path Parameters**
+
+id - Product ID - required
+
+**Headers**
+
+authtoken - JWT - required (GodMode user)
+
+**Body**
+
+Required
+
+```
+{
+  "SomeArray": [...],
+  "SomeObject": {...},
+  "SomeString": "...",
+  "SomeNumber": 1
+}
+```
+
+**Success Response**
+
+Code: 200
+
+
+---
+
+### `product/v1/data/{id}`
+
+Public endpoint to get the data for a single product. Strips off CreatedBy attribute.
+
+**GET**
+
+**Path Parameters**
+
+id - Product ID - required
+
+**Success Response**
+
+Code: 200
+
+```
+{
+  data: {...}
+}
+```
