@@ -31,16 +31,9 @@ const base = extend => {
     resolve: {
       extensions: ['.js'],
       modules: [src, 'node_modules'],
-      // alias: {
-      //   Components: prependSrc('client/components'),
-      //   Actions: prependSrc('client/actions'),
-      //   Containers: prependSrc('client/containers'),
-      //   Reducers: prependSrc('client/reducers'),
-      //   Utils: prependSrc('client/utils'),
-      //   Constants: prependSrc('client/constants.js'),
-      //   Store: prependSrc('client/store.js'),
-      //   Sagas: prependSrc('client/sagas/index.js'),
-      // },
+      alias: {
+        utils: '../src/utils',
+      },
     },
     module: {
       rules,

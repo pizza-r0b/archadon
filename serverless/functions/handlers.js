@@ -12,6 +12,7 @@ module.exports = {
   updateUserPassword: user.updateUserPassword,
   updateUserEmail: user.updateUserEmail,
   updateUserProfile: user.updateUserProfile,
+  deleteUserData: user.deleteUserData,
   // products
   updateProductData: product.updateData,
   createProduct: product.create,
