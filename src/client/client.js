@@ -9,6 +9,7 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import App from 'Containers/App';
 import { AppContainer } from 'react-hot-loader';
+import './fonts';
 
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();

@@ -1,12 +1,19 @@
 import React from 'react';
-import TodoList from 'Containers/TodoList';
+import background from 'Images/artisan-rug-home.jpg';
 
 function Home() {
+  console.log(background);
   return (
-    <div>
-      <h1 style={{ margin: '20px 0 0 0' }}>Redux Server Rendering Starter</h1>
-      <h2 style={{ margin: 0, fontWeight: 'lighter' }}>Now With Hot Module Reloading, Redux Sagas, and React Router 4</h2>
-      <TodoList />
+    <div
+      className="flex-grow-1 home flex-parent flex-justify-center"
+      style={{
+        backgroundImage: `url(${background})`,
+      }}
+    >
+      <div className="flex-parent flex-col flex-align-center">
+        <h1 className="headline">Handmade, artisan rugs</h1>
+        <div className="jumbo-btn">Shop Selection</div>
+      </div>
     </div>
   );
 }

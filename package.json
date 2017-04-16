@@ -5,13 +5,14 @@
   "main": "build/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run dev:start",
+    "start": "npm run sprite && npm run dev:start",
     "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 run-p dev:client:build dev:server:build dev:server:delay",
     "dev:server:delay": "run-s delay dev:server:start",
     "delay": "node ./node_modules/npm-delay 10000",
     "dev:server:build": "webpack --config ./webpack/server.js --watch --colors --display-error-details",
     "dev:server:start": "nodemon ./build/server.js --watch ./src/server --ignore ./src/client",
-    "dev:client:build": "node webpack/dev-server.js"
+    "dev:client:build": "node webpack/dev-server.js",
+    "sprite": "cd ./utils; mkdir -p lib; ./spritesheet ../src/client/svg/*.svg > ../src/client/images/spritesheet.svg"
   },
   "repository": {
     "url": "git+https://github.com/realseanp/isomorphic-redux-react-webpack-starter",
@@ -61,7 +62,10 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
     "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "image-webpack-loader": "^3.3.0",
     "json-loader": "^0.5.4",
+    "libxmljs": "^0.18.4",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.1",
     "nodemon": "^1.11.0",
@@ -71,6 +75,7 @@
     "sass-loader": "^6.0.3",
     "source-map-support": "^0.4.14",
     "style-loader": "^0.16.0",
+    "svg-inline-loader": "^0.7.1",
     "webpack": "^2.3.2",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.4.2",

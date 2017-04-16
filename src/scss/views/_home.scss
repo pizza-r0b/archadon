@@ -1,0 +1,26 @@
+.home {
+  background-position: center -15px;
+  padding-top: 10vh;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.headline {
+  @include font-size(3.2);
+  font-family: $bodoni;
+  color: $white;
+  font-weight: normal;
+  text-align: center;
+}
+
+
+@include desktop {
+  .home {
+    padding-top: 0;
+    align-items: center;
+    background-position: center -10px;
+  }
+  .headline {
+    @include font-size(6.4);
+  }
+}

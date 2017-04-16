@@ -1,0 +1,35 @@
+
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10)+px;
+  font-size: $sizeValue+rem;
+}
+
+@mixin mobile {
+    @media (min-width: #{$mobileWidth}) {
+        @content;
+    }
+}
+
+@mixin largeMobile {
+    @media (min-width: #{$largeMobileWidth}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tabletWidth}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktopWidth}) {
+        @content;
+    }
+}
+
+@mixin largeDesktop {
+    @media (min-width: #{$largeDesktopWidth}) {
+        @content;
+    }
+}

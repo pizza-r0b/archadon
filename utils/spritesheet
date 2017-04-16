@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+const minimist = require('minimist');
+const args = minimist(process.argv.slice(2));
+const xmljs = require('libxmljs');
+
+const getFullPath = (location) => path.resolve(process.cwd(), location);
+
+const getPathParts = (location) => path.parse(location);
+
+const ids = [];
+
+const getId = () => {
+  const id = `--ss-${ids.length}`;
+
+  ids.push(id);
+  return id;
+};
+
+const getAST = (location) => {
+  const fullPath = getFullPath(location);
+  const pathParts = getPathParts(fullPath);
+  const fileContent = fs.readFileSync(fullPath, 'utf8');
+  const ast = xmljs.parseXmlString(fileContent);
+  const root = ast.get('//*');
+  const idMap = {};
+
+  root.find('//*[not(ancestor::*[name() = \'defs\'])]/@stroke').map(colorInterface);
+  root.find('//*[not(ancestor::*[name() = \'defs\'])]/@fill').map(colorInterface);
+
+  root.find('//@id').forEach(attr => {
+    const id = attr.value();
+    const newId = getId();
+    idMap[id] = newId;
+    attr.value(newId);
+  });
+
+  root.attr({ id: pathParts.name });
+
+  ['width', 'height'].forEach(prop => {
+    const attr = root.attr(prop);
+
+    if (attr) attr.remove();
+  });
+
+  const match = new RegExp(`#(${Object.keys(idMap).join('|')})`);
+  const replace = attr => {
+    const ref = attr.value();
+    const newRef = idMap[ref] || ref;
+
+    attr.value(newRef.replace(match, (all, id) => `#${idMap[id]}`));
+  };
+
+  root.find('//@mask').forEach(replace);
+  root.find(
+    '//@xlink:href',
+    { xlink: 'http://www.w3.org/1999/xlink' }
+  ).forEach(replace);
+  return root;
+};
+
+const colorReplace = color => {
+  const match = /^(none|_[^$]+)$/;
+
+  return match.test(color)
+    ? color.match(match)[1].replace(/^_/, '')
+    : 'currentColor';
+};
+
+const colorInterface = attr => {
+  attr.value(colorReplace(attr.value()));
+};
+
+const asts = args._.map(getAST);
+
+if (asts.length > 0) {
+  const file = xmljs.parseXmlString(`
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="opacity: 0; height: 0; width: 0; display: block;"><defs/></svg>
+  `);
+  const defsNode = file.get('/*/*');
+
+  asts.forEach(ast => defsNode.addChild(ast));
+
+  console.log(file.toString()); // eslint-disable-line no-console
+}

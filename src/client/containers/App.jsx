@@ -8,6 +8,7 @@ import Home from 'Components/Home';
 import About from 'Components/About';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
+import spriteSheet from 'Images/spritesheet.svg';
 
 class App extends Component {
   constructor() {
@@ -22,12 +23,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className={`full-width full-height ${this.props.ui.showBgImage ? 'bg' : ''}`}>
-        <div className="wrap">
-          <Navigation />
+      <div className="layout">
+        <Navigation />
+        <div className="flex-grow-1 flex-parent">
           <Route path="/" exact component={Home} />
           <Route path="/about" component={About} />
-          <button style={{ margin: 'auto' }} className="btn" onClick={this.handleBgToggle}>Toggle Background</button>
+          <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
         </div>
       </div>
     );

@@ -14,6 +14,47 @@ const base = extend => {
         },
       }],
     },
+    {
+      test: /\.svg$/,
+      use: [
+        {
+          loader: 'svg-inline-loader',
+        },
+      ],
+    },
+    {
+      test: /\.(ttf|woff|eot)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          query: {
+            name: '[name].[ext]',
+          },
+        },
+      ],
+    },
+    {
+      test: /\.(jpe?g|png|gif)$/i,
+      use: [
+        'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+        {
+          loader: 'image-webpack-loader',
+          query: {
+            pngquant: {
+              quality: '65-90',
+              speed: 4,
+            },
+            gifsicle: {
+              interlaced: false,
+              progressive: true,
+            },
+            optipng: {
+              optimizationLevel: 7,
+            },
+          },
+        },
+      ],
+    },
   ];
 
   if (extend.rules) {
@@ -39,6 +80,8 @@ const base = extend => {
         Constants: prependSrc('client/constants.js'),
         Store: prependSrc('client/store.js'),
         Sagas: prependSrc('client/sagas/index.js'),
+        Images: prependSrc('client/images'),
+        Ui: prependSrc('client/components/ui'),
       },
     },
     module: {
