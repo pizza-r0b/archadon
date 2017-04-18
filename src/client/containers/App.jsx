@@ -30,6 +30,13 @@ class App extends Component {
           <Route path="/about" component={About} />
           <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
         </div>
+        <div className="modal open">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h1>Hey</h1>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
