@@ -1,154 +1,88 @@
-import React from 'react';
-import rug from 'Images/oriental-rug-splash.png';
-import rug2 from 'Images/oriental-rug-splash-2.jpg';
-import rug3 from 'Images/oriental-rug-splash-3.jpg';
-import rug4 from 'Images/oriental-rug-splash-4.jpg';
-import Canvas from './Canvas';
+import React, { PropTypes } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import classnames from 'classnames';
+import rug1 from 'Images/rug1.png';
 
-const BLUE = '#166ED4';
-const RED = '#E10C37';
-const GREEN = '#82E10C';
-const YELLOW = '#E1D40C';
+class Canvas extends React.Component {
 
-class Slide extends React.Component {
-  state = {}
+  static propTypes = {
+    img: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+  }
 
-  componentWillEnter(cb) {
-    this.setState({
-      active: true,
-      leave: false,
-      enter: true,
-      wrapAnimationEnd: (event) => {
-        if (event.animationName === 'enter') {
-          cb();
-        }
-      },
-      maskTransitionEnd: this.maskTransitionEnd,
+  drawImageToCanvas = (img) => {
+    const ctx = this.canvas.getContext('2d');
+    ctx.save();
+    ctx.globalAlpha = 0.15;
+    ctx.drawImage(img, - this.canvas.width / 2, - this.canvas.height / 2);
+    ctx.restore();
+  }
+
+  drawColorOverlay = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = this.canvas.width;
+    canvas.height = this.canvas.height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = this.props.color;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const drawingCtx = this.canvas.getContext('2d');
+    drawingCtx.save();
+    drawingCtx.globalCompositeOperation = 'color';
+    drawingCtx.drawImage(canvas, 0, 0);
+    drawingCtx.restore();
+  }
+
+  loadImage = () => {
+    const img = document.createElement('img');
+
+    img.addEventListener('load', () => {
+      this.drawImageToCanvas(img);
+      this.drawColorOverlay();
     });
+
+    img.src = this.props.img;
   }
-  componentDidEnter() {
+
+  componentDidMount() {
+
+    this.loadImage();
+
+    // load image to canvas
+    // add color overlay
 
   }
-  componentWillLeave(cb) {
-    // add class to rotate mask and add transition end event to that rotation
-    // that transition end event will trigger another function that will slide out
-    // and fade out both canvases. That animation will have a transition end event
-    // that will call the cb
-    this.setState({
-      active: true,
-      rotate: true,
-      enter: false,
-      wrapAnimationEnd: (event) => {
-        if (event.animationName === 'leave') {
-          cb();
-        }
-      },
-      maskTransitionEnd: this.maskTransitionEnd,
-    });
-  }
-  componentDidLeave() {
 
-  }
-  maskTransitionEnd = () => {
-    this.setState((prevState) => Object.assign({}, prevState, {
-      leave: true,
-      enter: false,
-      maskTransitionEnd: null,
-    }));
+  getRef = c => {
+    this.canvas = c;
   }
   render() {
-    const { item } = this.props;
     return (
-      <div
-        style={{ backgroundColor: item.backgroundColor }}
-        onAnimationEnd={this.state.wrapAnimationEnd}
-        className={
-          classnames('canvas-wrap flex-grow-1 flex-parent flex-align-center flex-justify-center', {
-            'canvas-wrap-leave': this.state.leave,
-            'canvas-wrap-enter': this.state.enter,
-            active: this.state.active,
-          })
-        }
-      >
-        <div
-          className={classnames('canvas-wrap flex-grow-1 flex-parent flex-align-center flex-justify-center', {
-            'canvas-fade active': this.state.leave,
-          })}
-        >
-          <Canvas
-            img={item.imageSrc}
-            color={item.backgroundColor}
-            className="original-canvas"
-            width={615}
-            height={409}
-          />
-          <Canvas
-            img={item.imageSrc}
-            color={item.backgroundColor}
-            onTransitionEnd={this.state.maskTransitionEnd}
-            className={classnames('masked-canvas', {
-              'masked-canvas-rotate': this.state.rotate,
-            })}
-            mask
-            width={615}
-            height={409}
-          />
-        </div>
-      </div>
+      <canvas ref={this.getRef} />
     );
   }
 }
 
 class Home extends React.Component {
 
-  state = {
-    currentIndex: 0,
-  }
-
-  images = [
-    {
-      backgroundColor: BLUE,
-      imageSrc: rug,
-    },
-    {
-      backgroundColor: RED,
-      imageSrc: rug2,
-    },
-    {
-      backgroundColor: YELLOW,
-      imageSrc: rug4,
-    },
-  ];
-
   constructor() {
     super();
-    this.slides = this.createSlides();
   }
 
-  incrementCount = () => {
-    let index;
-    if (this.state.currentIndex === this.images.length - 1) {
-      index = 0;
-    } else {
-      index = this.state.currentIndex + 1;
-    }
-    this.setState({ currentIndex: index });
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-      this.incrementCount();
-    }, 5000);
-  }
-
-  createSlides = () => this.images.map((item, i) => <Slide key={i} item={item} />)
 
   render() {
     return (
-      <ReactTransitionGroup component="div" style={{ position: 'relative', overflow: 'hidden' }} className="flex-parent flex-grow-1">
-        {this.slides[this.state.currentIndex]}
+      <ReactTransitionGroup component="div" style={{ position: 'relative', overflow: 'hidden' }} className="flex-parent flex-grow-1 home-transition-group">
+        <div className="flex-parent flex-grow-1 home-slide-flex">
+          <div className="home-slide-box">hey</div>
+          <div className="home-slide-box home-slide-img-box">
+            <img className="home-slide-img" src={rug1} />
+          </div>
+          <div className="home-slide-box">hi</div>
+        </div>
+        <div className="home-slide-bg">
+          <Canvas img={rug1} color="#4AD84C" />
+        </div>
       </ReactTransitionGroup>
     );
   }
