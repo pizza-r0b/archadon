@@ -1,0 +1,27 @@
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin: 0;
+  font-weight: normal;
+  font-family: $bodoni;
+}
+
+h1, .h1 {
+  @include font-size(4.8);
+  line-height: 46px;
+}
+
+@each $colorName, $hex in $colorMap {
+  .font-color--#{$colorName} {
+    color: $hex;
+  }
+}
+
+@each $align in center, right, left, justify {
+  .align--#{$align} {
+    text-align: $align;
+  }
+}

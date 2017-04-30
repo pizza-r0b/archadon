@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import classnames from 'classnames';
 import rug1 from 'Images/rug1.png';
+import rug2 from 'Images/rug2.png';
+import rug3 from 'Images/rug3.png';
 
 class Canvas extends React.Component {
 
@@ -14,7 +16,7 @@ class Canvas extends React.Component {
     const ctx = this.canvas.getContext('2d');
     ctx.save();
     ctx.globalAlpha = 0.15;
-    ctx.drawImage(img, - this.canvas.width / 2, - this.canvas.height / 2);
+    ctx.drawImage(img, - this.canvas.width / 2, - this.canvas.height / 2, img.width / 2, img.height / 2);
     ctx.restore();
   }
 
@@ -63,27 +65,169 @@ class Canvas extends React.Component {
   }
 }
 
+const FEATURED_RUGS = [
+  {
+    name: 'Theo',
+    id: '1',
+    size: '6x12',
+    country: 'Persia',
+    src: rug1,
+  },
+  {
+    name: 'Jenni',
+    id: '2',
+    size: '6x12',
+    country: 'Persia',
+    src: rug2,
+  },
+  {
+    name: 'Jenni',
+    id: '2',
+    size: '6x12',
+    country: 'Persia',
+    src: rug3,
+  },
+];
+
+const COLORS = ['#42D044', '#2D76CE', '#5C3D6D'];
+
+class Slide extends React.Component {
+
+  state = {}
+
+  componentWillAppear(cb) {
+    this.setState({
+      entering: true,
+      appear: true,
+    });
+    cb();
+  }
+
+  componentWillEnter(cb) {
+    this.setState({
+      entering: true,
+      appear: false,
+    });
+    cb();
+  }
+
+  animationEndFunc = (cb, name) => (e) => {
+    if (e.animationName === name) {
+      cb();
+    }
+  }
+
+  componentWillLeave(cb) {
+    this.setState({
+      imgAnimationEndFunc: this.animationEndFunc(cb, 'slideLeave'),
+      leaving: true,
+      entering: false,
+      appear: false,
+    });
+  }
+  render() {
+    const { img, color, Cta } = this.props;
+    return (
+      <div
+        onAnimationEnd={this.state.imgAnimationEndFunc}
+        className={classnames('flex-parent flex-grow-1 slide-wrap', {
+          leaving: this.state.leaving,
+          entering: this.state.entering && !this.state.appear,
+        })}
+      >
+        <div className="flex-parent flex-grow-1 home-slide-flex">
+          <div className="home-slide-box">
+            <Cta />
+          </div>
+          <div className="home-slide-box home-slide-img-box">
+            <img
+              className={classnames('home-slide-img', {
+                leaving: this.state.leaving,
+                entering: this.state.entering,
+              })}
+              src={img}
+            />
+          </div>
+          <div className="home-slide-box">hi</div>
+        </div>
+        <div className="home-slide-bg">
+          <Canvas img={img} color={color} />
+        </div>
+      </div>
+    );
+  }
+
+}
+
+const interval = (callback, delay) => {
+  const tick = now => {
+    if (now - start >= delay) {
+      start = now;
+      callback();
+    }
+    requestAnimationFrame(tick);
+  };
+  let start = performance.now();
+  requestAnimationFrame(tick);
+};
+
+const DURATION = 5500;
+
 class Home extends React.Component {
 
   constructor() {
     super();
   }
 
+  state = {
+    currentIndex: 0,
+  }
+
+  Cta = () => (
+    <div className="flex-parent flex-col flex-align-center">
+      <h1 className="font-color--white align--center">
+        Handmade <span style={{ display: 'block' }}>artisan rugs</span>
+      </h1>
+      <button className="btn btn--white margin--top-5">Shop Selection</button>
+    </div>
+  )
+
+  updateSlide = () => {
+    let currentIndex;
+    if (this.state.currentIndex < this.slides.length - 1) {
+      currentIndex = this.state.currentIndex + 1;
+    } else {
+      currentIndex = 0;
+    }
+    this.setState({ currentIndex });
+  }
+
+  componentDidMount() {
+    interval(this.updateSlide, DURATION);
+  }
+
+  slides = FEATURED_RUGS.map((obj, i) => <Slide key={i} img={obj.src} Cta={this.Cta} color={COLORS[i]} />)
 
   render() {
+    const { Cta } = this;
     return (
-      <ReactTransitionGroup component="div" style={{ position: 'relative', overflow: 'hidden' }} className="flex-parent flex-grow-1 home-transition-group">
-        <div className="flex-parent flex-grow-1 home-slide-flex">
-          <div className="home-slide-box">hey</div>
-          <div className="home-slide-box home-slide-img-box">
-            <img className="home-slide-img" src={rug1} />
-          </div>
-          <div className="home-slide-box">hi</div>
+      <div className="flex-parent flex-grow-1 flex-col">
+        <ReactTransitionGroup
+          component="div"
+          style={{
+            transform: 'translate3d(0,0,0)',
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: '100%',
+          }}
+          className="flex-parent flex-grow-1 home-transition-group"
+        >
+          {this.slides[this.state.currentIndex]}
+        </ReactTransitionGroup>
+        <div className="padding--top-15 padding--bottom-10">
+          <h1 className="align--center">Our Selection</h1>
         </div>
-        <div className="home-slide-bg">
-          <Canvas img={rug1} color="#4AD84C" />
-        </div>
-      </ReactTransitionGroup>
+      </div>
     );
   }
 }

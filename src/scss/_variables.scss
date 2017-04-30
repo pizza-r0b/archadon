@@ -5,13 +5,20 @@ $desktopWidth: "992px";
 $largeDesktopWidth: "1392px";
 
 $white: #FFFFFF;
-$cta: #39A66F;
-$second: #166ED4;
-$secondDark: darken($second, 12%);
-$third: #6037FF;
-$fourth: #E85059;
-$fifth: #FD7400;
-$gray: #5A5A5A;
+$dark: #2F3036;
+$light: #F0F3FF;
+$first: #803BDD;
+$second: #42D044;
+$third: #6D3BDD;
+
+$colorMap: (
+  white: $white,
+  dark: $dark,
+  light: $light,
+  first: $first,
+  second: $second,
+  third: $third
+);
 
 $spacer: 5;
 
