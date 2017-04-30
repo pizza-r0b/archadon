@@ -130,28 +130,40 @@ class Slide extends React.Component {
     return (
       <div
         onAnimationEnd={this.state.imgAnimationEndFunc}
-        className={classnames('flex-parent flex-grow-1 slide-wrap', {
+        className={classnames('animation-wrap', {
           leaving: this.state.leaving,
           entering: this.state.entering && !this.state.appear,
         })}
       >
-        <div className="flex-parent flex-grow-1 home-slide-flex">
-          <div className="home-slide-box">
-            <Cta />
+        <div
+          className={classnames('flex-parent flex-grow-1 slide-wrap', {
+
+          })}
+        >
+          <div className="flex-parent flex-grow-1 home-slide-flex">
+            <div className="home-slide-box">
+              <Cta />
+            </div>
+            <div className="home-slide-box home-slide-img-box">
+              <img
+                className={classnames('home-slide-img', {
+                  leaving: this.state.leaving,
+                  entering: this.state.entering,
+                })}
+                src={img}
+              />
+            </div>
+            <div className="home-slide-box">
+            <h2 className="font-color--white align--center">
+                Rug Name
+            </h2>
+            <h3 className="font-color--white align--center">8x12</h3>
+              <button className="btn btn--white margin--top-3">Add To Cart</button>
+            </div>
           </div>
-          <div className="home-slide-box home-slide-img-box">
-            <img
-              className={classnames('home-slide-img', {
-                leaving: this.state.leaving,
-                entering: this.state.entering,
-              })}
-              src={img}
-            />
+          <div className="home-slide-bg">
+            <Canvas img={img} color={color} />
           </div>
-          <div className="home-slide-box">hi</div>
-        </div>
-        <div className="home-slide-bg">
-          <Canvas img={img} color={color} />
         </div>
       </div>
     );
@@ -171,7 +183,7 @@ const interval = (callback, delay) => {
   requestAnimationFrame(tick);
 };
 
-const DURATION = 5500;
+const DURATION = 3500;
 
 class Home extends React.Component {
 
@@ -186,7 +198,7 @@ class Home extends React.Component {
   Cta = () => (
     <div className="flex-parent flex-col flex-align-center">
       <h1 className="font-color--white align--center">
-        Handmade <span style={{ display: 'block' }}>artisan rugs</span>
+        Handmade, <span style={{ display: 'block' }}>artisan rugs</span>
       </h1>
       <button className="btn btn--white margin--top-5">Shop Selection</button>
     </div>

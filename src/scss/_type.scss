@@ -10,8 +10,8 @@ h6, .h6 {
 }
 
 h1, .h1 {
-  @include font-size(4.8);
-  line-height: 46px;
+  @include font-size(3.8);
+  line-height: 36px;
 }
 
 @each $colorName, $hex in $colorMap {
@@ -23,5 +23,12 @@ h1, .h1 {
 @each $align in center, right, left, justify {
   .align--#{$align} {
     text-align: $align;
+  }
+}
+
+@include largeMobile {
+  h1, .h1 {
+    @include font-size(4.8);
+    line-height: 46px;
   }
 }
