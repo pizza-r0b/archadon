@@ -6,9 +6,22 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import About from 'Components/About';
+import Login from 'Components/Login';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
+
+function Modal({ children }) {
+  return (
+    <div className="modal open">
+      <div className="modal-content">
+        <div className="modal-body global-padding">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 class App extends Component {
   constructor() {
@@ -30,13 +43,14 @@ class App extends Component {
           <Route path="/about" component={About} />
           <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
         </div>
-        {/*<div className="modal open">
-          <div className="modal-content">
-            <div className="modal-body">
-              <h1>Hey</h1>
-            </div>
-          </div>
-        </div>*/}
+        <Route
+          path="/login"
+          render={() => (
+            <Modal>
+              <Login />
+            </Modal>
+          )}
+        />
       </div>
     );
   }

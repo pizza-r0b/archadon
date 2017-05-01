@@ -40,24 +40,13 @@
     }
 
     &-content {
-      max-width: 480px;
       width: 100%;
+      height: 100%;
       position: relative;
       background-color: $white;
       // box-shadow: 0 0 45px opacify($highlight, 0.1);
-      margin: 38px auto;
       // border: 1px solid $dark;
     }
 
-    &-body {
-      padding: $spacer * 10;
-      box-sizing: border-box;
-    }
-}
-
-@include tablet {
-  .modal .modal-body {
-      padding: $spacer * 20;
-  }
 }
 
