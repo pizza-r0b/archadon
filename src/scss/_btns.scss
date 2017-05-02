@@ -8,17 +8,22 @@
   font-family: $bodyFont;
   border: 1px solid transparent;
   background-color: transparent;
-  padding: 10px 20px;
+  padding: 8px 40px;
   cursor: pointer;
-  @include font-size(1.6);
+  @include font-size(1.28);
   border-radius: 5px;
-  transform: scale(0.8);
+  // transform: scale(0.8);
   transform-origin: center;
 }
 
 .btn--white {
   border-color: $white;
   color: $white;
+}
+
+.btn--first {
+  border-color: $first;
+  color: $first;
 }
 
 @include largeMobile {

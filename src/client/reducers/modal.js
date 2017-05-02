@@ -1,8 +1,8 @@
 import { actions } from '../constants';
 
-export default function ui(state = {}, action) {
+export default function modal(state = {}, action) {
   switch (action.type) {
-    case actions.UPDATE_UI:
+    case actions.TOGGLE_MODAL:
       return {
         ...state,
         ...action.payload,

@@ -5,6 +5,12 @@
   left: 0;
   position: fixed;
   z-index: 999;
+
+  &.root {
+    a, a:visited {
+      color: $white;
+    }
+  }
 }
 
 .logo {

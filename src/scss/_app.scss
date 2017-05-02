@@ -15,6 +15,10 @@ html {
     font-size: 10px;
 }
 
+svg {
+    transition: 0.25s fill;
+}
+
 #app {
     height: 100%;
     min-height: 667px;
@@ -24,6 +28,10 @@ html {
 .global-padding {
     padding: 15px;
     box-sizing: border-box;
+}
+
+.global-margin {
+    margin: 15px;
 }
 
 .layout {
@@ -36,6 +44,10 @@ html {
     .global-padding {
         padding: 25px 30px 0;
         box-sizing: border-box;
+    }
+
+    .global-margin {
+        margin: 25px 30px 0;
     }
 }
 

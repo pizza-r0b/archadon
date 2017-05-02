@@ -7,8 +7,5 @@ function keyMirror(obj) {
 }
 
 export const actions = keyMirror({
-  ADD_TODO: null,
-  REMOVE_TODO: null,
-  TOGGLE_TODO: null,
-  UPDATE_UI: null,
+  TOGGLE_MODAL: null,
 });

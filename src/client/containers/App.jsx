@@ -7,13 +7,15 @@ import { Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import About from 'Components/About';
 import Login from 'Components/Login';
+import SignInForm from "Components/SignInForm";
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
+import classnames from 'classnames';
 
-function Modal({ children }) {
+function Modal({ children, open }) {
   return (
-    <div className="modal open">
+    <div className={classnames('modal', { open })}>
       <div className="modal-content">
         <div className="modal-body global-padding">
           {children}
@@ -22,6 +24,20 @@ function Modal({ children }) {
     </div>
   );
 }
+
+class ScrollToTop extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0)
+    }
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+const ScrollToTopWithRouter = withRouter(ScrollToTop);
 
 class App extends Component {
   constructor() {
@@ -36,22 +52,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="layout">
-        <Navigation />
-        <div className="flex-grow-1 flex-parent">
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
+      <ScrollToTopWithRouter>
+        <div className="layout">
+          <Navigation />
+          <div className="flex-grow-1 flex-parent">
+            <Route path="/" exact component={Home} />
+            <Route path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />
+            <Route path="/account" component={About} />
+            <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
+          </div>
         </div>
-        <Route
-          path="/login"
-          render={() => (
-            <Modal>
-              <Login />
-            </Modal>
-          )}
-        />
-      </div>
+      </ScrollToTopWithRouter>
     );
   }
 }
