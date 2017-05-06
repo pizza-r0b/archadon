@@ -3,6 +3,7 @@
 const comparePassword = require('../../utils/comparePassword');
 const createJwt = require('../../utils/createJwt');
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
+const corsRes = require('../../utils/corsRes');
 
 function login(event, context, callback) {
   let data;
@@ -18,7 +19,7 @@ function login(event, context, callback) {
   const email = data.email;
   const password = data.password;
   if (!email || !password) {
-    callback(null, { statusCode: 400, body: JSON.stringify({ code: 400, message: 'Bad request' }) });
+    callback(null, corsRes({ statusCode: 400, body: JSON.stringify({ code: 400, message: 'Bad request' }) }));
     return;
   }
   DolliDB.GetItem(process.env.TABLE_NAME, 'Email', email, { IndexName: 'gsi1' })
@@ -29,20 +30,20 @@ function login(event, context, callback) {
         const isMatch = comparePassword(password, hash);
         if (isMatch) {
           const token = createJwt({ ID });
-          const response = {
+          const response = corsRes({
             statusCode: 200,
             body: JSON.stringify({ authToken: token, ID }),
-          };
+          });
           callback(null, response);
         } else {
-          callback(null, { statusCode: 401 });
+          callback(null, corsRes({ statusCode: 401 }));
         }
       } else {
-        callback(null, { statusCode: 404 });
+        callback(null, corsRes({ statusCode: 404 }));
       }
     }).catch(e => {
       console.log(e);
-      callback(null, { statusCode: 500, body: e });
+      callback(null, corsRes({ statusCode: 500, body: e }));
     });
 }
 

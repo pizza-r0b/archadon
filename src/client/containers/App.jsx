@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Navigation from 'Components/Navigation';
 import { actions } from 'Constants';
-import { dispatchAction } from 'Utils/common';
+import { dispatchAction } from 'Utils';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Home from 'Components/Home';
 import About from 'Components/About';
 import Login from 'Components/Login';
-import SignInForm from "Components/SignInForm";
+import SignInForm from 'Components/SignInForm';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';

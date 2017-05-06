@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
-const { LOG_IN } = Actions;
+const { SIGN_UP } = Actions;
 
 class LogInForm extends React.Component {
 
@@ -18,6 +18,8 @@ class LogInForm extends React.Component {
   state = {
     email: '',
     password: '',
+    confirmPassword: '',
+    error: {},
   }
 
   onChange = ({ currentTarget: { value, name: key } }) => {
@@ -26,13 +28,22 @@ class LogInForm extends React.Component {
 
   submit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    if (this.state.password !== this.state.confirmPassword) {
+      this.setState({
+        error: {
+          type: 'confirm',
+          msg: 'Passwords do not match.',
+        },
+      });
+      return;
+    }
+    this.props.signup(this.state.email, this.state.password);
   }
 
   render() {
     return (
       <div className="flex-parent flex-col flex-align-center flex-justify-start full-width">
-        <h2 className="margin--bottom-7">Enter Your Credentials</h2>
+        <h2 className="margin--bottom-7">Sign Up</h2>
         <form className="form" onSubmit={this.submit}>
           <div className={classnames('form-group', { 'form-error': this.props.error })}>
             <div className="form-component">
@@ -41,13 +52,17 @@ class LogInForm extends React.Component {
             </div>
             <div className="form-component margin--top-3">
               <label htmlFor="password">Password</label>
-              <input onChange={this.onChange} name="password" value={this.state.password} type="password" />
+              <input className={classnames({ 'input-error': this.state.error.type === 'confirm' })} onChange={this.onChange} name="password" value={this.state.password} type="password" />
+            </div>
+            <div className="form-component margin--top-3">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input className={classnames({ 'input-error': this.state.error.type === 'confirm' })} onChange={this.onChange} name="confirmPassword" value={this.state.confirmPassword} type="password" />
             </div>
           </div>
           <div className="form-content">
-            {this.props.error && <p className="font-color--danger">{this.props.error}</p>}
-            <button className="btn btn--first">Log In</button>
-            <div className="margin--top-3"><span>{'Don\'t have an account?'} <Link to="/signup">Register now</Link>.</span></div>
+            {(this.props.error || this.state.error.msg) && <p className="font-color--danger margin--top-0">{this.props.error || this.state.error.msg}</p>}
+            <button className="btn btn--first">Sign Up</button>
+            <div className="margin--top-3"><span>{'Have an account?'} <Link to="/login">Log in</Link>.</span></div>
           </div>
         </form>
       </div>
@@ -55,13 +70,13 @@ class LogInForm extends React.Component {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  login(email, password) {
-    dispatch(action(LOG_IN, { email, password }));
+  signup(email, password) {
+    dispatch(action(SIGN_UP, { email, password }));
   },
 });
 
 const mapStateToProps = state => ({
-  error: state.errors.login,
+  error: state.errors.signup,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInForm);

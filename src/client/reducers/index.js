@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { routerReducer as router } from 'react-router-redux';
+import errors from './errors';
+import user from './user';
 
 export default combineReducers({
-  router: routerReducer,
+  router,
+  user,
+  errors,
 });

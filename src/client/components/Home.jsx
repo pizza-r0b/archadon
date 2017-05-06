@@ -171,16 +171,16 @@ class Slide extends React.Component {
 
 }
 
-const interval = (callback, delay) => {
+const interval = (callback, delay, arr) => {
   const tick = now => {
     if (now - start >= delay) {
       start = now;
       callback();
     }
-    requestAnimationFrame(tick);
+    arr.push(requestAnimationFrame(tick));
   };
   let start = performance.now();
-  requestAnimationFrame(tick);
+  arr.push(requestAnimationFrame(tick));
 };
 
 const DURATION = 3500;
@@ -214,8 +214,14 @@ class Home extends React.Component {
     this.setState({ currentIndex });
   }
 
+  int = [];
+
   componentDidMount() {
-    interval(this.updateSlide, DURATION);
+    interval(this.updateSlide, DURATION, this.int);
+  }
+
+  componentWillUnmount() {
+    this.int.forEach(int => window.cancelAnimationFrame(int));
   }
 
   slides = FEATURED_RUGS.map((obj, i) => <Slide key={i} img={obj.src} Cta={this.Cta} color={COLORS[i]} />)
