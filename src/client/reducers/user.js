@@ -2,7 +2,7 @@
 import actions from 'Actions';
 const { SET_USER_DATA } = actions;
 
-export default function user(state = null, action) {
+export default function user(state = {}, action) {
   switch (action.type) {
     case SET_USER_DATA:
       return {

@@ -11,7 +11,7 @@ $formRadius: 5px;
     box-shadow: 0 0 1px $danger;
   }
   50% {
-    box-shadow: 0px 0px 50px $danger;
+    box-shadow: 0px 0px 25px $danger;
   }
   100% {
     box-shadow: 0 0 0px $danger;
@@ -19,7 +19,7 @@ $formRadius: 5px;
 }
 
 .form-error {
-  animation: error 2s ease-out;
+  animation: error 1s ease-out;
 }
 
 .form {

@@ -3,6 +3,7 @@
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 const createJwt = require('../../utils/createJwt');
 const getUserItemData = require('../../utils/getUserItemData');
+const corsRes = require('../../utils/corsRes');
 
 function createUser(event, context, callback) {
   const data = JSON.parse(event.body);
@@ -11,9 +12,9 @@ function createUser(event, context, callback) {
   const password = data.password;
   // TODO: Add email validation
   if (!email || !password) {
-    callback(null, {
+    callback(null, corsRes({
       statusCode: 400,
-    });
+    }));
     return;
   }
 
@@ -28,16 +29,16 @@ function createUser(event, context, callback) {
   }).then(res => {
     const ID = res.meta.ID;
     const token = createJwt({ ID });
-    callback(null, {
+    callback(null, corsRes({
       statusCode: 200,
       body: JSON.stringify({ authToken: token, ID }),
-    });
+    }));
   }).catch(e => {
     console.log(e);
-    callback(null, {
+    callback(null, corsRes({
       statusCode: 409,
       body: e,
-    });
+    }));
   });
 }
 

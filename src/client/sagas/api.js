@@ -4,3 +4,4 @@ const REQUEST_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archado
 const url = path => `${REQUEST_URL}/${path}`;
 
 export const requestLogin = (email, password) => request('POST', url('user/v1/login'), { email, password });
+export const requestSignUp = (email, password) => request('POST', url('user/v1/create'), { email, password });

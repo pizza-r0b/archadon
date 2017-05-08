@@ -2,8 +2,9 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Svg from 'Ui/svg';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
 
-function Navigation({ location }) {
+function Navigation({ location, user }) {
   const isRoot = location.pathname === '/';
   return (
     <nav
@@ -18,12 +19,24 @@ function Navigation({ location }) {
         <Link to="/"><Svg variant="archadon-logo" color={isRoot ? '#FFF' : '#000'} /></Link>
       </div>
       <div className="flex-parent flex-align-center">
-        <div style={{ marginRight: '35px' }}>
-          <Link to="/login">Log In</Link>
-        </div>
-        <div style={{ marginRight: '35px' }}>
-          <Link to="/register">Register</Link>
-        </div>
+
+        {user.authToken && user.ID ?
+          (
+            [<div key="a" style={{ marginRight: '35px' }}>
+              <Link to="/login">My Account</Link>
+            </div>,
+            <div key="b" style={{ marginRight: '35px' }}>
+              <Link to="/signup">Log Out</Link>
+            </div>]
+          ) : (
+            [<div key="c" style={{ marginRight: '35px' }}>
+              <Link to="/login">Log In</Link>
+            </div>,
+            <div key="d" style={{ marginRight: '35px' }}>
+              <Link to="/signup">Sign Up</Link>
+            </div>]
+          )}
+
         <div className="flex-parent flex-align-center">
           <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
             <Svg variant="icon-cart" color={isRoot ? '#FFF' : '#000'} />
@@ -37,4 +50,8 @@ function Navigation({ location }) {
   );
 }
 
-export default withRouter(Navigation);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default withRouter(connect(mapStateToProps)(Navigation));
