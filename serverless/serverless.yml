@@ -54,7 +54,16 @@ functions:
       - http:
           path: user/v1/read/{id}
           method: get
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:
@@ -69,7 +78,16 @@ functions:
       - http:
           path: user/v1/update/data/{id}
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:
@@ -83,7 +101,16 @@ functions:
       - http:
           path: user/v1/update/item/password/{id}
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:
@@ -97,7 +124,16 @@ functions:
       - http:
           path: user/v1/update/item/email/{id}
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:
@@ -111,7 +147,16 @@ functions:
       - http:
           path: user/v1/create
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
     environment:
       TABLE_NAME: ${self:custom.UserItemTable}
   loginUser:
@@ -119,7 +164,16 @@ functions:
     events:
       - http:
           path: user/v1/login
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           method: post
     environment:
       TABLE_NAME: ${self:custom.UserItemTable}
@@ -130,7 +184,16 @@ functions:
       - http:
           path: product/v1/create
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
     environment:
       PRODUCT_TABLE: ${self:custom.ProductItemTable}
       USER_TABLE: ${self:custom.UserItemTable}
@@ -141,7 +204,16 @@ functions:
       - http:
           path: product/v1/update/data/{id}
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:
@@ -156,7 +228,16 @@ functions:
       - http:
           path: product/v1/data/{id}
           method: get
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
           request:
             parameters:
               paths:

@@ -5,4 +5,5 @@ export default keyMirror({
   SET_ERROR: null,
   SET_USER_DATA: null,
   SIGN_UP: null,
+  USER_AUTH_SUCCESS: null,
 });
