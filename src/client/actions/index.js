@@ -6,4 +6,6 @@ export default keyMirror({
   SET_USER_DATA: null,
   SIGN_UP: null,
   USER_AUTH_SUCCESS: null,
+  APP_LOAD: null,
+  LOG_OUT: null,
 });

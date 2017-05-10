@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navigation from 'Components/Navigation';
-import { actions } from 'Constants';
-import { dispatchAction } from 'Utils';
+import actions from 'Actions';
+import { action } from 'Utils';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Home from 'Components/Home';
@@ -12,6 +12,8 @@ import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
 import classnames from 'classnames';
+
+const { APP_LOAD } = actions;
 
 function Modal({ children, open }) {
   return (
@@ -40,14 +42,8 @@ class ScrollToTop extends Component {
 const ScrollToTopWithRouter = withRouter(ScrollToTop);
 
 class App extends Component {
-  constructor() {
-    super();
-    this.handleBgToggle = this.handleBgToggle.bind(this);
-  }
-
-  handleBgToggle(e) {
-    e.preventDefault();
-    this.props.onToggleBg(!this.props.ui.showBgImage);
+  componentDidMount() {
+    this.props.loaded();
   }
 
   render() {
@@ -68,13 +64,13 @@ class App extends Component {
 }
 
 App.propTypes = {
-  onToggleBg: React.PropTypes.func,
   ui: React.PropTypes.object,
+  loaded: React.PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
-  onToggleBg(bool) {
-    dispatch(dispatchAction(actions.UPDATE_UI, { showBgImage: bool }));
+  loaded() {
+    dispatch(action(APP_LOAD));
   },
 });
 

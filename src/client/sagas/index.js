@@ -4,10 +4,12 @@ import Actions from 'Actions';
 import { action } from 'Utils';
 const {
   LOG_IN,
+  LOG_OUT,
   SET_ERROR,
   SET_USER_DATA,
   USER_AUTH_SUCCESS,
   SIGN_UP,
+  APP_LOAD,
 } = Actions;
 import {
   requestLogin,
@@ -20,6 +22,31 @@ const getAuthData = state => ({
   ID: state.user.ID,
 });
 
+export function saveToLocalStorage(authToken, ID) {
+  window.localStorage.setItem('archadonauth', JSON.stringify({
+    authToken, ID,
+  }));
+}
+
+export function* getDataFromLocalStorage() {
+  let data;
+  try {
+    data = JSON.parse(window.localStorage.getItem('archadonauth'));
+  } catch (e) {
+
+  }
+  yield put(action(USER_AUTH_SUCCESS, data));
+}
+
+export function clearLocalStorageData() {
+  window.localStorage.clear('archadonauth');
+}
+
+export function* logOutSaga() {
+  yield call(clearLocalStorageData);
+  yield put(push('/login'));
+}
+
 export function* logInSaga({ payload: { email, password } }) {
   yield put(action(SET_ERROR, {
     type: 'login',
@@ -31,6 +58,7 @@ export function* logInSaga({ payload: { email, password } }) {
       authToken,
       ID,
     }));
+    yield call(saveToLocalStorage, authToken, ID);
   } catch ({ status }) {
     let error;
     if (status === 401) {
@@ -51,7 +79,7 @@ export function* getUserDataSaga() {
     const { response: { data } } = yield call(requestUserData, ID, authToken);
     yield put(action(SET_USER_DATA, data));
   } catch (e) {
-    console.log(e);
+    yield put(action(LOG_OUT));
   }
 }
 
@@ -68,6 +96,7 @@ export function* signUpSaga({ payload: { email, password } }) {
       authToken,
       ID,
     }));
+    yield call(saveToLocalStorage, authToken, ID);
   } catch ({ status, response: { body } }) {
     let error;
     if (body === 'User already exists' && status === 409) {
@@ -82,10 +111,13 @@ export function* signUpSaga({ payload: { email, password } }) {
   }
 }
 
+
 export default function* rootSaga() {
   yield [
     takeLatest(LOG_IN, logInSaga),
+    takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
+    takeLatest(LOG_OUT, logOutSaga),
   ];
 }

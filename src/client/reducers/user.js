@@ -1,6 +1,10 @@
 // @flow
 import actions from 'Actions';
-const { SET_USER_DATA, USER_AUTH_SUCCESS } = actions;
+const {
+  SET_USER_DATA,
+  USER_AUTH_SUCCESS,
+  LOG_OUT,
+ } = actions;
 
 export default function user(state = {}, action) {
   switch (action.type) {
@@ -9,6 +13,8 @@ export default function user(state = {}, action) {
         ...state,
         ...action.payload,
       };
+    case LOG_OUT:
+      return {};
     case USER_AUTH_SUCCESS:
       return {
         ...state,
