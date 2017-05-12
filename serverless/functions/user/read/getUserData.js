@@ -5,6 +5,7 @@ const corsHeaders = require('../../utils/corsRes');
 const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 
 function getUserData(event, context, callback) {
+  console.log('STARTING');
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
   const userID = params.id;
@@ -14,6 +15,7 @@ function getUserData(event, context, callback) {
     }));
   }
   const data = {};
+  console.log('Verifying Token');
   verifyJwt(token, userID).then(ID => {
     if (ID !== userID) {
       Promise.reject('Token rejected');
@@ -38,7 +40,13 @@ function getUserData(event, context, callback) {
     });
     callback(null, response);
   })
-    .catch(e => callback(null, corsHeaders({ statusCode: 401, body: e })));
+    .catch(e => {
+      console.log(e);
+      const body = JSON.stringify({
+        error: e,
+      });
+      callback(null, corsHeaders({ statusCode: 401, body }));
+    });
 }
 
 module.exports = getUserData;
