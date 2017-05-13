@@ -14,6 +14,10 @@ h1, .h1 {
   line-height: 36px;
 }
 
+p {
+  margin: 0;
+}
+
 @each $colorName, $hex in $colorMap {
   .font-color--#{$colorName} {
     color: $hex;

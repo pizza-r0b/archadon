@@ -11,6 +11,7 @@ const {
   CLEAR_AUTHENTICATION_DATA,
   SIGN_UP,
   LOADING,
+  PRODUCT_LIST_LOADED,
   APP_LOAD,
 } = Actions;
 import {
@@ -93,8 +94,14 @@ export function* logInSaga({ payload: { email, password } }) {
 }
 
 export function* getProductListSaga({ payload: { startKey } }) {
-  const data = yield call(requestProductList, startKey);
-  console.log(data);
+  const { status, response: { LastEvaluatedKey, Items, Count } } = yield call(requestProductList, startKey);
+  if (status === 200) {
+    yield put(action(PRODUCT_LIST_LOADED, {
+      LastEvaluatedKey,
+      Items,
+      Count,
+    }));
+  }
 }
 
 export function* getUserDataSaga() {

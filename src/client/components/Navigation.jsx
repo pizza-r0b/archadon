@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Svg from 'Ui/svg';
+import Svg from 'Ui/Svg';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 

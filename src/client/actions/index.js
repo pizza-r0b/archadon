@@ -11,4 +11,5 @@ export default keyMirror({
   CLEAR_AUTHENTICATION_DATA: null,
   LOADING: null,
   SET_REDIRECT_PATH: null,
+  PRODUCT_LIST_LOADED: null,
 });

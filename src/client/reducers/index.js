@@ -4,6 +4,7 @@ import errors from './errors';
 import user from './user';
 import loading from './loading';
 import redirectPath from './redirectPath';
+import products from './products';
 
 export default combineReducers({
   router,
@@ -11,4 +12,5 @@ export default combineReducers({
   redirectPath,
   errors,
   loading,
+  products,
 });

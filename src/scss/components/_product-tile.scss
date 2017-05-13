@@ -1,0 +1,53 @@
+.product-tile {
+  min-width: 100%;
+  max-width: 450px;
+  flex-grow: 3;
+  box-sizing: border-box;
+  padding: $spacer * 3px;
+  margin-bottom: $spacer * 3px;
+  &-inner {
+    box-sizing: border-box;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
+  }
+  &-padding-x {
+    padding: 0 $spacer * 3px;
+  }
+  &-padding-top {
+    padding-top: $spacer * 3px;
+  }
+
+  &-price-bar {
+    height: 39px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6d3bdd+0,803bdd+100 */
+    background: #6d3bdd; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #6d3bdd 0%, #803bdd 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #6d3bdd 0%,#803bdd 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #6d3bdd 0%,#803bdd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d3bdd', endColorstr='#803bdd',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  }
+}
+
+.heart {
+  width: 1.3725*1.5rem;
+  height: 1.5625*1.5rem;
+  color: $first;
+}
+
+@include largeMobile() {
+  .product-tile {
+    min-width: 400px;
+  }
+}
+
+@include tablet() {
+  .product-tile {
+    margin-bottom: $spacer * 5px;
+
+    &-padding-x {
+      padding: 0 $spacer * 5px;
+    }
+    &-padding-top {
+      padding-top: $spacer * 5px;
+    }
+  }
+}

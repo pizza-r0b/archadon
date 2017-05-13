@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import rug1 from 'Images/rug1.png';
 import rug2 from 'Images/rug2.png';
 import rug3 from 'Images/rug3.png';
+import ProductList from 'Components/ProductList';
 
 class Canvas extends React.Component {
 
@@ -244,6 +245,7 @@ class Home extends React.Component {
         </ReactTransitionGroup>
         <div className="padding--top-15 padding--bottom-10">
           <h1 className="align--center">Our Selection</h1>
+          <ProductList />
         </div>
       </div>
     );
