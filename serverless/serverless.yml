@@ -222,6 +222,26 @@ functions:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       USER_TABLE: ${self:custom.UserItemTable}
 
+  getProductList:
+    handler: functions/handlers.getProductList
+    events:
+      - http:
+          path: product/v1/list
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+    environment:
+      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+
   getProductData:
     handler: functions/handlers.getProductData
     events:

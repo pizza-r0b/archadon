@@ -17,4 +17,5 @@ module.exports = {
   updateProductData: product.updateData,
   createProduct: product.create,
   getProductData: product.getProductData,
+  getProductList: product.getProductList,
 };
