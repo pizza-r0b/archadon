@@ -8,3 +8,4 @@ export const requestSignUp = (email, password) => request('POST', url('user/v1/c
 export const requestUserData = (ID, token) => request('GET', url(`user/v1/read/${ID}`), null, {
   authtoken: token,
 });
+export const requestProductList = (startKey) => request('GET', url(`product/v1/list${startKey ? `?startKey=${startKey}` : ''}`));

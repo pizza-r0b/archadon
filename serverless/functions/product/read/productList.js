@@ -23,7 +23,7 @@ function getProductList(event, context, callback) {
       console.log(data);
       const promises = Items.map((item) => new Promise((_resolve, _reject) => {
         DolliDB.GetData(process.env.PRODUCT_DATA_TABLE, item.ID).then(productData => {
-          delete productData.CreatedBy;
+          delete item.CreatedBy;
           _resolve(Object.assign({}, item, productData));
         }).catch(e => _reject(e));
       }));

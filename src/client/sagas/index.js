@@ -17,6 +17,7 @@ import {
   requestLogin,
   requestUserData,
   requestSignUp,
+  requestProductList,
 } from './api';
 
 const getAuthData = state => ({
@@ -69,6 +70,7 @@ export function* logInSaga({ payload: { email, password } }) {
       authToken,
       ID,
     }));
+    yield put(push('/account'));
     yield call(saveToLocalStorage, authToken, ID);
   } catch ({ status }) {
     let error;
@@ -90,6 +92,11 @@ export function* logInSaga({ payload: { email, password } }) {
   }
 }
 
+export function* getProductListSaga({ payload: { startKey } }) {
+  const data = yield call(requestProductList, startKey);
+  console.log(data);
+}
+
 export function* getUserDataSaga() {
   yield put(action(LOADING, true));
   const { authToken, ID } = yield select(getAuthData);
@@ -100,8 +107,6 @@ export function* getUserDataSaga() {
     yield put(action(SET_USER_DATA, data));
     if (redirectPath) {
       yield put(push(redirectPath));
-    } else {
-      yield put(push('/account'));
     }
   } catch (e) {
     yield put(action(CLEAR_AUTHENTICATION_DATA));
@@ -123,6 +128,7 @@ export function* signUpSaga({ payload: { email, password } }) {
       authToken,
       ID,
     }));
+    yield put(push('/account'));
     yield call(saveToLocalStorage, authToken, ID);
   } catch ({ status, response: { body } }) {
     let error;
@@ -143,7 +149,7 @@ export function* signUpSaga({ payload: { email, password } }) {
 export default function* rootSaga() {
   yield [
     takeLatest(LOG_IN, logInSaga),
-    takeLatest(APP_LOAD, getDataFromLocalStorage),
+    takeLatest(APP_LOAD, [getDataFromLocalStorage, getProductListSaga]),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
