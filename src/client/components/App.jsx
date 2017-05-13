@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import Navigation from 'Components/Navigation';
 import actions from 'Actions';
@@ -5,8 +6,8 @@ import { action } from 'Utils';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Home from 'Components/Home';
-import About from 'Components/About';
-import Login from 'Components/Login';
+import Logout from 'Components/Logout';
+import Account from 'Components/Account';
 import SignInForm from 'Components/SignInForm';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
@@ -28,9 +29,14 @@ function Modal({ children, open }) {
 }
 
 class ScrollToTop extends Component {
+  props: {
+    location: Object,
+    children: Object,
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     }
   }
 
@@ -52,9 +58,19 @@ class App extends Component {
         <div className="layout">
           <Navigation />
           <div className="flex-grow-1 flex-parent">
-            <Route path="/" exact component={Home} />
-            <Route path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />
-            <Route path="/account" component={About} />
+            {
+              this.props.loading ?
+                <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
+                  <h1>Loading</h1>
+                </div>
+                :
+              [
+                <Route key="home" path="/" exact component={Home} />,
+                <Route key="login" path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />,
+                <Route key="account" path="/account" component={Account} />,
+                <Route key="logout" path="/logout" component={Logout} />,
+              ]
+            }
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>
         </div>
@@ -66,6 +82,7 @@ class App extends Component {
 App.propTypes = {
   ui: React.PropTypes.object,
   loaded: React.PropTypes.func,
+  loading: React.PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -76,6 +93,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   ui: state.ui,
+  loading: state.loading,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

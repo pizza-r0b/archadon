@@ -8,4 +8,7 @@ export default keyMirror({
   USER_AUTH_SUCCESS: null,
   APP_LOAD: null,
   LOG_OUT: null,
+  CLEAR_AUTHENTICATION_DATA: null,
+  LOADING: null,
+  SET_REDIRECT_PATH: null,
 });

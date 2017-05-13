@@ -8,7 +8,9 @@ const {
   SET_ERROR,
   SET_USER_DATA,
   USER_AUTH_SUCCESS,
+  CLEAR_AUTHENTICATION_DATA,
   SIGN_UP,
+  LOADING,
   APP_LOAD,
 } = Actions;
 import {
@@ -21,6 +23,8 @@ const getAuthData = state => ({
   authToken: state.user.authToken,
   ID: state.user.ID,
 });
+
+const getRedirectPath = state => state.redirectPath;
 
 export function saveToLocalStorage(authToken, ID) {
   window.localStorage.setItem('archadonauth', JSON.stringify({
@@ -35,7 +39,9 @@ export function* getDataFromLocalStorage() {
   } catch (e) {
 
   }
-  yield put(action(USER_AUTH_SUCCESS, data));
+  if (data) {
+    yield put(action(USER_AUTH_SUCCESS, data));
+  }
 }
 
 export function clearLocalStorageData() {
@@ -43,11 +49,16 @@ export function clearLocalStorageData() {
 }
 
 export function* logOutSaga() {
-  yield call(clearLocalStorageData);
+  yield call(clearAuthenticationDataSaga);
   yield put(push('/login'));
 }
 
+export function* clearAuthenticationDataSaga() {
+  yield call(clearLocalStorageData);
+}
+
 export function* logInSaga({ payload: { email, password } }) {
+  yield put(action(LOADING, true));
   yield put(action(SET_ERROR, {
     type: 'login',
     error: null,
@@ -61,11 +72,17 @@ export function* logInSaga({ payload: { email, password } }) {
     yield call(saveToLocalStorage, authToken, ID);
   } catch ({ status }) {
     let error;
-    if (status === 401) {
-      error = 'Invalid username or password. Try again 😊.';
-    } else {
-      error = 'Oops something went wrong 💩. Try again later.';
+    switch (status) {
+      case 401:
+        error = 'Invalid username or password. Try again 😊';
+        break;
+      case 404:
+        error = 'That account doesn\'t exist.';
+        break;
+      default:
+        error = 'Oops something went wrong 💩 Try again later.';
     }
+    yield put(action(LOADING, false));
     yield put(action(SET_ERROR, {
       type: 'login',
       error,
@@ -74,16 +91,26 @@ export function* logInSaga({ payload: { email, password } }) {
 }
 
 export function* getUserDataSaga() {
+  yield put(action(LOADING, true));
   const { authToken, ID } = yield select(getAuthData);
   try {
     const { response: { data } } = yield call(requestUserData, ID, authToken);
+    const redirectPath = yield select(getRedirectPath);
+
     yield put(action(SET_USER_DATA, data));
+    if (redirectPath) {
+      yield put(push(redirectPath));
+    } else {
+      yield put(push('/account'));
+    }
   } catch (e) {
-    yield put(action(LOG_OUT));
+    yield put(action(CLEAR_AUTHENTICATION_DATA));
   }
+  yield put(action(LOADING, false));
 }
 
 export function* signUpSaga({ payload: { email, password } }) {
+  yield put(action(LOADING, true));
   yield put(action(SET_ERROR, {
     type: 'signup',
     error: null,
@@ -104,6 +131,7 @@ export function* signUpSaga({ payload: { email, password } }) {
     } else {
       error = 'Oops. Something went wrong. Try again later.';
     }
+    yield put(action(LOADING, false));
     yield put(action(SET_ERROR, {
       type: 'signup',
       error,
@@ -118,6 +146,7 @@ export default function* rootSaga() {
     takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
+    takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
     takeLatest(LOG_OUT, logOutSaga),
   ];
 }

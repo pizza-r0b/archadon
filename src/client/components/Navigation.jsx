@@ -23,10 +23,10 @@ function Navigation({ location, user }) {
         {user.authToken && user.ID ?
           (
             [<div key="a" style={{ marginRight: '35px' }}>
-              <Link to="/login">My Account</Link>
+              <Link to="/account">My Account</Link>
             </div>,
             <div key="b" style={{ marginRight: '35px' }}>
-              <Link to="/signup">Log Out</Link>
+              <Link to="/logout">Log Out</Link>
             </div>]
           ) : (
             [<div key="c" style={{ marginRight: '35px' }}>

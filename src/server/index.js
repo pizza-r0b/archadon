@@ -1,7 +1,7 @@
 import express from 'express';
 import React from 'react';
 import html from './html';
-import App from 'Containers/App';
+import App from 'Components/App';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';

@@ -7,7 +7,7 @@ import makeStore from 'Store';
 import sagas from 'Sagas';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import App from 'Containers/App';
+import App from 'Components/App';
 import { AppContainer } from 'react-hot-loader';
 import './fonts';
 
@@ -42,8 +42,8 @@ const render = Component => {
 render(App);
 
 if (module.hot && process.env.NODE_ENV) {
-  module.hot.accept('Containers/App', () => {
-    const NextApp = require('Containers/App').default; //eslint-disable-line
+  module.hot.accept('Components/App', () => {
+    const NextApp = require('Components/App').default; //eslint-disable-line
     render(NextApp);
   });
 

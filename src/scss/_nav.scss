@@ -17,3 +17,17 @@
   width: 14.656rem;
   height: 2.5rem;
 }
+
+.auth-nav-bar {
+  width: 170px;
+  padding-right: $spacer * 5px;
+
+  &-link {
+    display: block;
+    margin: $spacer*5px 0;
+    &.active {
+      color: $second;
+    }
+  }
+}
+
