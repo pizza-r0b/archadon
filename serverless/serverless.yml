@@ -272,6 +272,11 @@ resources:
     UserDataTable: ${file(./resources/User/Data.yml)}
     ProductItemTable: ${file(./resources/Product/Item.yml)}
     ProductDataTable: ${file(./resources/Product/Data.yml)}
+    S3Bucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: ${self:service}-${self:provider.stage}
+
 
     # ProductTable: ${file(./resources/ProductTable.yml)}
     # ChargeTable: ${file(./resources/ChargeTable.yml)}

@@ -82,6 +82,7 @@ const base = extend => {
         Sagas: prependSrc('client/sagas/index.js'),
         Images: prependSrc('client/images'),
         Ui: prependSrc('client/components/ui'),
+        Types: prependSrc('client/types.js'),
       },
     },
     module: {

@@ -4,7 +4,7 @@ import Svg from 'Ui/Svg';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-function Navigation({ location, user }) {
+function Navigation({ location, user, qty }) {
   const isRoot = location.pathname === '/';
   return (
     <nav
@@ -42,7 +42,7 @@ function Navigation({ location, user }) {
             <Svg variant="icon-cart" color={isRoot ? '#FFF' : '#000'} />
           </div>
           <div>
-            0
+            {qty}
           </div>
         </div>
       </div>
@@ -52,6 +52,7 @@ function Navigation({ location, user }) {
 
 const mapStateToProps = state => ({
   user: state.user,
+  qty: state.cart.totalQty,
 });
 
 export default withRouter(connect(mapStateToProps)(Navigation));

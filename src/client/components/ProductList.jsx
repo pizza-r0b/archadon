@@ -10,7 +10,7 @@ function ProductList({ products = [], lastEvaluatedKey: { ID } = {} }: {
   return (
     <div className="flex-grow-1 flex-parent flex-col">
       <div className="margin--top-8 margin--bottom-8 flex-grow-1 flex-parent flex-wrap flex-align-center flex-justify-center">
-        {products.map(product => <ProductTile product={product} />)}
+        {products.map(product => <ProductTile key={product.ID} product={product} />)}
       </div>
       {ID &&
         <div className="flex-parent flex-align-center flex-justify-center">

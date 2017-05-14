@@ -22,8 +22,8 @@ Properties:
       AttributeName: GrandTotal
       AttributeType: N
   ProvisionedThroughput:
-    ReadCapacityUnits: 1
-    WriteCapacityUnits: 1
+    ReadCapacityUnits: 3
+    WriteCapacityUnits: 3
   StreamSpecification:
     StreamViewType: KEYS_ONLY
   GlobalSecondaryIndexes:
@@ -45,6 +45,6 @@ Properties:
         - AttributeName: GrandTotal
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
 

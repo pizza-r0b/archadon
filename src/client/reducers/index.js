@@ -5,10 +5,12 @@ import user from './user';
 import loading from './loading';
 import redirectPath from './redirectPath';
 import products from './products';
+import cart from './cart';
 
 export default combineReducers({
   router,
   user,
+  cart,
   redirectPath,
   errors,
   loading,

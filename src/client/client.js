@@ -11,7 +11,7 @@ import App from 'Components/App';
 import { AppContainer } from 'react-hot-loader';
 import './fonts';
 
-const logger = createLogger();
+// const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
 const history = createHistory();
 
@@ -19,7 +19,6 @@ const routeMiddleware = routerMiddleware(history);
 
 const store = makeStore(
   window.__INITIAL_STATE__,
-  logger,
   sagaMiddleware,
   routeMiddleware,
 );

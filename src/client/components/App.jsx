@@ -57,7 +57,7 @@ class App extends Component {
       <ScrollToTopWithRouter>
         <div className="layout">
           <Navigation />
-          <div className="flex-grow-1 flex-parent">
+          <div style={{ height: '100%' }} className="flex-grow-1 flex-parent">
             {
               this.props.loading ?
                 <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">

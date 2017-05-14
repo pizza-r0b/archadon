@@ -12,6 +12,8 @@ const {
   SIGN_UP,
   LOADING,
   PRODUCT_LIST_LOADED,
+  PRODUCT_DATA_LOADED,
+  ADD_TO_CART,
   APP_LOAD,
 } = Actions;
 import {
@@ -19,12 +21,15 @@ import {
   requestUserData,
   requestSignUp,
   requestProductList,
+  requestProductData,
 } from './api';
 
 const getAuthData = state => ({
   authToken: state.user.authToken,
   ID: state.user.ID,
 });
+
+const getCartItems = state => state.cart.items;
 
 const getRedirectPath = state => state.redirectPath;
 
@@ -121,6 +126,25 @@ export function* getUserDataSaga() {
   yield put(action(LOADING, false));
 }
 
+export function* getProductDataSaga({ payload: product }) {
+  // if only product ID is added to cart then we need to get the rest of the
+  // data from the server.
+  if (typeof product === 'string') {
+    const cartItems = yield select(getCartItems);
+    if (cartItems.find(p => p.ID === product)) return;
+    try {
+      const { response: { data } } = yield call(requestProductData, product);
+      if (Object.keys(data).length > 0) {
+        data.ID = product;
+        yield put(action(PRODUCT_DATA_LOADED, data));
+      }
+    } catch (e) {
+
+    }
+
+  }
+}
+
 export function* signUpSaga({ payload: { email, password } }) {
   yield put(action(LOADING, true));
   yield put(action(SET_ERROR, {
@@ -157,6 +181,7 @@ export default function* rootSaga() {
   yield [
     takeLatest(LOG_IN, logInSaga),
     takeLatest(APP_LOAD, [getDataFromLocalStorage, getProductListSaga]),
+    takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),

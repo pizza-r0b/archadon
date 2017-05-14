@@ -12,4 +12,7 @@ export default keyMirror({
   LOADING: null,
   SET_REDIRECT_PATH: null,
   PRODUCT_LIST_LOADED: null,
+  ADD_TO_CART: null,
+  PRODUCT_DATA_LOADED: null,
+  REMOVE_FROM_CART: null,
 });

@@ -5,6 +5,13 @@
   box-sizing: border-box;
   padding: $spacer * 3px;
   margin-bottom: $spacer * 3px;
+
+  &-img {
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
   &-inner {
     box-sizing: border-box;
     box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
