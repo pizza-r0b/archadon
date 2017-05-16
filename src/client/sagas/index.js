@@ -13,6 +13,7 @@ const {
   LOADING,
   PRODUCT_LIST_LOADED,
   PRODUCT_DATA_LOADED,
+  TOGGLE_FAVORITE,
   ADD_TO_CART,
   APP_LOAD,
 } = Actions;
@@ -22,6 +23,7 @@ import {
   requestSignUp,
   requestProductList,
   requestProductData,
+  requestUpdateUserData,
 } from './api';
 
 const getAuthData = state => ({
@@ -32,6 +34,8 @@ const getAuthData = state => ({
 const getCartItems = state => state.cart.items;
 
 const getRedirectPath = state => state.redirectPath;
+
+const getUserFavorites = state => state.user.Favorites || [];
 
 export function saveToLocalStorage(authToken, ID) {
   window.localStorage.setItem('archadonauth', JSON.stringify({
@@ -141,7 +145,6 @@ export function* getProductDataSaga({ payload: product }) {
     } catch (e) {
 
     }
-
   }
 }
 
@@ -176,12 +179,21 @@ export function* signUpSaga({ payload: { email, password } }) {
   }
 }
 
+export function* toggleFavoriteSaga() {
+  const Favorites = yield select(getUserFavorites);
+  const { authToken, ID } = yield select(getAuthData);
+  yield call(requestUpdateUserData, ID, authToken, {
+    Favorites,
+  });
+}
+
 
 export default function* rootSaga() {
   yield [
     takeLatest(LOG_IN, logInSaga),
-    takeLatest(APP_LOAD, [getDataFromLocalStorage, getProductListSaga]),
+    takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(ADD_TO_CART, getProductDataSaga),
+    takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),

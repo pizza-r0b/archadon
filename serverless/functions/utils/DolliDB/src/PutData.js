@@ -1,8 +1,17 @@
 import docClient from './utils/docClient';
 import toPaths from './utils/toPaths';
 import { isObject } from './utils';
+import GetData from './GetData';
 
-function PutData(TableName, key, data, meta) {
+function CheckForData(tableName, hashKey, hashKeyVal, pathPrefix) {
+  return new Promise(async (resolve, reject) => {
+    const data = await GetData(tableName, hashKeyVal, pathPrefix);
+    const paths = toPaths(data);
+    resolve(paths);
+  });
+}
+
+async function PutData(TableName, key, data, meta) {
   const keyName = key[0];
   const keyValue = key[1];
 
@@ -20,9 +29,32 @@ function PutData(TableName, key, data, meta) {
 
   const items = params.RequestItems[TableName];
 
-  data.forEach((item) => {
-    const path = item[0];
-    const value = item[1];
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    const [path, value] = item;
+    if (value === '<<EmptyArray>>') {
+      const dataToDelete = await CheckForData(TableName, keyName, keyValue, path); //eslint-disable-line
+      dataToDelete.forEach(([pathKey]) => {
+        items.push({
+          DeleteRequest: {
+            Key: {
+              [keyName]: keyValue,
+              Path: pathKey,
+            },
+          },
+        });
+      });
+      items.push({
+        DeleteRequest: {
+          Key: {
+            [keyName]: keyValue,
+            Path: path,
+          },
+        },
+      });
+      continue; // eslint-disable-line
+    }
+
     items.push({
       PutRequest: {
         Item: {
@@ -32,7 +64,7 @@ function PutData(TableName, key, data, meta) {
         },
       },
     });
-  });
+  }
 
   return new Promise((resolve, reject) => {
     docClient.batchWrite(params, (err, res) => {

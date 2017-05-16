@@ -13,6 +13,9 @@ const setter = (obj) => (
         context[key] = context[key] ? context[key] : getRef(nextKey);
         return context[key];
       } else {
+        if (value === '<<EmptyArray>>') {
+          value = [];
+        }
         context[key] = value;
       }
     }, obj);

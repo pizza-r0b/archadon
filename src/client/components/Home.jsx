@@ -21,6 +21,7 @@ class Canvas extends React.Component {
     ctx.restore();
   }
 
+
   drawColorOverlay = () => {
     const canvas = document.createElement('canvas');
     canvas.width = this.canvas.width;
@@ -40,6 +41,7 @@ class Canvas extends React.Component {
     const img = document.createElement('img');
 
     img.addEventListener('load', () => {
+      if (!this.canvas) return;
       this.drawImageToCanvas(img);
       this.drawColorOverlay();
     });
@@ -48,12 +50,10 @@ class Canvas extends React.Component {
   }
 
   componentDidMount() {
-
     this.loadImage();
 
     // load image to canvas
     // add color overlay
-
   }
 
   getRef = c => {

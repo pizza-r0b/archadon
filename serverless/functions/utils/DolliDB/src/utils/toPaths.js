@@ -23,8 +23,10 @@ function reduceObject(object, initialValue, prefix) {
     }
     if (isObject(value)) {
       a.push(...reduceObject(value, [], name));
-    } else if (Array.isArray(value)) {
+    } else if (Array.isArray(value) && value.length > 0) {
       a.push(...arrayToPaths(value, name));
+    } else if (Array.isArray(value) && value.length === 0) {
+      a.push([name, '<<EmptyArray>>']);
     } else {
       a.push([name, value]);
     }

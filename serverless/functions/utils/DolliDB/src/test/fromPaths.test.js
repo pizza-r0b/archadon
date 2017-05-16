@@ -4,8 +4,10 @@ import { assert } from 'chai';
 describe('fromPaths', () => {
   it('returns an object from an array of DollDB Item Paths', () => {
     const data = {
+      Favorites: [],
       Foo: {
         Bar: {
+          Empty: [],
           Fiz: [1, '2', 3, {
             A: 'B',
             C: 'D',

@@ -5,7 +5,11 @@ import { action } from 'Utils';
 import actions from 'Actions';
 import { connect } from 'react-redux';
 
-const { ADD_TO_CART, REMOVE_FROM_CART } = actions;
+const {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  TOGGLE_FAVORITE,
+ } = actions;
 
 const IMAGE_ORIGIN = process.env.NODE_ENV !== 'production' ? 'https://assets.dev.archadon.com' : 'https://assets.archadon.com';
 
@@ -22,11 +26,20 @@ type ProductTileProps = {
     Images: Object[],
   },
   addToCart: Function,
+  toggleFavorite: Function,
   removeFromCart: Function,
+  favorites: Array<string>,
   cart: Object,
 };
 
-function ProductTile({ product, addToCart, cart: { items: cartItems }, removeFromCart }: ProductTileProps) {
+function ProductTile({
+  product,
+  addToCart,
+  cart: { items: cartItems },
+  removeFromCart,
+  toggleFavorite,
+  favorites,
+}: ProductTileProps) {
   const inCart = cartItems.find((item) => {
     if (!item) {
       item = {};
@@ -63,7 +76,7 @@ function ProductTile({ product, addToCart, cart: { items: cartItems }, removeFro
               <h2>{product.Name}</h2>
               <p>{`${product.Width}x${product.Height}`}</p>
             </div>
-            <div className="heart">
+            <div onClick={toggleFavorite(product.ID)} className="heart">
               <Svg color="#803BDD" variant="icon-heart" />
             </div>
           </div>
@@ -80,10 +93,12 @@ function ProductTile({ product, addToCart, cart: { items: cartItems }, removeFro
 const mapDispatchToProps = dispatch => ({
   addToCart: (product) => () => dispatch(action(ADD_TO_CART, product)),
   removeFromCart: (ID) => () => dispatch(action(REMOVE_FROM_CART, ID)),
+  toggleFavorite: (ID) => () => dispatch((action(TOGGLE_FAVORITE, ID))),
 });
 
 const mapStateToProps = state => ({
   cart: state.cart,
+  favorites: state.user.favorites || [],
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductTile);
