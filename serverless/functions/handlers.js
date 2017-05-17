@@ -18,4 +18,5 @@ module.exports = {
   createProduct: product.create,
   getProductData: product.getProductData,
   getProductList: product.getProductList,
+  getBatch: product.getBatch,
 };

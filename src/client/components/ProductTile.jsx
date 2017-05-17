@@ -77,7 +77,7 @@ function ProductTile({
               <p>{`${product.Width}x${product.Height}`}</p>
             </div>
             <div onClick={toggleFavorite(product.ID)} className="heart">
-              <Svg color="#803BDD" variant="icon-heart" />
+              <Svg color="#803BDD" variant={favorites.includes(product.ID) ? 'icon-heart-filled' : 'icon-heart'} />
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  favorites: state.user.favorites || [],
+  favorites: state.user.Favorites || [],
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductTile);

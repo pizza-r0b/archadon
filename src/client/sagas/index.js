@@ -13,6 +13,7 @@ const {
   LOADING,
   PRODUCT_LIST_LOADED,
   PRODUCT_DATA_LOADED,
+  SET_REDIRECT_PATH,
   TOGGLE_FAVORITE,
   ADD_TO_CART,
   APP_LOAD,
@@ -34,6 +35,8 @@ const getAuthData = state => ({
 const getCartItems = state => state.cart.items;
 
 const getRedirectPath = state => state.redirectPath;
+
+const getCurrentPath = state => state.router.location.pathname;
 
 const getUserFavorites = state => state.user.Favorites || [];
 
@@ -121,6 +124,7 @@ export function* getUserDataSaga() {
     const redirectPath = yield select(getRedirectPath);
 
     yield put(action(SET_USER_DATA, data));
+
     if (redirectPath) {
       yield put(push(redirectPath));
     }
@@ -182,9 +186,23 @@ export function* signUpSaga({ payload: { email, password } }) {
 export function* toggleFavoriteSaga() {
   const Favorites = yield select(getUserFavorites);
   const { authToken, ID } = yield select(getAuthData);
-  yield call(requestUpdateUserData, ID, authToken, {
-    Favorites,
-  });
+  if (!authToken || !ID) {
+    const currentPath = yield select(getCurrentPath);
+    yield put(action(SET_REDIRECT_PATH, currentPath));
+    yield put(push('/login'));
+    yield put(action(SET_ERROR, {
+      type: 'login',
+      error: 'Please sign in to your account to favorite items.',
+    }));
+  } else {
+    try {
+      yield call(requestUpdateUserData, ID, authToken, {
+        Favorites,
+      });
+    } catch (e) {
+
+    }
+  }
 }
 
 

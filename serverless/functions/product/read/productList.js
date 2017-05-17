@@ -20,7 +20,6 @@ function getProductList(event, context, callback) {
         return reject(err);
       }
       const { Items = [], Count, LastEvaluatedKey } = data;
-      console.log(data);
       const promises = Items.map((item) => new Promise((_resolve, _reject) => {
         DolliDB.GetData(process.env.PRODUCT_DATA_TABLE, item.ID).then(productData => {
           delete item.CreatedBy;

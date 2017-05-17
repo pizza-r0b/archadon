@@ -222,6 +222,17 @@ functions:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       USER_TABLE: ${self:custom.UserItemTable}
 
+  getProductBatch:
+    handler: functions/handlers.getBatch
+    events:
+      - http:
+          path: product/v1/batch
+          method: post
+          cors: true
+    environment:
+      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+
   getProductList:
     handler: functions/handlers.getProductList
     events:

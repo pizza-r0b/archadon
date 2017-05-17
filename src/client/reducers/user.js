@@ -28,7 +28,7 @@ export default function user(state: StateType = { Favorites: [] }, action: Objec
         Favorites = state.Favorites.filter((p) => p !== ID);
       } else {
         state.Favorites.push(ID);
-        Favorites = state.Favorites;
+        Favorites = state.Favorites.slice();
       }
       return {
         ...state,
