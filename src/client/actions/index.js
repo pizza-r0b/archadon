@@ -16,4 +16,8 @@ export default keyMirror({
   PRODUCT_DATA_LOADED: null,
   REMOVE_FROM_CART: null,
   TOGGLE_FAVORITE: null,
+  LOAD_FAVORITES: null,
+  FAVORITES_LOADED: null,
+  SET_LOADING_PAGE: null,
+  REPLACE_CART: null,
 });

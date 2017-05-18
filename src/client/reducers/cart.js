@@ -5,6 +5,7 @@ const {
   ADD_TO_CART,
   PRODUCT_DATA_LOADED,
   REMOVE_FROM_CART,
+  REPLACE_CART,
  } = actions;
 
 type CartItemType = {
@@ -58,6 +59,9 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
         newState.items.findIndex(p => p === id)
       ] = action.payload;
       return newState;
+
+    case REPLACE_CART:
+      return action.payload;
 
     case REMOVE_FROM_CART:
       const ID = action.payload;

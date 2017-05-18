@@ -36,15 +36,17 @@ function Navigation({ location, user, qty }) {
               <Link to="/signup">Sign Up</Link>
             </div>]
           )}
+        <Link to="/cart">
+          <div className="flex-parent flex-align-center">
+            <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
+              <Svg variant="icon-cart" color={isRoot ? '#FFF' : '#000'} />
+            </div>
+            <div>
+              {qty}
+            </div>
+          </div>
+        </Link>
 
-        <div className="flex-parent flex-align-center">
-          <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
-            <Svg variant="icon-cart" color={isRoot ? '#FFF' : '#000'} />
-          </div>
-          <div>
-            {qty}
-          </div>
-        </div>
       </div>
     </nav>
   );

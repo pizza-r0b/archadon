@@ -9,6 +9,7 @@ import Home from 'Components/Home';
 import Logout from 'Components/Logout';
 import Account from 'Components/Account';
 import SignInForm from 'Components/SignInForm';
+import Cart from 'Components/Cart';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
@@ -59,7 +60,7 @@ class App extends Component {
           <Navigation />
           <div style={{ height: '100%' }} className="flex-grow-1 flex-parent">
             {
-              this.props.loading ?
+              this.props.loading.full ?
                 <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
                   <h1>Loading</h1>
                 </div>
@@ -69,6 +70,7 @@ class App extends Component {
                 <Route key="login" path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />,
                 <Route key="account" path="/account" component={Account} />,
                 <Route key="logout" path="/logout" component={Logout} />,
+                <Route key="cart" path="/cart" component={Cart} />,
               ]
             }
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />

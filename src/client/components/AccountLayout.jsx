@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import Orders from 'Components/Orders';
+import Favorites from 'Components/Favorites';
 
 function AccountLayout() {
   return (
@@ -11,10 +12,10 @@ function AccountLayout() {
         <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/favorites">Favorites</NavLink>
         <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/settings">Settings</NavLink>
       </div>
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 flex-parent account-content">
         <Switch>
           <Route exact path="/account/(orders)?" component={Orders} />
-
+          <Route exact path="/account/favorites" component={Favorites} />
         </Switch>
 
       </div>

@@ -6,18 +6,24 @@ const {
   LOG_OUT,
   CLEAR_AUTHENTICATION_DATA,
   TOGGLE_FAVORITE,
+  FAVORITES_LOADED,
 } = actions;
 
 type StateType = {
   Favorites: Array<Object>
  };
 
-export default function user(state: StateType = { Favorites: [] }, action: Object) {
+export default function user(state: StateType = { Favorites: [], FavoritesDetail: [] }, action: Object) {
   switch (action.type) {
     case SET_USER_DATA:
       return {
         ...state,
         ...action.payload,
+      };
+    case FAVORITES_LOADED:
+      return {
+        ...state,
+        FavoritesDetail: action.payload || [],
       };
     case TOGGLE_FAVORITE:
       const ID = action.payload;

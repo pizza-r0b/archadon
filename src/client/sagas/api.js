@@ -13,3 +13,4 @@ export const requestProductData = (ID: string) => request('GET', url(`product/v1
 export const requestUpdateUserData = (ID: string, token: string, body: Object) => request('POST', url(`user/v1/update/data/${ID}`), { data: body }, {
   authtoken: token,
 });
+export const requestBatch = (Items: Array<string>) => request('POST', url('product/v1/batch'), { Items });

@@ -14,6 +14,10 @@ h1, .h1 {
   line-height: 36px;
 }
 
+.h3, h3 {
+  font-family: $bodyFont;
+}
+
 p {
   margin: 0;
 }

@@ -3,16 +3,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProductTile from 'Components/ProductTile';
 
-function ProductList({ products = [], lastEvaluatedKey: { ID } = {} }: {
+function ProductList({ products = [], className, hideBtn, lastEvaluatedKey: { ID } = {} }: {
   products: Object[],
   lastEvaluatedKey: Object,
+  hideBtn: boolean,
+  className: string,
 }) {
   return (
     <div className="flex-grow-1 flex-parent flex-col">
-      <div className="margin--top-8 margin--bottom-8 flex-grow-1 flex-parent flex-wrap flex-align-center flex-justify-center">
+      <div className={`margin--top-8 margin--bottom-8 flex-grow-1 flex-parent flex-wrap ${className ? `${className}` : 'flex-align-center flex-justify-center'}`}>
         {products.map(product => <ProductTile key={product.ID} product={product} />)}
       </div>
-      {ID &&
+      {!hideBtn && ID &&
         <div className="flex-parent flex-align-center flex-justify-center">
           <button className="btn btn--first">Load More</button>
         </div>
@@ -21,8 +23,8 @@ function ProductList({ products = [], lastEvaluatedKey: { ID } = {} }: {
   );
 }
 
-const mapStateToProps = state => ({
-  products: state.products.Items,
+const mapStateToProps = (state, ownProps) => ({
+  products: ownProps.products || state.products.Items,
   lastEvaluatedKey: state.products.LastEvaluatedKey,
 });
 

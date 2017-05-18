@@ -26,6 +26,16 @@
   color: $first;
 }
 
+.btn--second {
+  border-color: $second;
+  color: $second;
+
+  &.alt {
+    color: $light;
+    background-color: $second;
+  }
+}
+
 @include largeMobile {
   .btn {
     // transform: scale(1);

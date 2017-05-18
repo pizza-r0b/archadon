@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { call, takeLatest, put, select } from 'redux-saga/effects';
+import { call, takeLatest, put, select, take } from 'redux-saga/effects';
 import Actions from 'Actions';
 import { action } from 'Utils';
 const {
@@ -17,15 +17,23 @@ const {
   TOGGLE_FAVORITE,
   ADD_TO_CART,
   APP_LOAD,
+  SET_LOADING_PAGE,
+  FAVORITES_LOADED,
+  REPLACE_CART,
+  REMOVE_FROM_CART,
+  LOAD_FAVORITES,
 } = Actions;
 import {
   requestLogin,
   requestUserData,
   requestSignUp,
+  requestBatch,
   requestProductList,
   requestProductData,
   requestUpdateUserData,
 } from './api';
+
+const CART_VAR = 'archadon-cart';
 
 const getAuthData = state => ({
   authToken: state.user.authToken,
@@ -33,6 +41,8 @@ const getAuthData = state => ({
 });
 
 const getCartItems = state => state.cart.items;
+
+const getCart = state => state.cart;
 
 const getRedirectPath = state => state.redirectPath;
 
@@ -48,10 +58,19 @@ export function saveToLocalStorage(authToken, ID) {
 
 export function* getDataFromLocalStorage() {
   let data;
+  let cart;
   try {
     data = JSON.parse(window.localStorage.getItem('archadonauth'));
   } catch (e) {
 
+  }
+  try {
+    cart = JSON.parse(window.localStorage.getItem(CART_VAR));
+  } catch (e) {
+
+  }
+  if (cart) {
+    yield put(action(REPLACE_CART, cart));
   }
   if (data) {
     yield put(action(USER_AUTH_SUCCESS, data));
@@ -152,6 +171,11 @@ export function* getProductDataSaga({ payload: product }) {
   }
 }
 
+export function* addToCartLocalStorage() {
+  const cart = yield select(getCart);
+  window.localStorage.setItem(CART_VAR, JSON.stringify(cart));
+}
+
 export function* signUpSaga({ payload: { email, password } }) {
   yield put(action(LOADING, true));
   yield put(action(SET_ERROR, {
@@ -205,9 +229,25 @@ export function* toggleFavoriteSaga() {
   }
 }
 
+export function* loadFavoritesSaga() {
+  yield put(action(SET_LOADING_PAGE, 'favorites'));
+  const { authToken, ID } = yield select(getAuthData);
+  if (!authToken || !ID) return;
+  try {
+    const favorites = yield select(getUserFavorites);
+    if (!favorites.length) return;
+    const { response: data } = yield call(requestBatch, favorites);
+    yield put(action(FAVORITES_LOADED, data));
+  } catch (e) {
+
+  }
+  yield put(action(SET_LOADING_PAGE, ''));
+}
+
 
 export default function* rootSaga() {
   yield [
+    takeLatest(LOAD_FAVORITES, loadFavoritesSaga),
     takeLatest(LOG_IN, logInSaga),
     takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(ADD_TO_CART, getProductDataSaga),
@@ -216,5 +256,11 @@ export default function* rootSaga() {
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
     takeLatest(LOG_OUT, logOutSaga),
+    (function* () {
+      while (true) {
+        yield take([ADD_TO_CART, REMOVE_FROM_CART]);
+        yield call(addToCartLocalStorage);
+      }
+    }()),
   ];
 }

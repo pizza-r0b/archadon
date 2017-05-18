@@ -6,6 +6,11 @@
   padding: $spacer * 3px;
   margin-bottom: $spacer * 3px;
 
+  .favorites & {
+    max-width: 300px;
+    min-width: 300px;
+  }
+
   &-img {
     img {
       height: auto;
