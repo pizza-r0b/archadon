@@ -10,6 +10,12 @@ export default function html(routerWithContext, props) {
                 <title></title>
                 <meta name="description" content="" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                ${
+                    process.env.NODE_ENV === 'production' ?
+                    `<link rel="stylesheet" href="/styles.css" />`
+                    :
+                    ''
+                }
             </head>
             <body>
                 <div id="app">${routerWithContext}</div>

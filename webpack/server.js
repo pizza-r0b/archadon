@@ -6,7 +6,12 @@ const serverConfig = base({
   rules: [
     {
       test: /\.scss$/,
-      use: ['css-loader', 'sass-loader'],
+      use: ['css-loader', {
+        loader: 'sass-loader',
+        options: {
+          data: '$env: ' + process.env.NODE_ENV + ';',
+        },
+      }],
     },
   ],
   config: {

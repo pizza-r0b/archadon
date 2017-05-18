@@ -14,7 +14,7 @@ const app = express();
 app.use(express.static('public'));
 
 app.use(async (req, res, next) => {
-  const response = await fetch(`${process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : ''}product/v1/list`);
+  const response = await fetch(`${process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/dev/'}product/v1/list`);
   const products = await response.json();
   const store = makeStore({ products });
   try {

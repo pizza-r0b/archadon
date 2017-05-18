@@ -4,19 +4,19 @@ import Svg from 'Ui/Svg';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 
-function Navigation({ location, user, qty }) {
+function Navigation({ location, user, qty, scrolled }) {
   const isRoot = location.pathname === '/';
   return (
     <nav
-      style={{ position: isRoot ? 'fixed' : 'relative' }}
+      style={{ position: 'fixed' }}
       className={
-        classnames('global-nav global-padding flex-parent flex-justify-between flex-align-center', {
-          root: isRoot,
+        classnames('global-nav global-padding-x flex-parent flex-justify-between flex-align-center', {
+          root: isRoot && !scrolled,
         })
       }
     >
       <div className="logo">
-        <Link to="/"><Svg variant="archadon-logo" color={isRoot ? '#FFF' : '#000'} /></Link>
+        <Link to="/"><Svg variant="archadon-logo" color="#FFF" /></Link>
       </div>
       <div className="flex-parent flex-align-center">
 
@@ -39,7 +39,7 @@ function Navigation({ location, user, qty }) {
         <Link to="/cart">
           <div className="flex-parent flex-align-center">
             <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
-              <Svg variant="icon-cart" color={isRoot ? '#FFF' : '#000'} />
+              <Svg variant="icon-cart" color="#FFF" />
             </div>
             <div>
               {qty}

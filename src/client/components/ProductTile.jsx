@@ -4,14 +4,13 @@ import Svg from 'Ui/Svg';
 import { action } from 'Utils';
 import actions from 'Actions';
 import { connect } from 'react-redux';
+import { IMAGE_ORIGIN } from 'Constants';
 
 const {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   TOGGLE_FAVORITE,
  } = actions;
-
-const IMAGE_ORIGIN = process.env.NODE_ENV !== 'production' ? 'https://assets.dev.archadon.com' : 'https://assets.archadon.com';
 
 type ProductTileProps = {
   product: {

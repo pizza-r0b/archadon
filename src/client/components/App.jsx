@@ -49,15 +49,28 @@ class ScrollToTop extends Component {
 const ScrollToTopWithRouter = withRouter(ScrollToTop);
 
 class App extends Component {
+
+  state = {
+    scrolled: false,
+  }
+
+  handleScroll = () => {
+    if (window.scrollY + 50 > window.innerHeight && !this.state.scrolled) {
+      this.setState({ scrolled: true });
+    } else if (window.scrollY < window.innerHeight && this.state.scrolled) {
+      this.setState({ scrolled: false });
+    }
+  }
   componentDidMount() {
     this.props.loaded();
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   render() {
     return (
       <ScrollToTopWithRouter>
         <div className="layout">
-          <Navigation />
+          <Navigation scrolled={this.state.scrolled} />
           <div style={{ height: '100%' }} className="flex-grow-1 flex-parent">
             {
               this.props.loading.full ?
