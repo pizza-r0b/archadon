@@ -1,0 +1,12 @@
+.mobile-col {
+  flex-direction: column;
+}
+
+@include largeMobile() {
+  .mobile-col {
+    flex-direction: row;
+  }
+  .middle-input {
+    margin: 0 $spacer * 3px;
+  }
+}

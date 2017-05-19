@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN } from 'Constants';
 import actions from 'Actions';
+import { Link } from 'react-router-dom';
 import { action } from 'Utils';
 const { REMOVE_FROM_CART } = actions;
 
@@ -53,9 +54,9 @@ function Cart({ cart: { items, totalPrice } }) {
               <p className="margin--bottom-3">
                 Shipping: FREE
               </p>
-              <div className="btn btn--second alt flex-grow-0">
+              <Link to="/checkout" className="btn btn--second alt flex-grow-0">
                 Check Out Now
-            </div>
+              </Link>
             </div>
             <div className="flex-parent flex-col flex-grow-1">
               {items.map(item => <CartItem key={item.ID} item={item} />)}

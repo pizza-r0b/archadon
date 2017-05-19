@@ -1,7 +1,7 @@
 .cart-item {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid $light;
+  border: 1px solid $light;
   border-radius: 5px;
   display: block;
   padding: $spacer * 3px;
@@ -9,7 +9,7 @@
     img {
       height: auto;
       width: 100%;
-      border: 2px solid $light;
+      border: 1px solid $light;
       border-radius: 5px;
       padding: $spacer;
     }

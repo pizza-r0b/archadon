@@ -9,6 +9,7 @@ import Home from 'Components/Home';
 import Logout from 'Components/Logout';
 import Account from 'Components/Account';
 import SignInForm from 'Components/SignInForm';
+import Checkout from 'Components/Checkout';
 import Cart from 'Components/Cart';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
@@ -84,6 +85,7 @@ class App extends Component {
                 <Route key="account" path="/account" component={Account} />,
                 <Route key="logout" path="/logout" component={Logout} />,
                 <Route key="cart" path="/cart" component={Cart} />,
+                <Route key="checkout" path="/checkout" component={Checkout} />,
               ]
             }
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
