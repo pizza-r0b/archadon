@@ -16,6 +16,7 @@ const {
   SET_REDIRECT_PATH,
   TOGGLE_FAVORITE,
   ADD_TO_CART,
+  PURCHASE,
   APP_LOAD,
   SET_LOADING_PAGE,
   FAVORITES_LOADED,
@@ -207,6 +208,27 @@ export function* signUpSaga({ payload: { email, password } }) {
   }
 }
 
+const createStripeToken = data => new Promise((resolve, reject) => {
+  window.Stripe.card.createToken(data, (status, response) => {
+    if (response.error) {
+      return reject(response.error.message);
+    }
+    return resolve(response.id);
+  });
+});
+
+export function* purchaseSaga({ payload: { data, cardDetails } }) {
+  const { card: number, expMonth: exp_month, expYear: exp_year, cvc } = cardDetails;
+  try {
+    const token = yield call(createStripeToken, {
+      number, exp_month, exp_year, cvc,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+}
+
 export function* toggleFavoriteSaga() {
   const Favorites = yield select(getUserFavorites);
   const { authToken, ID } = yield select(getAuthData);
@@ -256,6 +278,7 @@ export default function* rootSaga() {
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
     takeLatest(LOG_OUT, logOutSaga),
+    takeLatest(PURCHASE, purchaseSaga),
     (function* () {
       while (true) {
         yield take([ADD_TO_CART, REMOVE_FROM_CART]);

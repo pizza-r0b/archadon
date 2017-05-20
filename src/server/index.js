@@ -9,6 +9,10 @@ import makeStore from 'Store';
 import { AppContainer } from 'react-hot-loader';
 import fetch from 'node-fetch';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const app = express();
 
 app.use(express.static('public'));

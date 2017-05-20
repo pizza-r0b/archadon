@@ -9,6 +9,10 @@ $path: null;
 $bodoni: 'Bodoni 72';
 $bodyFont: "acumin-pro-semi-condensed",sans-serif;
 
+.body-font {
+	font-family: $bodyFont!important;
+}
+
 @font-face {
 	font-family: $bodoni;
 	src: url('#{$path}BodoniSvtyTwoITCTT-BookIta.eot');
