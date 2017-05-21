@@ -650,6 +650,11 @@ var App = function (_Component2) {
       window.addEventListener('scroll', this.handleScroll);
     }
   }, {
+    key: 'componentWillUmount',
+    value: function componentWillUmount() {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(

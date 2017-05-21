@@ -67,6 +67,10 @@ class App extends Component {
     window.addEventListener('scroll', this.handleScroll);
   }
 
+  componentWillUmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
   render() {
     return (
       <ScrollToTopWithRouter>
