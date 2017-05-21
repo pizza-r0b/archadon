@@ -31,6 +31,7 @@ import {
   requestBatch,
   requestProductList,
   requestProductData,
+  requestPurchase,
   requestUpdateUserData,
 } from './api';
 
@@ -42,6 +43,8 @@ const getAuthData = state => ({
 });
 
 const getCartItems = state => state.cart.items;
+
+const getItemsForCheckout = state => state.cart.items.map(item => ({ ID: item.ID }));
 
 const getCart = state => state.cart;
 
@@ -217,12 +220,26 @@ const createStripeToken = data => new Promise((resolve, reject) => {
   });
 });
 
-export function* purchaseSaga({ payload: { data, cardDetails } }) {
+export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) {
   const { card: number, expMonth: exp_month, expYear: exp_year, cvc } = cardDetails;
   try {
-    const token = yield call(createStripeToken, {
+    const Token = yield call(createStripeToken, {
       number, exp_month, exp_year, cvc,
     });
+    const { ID: UserID } = yield select(getAuthData);
+    const Items = yield select(getItemsForCheckout);
+
+    const payload = {
+      Items,
+      UserID,
+      CustomerData,
+      Token,
+    };
+
+    const { response } = yield call(requestPurchase, payload);
+
+    console.log(response);
+
   } catch (e) {
     console.log(e);
   }

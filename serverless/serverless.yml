@@ -29,6 +29,8 @@ custom:
   UserItemTable: ${self:resources.Resources.UserItemTable.Properties.TableName}
   ProductDataTable: ${self:resources.Resources.ProductDataTable.Properties.TableName}
   ProductItemTable: ${self:resources.Resources.ProductItemTable.Properties.TableName}
+  OrderDataTable: ${self:resources.Resources.OrderDataTable.Properties.TableName}
+  OrderItemTable: ${self:resources.Resources.OrderItemTable.Properties.TableName}
 
 package:
  include:
@@ -253,6 +255,19 @@ functions:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
+  purchase:
+    handler: functions/handlers.purchase
+    events:
+      - http:
+          path: purchase/v1/charge
+          method: post
+          cors: true
+    environment:
+      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
+      ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
+      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+      STRIPE_SECRET_KEY: ${file(./secrets.yml):stripeSecretKey}
+
   getProductData:
     handler: functions/handlers.getProductData
     events:
@@ -283,6 +298,8 @@ resources:
     UserDataTable: ${file(./resources/User/Data.yml)}
     ProductItemTable: ${file(./resources/Product/Item.yml)}
     ProductDataTable: ${file(./resources/Product/Data.yml)}
+    OrderItemTable: ${file(./resources/Order/Item.yml)}
+    OrderDataTable: ${file(./resources/Order/Data.yml)}
     S3Bucket:
       Type: "AWS::S3::Bucket"
       Properties:

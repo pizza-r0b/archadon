@@ -3,6 +3,7 @@ node_modules
 jspm_packages
 CERT.crt
 KEY.key
+secrets.yml
 
 # Serverless directories
 .serverless

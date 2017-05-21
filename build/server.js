@@ -1403,7 +1403,7 @@ var CheckOut = function (_Component) {
           'h3',
           { className: 'margin--bottom-3 strong' },
           'Total: $',
-          this.props.totalPrice
+          this.props.totalPrice.toFixed(2)
         ),
         _react2.default.createElement(
           'form',

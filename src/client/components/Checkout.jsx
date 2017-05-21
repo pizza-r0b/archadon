@@ -79,7 +79,7 @@ class CheckOut extends Component {
       <div className="flex-parent global-padding padding--top-12 flex-col flex-align-center flex-justify-start full-width">
         <h2 className="margin--bottom-3">Check Out</h2>
 
-        <h3 className="margin--bottom-3 strong">Total: ${this.props.totalPrice}</h3>
+        <h3 className="margin--bottom-3 strong">Total: ${this.props.totalPrice.toFixed(2)}</h3>
 
         <form className="form" onSubmit={this.submit}>
           <div className="form-group">

@@ -1,16 +1,24 @@
 import { isObject, isNumber } from './index';
 
+function push(arr, name, value) {
+  if (isObject(value)) {
+    arr.push(...reduceObject(value, [], name));
+  } else if (Array.isArray(value) && value.length > 0) {
+    arr.push(...arrayToPaths(value, name));
+  } else if (Array.isArray(value) && value.length === 0) {
+    arr.push([name, '<<EmptyArray>>']);
+  } else if (value === '') {
+    arr.push([name, '<<EmptyString>>']);
+  } else {
+    arr.push([name, value]);
+  }
+}
+
 function arrayToPaths(arr, prefix) {
   const output = [];
   arr.forEach((val, i) => {
     const name = `${prefix}.${i}`;
-    if (isObject(val)) {
-      output.push(...reduceObject(val, [], name));
-    } else if (Array.isArray(val)) {
-      output.push(...arrayToPaths(val, name));
-    } else {
-      output.push([name, val]);
-    }
+    push(output, name, val);
   });
   return output;
 }
@@ -21,15 +29,7 @@ function reduceObject(object, initialValue, prefix) {
     if (isNumber(key)) {
       throw new Error(`Object has key ${name} which is a number. This is not allowed.`);
     }
-    if (isObject(value)) {
-      a.push(...reduceObject(value, [], name));
-    } else if (Array.isArray(value) && value.length > 0) {
-      a.push(...arrayToPaths(value, name));
-    } else if (Array.isArray(value) && value.length === 0) {
-      a.push([name, '<<EmptyArray>>']);
-    } else {
-      a.push([name, value]);
-    }
+    push(a, name, value);
     return a;
   }, initialValue);
 }

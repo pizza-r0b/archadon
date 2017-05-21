@@ -12,6 +12,9 @@ Properties:
     -
       AttributeName: Price
       AttributeType: N
+    -
+      AttributeName: Status
+      AttributeType: S
   GlobalSecondaryIndexes:
     -
       IndexName: gsi1
@@ -19,6 +22,16 @@ Properties:
         ProjectionType: ALL
       KeySchema:
         - AttributeName: Price
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+    -
+      IndexName: status
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: Status
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 3

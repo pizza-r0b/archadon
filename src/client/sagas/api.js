@@ -14,3 +14,9 @@ export const requestUpdateUserData = (ID: string, token: string, body: Object) =
   authtoken: token,
 });
 export const requestBatch = (Items: Array<string>) => request('POST', url('product/v1/batch'), { Items });
+export const requestPurchase = ((payload: {
+  Items: Array<Object>,
+  UserID: ?string,
+  CustomerData: Object,
+  Token: string,
+}) => request('POST', url('purchase/v1/charge'), payload));

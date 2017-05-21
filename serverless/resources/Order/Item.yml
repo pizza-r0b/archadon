@@ -1,0 +1,43 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: OrderItem-${self:service}-${self:custom.env}
+  KeySchema:
+    -
+      AttributeName: ID
+      KeyType: HASH
+  AttributeDefinitions:
+    -
+      AttributeName: ID
+      AttributeType: S
+    -
+      AttributeName: UserID
+      AttributeType: S
+    -
+      AttributeName: Email
+      AttributeType: S
+  GlobalSecondaryIndexes:
+    -
+      IndexName: userId
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: UserID
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+    -
+      IndexName: email
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: Email
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+  ProvisionedThroughput:
+    ReadCapacityUnits: 3
+    WriteCapacityUnits: 3
+  StreamSpecification:
+    StreamViewType: NEW_IMAGE

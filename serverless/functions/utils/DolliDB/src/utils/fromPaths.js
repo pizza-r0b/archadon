@@ -15,6 +15,8 @@ const setter = (obj) => (
       } else {
         if (value === '<<EmptyArray>>') {
           value = [];
+        } else if (value === '<<EmptyString>>') {
+          value = '';
         }
         context[key] = value;
       }
