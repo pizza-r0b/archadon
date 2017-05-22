@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'Actions';
 import { action } from 'Utils';
+import { Redirect } from 'react-router-dom';
 
 const { PURCHASE } = actions;
 
@@ -60,16 +61,48 @@ class CheckOut extends Component {
 
   submit = e => {
     e.preventDefault();
-    this.props.purchase({
-      data: this.state.data,
-      cardDetails: this.state.cardDetails,
+    if (this.isValid()) {
+      this.props.purchase({
+        data: this.state.data,
+        cardDetails: this.state.cardDetails,
+      });
+    }
+  }
+
+  checkData = obj => {
+    Object.entries(obj).forEach(([name, value]) => {
+      if (value === '' && !this.errorBlackList.includes(name)) {
+        this.errors[name] = true;
+      }
     });
-    // this.setState({
-    //   errors: {
-    //     ...this.state.errors,
-    //     [key]: true,
-    //   },
-    // });
+  }
+
+  errors = {}
+
+  isValid = () => {
+    this.errors = {};
+    const { data, cardDetails } = this.state;
+    this.checkData(data);
+    this.checkData(cardDetails);
+    if (Object.keys(this.errors).length) {
+      this.setState({ errors: this.errors });
+      return false;
+    } else {
+      if (Object.keys(this.state.errors).length) {
+        this.setState({ errors: {} });
+      }
+      return true;
+    }
+  }
+
+  errorBlackList = ['address2']
+
+  addError = el => {
+    const { props: { name } } = el;
+    if (this.state.errors[name]) {
+      return React.cloneElement(el, { className: 'input-error' });
+    }
+    return el;
   }
 
   onDataChange = this.onInputChange('data')
@@ -77,6 +110,7 @@ class CheckOut extends Component {
   render() {
     return (
       <div className="flex-parent global-padding padding--top-12 flex-col flex-align-center flex-justify-start full-width">
+        {!this.props.items && <Redirect to="/cart" />}
         <h2 className="margin--bottom-3">Check Out</h2>
 
         <h3 className="margin--bottom-3 strong">Total: ${this.props.totalPrice.toFixed(2)}</h3>
@@ -89,11 +123,13 @@ class CheckOut extends Component {
             </div>
             <div className="form-component">
               <label>Full Name</label>
-              <input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />
+              {this.addError(<input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />)}
             </div>
             <div className="form-component margin--top-3">
               <label>Email</label>
-              <input data-regex="email" value={this.state.data.email} onChange={this.onDataChange} name="email" type="email" />
+              {this.addError(
+                <input data-regex="email" value={this.state.data.email} onChange={this.onDataChange} name="email" type="email" />
+              )}
             </div>
             <div className="form-component margin--top-6 margin--bottom-3">
               <h3>Shipping</h3>
@@ -101,25 +137,35 @@ class CheckOut extends Component {
 
             <div className="form-component">
               <label>Address</label>
-              <input onChange={this.onDataChange} value={this.state.data.address1} name="address1" type="text" />
+              {this.addError(
+                <input onChange={this.onDataChange} value={this.state.data.address1} name="address1" type="text" />
+              )}
             </div>
             <div className="form-component margin--top-3">
               <label>Address Line 2</label>
-              <input onChange={this.onDataChange} value={this.state.data.address2} name="address2" type="text" />
+              {this.addError(
+                <input onChange={this.onDataChange} value={this.state.data.address2} name="address2" type="text" />
+              )}
             </div>
 
             <div className="flex-parent mobile-col flex-justify-between">
               <div className="form-component margin--top-3">
                 <label>City</label>
-                <input onChange={this.onDataChange} value={this.state.data.city} name="city" type="text" />
+                {this.addError(
+                  <input onChange={this.onDataChange} value={this.state.data.city} name="city" type="text" />
+                )}
               </div>
               <div className="form-component middle-input margin--top-3">
                 <label>State</label>
-                <input onChange={this.onDataChange} value={this.state.data.state} name="state" type="text" />
+                {this.addError(
+                  <input onChange={this.onDataChange} value={this.state.data.state} name="state" type="text" />
+                )}
               </div>
               <div className="form-component margin--top-3">
                 <label>Zip</label>
-                <input onChange={this.onDataChange} value={this.state.data.zip} name="zip" type="text" />
+                {this.addError(
+                  <input onChange={this.onDataChange} value={this.state.data.zip} name="zip" type="text" />
+                )}
               </div>
             </div>
 
@@ -129,24 +175,38 @@ class CheckOut extends Component {
 
             <div className="form-component">
               <label>Credit Card Number</label>
-              <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />
+              {this.addError(
+                <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />
+              )}
             </div>
 
             <div className="flex-parent flex-row flex-justify-between">
               <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
                 <label>Expiration Month</label>
-                <input placeholder="MM" data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />
+                {this.addError(
+                  <input placeholder="MM" data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />
+                )}
               </div>
               <div className="form-component margin--top-3 margin--x-3 middle-input flex-grow-1 flex-parent flex-col flex-justify-end">
                 <label>Expiration Year</label>
-                <input placeholder="YYYY" data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />
+                {this.addError(
+                  <input placeholder="YYYY" data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />
+                )}
               </div>
               <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
                 <label>CVC</label>
-                <input data-regex="expYear" placeholder="000(0)" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />
+                {this.addError(
+                  <input data-regex="expYear" placeholder="000(0)" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />
+                )}
               </div>
             </div>
             <div className="form-component margin--y-6">
+              {
+                (Object.keys(this.state.errors).length > 0 || this.props.error) &&
+                <p className="font-color--danger margin--bottom-3">
+                  {this.props.error || 'Please fill in fields marked with red.'}
+                </p>
+              }
               <button className="btn btn--second alt">Purchase</button>
             </div>
           </div>
@@ -158,6 +218,8 @@ class CheckOut extends Component {
 
 const mapStateToProps = state => ({
   totalPrice: state.cart.totalPrice,
+  items: state.cart.items.length > 0,
+  error: state.errors.checkout
 });
 
 const mapDispatchToProps = dispatch => ({

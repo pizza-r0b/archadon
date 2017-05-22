@@ -214,7 +214,7 @@ export function* signUpSaga({ payload: { email, password } }) {
 const createStripeToken = data => new Promise((resolve, reject) => {
   window.Stripe.card.createToken(data, (status, response) => {
     if (response.error) {
-      return reject(response.error.message);
+      return reject(response);
     }
     return resolve(response.id);
   });
@@ -235,15 +235,24 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
       CustomerData,
       Token,
     };
-
     const { response } = yield call(requestPurchase, payload);
-
-    console.log(response);
-
   } catch (e) {
-    console.log(e);
+    const { error = {}, response = { error: { code: '' } } } = e;
+    if (
+      (response.error && response.error.code && response.error.code === 'stripe-charge-failure') ||
+      (error && error.type === 'card_error')
+    ) {
+      yield put(action(SET_ERROR, {
+        type: 'checkout',
+        error: 'Oops. Your order wasn\'t processed. Please check your card details.',
+      }));
+    } else {
+      yield put(action(SET_ERROR, {
+        type: 'checkout',
+        error: 'Oops. Your order wasn\'t processed. Please verify your information is correct or try again.',
+      }));
+    }
   }
-
 }
 
 export function* toggleFavoriteSaga() {

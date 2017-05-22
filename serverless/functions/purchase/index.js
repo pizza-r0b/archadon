@@ -79,6 +79,29 @@ const putOrderData = Items => ({ ID, price, ChargeID, Brand, CustomerData, Last4
     .catch(e => reject({ code: 'order-creation-failure', debug: e }));
 });
 
+
+const notRequiredFields = ['address2'];
+
+function validate(Items, CustomerData, Token) {
+  const errors = { code: 'invalid-request', fields: [], hasErrors: false };
+  if (Items.length === 0) {
+    errors.fields.push('items');
+  }
+  if (!Token) {
+    errors.fields.push('token');
+  }
+  Object.entries(CustomerData).forEach(([name, value]) => {
+    if (value === '' && !notRequiredFields.includes(name)) {
+      errors.fields.push(name);
+    }
+  });
+  if (errors.fields.length) {
+    errors.hasErrors = true;
+  }
+  return errors;
+}
+
+
 function purchase(event, context, callback) {
   let body;
   try {
@@ -96,7 +119,16 @@ function purchase(event, context, callback) {
 
   const { Items = [], UserID = '', CustomerData = {}, Token = '' } = body;
 
-  console.log(body);
+  const errors = validate(Items, CustomerData, Token);
+
+  if (errors.hasErrors) {
+    callback(null, addCors({
+      statusCode: 400,
+      body: JSON.stringify({
+        error: errors,
+      }),
+    }));
+  }
 
   // get the actual price based on the products in the array
   // entails fetching product data from database
