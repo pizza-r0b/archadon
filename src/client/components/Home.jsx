@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import rug1 from 'Images/rug1.png';
 import rug2 from 'Images/rug2.png';
 import rug3 from 'Images/rug3.png';
-import ProductList from 'Components/ProductList';
+import Shop from 'Components/Shop';
 
 class Canvas extends React.Component {
 
@@ -155,10 +155,10 @@ class Slide extends React.Component {
               />
             </div>
             <div className="home-slide-box">
-            <h2 className="font-color--white align--center">
+              <h2 className="font-color--white align--center">
                 Rug Name
             </h2>
-            <h3 className="font-color--white align--center">8x12</h3>
+              <h3 className="font-color--white align--center">8x12</h3>
               <button className="btn btn--white margin--top-3">Add To Cart</button>
             </div>
           </div>
@@ -196,12 +196,18 @@ class Home extends React.Component {
     currentIndex: 0,
   }
 
+  scroll = () => {
+    if (this.velocityScroll) {
+      this.velocityScroll();
+    }
+  }
+
   Cta = () => (
     <div className="flex-parent flex-col flex-align-center">
       <h1 className="font-color--white align--center">
         Handmade, <span style={{ display: 'block' }}>artisan rugs</span>
       </h1>
-      <button className="btn btn--white margin--top-5">Shop Selection</button>
+      <button onClick={this.scroll} className="btn btn--white margin--top-5">Shop Selection</button>
     </div>
   )
 
@@ -218,6 +224,14 @@ class Home extends React.Component {
   int = [];
 
   componentDidMount() {
+    import('velocity-animate').then(Velocity => {
+      this.velocityScroll = () => {
+        Velocity(this.selection, 'scroll', {
+          duration: 1000,
+          easing: 'easeOutExpo',
+        });
+      };
+    });
     interval(this.updateSlide, DURATION, this.int);
   }
 
@@ -243,9 +257,8 @@ class Home extends React.Component {
         >
           {this.slides[this.state.currentIndex]}
         </ReactTransitionGroup>
-        <div className="padding--top-15 padding--bottom-10">
-          <h1 className="align--center">Our Selection</h1>
-          <ProductList />
+        <div ref={c => { this.selection = c; }}>
+          <Shop />
         </div>
       </div>
     );

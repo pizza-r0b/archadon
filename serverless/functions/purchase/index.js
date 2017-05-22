@@ -90,7 +90,8 @@ function validate(Items, CustomerData, Token) {
   if (!Token) {
     errors.fields.push('token');
   }
-  Object.entries(CustomerData).forEach(([name, value]) => {
+  Object.keys(CustomerData).forEach((name) => {
+    const value = CustomerData[name];
     if (value === '' && !notRequiredFields.includes(name)) {
       errors.fields.push(name);
     }
@@ -128,6 +129,7 @@ function purchase(event, context, callback) {
         error: errors,
       }),
     }));
+    return;
   }
 
   // get the actual price based on the products in the array

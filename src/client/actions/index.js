@@ -20,5 +20,6 @@ export default keyMirror({
   LOAD_FAVORITES: null,
   FAVORITES_LOADED: null,
   SET_LOADING_PAGE: null,
+  SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
 });

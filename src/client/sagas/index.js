@@ -23,6 +23,7 @@ const {
   REPLACE_CART,
   REMOVE_FROM_CART,
   LOAD_FAVORITES,
+  SET_ORDER_CONFIRMATION,
 } = Actions;
 import {
   requestLogin,
@@ -221,6 +222,7 @@ const createStripeToken = data => new Promise((resolve, reject) => {
 });
 
 export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) {
+  yield put(action(SET_LOADING_PAGE, 'purchase'));
   const { card: number, expMonth: exp_month, expYear: exp_year, cvc } = cardDetails;
   try {
     const Token = yield call(createStripeToken, {
@@ -236,6 +238,13 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
       Token,
     };
     const { response } = yield call(requestPurchase, payload);
+    if (response.success) {
+      yield put(action(SET_ORDER_CONFIRMATION, {
+        orderID: response.OrderID,
+        email: CustomerData.email,
+      }));
+      yield put(push('/order-confirmation'));
+    }
   } catch (e) {
     const { error = {}, response = { error: { code: '' } } } = e;
     if (
@@ -253,6 +262,7 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
       }));
     }
   }
+  yield put(action(SET_LOADING_PAGE, ''));
 }
 
 export function* toggleFavoriteSaga() {

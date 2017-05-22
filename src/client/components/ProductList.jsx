@@ -10,8 +10,8 @@ function ProductList({ products = [], className, hideBtn, lastEvaluatedKey: { ID
   className: string,
 }) {
   return (
-    <div className="flex-grow-1 flex-parent flex-col">
-      <div className={`margin--top-8 margin--bottom-8 flex-grow-1 flex-parent flex-wrap ${className ? `${className}` : 'flex-align-center flex-justify-center'}`}>
+    <div className="flex-grow-1 flex-parent flex-col margin--bottom-10">
+      <div className={`margin--top-8 margin--bottom-6 flex-grow-1 flex-parent flex-wrap ${className ? `${className}` : 'flex-align-center flex-justify-center'}`}>
         {products.map(product => <ProductTile key={product.ID} product={product} />)}
       </div>
       {!hideBtn && ID &&

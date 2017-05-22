@@ -11,6 +11,8 @@ import Account from 'Components/Account';
 import SignInForm from 'Components/SignInForm';
 import Checkout from 'Components/Checkout';
 import Cart from 'Components/Cart';
+import Shop from 'Components/Shop';
+import OrderConfirmation from 'Components/OrderConfirmation';
 import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
@@ -56,18 +58,21 @@ class App extends Component {
   }
 
   handleScroll = () => {
+    if (this.unmount) return;
     if (window.scrollY + 50 > window.innerHeight && !this.state.scrolled) {
       this.setState({ scrolled: true });
-    } else if (window.scrollY < window.innerHeight && this.state.scrolled) {
+    } else if (window.scrollY + 50 < window.innerHeight && this.state.scrolled) {
       this.setState({ scrolled: false });
     }
   }
   componentDidMount() {
     this.props.loaded();
+    this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUmount() {
+    this.unmount = true;
     window.removeEventListener('scroll', this.handleScroll);
   }
 
@@ -84,12 +89,14 @@ class App extends Component {
                 </div>
                 :
               [
+                <Route key="shop" path="/shop" component={Shop} />,
                 <Route key="home" path="/" exact component={Home} />,
                 <Route key="login" path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />,
                 <Route key="account" path="/account" component={Account} />,
                 <Route key="logout" path="/logout" component={Logout} />,
                 <Route key="cart" path="/cart" component={Cart} />,
                 <Route key="checkout" path="/checkout" component={Checkout} />,
+                <Route key="confirm" path="/order-confirmation" component={OrderConfirmation} />,
               ]
             }
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />

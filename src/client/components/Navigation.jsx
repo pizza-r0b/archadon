@@ -19,7 +19,9 @@ function Navigation({ location, user, qty, scrolled }) {
         <Link to="/"><Svg variant="archadon-logo" color="#FFF" /></Link>
       </div>
       <div className="flex-parent flex-align-center">
-
+        <div style={{ marginRight: '35px' }}>
+          <Link to="/shop">Shop</Link>
+        </div>
         {user.authToken && user.ID ?
           (
             [<div key="a" style={{ marginRight: '35px' }}>
