@@ -147,6 +147,26 @@ export function* getUserDataSaga() {
     const { response: { data } } = yield call(requestUserData, ID, authToken);
     const redirectPath = yield select(getRedirectPath);
 
+    if (data.orders && data.orders.length) {
+      const orderItemMap = new Map();
+      const orderIDs = data.orders.reduce((a, order) => {
+        a.push(...order.Items.map(({ ID: itemID }) => itemID));
+        return a;
+      }, []);
+
+      const { response: orders } = yield call(requestBatch, orderIDs);
+
+      orders.forEach(order => {
+        orderItemMap.set(order.ID, order);
+      });
+
+      data.orders.forEach(order => {
+        order.Items.forEach((item, i, arr) => {
+          arr[i] = orderItemMap.get(item.ID);
+        });
+      });
+    }
+
     yield put(action(SET_USER_DATA, data));
 
     if (redirectPath) {
