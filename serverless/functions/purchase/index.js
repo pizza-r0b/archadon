@@ -5,8 +5,10 @@ const uuid = require('uuid/v1');
 
 const { ORDER_ITEM_TABLE, ORDER_DATA_TABLE, PRODUCT_ITEM_TABLE } = process.env;
 
-const createCharge = ({ token, email }) => ({ Responses }) => new Promise((resolve, reject) => {
-  const items = Responses[PRODUCT_ITEM_TABLE] || [];
+let processedItems;
+
+const createCharge = ({ token, email }) => (items) => new Promise((resolve, reject) => {
+  processedItems = items;
   const price = items.reduce((initialPrice, item) => {
     initialPrice += item.Price;
     return initialPrice;
@@ -73,7 +75,7 @@ const putOrderData = Items => ({ ID, price, ChargeID, Brand, CustomerData, Last4
     Brand,
     Last4,
     CustomerData,
-    Items,
+    Items: processedItems,
     ChargeType: 'stripe',
   }).then(() => resolve({ ID }))
     .catch(e => reject({ code: 'order-creation-failure', debug: e }));
@@ -136,6 +138,16 @@ function purchase(event, context, callback) {
   // entails fetching product data from database
   // make sure product is available
   DolliDB.GetBatch(process.env.PRODUCT_ITEM_TABLE, Items.map(item => item.ID))
+    .then(({ Responses }) => {
+      const items = Responses[PRODUCT_ITEM_TABLE] || [];
+      const promises = items.map((item) => new Promise((_resolve, _reject) => {
+        DolliDB.GetData(process.env.PRODUCT_DATA_TABLE, item.ID).then(productData => {
+          delete item.CreatedBy;
+          _resolve(Object.assign({}, item, productData));
+        }).catch(e => _reject(e));
+      }));
+      return Promise.all(promises);
+    })
     .then(createCharge({ token: Token, email: CustomerData.email }))
     .then(createOrder(CustomerData, UserID))
     .then(putOrderData(Items))

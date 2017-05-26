@@ -268,6 +268,7 @@ functions:
       ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
       ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
       PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       STRIPE_SECRET_KEY: ${file(./secrets.yml):stripeSecretKey}
 
   getProductData:

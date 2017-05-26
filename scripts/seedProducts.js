@@ -1,7 +1,7 @@
 const productData = require('./product-data');
 const fetch = require('node-fetch');
 
-const authtoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5NDcyNTQ1OSwiZXhwIjoxNDk0NzMyNjU5fQ.Uob21svk3c7sHyxDg_kagXFrE_NXUslDglySLsP2CWk';
+const authtoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5NTc3NDMyMCwiZXhwIjoxNDk1NzgxNTIwfQ.ztWhG_pjGSSsUkeF3rBXfBjKJTeT4qxQCQcrlPiROJk';
 
 let count = 1;
 

@@ -150,11 +150,11 @@ var _stringify = __webpack_require__(20);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _slicedToArray2 = __webpack_require__(14);
+var _slicedToArray2 = __webpack_require__(15);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _entries = __webpack_require__(13);
+var _entries = __webpack_require__(14);
 
 var _entries2 = _interopRequireDefault(_entries);
 
@@ -297,24 +297,47 @@ module.exports = require("babel-runtime/helpers/defineProperty");
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("babel-runtime/core-js/object/entries");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var IMAGE_ORIGIN = exports.IMAGE_ORIGIN = process.env.NODE_ENV !== 'production' ? 'https://assets.dev.archadon.com' : 'https://assets.dev.archadon.com';
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(IMAGE_ORIGIN, 'IMAGE_ORIGIN', '/Users/realseanp1/Projects/archadon/src/client/constants.js');
+}();
+
+;
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/helpers/slicedToArray");
+module.exports = require("babel-runtime/core-js/object/entries");
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-router");
+module.exports = require("babel-runtime/helpers/slicedToArray");
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router");
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -395,7 +418,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -409,7 +432,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ProductList = __webpack_require__(16);
+var _ProductList = __webpack_require__(17);
 
 var _ProductList2 = _interopRequireDefault(_ProductList);
 
@@ -445,7 +468,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,29 +512,6 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(Svg, "Svg", "/Users/realseanp1/Projects/archadon/src/client/components/ui/Svg.jsx");
 
   __REACT_HOT_LOADER__.register(_default, "default", "/Users/realseanp1/Projects/archadon/src/client/components/ui/Svg.jsx");
-}();
-
-;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var IMAGE_ORIGIN = exports.IMAGE_ORIGIN = process.env.NODE_ENV !== 'production' ? 'https://assets.dev.archadon.com' : 'https://assets.dev.archadon.com';
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(IMAGE_ORIGIN, 'IMAGE_ORIGIN', '/Users/realseanp1/Projects/archadon/src/client/constants.js');
 }();
 
 ;
@@ -613,7 +613,7 @@ var _Cart = __webpack_require__(36);
 
 var _Cart2 = _interopRequireDefault(_Cart);
 
-var _Shop = __webpack_require__(17);
+var _Shop = __webpack_require__(18);
 
 var _Shop2 = _interopRequireDefault(_Shop);
 
@@ -621,7 +621,7 @@ var _OrderConfirmation = __webpack_require__(43);
 
 var _OrderConfirmation2 = _interopRequireDefault(_OrderConfirmation);
 
-var _reactRouter = __webpack_require__(15);
+var _reactRouter = __webpack_require__(16);
 
 __webpack_require__(58);
 
@@ -1159,7 +1159,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
-var _Constants = __webpack_require__(19);
+var _Constants = __webpack_require__(13);
 
 var _Actions = __webpack_require__(1);
 
@@ -1347,11 +1347,11 @@ var _keys = __webpack_require__(21);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _slicedToArray2 = __webpack_require__(14);
+var _slicedToArray2 = __webpack_require__(15);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _entries = __webpack_require__(13);
+var _entries = __webpack_require__(14);
 
 var _entries2 = _interopRequireDefault(_entries);
 
@@ -1812,7 +1812,7 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 var _Utils = __webpack_require__(4);
 
-var _ProductList = __webpack_require__(16);
+var _ProductList = __webpack_require__(17);
 
 var _ProductList2 = _interopRequireDefault(_ProductList);
 
@@ -1962,7 +1962,7 @@ var _rug5 = __webpack_require__(62);
 
 var _rug6 = _interopRequireDefault(_rug5);
 
-var _Shop = __webpack_require__(17);
+var _Shop = __webpack_require__(18);
 
 var _Shop2 = _interopRequireDefault(_Shop);
 
@@ -2658,7 +2658,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(3);
 
-var _Svg = __webpack_require__(18);
+var _Svg = __webpack_require__(19);
 
 var _Svg2 = _interopRequireDefault(_Svg);
 
@@ -2904,7 +2904,7 @@ var _reactRedux = __webpack_require__(2);
 
 var _reactRouterDom = __webpack_require__(3);
 
-var _Constants = __webpack_require__(19);
+var _Constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3015,7 +3015,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Svg = __webpack_require__(18);
+var _Svg = __webpack_require__(19);
 
 var _Svg2 = _interopRequireDefault(_Svg);
 
@@ -3027,7 +3027,7 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 var _reactRedux = __webpack_require__(2);
 
-var _Constants = __webpack_require__(19);
+var _Constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3592,11 +3592,11 @@ var _extends3 = __webpack_require__(10);
 
 var _extends4 = _interopRequireDefault(_extends3);
 
-var _slicedToArray2 = __webpack_require__(14);
+var _slicedToArray2 = __webpack_require__(15);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _entries = __webpack_require__(13);
+var _entries = __webpack_require__(14);
 
 var _entries2 = _interopRequireDefault(_entries);
 
@@ -4068,7 +4068,7 @@ var _App2 = _interopRequireDefault(_App);
 
 var _server = __webpack_require__(32);
 
-var _reactRouter = __webpack_require__(15);
+var _reactRouter = __webpack_require__(16);
 
 var _reactRedux = __webpack_require__(2);
 
