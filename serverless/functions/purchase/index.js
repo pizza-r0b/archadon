@@ -47,6 +47,8 @@ const createOrder = (CustomerData, UserID) => ({ price, ChargeID, Brand, Last4 }
   DolliDB.PutItem(ORDER_ITEM_TABLE, {
     ID,
     UserID,
+    CreatedAt: Date(),
+    Status: 'Processing',
     Email: CustomerData.email,
   }, null)
     .then(() => resolve({ ID, price, ChargeID, Brand, Last4, CustomerData }))

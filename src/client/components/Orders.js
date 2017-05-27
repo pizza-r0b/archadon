@@ -8,6 +8,10 @@ function OrderItem({ item }) {
   return (
     <div className="order-item">
       <img src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
+      <div className="margin--left-2">
+        <p>{item.Name} {item.Price.toFixed(2)}</p>
+        <small>SKU: {item.ID}</small>
+      </div>
     </div>
   )
 }
@@ -15,7 +19,13 @@ function OrderItem({ item }) {
 function OrderBox({ order }) {
   return (
     <div className="item-box margin--y-3">
-      <p>Order ID: <span className="strong">{order.ID}</span></p>
+      <p><small>Order ID: {order.ID}</small></p>
+      <p><small>Status: <strong className={order.Status.toLowerCase()}>{order.Status}</strong></small></p>
+      <p><small>{order.Brand} ****{order.Last4}</small></p>
+
+      <p className="strong">Total: ${order.Price.toFixed(2)}</p>
+
+
       {order.Items.map((item, i) => <OrderItem key={i} item={item} />)}
     </div>
   );
@@ -28,7 +38,7 @@ function Orders({ orders }) {
       {orders.length === 0 && (
         <div className="flex-grow-1">
           <p className="margin--bottom-3">You don't have any recent orders.</p>
-          <Link to="/shop" className="btn">Shop Now</Link>
+          <Link to="/shop" className="btn btn--first">Shop Now</Link>
         </div>
       )}
 

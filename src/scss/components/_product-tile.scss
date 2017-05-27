@@ -53,7 +53,7 @@
 
 @include tablet() {
   .product-tile {
-    margin-bottom: $spacer * 5px;
+    margin-bottom: $spacer * 1px;
 
     &-padding-x {
       padding: 0 $spacer * 5px;

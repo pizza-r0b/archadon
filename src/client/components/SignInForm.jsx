@@ -6,7 +6,7 @@ import SignUpForm from './Register';
 
 function SignInForm({ path }) {
   return (
-    <div className="full-width padding--top-15 flex-parent global-padding flex-align-start flex-justify-center">
+    <div className="full-width padding--top-15 flex-grow-1 flex-parent global-padding flex-align-start flex-justify-center">
       {path === '/login' ? <LogInForm /> : <SignUpForm />}
     </div>
   );

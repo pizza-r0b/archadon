@@ -15,7 +15,33 @@ Properties:
     -
       AttributeName: Email
       AttributeType: S
+    -
+      AttributeName: CreatedAt
+      AttributeType: S
+    -
+      AttributeName: Status
+      AttributeType: S
   GlobalSecondaryIndexes:
+    -
+      IndexName: createdAt
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: CreatedAt
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+    -
+      IndexName: status
+      Projection:
+        ProjectionType: ALL
+      KeySchema:
+        - AttributeName: Status
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
     -
       IndexName: userId
       Projection:
