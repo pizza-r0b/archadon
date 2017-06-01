@@ -132,7 +132,6 @@ export function* logInSaga({ payload: { email, password } }) {
 }
 
 export function* getProductListSaga(actionString, { payload: { startKey } }) {
-  console.log(actionString);
   const actionType = typeof actionString === 'string' ? actionString : PRODUCT_LIST_LOADED;
   const { status, response: { LastEvaluatedKey, Items, Count } } = yield call(requestProductList, startKey);
   if (status === 200) {
