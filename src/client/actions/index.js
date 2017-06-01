@@ -22,4 +22,6 @@ export default keyMirror({
   SET_LOADING_PAGE: null,
   SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
+  LOAD_MORE: null,
+  LOAD_MORE_DONE: null,
 });

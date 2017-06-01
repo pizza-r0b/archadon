@@ -26,6 +26,7 @@ export default function user(state: StateType = { Favorites: [], FavoritesDetail
         FavoritesDetail: action.payload || [],
       };
     case TOGGLE_FAVORITE:
+      if (!state.authToken) return state;
       const ID = action.payload;
       state.Favorites = state.Favorites || [];
       const item = state.Favorites.find((p) => p === ID);

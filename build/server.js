@@ -107,7 +107,9 @@ var _default = (0, _Utils.keyMirror)({
   FAVORITES_LOADED: null,
   SET_LOADING_PAGE: null,
   SET_ORDER_CONFIRMATION: null,
-  REPLACE_CART: null
+  REPLACE_CART: null,
+  LOAD_MORE: null,
+  LOAD_MORE_DONE: null
 });
 
 exports.default = _default;
@@ -357,7 +359,16 @@ var _ProductTile = __webpack_require__(45);
 
 var _ProductTile2 = _interopRequireDefault(_ProductTile);
 
+var _Utils = __webpack_require__(4);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_MORE = _Actions2.default.LOAD_MORE;
+
 
 function ProductList(_ref) {
   var _ref$products = _ref.products,
@@ -366,7 +377,8 @@ function ProductList(_ref) {
       hideBtn = _ref.hideBtn,
       _ref$lastEvaluatedKey = _ref.lastEvaluatedKey;
   _ref$lastEvaluatedKey = _ref$lastEvaluatedKey === undefined ? {} : _ref$lastEvaluatedKey;
-  var ID = _ref$lastEvaluatedKey.ID;
+  var lastEvaluatedKey = _ref$lastEvaluatedKey.ID,
+      loadMore = _ref.loadMore;
 
   return _react2.default.createElement(
     'div',
@@ -378,18 +390,19 @@ function ProductList(_ref) {
         return _react2.default.createElement(_ProductTile2.default, { key: product.ID, product: product });
       })
     ),
-    !hideBtn && ID && _react2.default.createElement(
+    !hideBtn && lastEvaluatedKey && _react2.default.createElement(
       'div',
       { className: 'flex-parent flex-align-center flex-justify-center' },
       _react2.default.createElement(
         'button',
-        { className: 'btn btn--first' },
+        { onClick: function onClick() {
+            loadMore(lastEvaluatedKey);
+          }, className: 'btn btn--first' },
         'Load More'
       )
     )
   );
 }
-
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
@@ -398,7 +411,15 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps)(ProductList);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    loadMore: function loadMore(startKey) {
+      dispatch((0, _Utils.action)(LOAD_MORE, { startKey: startKey }));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ProductList);
 
 exports.default = _default;
 ;
@@ -410,7 +431,11 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(ProductList, 'ProductList', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 
+  __REACT_HOT_LOADER__.register(LOAD_MORE, 'LOAD_MORE', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
+
   __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 }();
@@ -3891,6 +3916,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _toConsumableArray2 = __webpack_require__(68);
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _extends2 = __webpack_require__(10);
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -3903,7 +3932,8 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PRODUCT_LIST_LOADED = _Actions2.default.PRODUCT_LIST_LOADED;
+var PRODUCT_LIST_LOADED = _Actions2.default.PRODUCT_LIST_LOADED,
+    LOAD_MORE_DONE = _Actions2.default.LOAD_MORE_DONE;
 function products() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
@@ -3911,6 +3941,11 @@ function products() {
   switch (action.type) {
     case PRODUCT_LIST_LOADED:
       return (0, _extends3.default)({}, state, action.payload);
+    case LOAD_MORE_DONE:
+      var lastItems = state.Items || [];
+      return (0, _extends3.default)({}, state, action.payload, {
+        Items: [].concat((0, _toConsumableArray3.default)(lastItems), (0, _toConsumableArray3.default)(action.payload.Items))
+      });
     default:
       return state;
   }
@@ -3925,6 +3960,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(products, 'products', '/Users/realseanp1/Projects/archadon/src/client/reducers/products.js');
 
   __REACT_HOT_LOADER__.register(PRODUCT_LIST_LOADED, 'PRODUCT_LIST_LOADED', '/Users/realseanp1/Projects/archadon/src/client/reducers/products.js');
+
+  __REACT_HOT_LOADER__.register(LOAD_MORE_DONE, 'LOAD_MORE_DONE', '/Users/realseanp1/Projects/archadon/src/client/reducers/products.js');
 }();
 
 ;
@@ -4016,6 +4053,7 @@ function user() {
         FavoritesDetail: action.payload || []
       });
     case TOGGLE_FAVORITE:
+      if (!state.authToken) return state;
       var ID = action.payload;
       state.Favorites = state.Favorites || [];
       var item = state.Favorites.find(function (p) {
@@ -4354,6 +4392,12 @@ module.exports = require("react-addons-transition-group");
 /***/ (function(module, exports) {
 
 module.exports = require("velocity-animate");
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/helpers/toConsumableArray");
 
 /***/ })
 /******/ ]);

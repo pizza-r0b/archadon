@@ -22,6 +22,8 @@ const {
   FAVORITES_LOADED,
   REPLACE_CART,
   REMOVE_FROM_CART,
+  LOAD_MORE_DONE,
+  LOAD_MORE,
   LOAD_FAVORITES,
   SET_ORDER_CONFIRMATION,
 } = Actions;
@@ -129,10 +131,12 @@ export function* logInSaga({ payload: { email, password } }) {
   }
 }
 
-export function* getProductListSaga({ payload: { startKey } }) {
+export function* getProductListSaga(actionString, { payload: { startKey } }) {
+  console.log(actionString);
+  const actionType = typeof actionString === 'string' ? actionString : PRODUCT_LIST_LOADED;
   const { status, response: { LastEvaluatedKey, Items, Count } } = yield call(requestProductList, startKey);
   if (status === 200) {
-    yield put(action(PRODUCT_LIST_LOADED, {
+    yield put(action(actionType, {
       LastEvaluatedKey,
       Items,
       Count,
@@ -306,6 +310,7 @@ export function* loadFavoritesSaga() {
 
 export default function* rootSaga() {
   yield [
+    takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
     takeLatest(LOAD_FAVORITES, loadFavoritesSaga),
     takeLatest(LOG_IN, logInSaga),
     takeLatest(APP_LOAD, getDataFromLocalStorage),
