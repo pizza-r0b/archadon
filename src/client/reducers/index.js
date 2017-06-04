@@ -7,6 +7,7 @@ import redirectPath from './redirectPath';
 import products from './products';
 import cart from './cart';
 import orderConfirmation from './orderConfirmation';
+import productDetails from './productDetails';
 
 export default combineReducers({
   router,
@@ -14,6 +15,7 @@ export default combineReducers({
   cart,
   redirectPath,
   orderConfirmation,
+  productDetails,
   errors,
   loading,
   products,

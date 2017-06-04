@@ -16,6 +16,10 @@
   transform-origin: center;
 }
 
+.btn:focus {
+  outline: none;
+}
+
 .btn--white {
   border-color: $white;
   color: $white;

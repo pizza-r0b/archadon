@@ -19,8 +19,10 @@ const {
   PURCHASE,
   APP_LOAD,
   SET_LOADING_PAGE,
+  GET_PRODUCT_DETAILS,
   FAVORITES_LOADED,
   REPLACE_CART,
+  PRODUCT_DETAIL_LOADED,
   REMOVE_FROM_CART,
   LOAD_MORE_DONE,
   LOAD_MORE,
@@ -56,6 +58,10 @@ const getRedirectPath = state => state.redirectPath;
 const getCurrentPath = state => state.router.location.pathname;
 
 const getUserFavorites = state => state.user.Favorites || [];
+
+const getLoadedProducts = state => state.products.Items;
+
+const getProductDetails = state => state.productDetails;
 
 export function saveToLocalStorage(authToken, ID) {
   window.localStorage.setItem('archadonauth', JSON.stringify({
@@ -168,6 +174,13 @@ export function* getProductDataSaga({ payload: product }) {
   if (typeof product === 'string') {
     const cartItems = yield select(getCartItems);
     if (cartItems.find(p => p.ID === product)) return;
+    const allLoadedProducts = yield select(getProductDetails);
+    allLoadedProducts.push(...yield select(getLoadedProducts));
+    const productObject = allLoadedProducts.find(p => p.ID === product);
+    if (productObject) {
+      yield put(action(PRODUCT_DATA_LOADED, productObject));
+      return;
+    }
     try {
       const { response: { data } } = yield call(requestProductData, product);
       if (Object.keys(data).length > 0) {
@@ -178,6 +191,35 @@ export function* getProductDataSaga({ payload: product }) {
 
     }
   }
+}
+
+export function* getProductDetailSaga({ payload: id }) {
+  yield put(action(LOADING, true));
+  const products = yield select(getProductDetails);
+  let product = products.find(p => p.ID === id);
+  if (product) {
+    yield put(push(`/product/${product.Name}/${product.ID}`));
+    yield put(action(LOADING, false));
+    return;
+  }
+  const allProducts = yield select(getLoadedProducts);
+  product = allProducts.find(p => p.ID === id);
+
+  if (!product) {
+    try {
+      const { response: { data } } = yield call(requestProductData, product);
+      if (Object.keys(data).length > 0) {
+        data.ID = id;
+        product = data;
+      }
+    } catch (e) { console.error('Error getting product'); }
+  }
+
+  yield put(action(PRODUCT_DETAIL_LOADED, product));
+
+  yield put(push(`/product/${product.Name}/${product.ID}`));
+
+  yield put(action(LOADING, false));
 }
 
 export function* addToCartLocalStorage() {
@@ -307,6 +349,7 @@ export function* loadFavoritesSaga() {
 }
 
 
+
 export default function* rootSaga() {
   yield [
     takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
@@ -315,6 +358,7 @@ export default function* rootSaga() {
     takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
+    takeLatest(GET_PRODUCT_DETAILS, getProductDetailSaga),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),

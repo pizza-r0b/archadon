@@ -10,6 +10,7 @@ import Logout from 'Components/Logout';
 import Account from 'Components/Account';
 import SignInForm from 'Components/SignInForm';
 import Checkout from 'Components/Checkout';
+import ProductDetail from 'Components/ProductDetail';
 import Cart from 'Components/Cart';
 import Shop from 'Components/Shop';
 import OrderConfirmation from 'Components/OrderConfirmation';
@@ -36,9 +37,13 @@ class ScrollToTop extends Component {
   props: {
     location: Object,
     children: Object,
+    match: Object,
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.match.path === '/' || this.props.match.path === '/shop') {
+      return;
+    }
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
     }
@@ -52,7 +57,10 @@ class ScrollToTop extends Component {
 const ScrollToTopWithRouter = withRouter(ScrollToTop);
 
 class App extends Component {
-
+  props: {
+    loaded: Function,
+    loading: Object,
+  }
   state = {
     scrolled: false,
   }
@@ -81,7 +89,7 @@ class App extends Component {
       <ScrollToTopWithRouter>
         <div className="layout">
           <Navigation scrolled={this.state.scrolled} />
-          <div style={{ height: '100%' }} className="flex-grow-1 flex-parent">
+          <div style={{/*height: '100%'*/}} className="flex-grow-1 flex-parent">
             {
               this.props.loading.full ?
                 <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
@@ -96,6 +104,7 @@ class App extends Component {
                 <Route key="logout" path="/logout" component={Logout} />,
                 <Route key="cart" path="/cart" component={Cart} />,
                 <Route key="checkout" path="/checkout" component={Checkout} />,
+                <Route key="detail" path="/product/:name/:id" component={ProductDetail} />,
                 <Route key="confirm" path="/order-confirmation" component={OrderConfirmation} />,
               ]
             }
@@ -106,12 +115,6 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  ui: React.PropTypes.object,
-  loaded: React.PropTypes.func,
-  loading: React.PropTypes.bool,
-};
 
 const mapDispatchToProps = dispatch => ({
   loaded() {

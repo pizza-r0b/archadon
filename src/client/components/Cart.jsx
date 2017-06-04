@@ -6,26 +6,28 @@ import { Link } from 'react-router-dom';
 import { action } from 'Utils';
 const { REMOVE_FROM_CART } = actions;
 
-let CartItem = ({ item, removeFromCart }) => {
-  return (
-    <div className="cart-item">
-      <div className="img-wrap">
-        <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
-        <div>
-          <div>{item.Name}</div>
-          <div>{item.Width} x {item.Height}</div>
-        </div>
-      </div>
-      <div className="details">
-        <span className="strong">${item.Price}</span>
-        <div className="margin--top-3">
-          <span onClick={removeFromCart(item.ID)} style={{ cursor: 'pointer' }} className="font-color--first">Remove</span>
-        </div>
-      </div>
+type CartItemProps = {
+  item: Object,
+  removeFromCart: Function,
+}
 
+let CartItem = ({ item, removeFromCart }: CartItemProps) => (
+  <div className="cart-item">
+    <div className="img-wrap">
+      <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
+      <div>
+        <div>{item.Name}</div>
+        <div>{item.Width} x {item.Height}</div>
+      </div>
     </div>
-  );
-};
+    <div className="details">
+      <span className="strong">${item.Price}</span>
+      <div className="margin--top-3">
+        <span onClick={removeFromCart(item.ID)} style={{ cursor: 'pointer' }} className="font-color--first">Remove</span>
+      </div>
+    </div>
+  </div>
+);
 
 const mapDispatchToProps = dispatch => ({
   removeFromCart: (ID) => () => dispatch(action(REMOVE_FROM_CART, ID)),
@@ -39,7 +41,7 @@ function Cart({ cart: { items, totalPrice } }) {
       {items.length === 0 &&
         <div className="flex-parent flex-col flex-grow-1 flex-align-center flex-justify-center">
           <h2>Your cart is empty</h2>
-          <div className="btn btn--first margin--top-3">Shop Now</div>
+          <Link to="/shop" className="btn btn--first margin--top-3">Shop Now</Link>
         </div>
       }
       {items.length > 0 && (
@@ -71,7 +73,5 @@ function Cart({ cart: { items, totalPrice } }) {
 const mapStateToProps = state => ({
   cart: state.cart,
 });
-
-
 
 export default connect(mapStateToProps)(Cart);

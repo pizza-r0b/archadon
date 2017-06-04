@@ -1,0 +1,17 @@
+.product-detail-image img {
+  max-width: 100%;
+}
+
+.product-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+@include tablet() {
+  .product-detail-image, .product-detail-info {
+    width: 50%;
+  }
+  .product-detail {
+    flex-direction: row;
+  }
+}

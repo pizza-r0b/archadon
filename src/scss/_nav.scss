@@ -33,6 +33,7 @@
   border-right: 2px solid $light;
   width: 170px;
   padding-right: $spacer * 5px;
+  flex-shrink: 0;
 
   &-link {
     display: block;

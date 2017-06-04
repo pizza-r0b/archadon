@@ -1,20 +1,41 @@
 .order-item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   margin: $spacer * 3px 0;
+  &:nth-child(1) {
+    margin-top: 0;
+  }
   img {
     max-width: 150px;
     width: 100%;
   }
 }
 
+.item-box {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+
+  .details {
+    margin-right: 0;
+  }
+}
+
 
 @include tablet() {
   .order-item {
+    flex-direction: row;
     img {
       max-width: 150px;
+    }
+  }
+  .item-box {
+    flex-direction: row;
+
+    .details {
+      margin-right: $spacer * 3px;
     }
   }
 }

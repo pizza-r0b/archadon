@@ -24,4 +24,6 @@ export default keyMirror({
   REPLACE_CART: null,
   LOAD_MORE: null,
   LOAD_MORE_DONE: null,
+  PRODUCT_DETAIL_LOADED: null,
+  GET_PRODUCT_DETAILS: null,
 });

@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
 import Svg from 'Ui/Svg';
+import FavoriteBtn from 'Ui/FavoriteBtn';
 import { action } from 'Utils';
 import actions from 'Actions';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN } from 'Constants';
+import ProductDetailLink from 'Components/ProductDetailLink';
 
 const {
   ADD_TO_CART,
@@ -36,8 +38,6 @@ function ProductTile({
   addToCart,
   cart: { items: cartItems },
   removeFromCart,
-  toggleFavorite,
-  favorites,
 }: ProductTileProps) {
   const inCart = cartItems.find((item) => {
     if (!item) {
@@ -68,16 +68,18 @@ function ProductTile({
       <div className="product-tile-inner flex-parent flex-col flex-justify-between">
         <div className="product-tile-padding-x product-tile-padding-top">
           <div className="product-tile-img flex-parent flex-align-center flex-justify-center">
-            <img src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />
+            <ProductDetailLink product={product}>
+              <img src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />
+            </ProductDetailLink>
           </div>
           <div className="flex-parent flex-row flex-justify-between margin--top-1">
             <div>
-              <h2>{product.Name}</h2>
+              <ProductDetailLink product={product}>
+                <h2>{product.Name}</h2>
+              </ProductDetailLink>
               <p>{`${product.Width}x${product.Height}`}</p>
             </div>
-            <div onClick={toggleFavorite(product.ID)} className="heart">
-              <Svg color="#803BDD" variant={favorites.includes(product.ID) ? 'icon-heart-filled' : 'icon-heart'} />
-            </div>
+            <FavoriteBtn id={product.ID} />
           </div>
         </div>
         <div className="flex-parent flex-align-center flex-justify-between product-tile-padding-x product-tile-price-bar margin--top-5">
@@ -92,12 +94,10 @@ function ProductTile({
 const mapDispatchToProps = dispatch => ({
   addToCart: (product) => () => dispatch(action(ADD_TO_CART, product)),
   removeFromCart: (ID) => () => dispatch(action(REMOVE_FROM_CART, ID)),
-  toggleFavorite: (ID) => () => dispatch((action(TOGGLE_FAVORITE, ID))),
 });
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  favorites: state.user.Favorites || [],
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductTile);

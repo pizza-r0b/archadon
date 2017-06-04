@@ -13,14 +13,32 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const API_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/dev/';
+
 const app = express();
 
 app.use(express.static('public'));
 
+const productDetails = [];
+
+app.use('/product/:name/:id', async (req, res, next) => {
+  try {
+    const response = await fetch(`${API_URL}product/v1/data/${req.params.id}`);
+    const { data } = await response.json();
+    if (Object.keys(data).length > 0) {
+      data.ID = req.params.id;
+      productDetails.push(data);
+    }
+    next();
+  } catch (e) {
+    next();
+  }
+});
+
 app.use(async (req, res, next) => {
-  const response = await fetch(`${process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/dev/'}product/v1/list`);
+  const response = await fetch(`${API_URL}product/v1/list`);
   const products = await response.json();
-  const store = makeStore({ products });
+  const store = makeStore({ products, productDetails });
   try {
     const context = {};
     res.status(200).send(html(renderToString(
