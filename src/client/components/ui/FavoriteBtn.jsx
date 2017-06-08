@@ -15,7 +15,7 @@ type FavoriteBtnProps = {
 
 function FavoriteBtn({ favorites, toggleFavorite, id }: FavoriteBtnProps) {
   return (
-    <div onClick={toggleFavorite(id)} className="heart">
+    <div style={{ cursor: 'pointer' }} onClick={toggleFavorite(id)} className="heart">
       <Svg color="#803BDD" variant={favorites.includes(id) ? 'icon-heart-filled' : 'icon-heart'} />
     </div>
   );

@@ -2,16 +2,34 @@
   max-width: 100%;
 }
 
+.product-detail-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .product-detail {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
+
+  .product-detail-image {
+    margin: 0 0 $spacer * 3 0;
+  }
 
 @include tablet() {
   .product-detail-image, .product-detail-info {
     width: 50%;
   }
+  .product-detail-image {
+    margin: 0 $spacer * 3 0 0;
+  }
   .product-detail {
     flex-direction: row;
+      align-items: center;
+    justify-content: center;
   }
 }

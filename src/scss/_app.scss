@@ -34,6 +34,13 @@ svg {
     padding: 0 30px;
 }
 
+hr {
+    outline: 0;
+    border: 0;
+    height: 1px;
+    background-color: $light;
+}
+
 .global-margin {
     margin: 15px;
 }
