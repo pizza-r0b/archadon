@@ -7,7 +7,7 @@ const purchase = require('./purchase');
 module.exports = {
   // user
   createUser: user.createUser,
-  createUserProfile: user.createUserProfile,
+  onUserCreate: user.onUserCreate,
   loginUser: user.login,
   getUserData: user.getUserData,
   updateUserPassword: user.updateUserPassword,

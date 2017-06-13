@@ -10,7 +10,7 @@ const updateUserProfile = require('./update/updateUserProfile');
 
 module.exports = {
   createUser: create.createUser,
-  createUserProfile: create.createUserProfile,
+  onUserCreate: create.onUserCreate,
   updateUserPassword,
   updateUserProfile,
   updateUserEmail,

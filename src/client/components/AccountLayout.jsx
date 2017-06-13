@@ -10,7 +10,7 @@ function AccountLayout() {
         <h2>My Account</h2>
         <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/orders">Orders</NavLink>
         <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/favorites">Favorites</NavLink>
-        <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/settings">Settings</NavLink>
+        {/* <NavLink className="auth-nav-bar-link" activeClassName="active" to="/account/settings">Settings</NavLink> */}
       </div>
       <div className="flex-grow-1 flex-parent account-content">
         <Switch>

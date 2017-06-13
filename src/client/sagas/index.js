@@ -336,19 +336,23 @@ export function* toggleFavoriteSaga() {
 export function* loadFavoritesSaga() {
   yield put(action(SET_LOADING_PAGE, 'favorites'));
   const { authToken, ID } = yield select(getAuthData);
-  if (!authToken || !ID) return;
+  if (!authToken || !ID) {
+    yield put(action(SET_LOADING_PAGE, ''));
+    return;
+  }
   try {
     const favorites = yield select(getUserFavorites);
-    if (!favorites.length) return;
+    if (!favorites.length) {
+      yield put(action(SET_LOADING_PAGE, ''));
+      return;
+    }
     const { response: data } = yield call(requestBatch, favorites);
     yield put(action(FAVORITES_LOADED, data));
   } catch (e) {
-
+    yield put(action(SET_LOADING_PAGE, ''));
   }
   yield put(action(SET_LOADING_PAGE, ''));
 }
-
-
 
 export default function* rootSaga() {
   yield [

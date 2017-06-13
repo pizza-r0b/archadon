@@ -23,6 +23,10 @@ provider:
         - "dynamodb:*"
         - "s3:*"
       Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "ses:SendRawEmail"
+      Resource: "arn:aws:ses:us-east-1:478433309488:identity/archadon.com"
 custom:
   env: ${opt:env, self:provider.stage}
   UserDataTable: ${self:resources.Resources.UserDataTable.Properties.TableName}
@@ -36,10 +40,11 @@ package:
  include:
   - node_modules/**
   - functions/utils/**
+  - templates/**
 
 functions:
   listenToCreateUserStream:
-    handler: functions/handlers.createUserProfile
+    handler: functions/handlers.onUserCreate
     events:
        - stream:
           type: dynamodb

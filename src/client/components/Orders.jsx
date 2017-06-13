@@ -44,10 +44,10 @@ function OrderBox({ order }: { order: Object }) {
 function Orders({ orders }: { orders: Array<Object> }) {
   return (
     <div className="flex-grow-1 flex-parent flex-col">
-      <h2 className="margin--bottom-1">Orders</h2>
+      <h2 className="margin--bottom-5">Orders</h2>
       {orders.length === 0 && (
         <div className="flex-grow-1">
-          <p className="margin--bottom-3">You don't have any recent orders.</p>
+          <p className="margin--bottom-8">You don't have any recent orders.</p>
           <Link to="/shop" className="btn btn--first">Shop Now</Link>
         </div>
       )}

@@ -60,7 +60,7 @@ class LogInForm extends React.Component {
             </div>
           </div>
           <div className="form-content">
-            {(this.props.error || this.state.error.msg) && <p className="font-color--danger margin--top-0">{this.props.error || this.state.error.msg}</p>}
+            {(this.props.error || this.state.error.msg) && <p className="font-color--danger margin--top-0 margin--bottom-3">{this.props.error || this.state.error.msg}</p>}
             <button className="btn btn--first">Sign Up</button>
             <div className="margin--top-3"><span>{'Have an account?'} <Link to="/login">Log in</Link>.</span></div>
           </div>

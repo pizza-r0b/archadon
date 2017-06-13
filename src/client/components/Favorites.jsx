@@ -3,10 +3,18 @@ import actions from 'Actions';
 import { action } from 'Utils';
 import ProductList from 'Components/ProductList';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { LOAD_FAVORITES } = actions;
 
 class Favorites extends Component {
+  props: {
+    loadFavorites: Function,
+    loading: {
+      page: string,
+    }
+  }
+
   componentDidMount() {
     this.props.loadFavorites();
   }
@@ -22,10 +30,23 @@ class Favorites extends Component {
           :
           (
             <div>
-              <h2 className="title">Favorites</h2>
-              <div className="favorites">
-                <ProductList className="flex-justify-start" hideBtn products={this.props.favorites} />
-              </div>
+              <h2 className="title margin--bottom-5">Favorites</h2>
+              {
+                this.props.favorites.length > 0 ?
+                  (
+                    <div className="favorites">
+                      <ProductList className="flex-justify-start" hideBtn products={this.props.favorites} />
+                    </div>
+                  )
+                  :
+                  (
+                    <div className="flex-grow-1">
+                      <p className="margin--bottom-8">Aww. You haven't favorited anything yet.</p>
+                      <Link to="/shop" className="btn btn--first">Shop Now</Link>
+                    </div>
+                  )
+              }
+
             </div>
           )
         }

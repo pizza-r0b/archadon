@@ -4,6 +4,7 @@ const DolliDB = require('../../utils/DolliDB/build/main.min.js');
 const createJwt = require('../../utils/createJwt');
 const getUserItemData = require('../../utils/getUserItemData');
 const corsRes = require('../../utils/corsRes');
+const sendMail = require('../../utils/sendMail');
 
 function createUser(event, context, callback) {
   const data = JSON.parse(event.body);
@@ -42,17 +43,30 @@ function createUser(event, context, callback) {
   });
 }
 
-function listenToStreamAndcreateUserProfile(event, context, callback) {
+function onUserCreate(event, context, callback) {
   event.Records.forEach(record => {
     if (record.eventName === 'INSERT') {
-      const Email = record.dynamodb.NewImage.Email.S;
-      // TODO: send welcome email  via SES
+      const email = record.dynamodb.NewImage.Email.S;
+      sendMail({
+        to: email,
+        subject: 'Your New Archadon.com Account',
+        template: 'new-user',
+        context: {
+          email,
+        },
+      }).then(info => {
+        console.log('New User Created');
+        console.log(info);
+        callback(null, { message: `Successfully processed ${event.Records.length} records.`, info });
+      }).catch(err => {
+        console.log('New User Error');
+        callback(err);
+      });
     }
   });
-  callback(null, `Successfully processed ${event.Records.length} records.`);
 }
 
 module.exports = {
-  createUserProfile: listenToStreamAndcreateUserProfile,
+  onUserCreate,
   createUser,
 };

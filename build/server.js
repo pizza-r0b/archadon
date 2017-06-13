@@ -144,7 +144,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = __webpack_require__(21);
+var _stringify = __webpack_require__(22);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -412,7 +412,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
-var _ProductTile = __webpack_require__(48);
+var _ProductTile = __webpack_require__(49);
 
 var _ProductTile2 = _interopRequireDefault(_ProductTile);
 
@@ -551,30 +551,113 @@ var _temp = function () {
 
 /***/ }),
 /* 21 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("babel-runtime/core-js/json/stringify");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Utils = __webpack_require__(3);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _reactRedux = __webpack_require__(2);
+
+var _Svg = __webpack_require__(15);
+
+var _Svg2 = _interopRequireDefault(_Svg);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TOGGLE_FAVORITE = _Actions2.default.TOGGLE_FAVORITE;
+
+
+function FavoriteBtn(_ref) {
+  var favorites = _ref.favorites,
+      toggleFavorite = _ref.toggleFavorite,
+      id = _ref.id;
+
+  return _react2.default.createElement(
+    'div',
+    { style: { cursor: 'pointer' }, onClick: toggleFavorite(id), className: 'heart' },
+    _react2.default.createElement(_Svg2.default, { color: '#803BDD', variant: favorites.includes(id) ? 'icon-heart-filled' : 'icon-heart' })
+  );
+}
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    toggleFavorite: function toggleFavorite(ID) {
+      return function () {
+        return dispatch((0, _Utils.action)(TOGGLE_FAVORITE, ID));
+      };
+    }
+  };
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    favorites: state.user.Favorites || []
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FavoriteBtn);
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(FavoriteBtn, 'FavoriteBtn', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
+
+  __REACT_HOT_LOADER__.register(TOGGLE_FAVORITE, 'TOGGLE_FAVORITE', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
+
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
+}();
+
+;
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = require("babel-runtime/helpers/toConsumableArray");
+module.exports = require("babel-runtime/core-js/json/stringify");
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-router-redux");
+module.exports = require("babel-runtime/helpers/toConsumableArray");
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = require("redux");
+module.exports = require("react-router-redux");
 
 /***/ }),
 /* 25 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux");
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -608,7 +691,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Navigation = __webpack_require__(43);
+var _Navigation = __webpack_require__(44);
 
 var _Navigation2 = _interopRequireDefault(_Navigation);
 
@@ -622,31 +705,31 @@ var _reactRedux = __webpack_require__(2);
 
 var _reactRouterDom = __webpack_require__(4);
 
-var _Home = __webpack_require__(40);
+var _Home = __webpack_require__(41);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _Logout = __webpack_require__(42);
+var _Logout = __webpack_require__(43);
 
 var _Logout2 = _interopRequireDefault(_Logout);
 
-var _Account = __webpack_require__(35);
+var _Account = __webpack_require__(36);
 
 var _Account2 = _interopRequireDefault(_Account);
 
-var _SignInForm = __webpack_require__(50);
+var _SignInForm = __webpack_require__(51);
 
 var _SignInForm2 = _interopRequireDefault(_SignInForm);
 
-var _Checkout = __webpack_require__(38);
+var _Checkout = __webpack_require__(39);
 
 var _Checkout2 = _interopRequireDefault(_Checkout);
 
-var _ProductDetail = __webpack_require__(46);
+var _ProductDetail = __webpack_require__(47);
 
 var _ProductDetail2 = _interopRequireDefault(_ProductDetail);
 
-var _Cart = __webpack_require__(37);
+var _Cart = __webpack_require__(38);
 
 var _Cart2 = _interopRequireDefault(_Cart);
 
@@ -654,7 +737,7 @@ var _Shop = __webpack_require__(20);
 
 var _Shop2 = _interopRequireDefault(_Shop);
 
-var _OrderConfirmation = __webpack_require__(44);
+var _OrderConfirmation = __webpack_require__(45);
 
 var _OrderConfirmation2 = _interopRequireDefault(_OrderConfirmation);
 
@@ -841,7 +924,7 @@ var _temp2 = function () {
 ;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -852,7 +935,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = makeStore;
 
-var _redux = __webpack_require__(24);
+var _redux = __webpack_require__(25);
 
 var _reducers = __webpack_require__(55);
 
@@ -895,7 +978,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -905,7 +988,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _stringify = __webpack_require__(21);
+var _stringify = __webpack_require__(22);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
@@ -931,49 +1014,49 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/helpers/asyncToGenerator");
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-runtime/regenerator");
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("dotenv");
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = require("node-fetch");
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-dom/server");
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-hot-loader");
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1017,7 +1100,7 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 var _reactRouterDom = __webpack_require__(4);
 
-var _AccountLayout = __webpack_require__(36);
+var _AccountLayout = __webpack_require__(37);
 
 var _AccountLayout2 = _interopRequireDefault(_AccountLayout);
 
@@ -1093,7 +1176,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1109,11 +1192,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(4);
 
-var _Orders = __webpack_require__(45);
+var _Orders = __webpack_require__(46);
 
 var _Orders2 = _interopRequireDefault(_Orders);
 
-var _Favorites = __webpack_require__(39);
+var _Favorites = __webpack_require__(40);
 
 var _Favorites2 = _interopRequireDefault(_Favorites);
 
@@ -1140,11 +1223,6 @@ function AccountLayout() {
         _reactRouterDom.NavLink,
         { className: 'auth-nav-bar-link', activeClassName: 'active', to: '/account/favorites' },
         'Favorites'
-      ),
-      _react2.default.createElement(
-        _reactRouterDom.NavLink,
-        { className: 'auth-nav-bar-link', activeClassName: 'active', to: '/account/settings' },
-        'Settings'
       )
     ),
     _react2.default.createElement(
@@ -1177,7 +1255,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1366,7 +1444,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1805,7 +1883,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1851,6 +1929,8 @@ var _ProductList2 = _interopRequireDefault(_ProductList);
 
 var _reactRedux = __webpack_require__(2);
 
+var _reactRouterDom = __webpack_require__(4);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LOAD_FAVORITES = _Actions2.default.LOAD_FAVORITES;
@@ -1887,13 +1967,26 @@ var Favorites = function (_Component) {
           null,
           _react2.default.createElement(
             'h2',
-            { className: 'title' },
+            { className: 'title margin--bottom-5' },
             'Favorites'
           ),
-          _react2.default.createElement(
+          this.props.favorites.length > 0 ? _react2.default.createElement(
             'div',
             { className: 'favorites' },
             _react2.default.createElement(_ProductList2.default, { className: 'flex-justify-start', hideBtn: true, products: this.props.favorites })
+          ) : _react2.default.createElement(
+            'div',
+            { className: 'flex-grow-1' },
+            _react2.default.createElement(
+              'p',
+              { className: 'margin--bottom-8' },
+              'Aww. You haven\'t favorited anything yet.'
+            ),
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: '/shop', className: 'btn btn--first' },
+              'Shop Now'
+            )
           )
         )
       );
@@ -1941,7 +2034,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2377,7 +2470,7 @@ var _temp3 = function () {
 ;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2505,7 +2598,7 @@ var LogInForm = function (_React$Component) {
             { className: 'form-content' },
             this.props.error && _react2.default.createElement(
               'p',
-              { className: 'font-color--danger' },
+              { className: 'font-color--danger margin--bottom-3' },
               this.props.error
             ),
             _react2.default.createElement(
@@ -2575,7 +2668,7 @@ var _temp2 = function () {
 ;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2675,7 +2768,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2821,7 +2914,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2919,7 +3012,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3050,7 +3143,7 @@ function Orders(_ref3) {
     { className: 'flex-grow-1 flex-parent flex-col' },
     _react2.default.createElement(
       'h2',
-      { className: 'margin--bottom-1' },
+      { className: 'margin--bottom-5' },
       'Orders'
     ),
     orders.length === 0 && _react2.default.createElement(
@@ -3058,7 +3151,7 @@ function Orders(_ref3) {
       { className: 'flex-grow-1' },
       _react2.default.createElement(
         'p',
-        { className: 'margin--bottom-3' },
+        { className: 'margin--bottom-8' },
         'You don\'t have any recent orders.'
       ),
       _react2.default.createElement(
@@ -3091,23 +3184,23 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(timezoneOffset, 'timezoneOffset', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(timezoneOffset, 'timezoneOffset', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 
-  __REACT_HOT_LOADER__.register(OrderItem, 'OrderItem', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(OrderItem, 'OrderItem', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 
-  __REACT_HOT_LOADER__.register(OrderBox, 'OrderBox', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(OrderBox, 'OrderBox', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 
-  __REACT_HOT_LOADER__.register(Orders, 'Orders', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(Orders, 'Orders', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 
-  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/Orders.jsx');
 }();
 
 ;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3121,11 +3214,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _AddToCartBtn = __webpack_require__(51);
+var _AddToCartBtn = __webpack_require__(52);
 
 var _AddToCartBtn2 = _interopRequireDefault(_AddToCartBtn);
 
-var _FavoriteBtn = __webpack_require__(52);
+var _FavoriteBtn = __webpack_require__(21);
 
 var _FavoriteBtn2 = _interopRequireDefault(_FavoriteBtn);
 
@@ -3229,7 +3322,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3301,7 +3394,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3319,7 +3412,7 @@ var _Svg = __webpack_require__(15);
 
 var _Svg2 = _interopRequireDefault(_Svg);
 
-var _FavoriteBtn = __webpack_require__(52);
+var _FavoriteBtn = __webpack_require__(21);
 
 var _FavoriteBtn2 = _interopRequireDefault(_FavoriteBtn);
 
@@ -3333,7 +3426,7 @@ var _reactRedux = __webpack_require__(2);
 
 var _Constants = __webpack_require__(12);
 
-var _ProductDetailLink = __webpack_require__(47);
+var _ProductDetailLink = __webpack_require__(48);
 
 var _ProductDetailLink2 = _interopRequireDefault(_ProductDetailLink);
 
@@ -3490,7 +3583,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3639,7 +3732,7 @@ var LogInForm = function (_React$Component) {
             { className: 'form-content' },
             (this.props.error || this.state.error.msg) && _react2.default.createElement(
               'p',
-              { className: 'font-color--danger margin--top-0' },
+              { className: 'font-color--danger margin--top-0 margin--bottom-3' },
               this.props.error || this.state.error.msg
             ),
             _react2.default.createElement(
@@ -3709,7 +3802,7 @@ var _temp2 = function () {
 ;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3725,11 +3818,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(4);
 
-var _Login = __webpack_require__(41);
+var _Login = __webpack_require__(42);
 
 var _Login2 = _interopRequireDefault(_Login);
 
-var _Register = __webpack_require__(49);
+var _Register = __webpack_require__(50);
 
 var _Register2 = _interopRequireDefault(_Register);
 
@@ -3762,7 +3855,7 @@ var _temp = function () {
 ;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3849,89 +3942,6 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/AddToCartBtn.jsx');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ui/AddToCartBtn.jsx');
-}();
-
-;
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Utils = __webpack_require__(3);
-
-var _Actions = __webpack_require__(1);
-
-var _Actions2 = _interopRequireDefault(_Actions);
-
-var _reactRedux = __webpack_require__(2);
-
-var _Svg = __webpack_require__(15);
-
-var _Svg2 = _interopRequireDefault(_Svg);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TOGGLE_FAVORITE = _Actions2.default.TOGGLE_FAVORITE;
-
-
-function FavoriteBtn(_ref) {
-  var favorites = _ref.favorites,
-      toggleFavorite = _ref.toggleFavorite,
-      id = _ref.id;
-
-  return _react2.default.createElement(
-    'div',
-    { style: { cursor: 'pointer' }, onClick: toggleFavorite(id), className: 'heart' },
-    _react2.default.createElement(_Svg2.default, { color: '#803BDD', variant: favorites.includes(id) ? 'icon-heart-filled' : 'icon-heart' })
-  );
-}
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    toggleFavorite: function toggleFavorite(ID) {
-      return function () {
-        return dispatch((0, _Utils.action)(TOGGLE_FAVORITE, ID));
-      };
-    }
-  };
-};
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    favorites: state.user.Favorites || []
-  };
-};
-
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(FavoriteBtn);
-
-exports.default = _default;
-;
-
-var _temp = function () {
-  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-    return;
-  }
-
-  __REACT_HOT_LOADER__.register(FavoriteBtn, 'FavoriteBtn', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
-
-  __REACT_HOT_LOADER__.register(TOGGLE_FAVORITE, 'TOGGLE_FAVORITE', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
-
-  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
-
-  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
-
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ui/FavoriteBtn.jsx');
 }();
 
 ;
@@ -4085,7 +4095,7 @@ var _Actions = __webpack_require__(1);
 
 var _Actions2 = _interopRequireDefault(_Actions);
 
-var _reactRouterRedux = __webpack_require__(23);
+var _reactRouterRedux = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4143,9 +4153,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(24);
+var _redux = __webpack_require__(25);
 
-var _reactRouterRedux = __webpack_require__(23);
+var _reactRouterRedux = __webpack_require__(24);
 
 var _errors = __webpack_require__(54);
 
@@ -4327,7 +4337,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = __webpack_require__(22);
+var _toConsumableArray2 = __webpack_require__(23);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
@@ -4376,7 +4386,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toConsumableArray2 = __webpack_require__(22);
+var _toConsumableArray2 = __webpack_require__(23);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
@@ -4588,7 +4598,7 @@ var _temp = function () {
 "use strict";
 
 
-var _regenerator = __webpack_require__(29);
+var _regenerator = __webpack_require__(30);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
@@ -4596,11 +4606,11 @@ var _keys = __webpack_require__(14);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _asyncToGenerator2 = __webpack_require__(28);
+var _asyncToGenerator2 = __webpack_require__(29);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _express = __webpack_require__(31);
+var _express = __webpack_require__(32);
 
 var _express2 = _interopRequireDefault(_express);
 
@@ -4608,31 +4618,31 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _html = __webpack_require__(27);
+var _html = __webpack_require__(28);
 
 var _html2 = _interopRequireDefault(_html);
 
-var _App = __webpack_require__(25);
+var _App = __webpack_require__(26);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _server = __webpack_require__(33);
+var _server = __webpack_require__(34);
 
 var _reactRouter = __webpack_require__(18);
 
 var _reactRedux = __webpack_require__(2);
 
-var _Store = __webpack_require__(26);
+var _Store = __webpack_require__(27);
 
 var _Store2 = _interopRequireDefault(_Store);
 
-var _reactHotLoader = __webpack_require__(34);
+var _reactHotLoader = __webpack_require__(35);
 
-var _nodeFetch = __webpack_require__(32);
+var _nodeFetch = __webpack_require__(33);
 
 var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
-var _dotenv = __webpack_require__(30);
+var _dotenv = __webpack_require__(31);
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
