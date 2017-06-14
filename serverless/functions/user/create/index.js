@@ -46,6 +46,7 @@ function createUser(event, context, callback) {
 function onUserCreate(event, context, callback) {
   event.Records.forEach(record => {
     if (record.eventName === 'INSERT') {
+      console.log(record);
       const email = record.dynamodb.NewImage.Email.S;
       sendMail({
         to: email,

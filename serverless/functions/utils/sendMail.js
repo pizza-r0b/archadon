@@ -9,8 +9,9 @@ const transporter = nodemailer.createTransport({
 });
 
 transporter.use('compile', hbs({
-  viewEngine: exphbs({ extname: '.hbs' }),
-  viewPath: '../../templates',
+  viewEngine: exphbs(),
+  viewPath: path.resolve(__dirname, '../../templates'),
+  extName: '.hbs',
 }));
 
 function sendMail(options) {
