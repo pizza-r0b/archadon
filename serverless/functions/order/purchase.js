@@ -58,8 +58,6 @@ const createOrder = (CustomerData, UserID) => ({ price, ChargeID, Brand, Last4 }
     }));
 });
 
-
-
 const putOrderData = Items => ({ ID, price, ChargeID, Brand, CustomerData, Last4 }) => new Promise((resolve, reject) => {
   console.log(JSON.stringify({
     Price: price,

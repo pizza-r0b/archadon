@@ -2,7 +2,7 @@
 
 const user = require('./user');
 const product = require('./product');
-const purchase = require('./purchase');
+const order = require('./order');
 
 module.exports = {
   // user
@@ -21,5 +21,6 @@ module.exports = {
   getProductList: product.getProductList,
   getBatch: product.getBatch,
   // orders
-  purchase,
+  order: order.purchase,
+  onOrderCreate: order.onOrderCreate,
 };

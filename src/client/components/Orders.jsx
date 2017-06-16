@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
 
-function timezoneOffset(date) {
+function timezoneOffset(date, raw) {
   const current = new Date();
   const offset = current.getTimezoneOffset() / 60;
   const output = new Date(date);
   output.setHours(output.getHours() + offset);
+  if (raw) {
+    return output;
+  }
   return output.toDateString();
 }
 
@@ -52,7 +55,7 @@ function Orders({ orders }: { orders: Array<Object> }) {
         </div>
       )}
 
-      {orders.length > 0 && orders.sort((a, b) => b.CreatedAt > a.CreatedAt).map(order => (
+      {orders.length > 0 && orders.sort((b, a) => timezoneOffset(b.CreatedAt, true) < timezoneOffset(a.CreatedAt, true)).map(order => (
         <OrderBox order={order} />
       ))}
     </div>

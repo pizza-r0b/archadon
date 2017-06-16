@@ -52,6 +52,7 @@ function onUserCreate(event, context, callback) {
         to: email,
         subject: 'Your New Archadon.com Account',
         template: 'new-user',
+        from: 'welcome@archadon.com',
         context: {
           email,
         },

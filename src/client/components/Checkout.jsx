@@ -42,7 +42,7 @@ class CheckOut extends Component {
 
   onInputChange = key => ({ currentTarget }) => {
     const { name, value } = currentTarget;
-    if (currentTarget.dataset.regex) {
+    if (currentTarget.dataset.regex && currentTarget.dataset.regex !== 'email') {
       const re = new RegExp(regex[currentTarget.dataset.regex], 'i');
       if (!re.test(value)) {
         return;
@@ -113,6 +113,7 @@ class CheckOut extends Component {
   }
 
   onDataChange = this.onInputChange('data')
+
   onCardChange = this.onInputChange('cardDetails')
   render() {
     const error =

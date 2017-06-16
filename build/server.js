@@ -1552,7 +1552,7 @@ var CheckOut = function (_Component) {
         var name = currentTarget.name,
             value = currentTarget.value;
 
-        if (currentTarget.dataset.regex) {
+        if (currentTarget.dataset.regex && currentTarget.dataset.regex !== 'email') {
           var re = new RegExp(regex[currentTarget.dataset.regex], 'i');
           if (!re.test(value)) {
             return;
@@ -3034,11 +3034,14 @@ var _Constants = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function timezoneOffset(date) {
+function timezoneOffset(date, raw) {
   var current = new Date();
   var offset = current.getTimezoneOffset() / 60;
   var output = new Date(date);
   output.setHours(output.getHours() + offset);
+  if (raw) {
+    return output;
+  }
   return output.toDateString();
 }
 
@@ -3160,8 +3163,8 @@ function Orders(_ref3) {
         'Shop Now'
       )
     ),
-    orders.length > 0 && orders.sort(function (a, b) {
-      return b.CreatedAt > a.CreatedAt;
+    orders.length > 0 && orders.sort(function (b, a) {
+      return timezoneOffset(b.CreatedAt, true) < timezoneOffset(a.CreatedAt, true);
     }).map(function (order) {
       return _react2.default.createElement(OrderBox, { order: order });
     })
