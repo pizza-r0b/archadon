@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy:prod": "sls deploy --env prod --assetUrl 'https://assets.dev.archadon.com'"
+  },
   "dependencies": {
     "aws-sdk": "^2.32.0",
     "bcrypt-nodejs": "^0.0.3",

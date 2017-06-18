@@ -16,7 +16,7 @@ Properties:
       AttributeName: FileName
       AttributeType: S
   ProvisionedThroughput:
-    ReadCapacityUnits: 3
-    WriteCapacityUnits: 3
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
   StreamSpecification:
     StreamViewType: KEYS_ONLY

@@ -30,8 +30,8 @@ Properties:
         - AttributeName: CreatedAt
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
     -
       IndexName: status
       Projection:
@@ -40,8 +40,8 @@ Properties:
         - AttributeName: Status
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
     -
       IndexName: userId
       Projection:
@@ -50,8 +50,8 @@ Properties:
         - AttributeName: UserID
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
     -
       IndexName: email
       Projection:
@@ -60,10 +60,10 @@ Properties:
         - AttributeName: Email
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
   ProvisionedThroughput:
-    ReadCapacityUnits: 3
-    WriteCapacityUnits: 3
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
   StreamSpecification:
     StreamViewType: NEW_IMAGE

@@ -24,8 +24,8 @@ Properties:
         - AttributeName: Price
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
     -
       IndexName: status
       Projection:
@@ -34,10 +34,10 @@ Properties:
         - AttributeName: Status
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
   ProvisionedThroughput:
-    ReadCapacityUnits: 3
-    WriteCapacityUnits: 3
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
   StreamSpecification:
     StreamViewType: NEW_IMAGE

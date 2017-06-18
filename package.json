@@ -5,7 +5,8 @@
   "main": "build/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "npm run sprite && npm run prod:build && gcloud app deploy",
+    "predeploy": "npm run sprite && npm run prod:build",
+    "deploy": "eb deploy",
     "start": "npm run prod:start",
     "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 npm run sprite && run-p dev:client:build dev:server:build dev:server:delay",
     "dev:server:delay": "run-s delay dev:server:start",

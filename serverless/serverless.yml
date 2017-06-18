@@ -11,8 +11,7 @@
 #
 # Happy Coding!
 
-service: archadon # NOTE: update this with your service name
-
+service: archadon-${self:custom.env}
 provider:
   name: aws
   runtime: nodejs6.10
@@ -341,7 +340,7 @@ resources:
     S3Bucket:
       Type: "AWS::S3::Bucket"
       Properties:
-        BucketName: ${self:service}-${self:provider.stage}
+        BucketName: ${self:service}
 
 
     # ProductTable: ${file(./resources/ProductTable.yml)}

@@ -21,10 +21,10 @@ Properties:
         - AttributeName: Email
           KeyType: HASH
       ProvisionedThroughput:
-        ReadCapacityUnits: 3
-        WriteCapacityUnits: 3
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
   ProvisionedThroughput:
-    ReadCapacityUnits: 3
-    WriteCapacityUnits: 3
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
   StreamSpecification:
     StreamViewType: NEW_IMAGE
