@@ -40,7 +40,7 @@ const render = Component => {
 
 render(App);
 
-if (module.hot && process.env.NODE_ENV) {
+if (module.hot && process.env.NODE_ENV !== 'production') {
   module.hot.accept('Components/App', () => {
     const NextApp = require('Components/App').default; //eslint-disable-line
     render(NextApp);

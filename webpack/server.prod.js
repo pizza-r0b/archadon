@@ -21,8 +21,11 @@ const serverConfig = base({
     target: 'node',
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production'),
+        'process.env': {
+          NODE_ENV: JSON.stringify('production'),
+        },
       }),
+      new webpack.optimize.UglifyJsPlugin(),
       new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     externals: [nodeExternals({

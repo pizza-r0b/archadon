@@ -33,10 +33,12 @@ const clientConfig = base({
       path: outputPath,
     }),
     plugins: [
-      new UglifyJSPlugin(),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production'),
+        'process.env': {
+          NODE_ENV: JSON.stringify('production'),
+        },
       }),
+      new webpack.optimize.UglifyJsPlugin(),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),
