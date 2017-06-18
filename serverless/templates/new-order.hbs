@@ -1,0 +1,32 @@
+<div style="max-width: 600px; font-family: Arial, Helvetica, sans-serif">
+  <img style="display: block; height: 25px; width: auto" src="{{assetURL}}/archadon.png" alt="Archadon Artisan Rugs" />
+  <p>Archadon Order ID: {{ID}}</p>
+  <p>Stripe Charge ID: {{chargeID}}</p>
+  <p>A new order of has been received</p>
+
+  <hr />
+  <p><strong>SHIP TO</strong></p>
+  {{customerData.name}}<br />
+  {{customerData.address1}}<br />
+  {{#if cusomerData.address2}}
+    {{cusomerData.address2}}<br/>
+  {{/if}}
+  {{customerData.city}}, {{customerData.state}}, {{customerData.zip}}
+  <hr />
+  <p><strong>ITEMS</strong></p>
+  <table style="width: 100%">
+    <tr>
+      <th style="text-align: left">Item Name</th>
+      <th style="text-align: left">Item Price</th>
+      <th style="text-align: left">Item SKU</th>
+    </tr>
+  {{#each items}}
+    <tr>
+      <td>{{this.Name}}</td>
+      <td>{{this.Price}}</td>
+      <td>{{this.SKU}}</td>
+    </tr>
+  {{/each}}
+  </table>
+  <h2>Total: {{price}}</h2>
+</div>

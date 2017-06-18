@@ -1,7 +1,8 @@
 const purchase = require('./purchase');
-const onOrderCreate = require('./purchaseStreamListener');
+const { purchaseStreamListener, emailAdmin } = require('./purchaseStreamListener');
 
 module.exports = {
   purchase,
-  onOrderCreate,
+  emailAdmin,
+  onOrderCreate: purchaseStreamListener,
 };

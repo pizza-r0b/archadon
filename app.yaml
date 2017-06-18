@@ -1,0 +1,13 @@
+runtime: nodejs
+env: flex
+skip_files:
+- ^src$
+- ^utils$
+- ^serverless$
+- ^scripts$
+- .flowconfig
+- Procfile
+- .gitignore
+- .babelrc
+- .eslintrc
+- .env

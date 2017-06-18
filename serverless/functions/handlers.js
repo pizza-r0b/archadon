@@ -23,4 +23,5 @@ module.exports = {
   // orders
   order: order.purchase,
   onOrderCreate: order.onOrderCreate,
+  emailAdmin: order.emailAdmin,
 };

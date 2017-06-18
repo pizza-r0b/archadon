@@ -1390,6 +1390,12 @@ svg {
 .global-padding-x {
   padding: 0 30px; }
 
+hr {
+  outline: 0;
+  border: 0;
+  height: 1px;
+  background-color: #e1e7ff; }
+
 .global-margin {
   margin: 15px; }
 
@@ -1746,17 +1752,62 @@ a, a:visited {
     .item-box .details {
       margin-right: 15px; } }
 
+.next-bar {
+  height: 45px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6d3bdd+0,803bdd+100 */
+  background: #6d3bdd;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #6d3bdd 0%, #803bdd 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #6d3bdd 0%, #803bdd 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #6d3bdd 0%, #803bdd 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d3bdd', endColorstr='#803bdd',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  margin-top: 25px;
+  color: #FFFFFF;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 3px #2F3036; }
+
+@media (min-width: 768px) {
+  .next-bar {
+    position: relative;
+    height: 60px;
+    box-shadow: 0 0 0; } }
+
 .product-detail-image img {
   max-width: 100%; }
 
+.product-detail-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+
 .product-detail {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start; }
+
+.product-detail-image {
+  margin: 0 0 15 0; }
 
 @media (min-width: 768px) {
   .product-detail-image, .product-detail-info {
     width: 50%; }
+  .product-detail-image {
+    margin: 0 15 0 0; }
   .product-detail {
-    flex-direction: row; } }
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; } }
 
 /*# sourceMappingURL=styles.css.map*/

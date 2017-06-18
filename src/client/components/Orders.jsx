@@ -21,7 +21,6 @@ function OrderItem({ item }: { item: Object }) {
       <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
       <div className="margin--left-2">
         <p>{item.Name} ${item.Price.toFixed(2)}</p>
-        <small>SKU: {item.ID}</small>
       </div>
     </div>
   );
@@ -55,8 +54,8 @@ function Orders({ orders }: { orders: Array<Object> }) {
         </div>
       )}
 
-      {orders.length > 0 && orders.sort((b, a) => timezoneOffset(b.CreatedAt, true) < timezoneOffset(a.CreatedAt, true)).map(order => (
-        <OrderBox order={order} />
+      {orders.length > 0 && orders.sort((b, a) => b.CreatedAt < a.CreatedAt).map(order => (
+        <OrderBox key={order.ID} order={order} />
       ))}
     </div>
   );

@@ -279,6 +279,20 @@ functions:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       STRIPE_SECRET_KEY: ${file(./secrets.yml):stripeSecretKey}
 
+  emailAdmin:
+    handler: functions/handlers.emailAdmin
+    events:
+      - stream:
+          type: dynamodb
+          startingPosition: LATEST
+          arn:
+            Fn::GetAtt:
+              - OrderItemTable
+              - StreamArn
+    environment:
+      ADMIN_EMAIL: ${file(./secrets.yml):adminEmail}
+      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
+
   onOrderCreate:
     handler: functions/handlers.onOrderCreate
     events:

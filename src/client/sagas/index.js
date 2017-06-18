@@ -163,7 +163,6 @@ export function* getUserDataSaga() {
     }
   } catch (e) {
     yield put(action(CLEAR_AUTHENTICATION_DATA));
-    throw new Error(e);
   }
   yield put(action(LOADING, false));
 }

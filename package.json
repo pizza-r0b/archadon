@@ -5,8 +5,9 @@
   "main": "build/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run sprite && npm run dev:start",
-    "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 run-p dev:client:build dev:server:build dev:server:delay",
+    "deploy": "npm run sprite && npm run prod:build && gcloud app deploy",
+    "start": "npm run prod:start",
+    "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 npm run sprite && run-p dev:client:build dev:server:build dev:server:delay",
     "dev:server:delay": "run-s delay dev:server:start",
     "delay": "node ./node_modules/npm-delay 10000",
     "dev:server:build": "webpack --config ./webpack/server.js --watch --colors --display-error-details",
