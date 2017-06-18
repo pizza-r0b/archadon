@@ -1,9 +1,6 @@
 import { request } from 'Utils';
 const REQUEST_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev' : 'https://api.archadon.com/prod';
 
-console.log(REQUEST_URL);
-console.log(process.env.NODE_ENV);
-
 const url = path => `${REQUEST_URL}/${path}`;
 
 export const requestLogin = (email: string, password: string) => request('POST', url('user/v1/login'), { email, password });
