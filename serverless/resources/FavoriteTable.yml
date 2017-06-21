@@ -1,6 +1,6 @@
 Type: AWS::DynamoDB::Table
 Properties:
-  TableName: FavoriteTable-${self:service}-${self:custom.env}
+  TableName: FavoriteTable-${self:service}
   KeySchema:
     -
       AttributeName: ItemID

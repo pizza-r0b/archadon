@@ -1,6 +1,6 @@
 Type: AWS::DynamoDB::Table
 Properties:
-  TableName: TaggedProductTable-${self:service}-${self:custom.env}
+  TableName: TaggedProductTable-${self:service}
   KeySchema:
     -
       AttributeName: ItemID

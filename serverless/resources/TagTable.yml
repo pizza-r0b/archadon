@@ -1,6 +1,6 @@
 Type: AWS::DynamoDB::Table
 Properties:
-  TableName: TagTable-${self:service}-${self:custom.env}
+  TableName: TagTable-${self:service}
   KeySchema:
     -
       AttributeName: ItemID

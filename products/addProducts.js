@@ -1,7 +1,6 @@
 const readline = require('readline');
-const util = require('util');
 const fetch = require('node-fetch');
-const data = require('./6-18-17/data');
+const data = require('./6-18-17/uploaded/data');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -16,7 +15,7 @@ function getProductRequestPromises(authtoken) {
   const promises = data.map(product => {
     product.Images = [{ src: `${product.SKU}.jpg` }];
     return new Promise((resolve) => {
-      fetch('https://api.archadon.com/prod/product/v1/create', {
+      fetch('https://api.archadon.com/dev/product/v1/create', {
         method: 'POST',
         headers: {
           authtoken,
@@ -27,7 +26,7 @@ function getProductRequestPromises(authtoken) {
         const { ID } = await res.json();
         delete product.Price;
         delete product.Name;
-        return fetch(`https://api.archadon.com/prod/product/v1/update/data/${ID}`, {
+        return fetch(`https://api.archadon.com/dev/product/v1/update/data/${ID}`, {
           method: 'POST',
           headers: {
             authtoken,
@@ -47,7 +46,7 @@ function getProductRequestPromises(authtoken) {
 (async function addProducts() {
   const email = 'seanpapanikolas@gmail.com';
   const password = await question('Password? ');
-  const res = await fetch('https://api.archadon.com/prod/user/v1/login', {
+  const res = await fetch('https://api.archadon.com/dev/user/v1/login', {
     method: 'POST',
     body: JSON.stringify({
       email,

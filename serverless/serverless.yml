@@ -337,10 +337,10 @@ resources:
     ProductDataTable: ${file(./resources/Product/Data.yml)}
     OrderItemTable: ${file(./resources/Order/Item.yml)}
     OrderDataTable: ${file(./resources/Order/Data.yml)}
-    S3Bucket:
-      Type: "AWS::S3::Bucket"
-      Properties:
-        BucketName: ${self:service}
+    # S3Bucket:
+    #   Type: "AWS::S3::Bucket"
+    #   Properties:
+    #     BucketName: ${self:service}
 
 
     # ProductTable: ${file(./resources/ProductTable.yml)}

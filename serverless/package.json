@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "deploy:prod": "sls deploy --env prod --assetUrl 'https://assets.dev.archadon.com'"
+    "deploy:prod": "sls deploy --env prod --assetUrl 'https://assets.archadon.com'",
+    "deploy:dev": "sls deploy --env dev --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
     "aws-sdk": "^2.32.0",
