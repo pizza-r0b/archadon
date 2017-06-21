@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux';
+import { push, LOCATION_CHANGE } from 'react-router-redux';
 import { call, takeLatest, put, select, take } from 'redux-saga/effects';
 import Actions from 'Actions';
 import { action } from 'Utils';
@@ -28,6 +28,7 @@ const {
   LOAD_MORE,
   LOAD_FAVORITES,
   SET_ORDER_CONFIRMATION,
+  ON_NAV_OPEN,
 } = Actions;
 import {
   requestLogin,
@@ -62,6 +63,8 @@ const getUserFavorites = state => state.user.Favorites || [];
 const getLoadedProducts = state => state.products.Items;
 
 const getProductDetails = state => state.productDetails;
+
+const getNavState = state => state.navOpen;
 
 export function saveToLocalStorage(authToken, ID) {
   window.localStorage.setItem('archadonauth', JSON.stringify({
@@ -373,5 +376,14 @@ export default function* rootSaga() {
         yield call(addToCartLocalStorage);
       }
     }()),
+    (function* () {
+      while (true) {
+        yield take([LOCATION_CHANGE]);
+        const navOpen = yield select(getNavState);
+        if (navOpen) {
+          yield put(action(ON_NAV_OPEN, !navOpen));
+        }
+      }
+    }())
   ];
 }

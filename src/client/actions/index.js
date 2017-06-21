@@ -26,4 +26,5 @@ export default keyMirror({
   LOAD_MORE_DONE: null,
   PRODUCT_DETAIL_LOADED: null,
   GET_PRODUCT_DETAILS: null,
+  ON_NAV_OPEN: null,
 });

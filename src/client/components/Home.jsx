@@ -155,11 +155,7 @@ class Slide extends React.Component {
               />
             </div>
             <div className="home-slide-box">
-              <h2 className="font-color--white align--center">
-                Rug Name
-            </h2>
-              <h3 className="font-color--white align--center">8x12</h3>
-              <button className="btn btn--white margin--top-3">Add To Cart</button>
+
             </div>
           </div>
           <div className="home-slide-bg">
@@ -257,6 +253,12 @@ class Home extends React.Component {
         >
           {this.slides[this.state.currentIndex]}
         </ReactTransitionGroup>
+        <section className="content-section">
+          <div className="content">
+            <h1>I was inspired by the integrity and simple grace of the Tibetan people.</h1>
+            <p className="margin--top-3">We knew little of one another and yet, we saw many things in the same way. You will see this in the way we create rugs: attention to detail, dedication to craft. Only traditional methods and the finest hand spun Tibetan wool will do. Like the integrity that defines a culture, there is integrity in this rug. It is born of pure craftsmanship. There is a magical quality too. It's in the colors, the design. It is the look of today: exciting, stirring, vital. The union of two worlds: a modern face with a soul that reaches far back in time. The only difference between this rug and other works of art is that you walk on it, you live with it, it becomes part of you. Inspiration that lasts a lifetime.</p>
+          </div>
+        </section>
         <div ref={c => { this.selection = c; }}>
           <Shop />
         </div>

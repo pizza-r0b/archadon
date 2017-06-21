@@ -31,7 +31,7 @@ svg {
 }
 
 .global-padding-x {
-    padding: 0 30px;
+    padding: 0 15px;
 }
 
 hr {
@@ -56,6 +56,10 @@ hr {
     .global-padding {
         padding: 25px 30px 0;
         box-sizing: border-box;
+    }
+
+    .global-padding-x {
+        padding: 0 30px;
     }
 
     .global-margin {

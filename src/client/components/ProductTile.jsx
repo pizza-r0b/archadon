@@ -67,23 +67,26 @@ function ProductTile({
     <div className="product-tile">
       <div className="product-tile-inner flex-parent flex-col flex-justify-between">
         <div className="product-tile-padding-x product-tile-padding-top">
-          <div className="product-tile-img flex-parent flex-align-center flex-justify-center">
-            <ProductDetailLink product={product}>
-              <img src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />
-            </ProductDetailLink>
-          </div>
+          <ProductDetailLink product={product}>
+            <div style={{ backgroundImage: `url(${`${IMAGE_ORIGIN}/${product.Images[0].src}`})`}} className="product-tile-img flex-parent flex-align-center flex-justify-center" />
+          </ProductDetailLink>
           <div className="flex-parent flex-row flex-justify-between margin--top-1">
             <div>
               <ProductDetailLink product={product}>
                 <h2>{product.Name}</h2>
               </ProductDetailLink>
-              <p>{`${product.Width}x${product.Height}`}</p>
+              <p>{`${product.LongDescription}`}</p>
             </div>
             <FavoriteBtn id={product.ID} />
           </div>
         </div>
         <div className="flex-parent flex-align-center flex-justify-between product-tile-padding-x product-tile-price-bar margin--top-5">
-          <p className="font-color--white bold">${product.Price}</p>
+          <p className="font-color--white bold">{product.Price.toLocaleString('USD', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}</p>
           {cartButton}
         </div>
       </div>

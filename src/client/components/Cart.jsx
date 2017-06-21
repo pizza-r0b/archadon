@@ -21,7 +21,12 @@ let CartItem = ({ item, removeFromCart }: CartItemProps) => (
       </div>
     </div>
     <div className="details">
-      <span className="strong">${item.Price}</span>
+      <span className="strong">{item.Price.toLocaleString('USD', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}</span>
       <div className="margin--top-3">
         <span onClick={removeFromCart(item.ID)} style={{ cursor: 'pointer' }} className="font-color--first">Remove</span>
       </div>
@@ -51,7 +56,12 @@ function Cart({ cart: { items, totalPrice } }) {
           <div className="flex-parent flex-grow-1 cart-wrap">
             <div className="cart-wrap-aside">
               <h3 className="strong">
-                Total: ${totalPrice.toFixed(2)}
+                Total: {totalPrice.toLocaleString('USD', {
+                  style: 'currency',
+                  currency: 'USD',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </h3>
               <p className="margin--bottom-3">
                 Shipping: FREE

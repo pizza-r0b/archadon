@@ -8,9 +8,22 @@ import products from './products';
 import cart from './cart';
 import orderConfirmation from './orderConfirmation';
 import productDetails from './productDetails';
+import actions from 'Actions';
+
+const { ON_NAV_OPEN } = actions;
+
+function navOpen(state = false, action) {
+  switch (action.type) {
+    case ON_NAV_OPEN:
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
 export default combineReducers({
   router,
+  navOpen,
   user,
   cart,
   redirectPath,

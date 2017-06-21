@@ -3,53 +3,63 @@ import { Link, withRouter } from 'react-router-dom';
 import Svg from 'Ui/Svg';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import actions from 'Actions';
+import { action } from 'Utils';
 
-function Navigation({ location, user, qty, scrolled }) {
+const { ON_NAV_OPEN } = actions;
+
+function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
   const isRoot = location.pathname === '/';
   return (
     <nav
       style={{ position: 'fixed' }}
       className={
-        classnames('global-nav global-padding-x flex-parent flex-justify-between flex-align-center', {
+        classnames('global-nav global-padding-x flex-justify-between flex-align-center', {
           root: isRoot && !scrolled,
+          open: navOpen,
         })
       }
     >
       <div className="logo">
         <Link to="/"><Svg variant="archadon-logo" color="#FFF" /></Link>
       </div>
-      <div className="flex-parent flex-align-center">
-        <div style={{ marginRight: '35px' }}>
+      <div onClick={() => { toggleNav(navOpen); }} className="ham">
+        <div className="ham-inner" />
+      </div>
+      <div className="global-nav-links flex-parent flex-align-center">
+        <div onClick={() => { toggleNav(navOpen); }} className="global-nav-link close">
+          Close
+        </div>
+        <div className="global-nav-link">
           <Link to="/shop">Shop</Link>
         </div>
         {user.authToken && user.ID ?
           (
-            [<div key="a" style={{ marginRight: '35px' }}>
+            [<div className="global-nav-link" key="a">
               <Link to="/account">My Account</Link>
             </div>,
-            <div key="b" style={{ marginRight: '35px' }}>
+            <div className="global-nav-link" key="b">
               <Link to="/logout">Log Out</Link>
             </div>]
           ) : (
-            [<div key="c" style={{ marginRight: '35px' }}>
+            [<div className="global-nav-link" key="c">
               <Link to="/login">Log In</Link>
             </div>,
-            <div key="d" style={{ marginRight: '35px' }}>
+            <div className="global-nav-link" key="d">
               <Link to="/signup">Sign Up</Link>
             </div>]
           )}
-        <Link to="/cart">
-          <div className="flex-parent flex-align-center">
-            <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
-              <Svg variant="icon-cart" color="#FFF" />
-            </div>
-            <div>
-              {qty}
-            </div>
-          </div>
-        </Link>
-
       </div>
+      <Link className="cart" to="/cart">
+        <div className="flex-parent flex-align-center">
+          <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
+            <Svg variant="icon-cart" color="currentColor" />
+          </div>
+          <div>
+            {qty}
+          </div>
+        </div>
+      </Link>
     </nav>
   );
 }
@@ -57,6 +67,13 @@ function Navigation({ location, user, qty, scrolled }) {
 const mapStateToProps = state => ({
   user: state.user,
   qty: state.cart.totalQty,
+  navOpen: state.navOpen,
 });
 
-export default withRouter(connect(mapStateToProps)(Navigation));
+const mapDispatchToProps = dispatch => ({
+  toggleNav(open) {
+    dispatch(action(ON_NAV_OPEN, !open));
+  },
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navigation));

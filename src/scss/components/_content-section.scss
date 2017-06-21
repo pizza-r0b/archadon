@@ -1,0 +1,28 @@
+.content-section {
+  min-height: 50vh;
+  padding: $spacer * 20px $spacer * 3px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $light;
+  justify-content: center;
+
+  .content{
+    text-align: center;
+    width: 100%
+  }
+}
+
+@include tablet() {
+
+  .content-section {
+      justify-content: flex-start;
+      padding: $spacer * 20px $spacer * 10px;
+
+  }
+
+  .content-section .content {
+    text-align: left;
+    width: 50%;
+  }
+}

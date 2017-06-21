@@ -30,12 +30,12 @@ class Favorites extends Component {
           :
           (
             <div>
-              <h2 className="title margin--bottom-5">Favorites</h2>
+              <h2 className="title margin--bottom-3">Favorites</h2>
               {
                 this.props.favorites.length > 0 ?
                   (
                     <div className="favorites">
-                      <ProductList className="flex-justify-start" hideBtn products={this.props.favorites} />
+                      <ProductList className="flex-justify-start margin--top-3" hideBtn products={this.props.favorites} />
                     </div>
                   )
                   :

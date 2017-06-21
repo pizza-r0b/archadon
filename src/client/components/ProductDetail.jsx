@@ -24,13 +24,14 @@ function ProductDetail({ product }) {
           <h3 className="strong">${product.Price}</h3>
           <hr />
           <FavoriteBtn id={product.ID} />
-          <p className="margin--bottom-5 margin--top-3">{product.LongDescription}</p>
+          <p className="margin--top-3">{product.LongDescription}</p>
+          <p className="margin--bottom-5">{product.ShortDescription}</p>
           <AddToCartBtn id={product.ID} />
         </div>
       </div>
-      <div className="next-bar">
+      {/*<div className="next-bar">
         <h2>Next</h2>
-      </div>
+      </div>*/}
     </div>
   );
 }
