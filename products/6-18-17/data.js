@@ -1,4 +1,4 @@
-const data = [
+module.exports = [
   {
     SKU: '1.11x3_32217_3043',
     Name: `1'11x3`,
@@ -146,6 +146,36 @@ const data = [
     LongDescription: 'New Zealand Wool',
     ShortDescription: 'Soumak (Flatweave)',
     Weight: 5.0,
+    Width: 2.1,
+    Height: 3.1,
+  },
+  {
+    SKU: '2.1x3.2_32212_29258',
+    Name: `2'1x3'2`,
+    Price: 145.20,
+    LongDescription: 'Tibetan Wool With Silk',
+    ShortDescription: '100 Knot',
+    Weight: 4,
+    Width: 2.1,
+    Height: 3.2,
+  },
+  {
+    SKU: '2.1x3.2_S_2401_56',
+    Name: `2'1.3'2 Kazak 11`,
+    Price: 72,
+    LongDescription: 'New Zealand Wool',
+    ShortDescription: 'Soumak (Flatweave)',
+    Weight: 5,
+    Width: 2.1,
+    Height: 3.2,
+  },
+  {
+    SKU: '2.3x3.1_S_1436_712',
+    Name: `2'3x3'1 Kazak 8`,
+    Price: 72,
+    LongDescription: 'New Zealand Wool',
+    ShortDescription: 'Soumak (Flatweave)',
+    Weight: 5,
     Width: 2.1,
     Height: 3.1,
   },
