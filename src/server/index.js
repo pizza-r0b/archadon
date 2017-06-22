@@ -9,10 +9,6 @@ import makeStore from 'Store';
 import { AppContainer } from 'react-hot-loader';
 import fetch from 'node-fetch';
 
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 const API_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/prod/';
 
 const app = express();

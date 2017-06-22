@@ -1,6 +1,11 @@
 const base = require('./base');
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env_dev'),
+});
 
 const defaults = base({});
 

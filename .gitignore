@@ -1,5 +1,7 @@
 node_modules
 .env
+.env_dev
+.env_prod
 temp
 
 .DS_Store

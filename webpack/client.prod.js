@@ -3,6 +3,11 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env_prod'),
+});
 
 const defaults = base({});
 
@@ -38,7 +43,7 @@ const clientConfig = base({
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      new webpack.optimize.UglifyJsPlugin(),
+      new UglifyJSPlugin(),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),

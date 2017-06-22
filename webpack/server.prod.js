@@ -1,6 +1,8 @@
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const base = require('./base.js');
+const Dotenv = require('dotenv-webpack');
+const path = require('path');
 
 const serverConfig = base({
   rules: [
@@ -20,6 +22,9 @@ const serverConfig = base({
     },
     target: 'node',
     plugins: [
+      new Dotenv({
+        path: path.resolve(__dirname, '../.env_prod'),
+      }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('production'),

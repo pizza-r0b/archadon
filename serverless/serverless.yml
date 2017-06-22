@@ -276,7 +276,7 @@ functions:
       ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
       PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
-      STRIPE_SECRET_KEY: ${file(./secrets.yml):stripeSecretKey}
+      STRIPE_SECRET_KEY: ${file(${opt:secrets}):stripeSecretKey}
 
   emailAdmin:
     handler: functions/handlers.emailAdmin
@@ -289,7 +289,7 @@ functions:
               - OrderItemTable
               - StreamArn
     environment:
-      ADMIN_EMAIL: ${file(./secrets.yml):adminEmail}
+      ADMIN_EMAIL: ${file(${opt:secrets}):adminEmail}
       ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
 
   onOrderCreate:
