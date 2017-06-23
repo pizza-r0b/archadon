@@ -1,6 +1,15 @@
 const readline = require('readline');
 const fetch = require('node-fetch');
-const data = require('./6-18-17/uploaded/data');
+let data = require('./6-18-17/uploaded/data');
+const moreData = require('./6-18-17/data_8_22.js');
+let unparsed = require('./6-18-17/data_8_22.1.js');
+const parse = require('./parse');
+
+unparsed = parse(unparsed);
+
+data = data.map(item => Object.assign({}, item, { Qty: 1 }));
+
+const finalData = [...data, ...unparsed, ...moreData];
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -12,9 +21,9 @@ const question = q => new Promise((resolve) => {
 });
 
 function getProductRequestPromises(authtoken) {
-  const promises = data.map(product => {
+  const promises = finalData.map(product => {
     product.Images = [{ src: `${product.SKU}.jpg` }];
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       fetch('https://api.archadon.com/dev/product/v1/create', {
         method: 'POST',
         headers: {
@@ -23,7 +32,11 @@ function getProductRequestPromises(authtoken) {
         },
         body: JSON.stringify(product),
       }).then(async (res) => {
-        const { ID } = await res.json();
+
+        const body = await res.json();
+        console.log(body);
+        const { ID } = body;
+        console.log(`Created item with ${ID}`);
         delete product.Price;
         delete product.Name;
         return fetch(`https://api.archadon.com/dev/product/v1/update/data/${ID}`, {
@@ -36,7 +49,7 @@ function getProductRequestPromises(authtoken) {
         });
       }).then(() => {
         resolve();
-      });
+      }).catch(e => reject(e));
     });
   });
 
@@ -55,7 +68,12 @@ function getProductRequestPromises(authtoken) {
   });
   const { authToken } = await res.json();
 
-  await getProductRequestPromises(authToken);
+  try {
+    await getProductRequestPromises(authToken);
+  } catch (e) {
+    console.log(`Error`);
+    throw new Error(e);
+  }
 
   console.log('All done');
 
