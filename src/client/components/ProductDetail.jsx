@@ -4,9 +4,9 @@ import AddToCartBtn from 'Ui/AddToCartBtn';
 import FavoriteBtn from 'Ui/FavoriteBtn';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { IMAGE_ORIGIN } from 'Constants';
+import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 
-function ProductDetail({ product }) {
+function ProductDetail({ product = DEFAULT_ITEM }) {
 
   if (!product) {
     return <Redirect to="/shop" />;
@@ -16,7 +16,7 @@ function ProductDetail({ product }) {
     <div className="padding--top-10 flex-parent product-detail-wrap flex-col">
       <div className="product-detail flex-grow-1 global-padding ">
         <div className="product-detail-image">
-          <img alt={product.Name} src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />
+          {product.Images && <img alt={product.Name} src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />}
         </div>
         <div className="product-detail-info">
           <h1 className="margin--bottom-2">{product.Name}</h1>

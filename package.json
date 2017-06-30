@@ -16,7 +16,7 @@
     "prod:build": "npm run sprite && npm run prod:client && PORT=8081 npm run prod:server",
     "prod:server": "NODE_ENV=production webpack --config ./webpack/server.prod.js",
     "prod:client": "NODE_ENV=production webpack --config ./webpack/client.prod.js",
-    "prod:start": "node build/server.js",
+    "prod:start": "NODE_ENV=production node build/server.js",
     "sprite": "cd ./utils; mkdir -p lib; ./spritesheet ../src/client/svg/*.svg > ../src/client/images/spritesheet.svg"
   },
   "repository": {
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/realseanp/isomorphic-redux-react-webpack-starter#readme",
   "dependencies": {
+    "algoliasearch": "^3.24.0",
     "aws-sdk": "^2.32.0",
     "babel-runtime": "^6.23.0",
     "classnames": "^2.2.5",
@@ -41,6 +42,8 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "express": "^4.15.2",
+    "history": "^4.6.3",
+    "libxmljs": "^0.18.4",
     "moment": "^2.18.1",
     "node-fetch": "^1.6.3",
     "react": "^15.4.2",

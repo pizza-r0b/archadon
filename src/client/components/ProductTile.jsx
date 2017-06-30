@@ -5,7 +5,7 @@ import FavoriteBtn from 'Ui/FavoriteBtn';
 import { action } from 'Utils';
 import actions from 'Actions';
 import { connect } from 'react-redux';
-import { IMAGE_ORIGIN } from 'Constants';
+import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import ProductDetailLink from 'Components/ProductDetailLink';
 
 const {
@@ -34,7 +34,7 @@ type ProductTileProps = {
 };
 
 function ProductTile({
-  product,
+  product = DEFAULT_ITEM,
   addToCart,
   cart: { items: cartItems },
   removeFromCart,
@@ -68,7 +68,7 @@ function ProductTile({
       <div className="product-tile-inner flex-parent flex-col flex-justify-between">
         <div className="product-tile-padding-x product-tile-padding-top">
           <ProductDetailLink product={product}>
-            <div style={{ backgroundImage: `url(${`${IMAGE_ORIGIN}/${product.Images[0].src}`})`}} className="product-tile-img flex-parent flex-align-center flex-justify-center" />
+            {product.Images && <div style={{ backgroundImage: `url(${`${IMAGE_ORIGIN}/${product.Images[0].src}`})` }} className="product-tile-img flex-parent flex-align-center flex-justify-center" />}
           </ProductDetailLink>
           <div className="flex-parent flex-row flex-justify-between margin--top-1">
             <div>

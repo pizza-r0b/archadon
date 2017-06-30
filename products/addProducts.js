@@ -1,15 +1,23 @@
 const readline = require('readline');
 const fetch = require('node-fetch');
-let data = require('./6-18-17/uploaded/data');
-const moreData = require('./6-18-17/data_8_22.js');
-let unparsed = require('./6-18-17/data_8_22.1.js');
+// p
+const a = require('./data/1.js');
+const b = require('./data/2.js');
+// p
+const c = require('./data/3.js');
+const d = require('./data/4.js');
+// p
+const e = require('./data/5.js');
 const parse = require('./parse');
 
-unparsed = parse(unparsed);
+const ENV = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 
-data = data.map(item => Object.assign({}, item, { Qty: 1 }));
-
-const finalData = [...data, ...unparsed, ...moreData];
+const data = [...parse(a), ...b, ...parse(c), ...d, ...parse(e)].map(item => {
+  if (!item.Qty) {
+    item.Qty = 1;
+  }
+  return item;
+});
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -21,10 +29,10 @@ const question = q => new Promise((resolve) => {
 });
 
 function getProductRequestPromises(authtoken) {
-  const promises = finalData.map(product => {
+  const promises = data.map(product => {
     product.Images = [{ src: `${product.SKU}.jpg` }];
     return new Promise((resolve, reject) => {
-      fetch('https://api.archadon.com/dev/product/v1/create', {
+      fetch(`https://api.archadon.com/${ENV}/product/v1/create`, {
         method: 'POST',
         headers: {
           authtoken,
@@ -34,12 +42,10 @@ function getProductRequestPromises(authtoken) {
       }).then(async (res) => {
 
         const body = await res.json();
-        console.log(body);
         const { ID } = body;
-        console.log(`Created item with ${ID}`);
         delete product.Price;
         delete product.Name;
-        return fetch(`https://api.archadon.com/dev/product/v1/update/data/${ID}`, {
+        return fetch(`https://api.archadon.com/${ENV}/product/v1/update/data/${ID}`, {
           method: 'POST',
           headers: {
             authtoken,
@@ -59,7 +65,7 @@ function getProductRequestPromises(authtoken) {
 (async function addProducts() {
   const email = 'seanpapanikolas@gmail.com';
   const password = await question('Password? ');
-  const res = await fetch('https://api.archadon.com/dev/user/v1/login', {
+  const res = await fetch(`https://api.archadon.com/${ENV}/user/v1/login`, {
     method: 'POST',
     body: JSON.stringify({
       email,

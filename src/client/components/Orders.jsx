@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { IMAGE_ORIGIN } from 'Constants';
+import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 
 function timezoneOffset(date, raw) {
   const current = new Date();
@@ -15,10 +15,10 @@ function timezoneOffset(date, raw) {
 }
 
 
-function OrderItem({ item }: { item: Object }) {
+function OrderItem({ item = DEFAULT_ITEM }: { item: Object }) {
   return (
     <div className="order-item">
-      <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
+      {item.Images && <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />}
       <div className="margin--left-2">
         <p>{item.Name} ${item.Price.toFixed(2)}</p>
       </div>

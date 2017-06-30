@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IMAGE_ORIGIN } from 'Constants';
+import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import actions from 'Actions';
 import { Link } from 'react-router-dom';
 import { action } from 'Utils';
@@ -11,10 +11,10 @@ type CartItemProps = {
   removeFromCart: Function,
 }
 
-let CartItem = ({ item, removeFromCart }: CartItemProps) => (
+let CartItem = ({ item = DEFAULT_ITEM, removeFromCart }: CartItemProps) => (
   <div className="cart-item">
     <div className="img-wrap">
-      <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />
+      {item.Images && <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />}
       <div>
         <div>{item.Name}</div>
         <div>{item.Width} x {item.Height}</div>
