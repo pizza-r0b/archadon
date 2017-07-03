@@ -117,9 +117,10 @@ class Filters extends Component {
       return;
     }
     const { queries, type } = FILTERS_ARR[filterindex].options[optionindex];
+    const field = FILTERS_ARR[filterindex].name;
 
     this.props.updateFilter({
-      queries, type,
+      queries, type, field,
     });
   }
   render() {

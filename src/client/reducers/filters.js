@@ -5,6 +5,9 @@ const { ON_FILTER_UPDATE, ON_CLEAR_FILTERS } = actions;
 export default function filters(state = [], action) {
   switch (action.type) {
     case ON_FILTER_UPDATE:
+      if (action.payload.filter.field === 'Size') {
+        state = state.filter(item => item.field !== 'Size');
+      }
       if (action.payload.filter.type === 'r') {
         state = state.filter(item => item.type !== 'r');
       }
