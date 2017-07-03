@@ -14,6 +14,7 @@ type ProductListType = {
   nbPages: number,
   hideBtn: boolean,
   className: string,
+  hideFav?: boolean,
   clear: Function,
   loadMore: Function,
 }
@@ -22,14 +23,14 @@ function ProductList({
   products = [],
   className,
   hideBtn,
-  clear,
+  hideFav,
   page,
   nbPages,
   loadMore,
 }: ProductListType) {
   return (
     <div>
-      <Filters />
+      {!hideFav && <Filters />}
       <div className="flex-grow-1 flex-parent flex-col margin--bottom-10">
         <div className={`margin--top-3 margin--bottom-6 flex-grow-1 flex-parent flex-wrap ${className ? `${className}` : 'flex-align-center flex-justify-center'}`}>
           {products.map(product => <ProductTile key={product.ID} product={product} />)}
