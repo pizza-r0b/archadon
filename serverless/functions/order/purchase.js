@@ -3,9 +3,21 @@ const addCors = require('../utils/corsRes');
 const DolliDB = require('../utils/DolliDB/build/main.min.js');
 const uuid = require('uuid/v1');
 
-const { ORDER_ITEM_TABLE, ORDER_DATA_TABLE, PRODUCT_ITEM_TABLE } = process.env;
+const { ORDER_ITEM_TABLE, ORDER_DATA_TABLE, PRODUCT_ITEM_TABLE, PRODUCT_DATA_TABLE } = process.env;
 
 let processedItems;
+
+const verifyItemInStock = items => new Promise((resolve, reject) => {
+  const outOfStock = items.filter(item => item.Qty === 0);
+  if (outOfStock.length) {
+    return reject({
+      code: 'out-of-stock',
+      items: outOfStock,
+    });
+  } else {
+    return resolve(items);
+  }
+});
 
 const createCharge = ({ token, email }) => (items) => new Promise((resolve, reject) => {
   processedItems = items;
@@ -59,24 +71,27 @@ const createOrder = (CustomerData, UserID) => ({ price, ChargeID, Brand, Last4 }
 });
 
 const putOrderData = Items => ({ ID, price, ChargeID, Brand, CustomerData, Last4 }) => new Promise((resolve, reject) => {
-  console.log(JSON.stringify({
-    Price: price,
-    ChargeID,
-    ID,
-    Brand,
-    Last4,
-    CustomerData,
-    Items,
-    ChargeType: 'stripe',
-  }));
-  DolliDB.PutData(ORDER_DATA_TABLE, ['ItemID', ID], {
-    Price: price,
-    ChargeID,
-    Brand,
-    Last4,
-    CustomerData,
-    Items: processedItems,
-    ChargeType: 'stripe',
+  const promises = [];
+
+  Items.forEach(item => {
+    if (typeof item.Qty !== 'undefined') {
+      const data = {
+        Qty: item.Qty - 1,
+      };
+      promises.push(DolliDB.PutData(PRODUCT_DATA_TABLE, ['ItemID', item.ID], data));
+    }
+  });
+
+  Promise.all(promises).then(() => {
+    return DolliDB.PutData(ORDER_DATA_TABLE, ['ItemID', ID], {
+      Price: price,
+      ChargeID,
+      Brand,
+      Last4,
+      CustomerData,
+      Items: processedItems,
+      ChargeType: 'stripe',
+    });
   }).then(() => resolve({ ID }))
     .catch(e => reject({ code: 'order-creation-failure', debug: e }));
 });
@@ -148,6 +163,7 @@ function purchase(event, context, callback) {
       }));
       return Promise.all(promises);
     })
+    .then(verifyItemInStock)
     .then(createCharge({ token: Token, email: CustomerData.email }))
     .then(createOrder(CustomerData, UserID))
     .then(putOrderData(Items))

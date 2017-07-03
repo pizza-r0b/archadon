@@ -5,6 +5,8 @@ import rug1 from 'Images/rug1.png';
 import rug2 from 'Images/rug2.png';
 import rug3 from 'Images/rug3.png';
 import Shop from 'Components/Shop';
+import { Link } from 'react-router-dom';
+import { IMAGE_ORIGIN } from 'Constants';
 
 class Canvas extends React.Component {
 
@@ -253,10 +255,20 @@ class Home extends React.Component {
         >
           {this.slides[this.state.currentIndex]}
         </ReactTransitionGroup>
+        <section className="content-section content-section--center">
+          <div className="content">
+            <h1>One Of A Kind, Handwoven Art That You Walk On</h1>
+            <h3 className="margin--top-3">Each rug is hand selected from the source. Only the finest will do. You're not purchasing just a rug. You're purchasing an piece of art. Something that will transform your room. Something to hold in high regard.</h3>
+            { /* <Link to="/about" className="btn btn--first margin--top-3">More About Us</Link> */}
+          </div>
+        </section>
         <section className="content-section">
           <div className="content">
             <h1>I was inspired by the integrity and simple grace of the Tibetan people.</h1>
             <p className="margin--top-3">We knew little of one another and yet, we saw many things in the same way. You will see this in the way we create rugs: attention to detail, dedication to craft. Only traditional methods and the finest hand spun Tibetan wool will do. Like the integrity that defines a culture, there is integrity in this rug. It is born of pure craftsmanship. There is a magical quality too. It's in the colors, the design. It is the look of today: exciting, stirring, vital. The union of two worlds: a modern face with a soul that reaches far back in time. The only difference between this rug and other works of art is that you walk on it, you live with it, it becomes part of you. Inspiration that lasts a lifetime.</p>
+          </div>
+          <div className="content">
+            <img src={`${IMAGE_ORIGIN}/tibet-rugs.jpg`} alt="Handwoven, oriental rugs" />
           </div>
         </section>
         <div ref={c => { this.selection = c; }}>

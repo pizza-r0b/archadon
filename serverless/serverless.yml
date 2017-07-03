@@ -239,7 +239,15 @@ functions:
       - http:
           path: product/v1/batch
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
     environment:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
@@ -270,7 +278,15 @@ functions:
       - http:
           path: purchase/v1/charge
           method: post
-          cors: true
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
     environment:
       ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
       ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
