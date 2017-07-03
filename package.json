@@ -33,6 +33,7 @@
     "algoliasearch": "^3.24.0",
     "aws-sdk": "^2.32.0",
     "babel-runtime": "^6.23.0",
+    "body-parser": "^1.17.2",
     "classnames": "^2.2.5",
     "dotenv": "^4.0.0",
     "dotenv-webpack": "^1.5.0",

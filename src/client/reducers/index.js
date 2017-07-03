@@ -9,6 +9,7 @@ import cart from './cart';
 import orderConfirmation from './orderConfirmation';
 import productDetails from './productDetails';
 import actions from 'Actions';
+import filters from './filters';
 
 const { ON_NAV_OPEN } = actions;
 
@@ -29,6 +30,7 @@ export default combineReducers({
   redirectPath,
   orderConfirmation,
   productDetails,
+  filters,
   errors,
   loading,
   products,

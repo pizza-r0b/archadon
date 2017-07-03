@@ -1,11 +1,7 @@
 const base = require('./base');
 const path = require('path');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
-
-dotenv.config({
-  path: path.resolve(__dirname, '../.env_dev'),
-});
+const Dotenv = require('dotenv-webpack');
 
 const defaults = base({});
 
@@ -41,6 +37,9 @@ const clientConfig = base({
       publicPath: `${'http://localhost'}:${process.env.DEV_SERVER_PORT}/`,
     },
     plugins: [
+      new Dotenv({
+        path: path.resolve(__dirname, '../.env_dev'),
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),

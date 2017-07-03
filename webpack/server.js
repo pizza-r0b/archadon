@@ -1,12 +1,8 @@
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const base = require('./base.js');
-const dotenv = require('dotenv');
 const path = require('path');
-
-dotenv.config({
-  path: path.resolve(__dirname, '../.env_dev'),
-});
+const Dotenv = require('dotenv-webpack');
 
 const serverConfig = base({
   rules: [
@@ -26,6 +22,9 @@ const serverConfig = base({
     },
     target: 'node',
     plugins: [
+      new Dotenv({
+        path: path.resolve(__dirname, '../.env_dev'),
+      }),
       new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     externals: [nodeExternals()],

@@ -16,6 +16,7 @@ const {
   SET_REDIRECT_PATH,
   TOGGLE_FAVORITE,
   ADD_TO_CART,
+  REPLACE_PRODUCT_LIST,
   PURCHASE,
   APP_LOAD,
   SET_LOADING_PAGE,
@@ -23,10 +24,12 @@ const {
   FAVORITES_LOADED,
   REPLACE_CART,
   PRODUCT_DETAIL_LOADED,
+  ON_CLEAR_FILTERS,
   REMOVE_FROM_CART,
   LOAD_MORE_DONE,
   LOAD_MORE,
   LOAD_FAVORITES,
+  ON_FILTER_UPDATE,
   SET_ORDER_CONFIRMATION,
   ON_NAV_OPEN,
 } = Actions;
@@ -54,13 +57,15 @@ const getItemsForCheckout = state => state.cart.items.map(item => ({ ID: item.ID
 
 const getCart = state => state.cart;
 
+const getFilters = state => state.filters;
+
 const getRedirectPath = state => state.redirectPath;
 
 const getCurrentPath = state => state.router.location.pathname;
 
 const getUserFavorites = state => state.user.Favorites || [];
 
-const getLoadedProducts = state => state.products.Items;
+const getLoadedProducts = state => state.products.hits;
 
 const getProductDetails = state => state.productDetails;
 
@@ -140,15 +145,16 @@ export function* logInSaga({ payload: { email, password } }) {
   }
 }
 
-export function* getProductListSaga(actionString, { payload: { startKey } }) {
+export function* getProductListSaga(actionString, { payload: { page } }) {
   const actionType = typeof actionString === 'string' ? actionString : PRODUCT_LIST_LOADED;
-  const { status, response: { LastEvaluatedKey, Items, Count } } = yield call(requestProductList, startKey);
+  const body = {};
+  const filters = yield select(getFilters);
+  if (filters.length) {
+    body.filters = filters;
+  }
+  const { status, response } = yield call(requestProductList, page, body);
   if (status === 200) {
-    yield put(action(actionType, {
-      LastEvaluatedKey,
-      Items,
-      Count,
-    }));
+    yield put(action(actionType, response));
   }
 }
 
@@ -359,6 +365,7 @@ export function* loadFavoritesSaga() {
 export default function* rootSaga() {
   yield [
     takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
+    takeLatest([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST),
     takeLatest(LOAD_FAVORITES, loadFavoritesSaga),
     takeLatest(LOG_IN, logInSaga),
     takeLatest(APP_LOAD, getDataFromLocalStorage),

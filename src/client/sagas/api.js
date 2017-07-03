@@ -9,7 +9,7 @@ export const requestSignUp = (email: string, password: string) => request('POST'
 export const requestUserData = (ID: string, token: string) => request('GET', url(`user/v1/read/${ID}`), null, {
   authtoken: token,
 });
-export const requestProductList = (startKey: string) => request('GET', url(`product/v1/list${startKey ? `?startKey=${startKey}` : ''}`));
+export const requestProductList = (page: string, body = {}) => request('POST', `/search/products${page ? `?page=${page}` : ''}`, body);
 export const requestProductData = (ID: string) => request('GET', url(`product/v1/data/${ID}`));
 export const requestUpdateUserData = (ID: string, token: string, body: Object) => request('POST', url(`user/v1/update/data/${ID}`), { data: body }, {
   authtoken: token,

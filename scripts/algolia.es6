@@ -14,6 +14,22 @@ const url = process.env.NODE_ENV === 'production' ? 'https://api.archadon.com/pr
 const indexPrefix = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 const indexName = `${indexPrefix}_Products`;
 const index = client.initIndex(indexName);
+const ascName = `${indexName}_asc`;
+const descName = `${indexName}_desc`;
+
+index.setSettings({
+  replicas: [ascName, descName],
+});
+
+const asc = client.initIndex(ascName);
+asc.setSettings({
+  ranking: ['asc(Price)'],
+});
+
+const desc = client.initIndex(descName);
+desc.setSettings({
+  ranking: ['desc(Price)'],
+});
 
 const fetchUrl = (u, startKey) => {
   if (startKey) {

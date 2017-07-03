@@ -20,7 +20,6 @@ function ProductDetail({ product = DEFAULT_ITEM }) {
         </div>
         <div className="product-detail-info">
           <h1 className="margin--bottom-2">{product.Name}</h1>
-          <h2>{product.Width} x {product.Height}</h2>
           <h3 className="strong">${product.Price}</h3>
           <hr />
           <FavoriteBtn id={product.ID} />

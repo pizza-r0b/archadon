@@ -74,6 +74,7 @@ const base = extend => {
       alias: {
         Components: prependSrc('client/components'),
         Actions: prependSrc('client/actions'),
+        Root: path.resolve(__dirname, '../'),
         Containers: prependSrc('client/containers'),
         Reducers: prependSrc('client/reducers'),
         Utils: prependSrc('client/utils'),

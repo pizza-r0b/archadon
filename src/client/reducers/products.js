@@ -3,6 +3,7 @@ import actions from 'Actions';
 const {
   PRODUCT_LIST_LOADED,
   LOAD_MORE_DONE,
+  REPLACE_PRODUCT_LIST,
 } = actions;
 
 export default function products(state = {}, action) {
@@ -12,12 +13,14 @@ export default function products(state = {}, action) {
         ...state,
         ...action.payload,
       };
+    case REPLACE_PRODUCT_LIST:
+      return action.payload;
     case LOAD_MORE_DONE:
-      const lastItems = state.Items || [];
+      const lastItems = state.hits || [];
       return {
         ...state,
         ...action.payload,
-        Items: [...lastItems, ...action.payload.Items],
+        hits: [...lastItems, ...action.payload.hits],
       };
     default:
       return state;

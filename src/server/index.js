@@ -8,14 +8,19 @@ import { Provider } from 'react-redux';
 import makeStore from 'Store';
 import { AppContainer } from 'react-hot-loader';
 import fetch from 'node-fetch';
+import searchRoute, { search } from '../search';
+import bodyParser from 'body-parser';
 
 const API_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/prod/';
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 const productDetails = [];
+
+app.post('/search/products', searchRoute);
 
 app.use('/product/:name/:id', async (req, res, next) => {
   try {
@@ -32,8 +37,7 @@ app.use('/product/:name/:id', async (req, res, next) => {
 });
 
 app.use(async (req, res, next) => {
-  const response = await fetch(`${API_URL}product/v1/list`);
-  const products = await response.json();
+  const products = await search();
   const store = makeStore({ products, productDetails });
   try {
     const context = {};

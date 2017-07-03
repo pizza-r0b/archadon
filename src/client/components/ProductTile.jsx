@@ -75,7 +75,7 @@ function ProductTile({
               <ProductDetailLink product={product}>
                 <h2>{product.Name}</h2>
               </ProductDetailLink>
-              <p>{`${product.LongDescription}`}</p>
+              <p>{product.LongDescription && `${product.LongDescription}`}</p>
             </div>
             <FavoriteBtn id={product.ID} />
           </div>
