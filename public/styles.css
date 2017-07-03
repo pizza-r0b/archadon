@@ -2030,4 +2030,26 @@ a, a:visited {
     text-align: left;
     width: 50%; } }
 
+.filter-wrap {
+  padding: 25;
+  box-sizing: border-box;
+  margin-top: 25; }
+  .filter-wrap .filter-option {
+    flex-grow: 1;
+    margin: 15 0; }
+    .filter-wrap .filter-option label {
+      display: block; }
+    .filter-wrap .filter-option select {
+      background: #FFFFFF;
+      border: 1px solid #e1e7ff;
+      height: 35px;
+      font-size: 1.2rem;
+      width: 100%; }
+
+@media (min-width: 768px) {
+  .filter-wrap .filters {
+    display: flex; }
+  .filter-wrap .filter-option {
+    margin-right: 25px; } }
+
 /*# sourceMappingURL=styles.css.map*/
