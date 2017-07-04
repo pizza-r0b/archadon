@@ -25,7 +25,8 @@ function ProductDetail({ product = DEFAULT_ITEM }) {
           <FavoriteBtn id={product.ID} />
           <p className="margin--top-3">{product.LongDescription}</p>
           <p className="margin--bottom-5">{product.ShortDescription}</p>
-          <AddToCartBtn id={product.ID} />
+          {product.Qty > 0 && <AddToCartBtn id={product.ID} />}
+          {product.Qty === 0 && <h3>Sold</h3>}
         </div>
       </div>
       {/*<div className="next-bar">

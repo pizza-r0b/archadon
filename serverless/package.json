@@ -1,9 +1,11 @@
 {
   "scripts": {
-    "deploy:prod": "sls deploy --env prod --secrets './secrets-prod.yml' --assetUrl 'https://assets.archadon.com'",
-    "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
+    "deploy:prod": "NODE_ENV=production sls deploy --env prod --secrets './secrets-prod.yml' --assetUrl 'https://assets.archadon.com'",
+    "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
+    "deploy:devfunction": "sls deploy function --function purchase --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
+    "algoliasearch": "^3.24.0",
     "aws-sdk": "^2.32.0",
     "bcrypt-nodejs": "^0.0.3",
     "express-handlebars": "^3.0.0",

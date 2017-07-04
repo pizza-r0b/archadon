@@ -18,6 +18,9 @@ provider:
   profile: archadon
   environment:
     ASSET_URL: ${opt:assetUrl, self:custom.assetUrl}
+    NODE_ENV: ${env:NODE_ENV, self:custom.NODE_ENV}
+    ALGOLIA_API_KEY: ${file(${opt:secrets}):ALGOLIA_API_KEY}
+    ALGOLIA_SECRET_KEY: ${file(${opt:secrets}):ALGOLIA_SECRET_KEY}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -31,6 +34,7 @@ provider:
 custom:
   assetUrl: "https://assets.dev.archadon.com"
   env: ${opt:env, self:provider.stage}
+  NODE_ENV: "development"
   UserDataTable: ${self:resources.Resources.UserDataTable.Properties.TableName}
   UserItemTable: ${self:resources.Resources.UserItemTable.Properties.TableName}
   ProductDataTable: ${self:resources.Resources.ProductDataTable.Properties.TableName}
@@ -252,25 +256,25 @@ functions:
       PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
-  getProductList:
-    handler: functions/handlers.getProductList
-    events:
-      - http:
-          path: product/v1/list
-          method: get
-          cors:
-            origins:
-              - '*'
-            headers:
-              - authtoken
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-    environment:
-      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
-      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+  # getProductList:
+  #   handler: functions/handlers.getProductList
+  #   events:
+  #     - http:
+  #         path: product/v1/list
+  #         method: get
+  #         cors:
+  #           origins:
+  #             - '*'
+  #           headers:
+  #             - authtoken
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #   environment:
+  #     PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+  #     PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
   purchase:
     handler: functions/handlers.order

@@ -56,7 +56,7 @@ async function searchRoute(req, res) {
         filters.push(queries.map(query => `${type} ${query}`).join(' AND '));
       }
     }
-    params.filters = filters.join(' AND ');
+    params.filters = `Qty > 0 AND ${filters.join(' AND ')}`;
   }
 
 

@@ -37,7 +37,7 @@ app.use('/product/:name/:id', async (req, res, next) => {
 });
 
 app.use(async (req, res, next) => {
-  const products = await search();
+  const products = await search({ filters: 'Qty > 0' });
   const store = makeStore({ products, productDetails });
   try {
     const context = {};

@@ -2,8 +2,21 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const addCors = require('../utils/corsRes');
 const DolliDB = require('../utils/DolliDB/build/main.min.js');
 const uuid = require('uuid/v1');
+const algolia = require('algoliasearch');
 
-const { ORDER_ITEM_TABLE, ORDER_DATA_TABLE, PRODUCT_ITEM_TABLE, PRODUCT_DATA_TABLE } = process.env;
+const {
+  ORDER_ITEM_TABLE,
+  ORDER_DATA_TABLE,
+  PRODUCT_ITEM_TABLE,
+  PRODUCT_DATA_TABLE,
+  ALGOLIA_API_KEY,
+  ALGOLIA_SECRET_KEY,
+} = process.env;
+
+const algoliaClient = algolia(ALGOLIA_API_KEY, ALGOLIA_SECRET_KEY);
+const indexPrefix = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+const indexName = `${indexPrefix}_Products`;
+const index = algoliaClient.initIndex(indexName);
 
 let processedItems;
 
@@ -70,15 +83,28 @@ const createOrder = (CustomerData, UserID) => ({ price, ChargeID, Brand, Last4 }
     }));
 });
 
-const putOrderData = Items => ({ ID, price, ChargeID, Brand, CustomerData, Last4 }) => new Promise((resolve, reject) => {
+const putOrderData = ({ ID, price, ChargeID, Brand, CustomerData, Last4 }) => new Promise((resolve, reject) => {
   const promises = [];
 
-  Items.forEach(item => {
+  processedItems.forEach(item => {
     if (typeof item.Qty !== 'undefined') {
       const data = {
         Qty: item.Qty - 1,
       };
-      promises.push(DolliDB.PutData(PRODUCT_DATA_TABLE, ['ItemID', item.ID], data));
+      promises.push(new Promise((_resolve, _reject) => {
+        DolliDB.PutData(PRODUCT_DATA_TABLE, ['ItemID', item.ID], data).then(() => {
+          index.partialUpdateObject({
+            objectID: item.SKU,
+            Qty: data.Qty,
+          }, (err) => {
+            if (err) {
+              console.log(err.message);
+              return _reject(err.message);
+            }
+            return _resolve();
+          });
+        }).catch(e => reject(e));
+      }));
     }
   });
 
@@ -166,7 +192,7 @@ function purchase(event, context, callback) {
     .then(verifyItemInStock)
     .then(createCharge({ token: Token, email: CustomerData.email }))
     .then(createOrder(CustomerData, UserID))
-    .then(putOrderData(Items))
+    .then(putOrderData)
     .then(({ ID }) => {
       // send email to customer
       // send email to order fulfillment

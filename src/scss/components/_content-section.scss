@@ -6,6 +6,7 @@
   align-items: center;
   border-bottom: 1px solid $light;
   justify-content: center;
+  flex-direction: column;
 
   .content{
     text-align: center;
@@ -24,6 +25,8 @@
   .content-section {
     justify-content: flex-start;
     padding: $spacer * 20px $spacer * 10px;
+    flex-direction: row;
+
 
     .content {
       text-align: left;

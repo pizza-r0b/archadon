@@ -258,7 +258,7 @@ class Home extends React.Component {
         <section className="content-section content-section--center">
           <div className="content">
             <h1>One Of A Kind, Handwoven Art That You Walk On</h1>
-            <h3 className="margin--top-3">Each rug is hand selected from the source. Only the finest will do. You're not purchasing just a rug. You're purchasing an piece of art. Something that will transform your room. Something to hold in high regard.</h3>
+            <h3 className="margin--top-3">Each rug is hand selected from the source. These rugs are handwoven and can take up to a year to complete. You're not purchasing just a rug. You're purchasing a piece of art. Something that will transform your room. Something to hold in high regard.</h3>
             { /* <Link to="/about" className="btn btn--first margin--top-3">More About Us</Link> */}
           </div>
         </section>

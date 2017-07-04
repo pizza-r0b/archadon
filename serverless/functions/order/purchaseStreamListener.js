@@ -13,7 +13,7 @@ function purchaseStreamListener(event, context, callback) {
 
         DolliDB.GetData(process.env.ORDER_DATA_TABLE, ID)
           .then(data => {
-            const { Items: items, CustomerData: customerData, Price: price } = data;
+            const { Items: items, CustomerData: customerData, Price: price = 0 } = data;
             return sendMail({
               to: email,
               subject: 'Your Archadon Order Confirmation',
@@ -57,7 +57,7 @@ function emailAdmin(event, context, callback) {
 
         DolliDB.GetData(process.env.ORDER_DATA_TABLE, ID)
           .then(data => {
-            const { Items: items, CustomerData: customerData, Price: price, ChargeID: chargeID } = data;
+            const { Items: items, CustomerData: customerData, Price: price = 0, ChargeID: chargeID } = data;
             return sendMail({
               to: process.env.ADMIN_EMAIL,
               subject: 'New Archadon Order',

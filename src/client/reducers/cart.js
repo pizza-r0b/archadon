@@ -6,6 +6,7 @@ const {
   PRODUCT_DATA_LOADED,
   REMOVE_FROM_CART,
   REPLACE_CART,
+  SET_ORDER_CONFIRMATION,
  } = actions;
 
 type CartItemType = {
@@ -43,6 +44,9 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
   }
 
   switch (action.type) {
+
+    case SET_ORDER_CONFIRMATION:
+      return Object.assign({}, INITIAL_STATE);
 
     case ADD_TO_CART:
       newState.items.push(action.payload);

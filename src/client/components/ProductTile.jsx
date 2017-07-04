@@ -47,7 +47,12 @@ function ProductTile({
   });
 
   let cartButton;
-  if (inCart) {
+
+  if (product.Qty === 0) {
+    cartButton = (
+      <p className="font-color--white bold margin--left-1">Sold</p>
+    );
+  } else if (inCart) {
     cartButton = (
       <div style={{ cursor: 'pointer' }} onClick={removeFromCart(product.ID)} className="flex-parent flex-align-center">
         <p className="font-color--white bold margin--left-1">Remove From Cart</p>

@@ -5,16 +5,23 @@ const REQUEST_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archado
 const url = path => `${REQUEST_URL}/${path}`;
 
 export const requestLogin = (email: string, password: string) => request('POST', url('user/v1/login'), { email, password });
+
 export const requestSignUp = (email: string, password: string) => request('POST', url('user/v1/create'), { email, password });
+
 export const requestUserData = (ID: string, token: string) => request('GET', url(`user/v1/read/${ID}`), null, {
   authtoken: token,
 });
+
 export const requestProductList = (page: string, body = {}) => request('POST', `/search/products${page ? `?page=${page}` : ''}`, body);
+
 export const requestProductData = (ID: string) => request('GET', url(`product/v1/data/${ID}`));
+
 export const requestUpdateUserData = (ID: string, token: string, body: Object) => request('POST', url(`user/v1/update/data/${ID}`), { data: body }, {
   authtoken: token,
 });
+
 export const requestBatch = (Items: Array<string>) => request('POST', url('product/v1/batch'), { Items });
+
 export const requestPurchase = ((payload: {
   Items: Array<Object>,
   UserID: ?string,
