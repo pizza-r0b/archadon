@@ -1784,8 +1784,6 @@ a, a:visited {
   .cart-item img {
     height: auto;
     width: 100%;
-    border: 1px solid #e1e7ff;
-    border-radius: 5px;
     padding: 5; }
   .cart-item .img-wrap {
     display: flex;
