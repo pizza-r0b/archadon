@@ -36,7 +36,7 @@ function ProductList({
           {products.map(product => <ProductTile key={product.ID} product={product} />)}
           {products.length === 0 && (
             <div className="flex-parent flex-align-center flex-col flex-justify-center">
-              <h2 className="margin--bottom-6">Your filters returned no results.</h2>
+              <h2 className="margin--bottom-6">Your filters returned no results. Try a different combination of filters or</h2>
               <ClearFilterButton />
             </div>
           )}

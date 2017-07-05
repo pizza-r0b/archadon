@@ -1,5 +1,5 @@
 .content-section {
-  min-height: 50vh;
+  min-height: 25vh;
   padding: $spacer * 20px $spacer * 3px;
   box-sizing: border-box;
   display: flex;
@@ -26,6 +26,7 @@
     justify-content: flex-start;
     padding: $spacer * 20px $spacer * 10px;
     flex-direction: row;
+    min-height: 50vh;
 
 
     .content {

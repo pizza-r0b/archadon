@@ -55,6 +55,8 @@ const getCartItems = state => state.cart.items;
 
 const getItemsForCheckout = state => state.cart.items.map(item => ({ ID: item.ID }));
 
+const getLoadingState = state => state.loading.full;
+
 const getCart = state => state.cart;
 
 const getFilters = state => state.filters;
@@ -386,12 +388,23 @@ export default function* rootSaga() {
     }()),
     (function* () {
       while (true) {
+        yield take(LOADING);
+        const loading = yield select(getLoadingState);
+        if (loading) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'initial';
+        }
+      }
+    }()),
+    (function* () {
+      while (true) {
         yield take([LOCATION_CHANGE]);
         const navOpen = yield select(getNavState);
         if (navOpen) {
           yield put(action(ON_NAV_OPEN, !navOpen));
         }
       }
-    }())
+    }()),
   ];
 }

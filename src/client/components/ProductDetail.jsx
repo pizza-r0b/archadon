@@ -19,7 +19,7 @@ function ProductDetail({ product = DEFAULT_ITEM }) {
           {product.Images && <img alt={product.Name} src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />}
         </div>
         <div className="product-detail-info">
-          <h1 className="margin--bottom-2">{product.Name}</h1>
+          <h1 className="margin--bottom-2">Hand-Knotted {product.Name}</h1>
           <h3 className="strong">${product.Price}</h3>
           <hr />
           <FavoriteBtn id={product.ID} />

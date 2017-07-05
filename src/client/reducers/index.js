@@ -10,6 +10,7 @@ import orderConfirmation from './orderConfirmation';
 import productDetails from './productDetails';
 import actions from 'Actions';
 import filters from './filters';
+import ui from './ui';
 
 const { ON_NAV_OPEN } = actions;
 
@@ -31,6 +32,7 @@ export default combineReducers({
   orderConfirmation,
   productDetails,
   filters,
+  ui,
   errors,
   loading,
   products,

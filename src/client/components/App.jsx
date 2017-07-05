@@ -4,7 +4,7 @@ import Navigation from 'Components/Navigation';
 import actions from 'Actions';
 import { action } from 'Utils';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Home from 'Components/Home';
 import Logout from 'Components/Logout';
 import Account from 'Components/Account';
@@ -18,6 +18,7 @@ import { withRouter } from 'react-router';
 import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
 import classnames from 'classnames';
+import Loader from 'Components/Loader';
 
 const { APP_LOAD } = actions;
 
@@ -65,49 +66,30 @@ class App extends Component {
     scrolled: false,
   }
 
-  handleScroll = () => {
-    if (this.unmount) return;
-    if (window.scrollY + 50 > window.innerHeight && !this.state.scrolled) {
-      this.setState({ scrolled: true });
-    } else if (window.scrollY + 50 < window.innerHeight && this.state.scrolled) {
-      this.setState({ scrolled: false });
-    }
-  }
+
   componentDidMount() {
     this.props.loaded();
-    this.handleScroll();
-    window.addEventListener('scroll', this.handleScroll);
   }
 
-  componentWillUmount() {
-    this.unmount = true;
-    window.removeEventListener('scroll', this.handleScroll);
-  }
 
   render() {
     return (
       <ScrollToTopWithRouter>
         <div className="layout">
-          <Navigation scrolled={this.state.scrolled} />
-          <div style={{/*height: '100%'*/}} className="flex-grow-1 flex-justify-center flex-parent">
-            {
-              this.props.loading.full ?
-                <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
-                  <h1>Loading</h1>
-                </div>
-                :
-              [
-                <Route key="shop" path="/shop" component={Shop} />,
-                <Route key="home" path="/" exact component={Home} />,
-                <Route key="login" path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />,
-                <Route key="account" path="/account" component={Account} />,
-                <Route key="logout" path="/logout" component={Logout} />,
-                <Route key="cart" path="/cart" component={Cart} />,
-                <Route key="checkout" path="/checkout" component={Checkout} />,
-                <Route key="detail" path="/product/:name/:id" component={ProductDetail} />,
-                <Route key="confirm" path="/order-confirmation" component={OrderConfirmation} />,
-              ]
-            }
+          <Navigation />
+          <div style={{ paddingTop: '35px' }} className="flex-grow-1 flex-justify-center flex-parent">
+            {this.props.loading.full && <Loader />}
+            <Switch>
+              <Route path="/shop" component={Shop} />
+              <Route path="/" exact component={Home} />
+              <Route path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />
+              <Route path="/account" component={Account} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/cart" component={Cart} />
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/product/:name/:id" component={ProductDetail} />
+              <Route path="/order-confirmation" component={OrderConfirmation} />
+            </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>
         </div>

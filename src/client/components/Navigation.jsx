@@ -9,13 +9,11 @@ import { action } from 'Utils';
 const { ON_NAV_OPEN } = actions;
 
 function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
-  const isRoot = location.pathname === '/';
   return (
     <nav
       style={{ position: 'fixed' }}
       className={
         classnames('global-nav global-padding-x flex-justify-between flex-align-center', {
-          root: isRoot && !scrolled,
           open: navOpen,
         })
       }

@@ -30,4 +30,5 @@ export default keyMirror({
   PRODUCT_DETAIL_LOADED: null,
   GET_PRODUCT_DETAILS: null,
   ON_NAV_OPEN: null,
+  HOME_LOADED: null,
 });

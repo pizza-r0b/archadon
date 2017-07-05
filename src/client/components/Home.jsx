@@ -1,193 +1,34 @@
+// @flow
 import React, { PropTypes } from 'react';
-import ReactTransitionGroup from 'react-addons-transition-group';
-import classnames from 'classnames';
-import rug1 from 'Images/rug1.png';
-import rug2 from 'Images/rug2.png';
-import rug3 from 'Images/rug3.png';
 import Shop from 'Components/Shop';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { IMAGE_ORIGIN } from 'Constants';
+import actions from 'Actions';
+import { action } from 'Utils';
 
-class Canvas extends React.Component {
+const { LOADING, HOME_LOADED } = actions;
 
-  static propTypes = {
-    img: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  }
+const preload = images => Promise.all(images.map(src => new Promise((resolve) => {
+  const el = document.createElement('img');
 
-  drawImageToCanvas = (img) => {
-    const ctx = this.canvas.getContext('2d');
-    ctx.save();
-    ctx.globalAlpha = 0.15;
-    ctx.drawImage(img, - this.canvas.width / 2, - this.canvas.height / 2, img.width / 2, img.height / 2);
-    ctx.restore();
-  }
+  el.addEventListener('load', () => {
+    resolve();
+  });
 
+  el.addEventListener('error', () => {
+    resolve();
+  });
 
-  drawColorOverlay = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = this.canvas.width;
-    canvas.height = this.canvas.height;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = this.props.color;
-    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    const drawingCtx = this.canvas.getContext('2d');
-    drawingCtx.save();
-    drawingCtx.globalCompositeOperation = 'color';
-    drawingCtx.drawImage(canvas, 0, 0);
-    drawingCtx.restore();
-  }
-
-  loadImage = () => {
-    const img = document.createElement('img');
-
-    img.addEventListener('load', () => {
-      if (!this.canvas) return;
-      this.drawImageToCanvas(img);
-      this.drawColorOverlay();
-    });
-
-    img.src = this.props.img;
-  }
-
-  componentDidMount() {
-    this.loadImage();
-
-    // load image to canvas
-    // add color overlay
-  }
-
-  getRef = c => {
-    this.canvas = c;
-  }
-  render() {
-    return (
-      <canvas ref={this.getRef} />
-    );
-  }
-}
-
-const FEATURED_RUGS = [
-  {
-    name: 'Theo',
-    id: '1',
-    size: '6x12',
-    country: 'Persia',
-    src: rug1,
-  },
-  {
-    name: 'Jenni',
-    id: '2',
-    size: '6x12',
-    country: 'Persia',
-    src: rug2,
-  },
-  {
-    name: 'Jenni',
-    id: '2',
-    size: '6x12',
-    country: 'Persia',
-    src: rug3,
-  },
-];
-
-const COLORS = ['#42D044', '#2D76CE', '#5C3D6D'];
-
-class Slide extends React.Component {
-
-  state = {}
-
-  componentWillAppear(cb) {
-    this.setState({
-      entering: true,
-      appear: true,
-    });
-    cb();
-  }
-
-  componentWillEnter(cb) {
-    this.setState({
-      entering: true,
-      appear: false,
-    });
-    cb();
-  }
-
-  animationEndFunc = (cb, name) => (e) => {
-    if (e.animationName === name) {
-      cb();
-    }
-  }
-
-  componentWillLeave(cb) {
-    this.setState({
-      imgAnimationEndFunc: this.animationEndFunc(cb, 'slideLeave'),
-      leaving: true,
-      entering: false,
-      appear: false,
-    });
-  }
-  render() {
-    const { img, color, Cta } = this.props;
-    return (
-      <div
-        onAnimationEnd={this.state.imgAnimationEndFunc}
-        className={classnames('animation-wrap', {
-          leaving: this.state.leaving,
-          entering: this.state.entering && !this.state.appear,
-        })}
-      >
-        <div
-          className={classnames('flex-parent flex-grow-1 slide-wrap', {
-
-          })}
-        >
-          <div className="flex-parent flex-grow-1 home-slide-flex">
-            <div className="home-slide-box">
-              <Cta />
-            </div>
-            <div className="home-slide-box home-slide-img-box">
-              <img
-                className={classnames('home-slide-img', {
-                  leaving: this.state.leaving,
-                  entering: this.state.entering,
-                })}
-                src={img}
-              />
-            </div>
-            <div className="home-slide-box">
-
-            </div>
-          </div>
-          <div className="home-slide-bg">
-            <Canvas img={img} color={color} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-}
-
-const interval = (callback, delay, arr) => {
-  const tick = now => {
-    if (now - start >= delay) {
-      start = now;
-      callback();
-    }
-    arr.push(requestAnimationFrame(tick));
-  };
-  let start = performance.now();
-  arr.push(requestAnimationFrame(tick));
-};
-
-const DURATION = 3500;
+  el.src = src;
+})));
 
 class Home extends React.Component {
 
-  constructor() {
-    super();
+  props: {
+    setLoadingState: Function,
+    homeIsLoaded: boolean,
+    homeLoaded: Function,
   }
 
   state = {
@@ -209,19 +50,18 @@ class Home extends React.Component {
     </div>
   )
 
-  updateSlide = () => {
-    let currentIndex;
-    if (this.state.currentIndex < this.slides.length - 1) {
-      currentIndex = this.state.currentIndex + 1;
-    } else {
-      currentIndex = 0;
-    }
-    this.setState({ currentIndex });
-  }
-
-  int = [];
-
   componentDidMount() {
+    console.log(this.props.homeLoaded);
+    if (!this.props.homeIsLoaded) {
+      this.props.setLoadingState(true);
+      preload(this.images).then(() => {
+        this.props.setLoadingState(false);
+        this.setState({ loaded: true });
+        this.props.homeLoaded();
+      });
+    }
+
+
     import('velocity-animate').then(Velocity => {
       this.velocityScroll = () => {
         Velocity(this.selection, 'scroll', {
@@ -230,31 +70,29 @@ class Home extends React.Component {
         });
       };
     });
-    interval(this.updateSlide, DURATION, this.int);
   }
 
-  componentWillUnmount() {
-    this.int.forEach(int => window.cancelAnimationFrame(int));
-  }
-
-  slides = FEATURED_RUGS.map((obj, i) => <Slide key={i} img={obj.src} Cta={this.Cta} color={COLORS[i]} />)
+  images = [`${IMAGE_ORIGIN}/hp-artisan-rugs.jpg`];
 
   render() {
     const { Cta } = this;
     return (
       <div className="flex-parent flex-grow-1 flex-col">
-        <ReactTransitionGroup
-          component="div"
-          style={{
-            transform: 'translate3d(0,0,0)',
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: '100%',
-          }}
-          className="flex-parent flex-grow-1 home-transition-group"
-        >
-          {this.slides[this.state.currentIndex]}
-        </ReactTransitionGroup>
+        <section className="hero">
+          <img className="main-image" alt="Handmade Artisan Rugs" src={this.images[0]} />
+          <div className="btn btn--white" onClick={() => { this.velocityScroll() }}>Shop Selection</div>
+          <div className="hero-titles">
+            <div className="hero-title">
+              <h1 className="font-color--white">Handmade</h1>
+            </div>
+            <div className="hero-title">
+              <h1 className="font-color--white">Artisan</h1>
+            </div>
+            <div className="hero-title">
+              <h1 className="font-color--white">Rugs</h1>
+            </div>
+          </div>
+        </section>
         <section className="content-section content-section--center">
           <div className="content">
             <h1>One Of A Kind, Handwoven Art That You Walk On</h1>
@@ -272,11 +110,24 @@ class Home extends React.Component {
           </div>
         </section>
         <div ref={c => { this.selection = c; }}>
-          <Shop />
+          { this.state.loaded && <Shop /> }
         </div>
       </div>
     );
   }
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => ({
+  setLoadingState(state) {
+    dispatch(action(LOADING, state));
+  },
+  homeLoaded() {
+    dispatch(action(HOME_LOADED));
+  },
+});
+
+const mapStateToProps = state => ({
+  homeIsLoaded: state.ui.homeLoaded,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -78,7 +78,7 @@ function ProductTile({
           <div className="flex-parent flex-row flex-justify-between margin--top-1">
             <div>
               <ProductDetailLink product={product}>
-                <h2>{product.Name}</h2>
+                <h2>Hand-Knotted {product.Name}</h2>
               </ProductDetailLink>
               <p>{product.LongDescription && `${product.LongDescription}`}</p>
             </div>
