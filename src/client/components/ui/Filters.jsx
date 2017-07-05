@@ -89,15 +89,23 @@ const FILTERS_ARR = [
   },
 ];
 
-function FilterOption({ filter, onChange, defaultIndex }) {
+FILTERS_ARR.reverse();
+
+type FilterProps = {
+  filter: Object,
+  onChange: Function,
+  defaultIndex: number,
+}
+
+function FilterOption({ filter, onChange, defaultIndex }: FilterProps) {
   const selectProps = {};
   if (defaultIndex === 0) {
     selectProps.value = 0;
   }
   return (
     <div className="filter-option">
-      <label><h3>{filter.name}</h3></label>
-      <select {...selectProps} onChange={onChange}>
+      <label htmlFor={filter.name}><h3>{filter.name}</h3></label>
+      <select name={filter.name} {...selectProps} onChange={onChange}>
         <option>Select {filter.name}</option>
         {filter.options.map((option, i) => (
           <option key={i} data-filterindex={filter.index} data-optionindex={i}>{option.copy}</option>
@@ -108,6 +116,11 @@ function FilterOption({ filter, onChange, defaultIndex }) {
 }
 
 class Filters extends Component {
+
+  props: {
+    updateFilter: Function,
+    filters: Array<Object>,
+  }
 
   onChange = (e) => {
     const select = e.currentTarget;

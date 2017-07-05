@@ -11,11 +11,12 @@ type AddToCartProps = {
   id: string,
   removeFromCart: Function,
   addToCart: Function,
+  className: string,
 };
 
-function AddToCartBtn({ inCart, id, removeFromCart, addToCart }: AddToCartProps) {
+function AddToCartBtn({ inCart, id, removeFromCart, addToCart, className }: AddToCartProps) {
   return (
-    <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className="btn btn--first">
+    <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className={`btn btn--first${className ? ` ${className}` : ''}`}>
       {inCart ? 'Remove From Cart' : 'Add To Cart'}
     </button>
   );

@@ -10,6 +10,7 @@ const { LOAD_FAVORITES } = actions;
 class Favorites extends Component {
   props: {
     loadFavorites: Function,
+    favorites: Array<Object>,
     loading: {
       page: string,
     }

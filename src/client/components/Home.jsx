@@ -1,5 +1,5 @@
 // @flow
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Shop from 'Components/Shop';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -33,6 +33,7 @@ class Home extends React.Component {
 
   state = {
     currentIndex: 0,
+    loaded: this.props.homeIsLoaded,
   }
 
   scroll = () => {
@@ -51,7 +52,6 @@ class Home extends React.Component {
   )
 
   componentDidMount() {
-    console.log(this.props.homeLoaded);
     if (!this.props.homeIsLoaded) {
       this.props.setLoadingState(true);
       preload(this.images).then(() => {
@@ -75,12 +75,11 @@ class Home extends React.Component {
   images = [`${IMAGE_ORIGIN}/hp-artisan-rugs.jpg`];
 
   render() {
-    const { Cta } = this;
     return (
       <div className="flex-parent flex-grow-1 flex-col">
         <section className="hero">
           <img className="main-image" alt="Handmade Artisan Rugs" src={this.images[0]} />
-          <div className="btn btn--white" onClick={() => { this.velocityScroll() }}>Shop Selection</div>
+          <div className="btn btn--white" onClick={() => { this.velocityScroll(); }}>Shop Selection</div>
           <div className="hero-titles">
             <div className="hero-title">
               <h1 className="font-color--white">Handmade</h1>
@@ -96,7 +95,7 @@ class Home extends React.Component {
         <section className="content-section content-section--center">
           <div className="content">
             <h1>One Of A Kind, Handwoven Art That You Walk On</h1>
-            <h3 className="margin--top-3">Each rug is hand selected from the source. These rugs are handwoven and can take up to a year to complete. You're not purchasing just a rug. You're purchasing a piece of art. Something that will transform your room. Something to hold in high regard.</h3>
+            <h3 className="margin--top-3">Each rug is hand selected from the source. Since 1985 our supplier has traveled to the tribal area on the Afghan/Pakistan border and Tibet establishing lasting relationships with the very best rug weavers in those areas. These rugs are hand-woven, one-of-a-kind, and will transform any room.</h3>
             { /* <Link to="/about" className="btn btn--first margin--top-3">More About Us</Link> */}
           </div>
         </section>

@@ -11,7 +11,6 @@ import ProductDetailLink from 'Components/ProductDetailLink';
 const {
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  TOGGLE_FAVORITE,
  } = actions;
 
 type ProductTileProps = {

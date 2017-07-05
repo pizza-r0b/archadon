@@ -217,12 +217,12 @@ export function* getProductDetailSaga({ payload: id }) {
 
   if (!product) {
     try {
-      const { response: { data } } = yield call(requestProductData, product);
+      const { response: { data } } = yield call(requestProductData, id);
       if (Object.keys(data).length > 0) {
         data.ID = id;
         product = data;
       }
-    } catch (e) { console.error('Error getting product'); }
+    } catch (e) { }
   }
 
   yield put(action(PRODUCT_DETAIL_LOADED, product));

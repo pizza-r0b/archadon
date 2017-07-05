@@ -4,6 +4,8 @@ import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import actions from 'Actions';
 import { Link } from 'react-router-dom';
 import { action } from 'Utils';
+import ProductDetailLink from 'Components/ProductDetailLink';
+
 const { REMOVE_FROM_CART } = actions;
 
 type CartItemProps = {
@@ -14,7 +16,7 @@ type CartItemProps = {
 let CartItem = ({ item = DEFAULT_ITEM, removeFromCart }: CartItemProps) => (
   <div className="cart-item">
     <div className="img-wrap">
-      {item.Images && <img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} />}
+      {item.Images && <ProductDetailLink product={item}><img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} /></ProductDetailLink>}
       <div>
         <div>{item.Name}</div>
         <div>{item.Width} x {item.Height}</div>
@@ -40,7 +42,7 @@ const mapDispatchToProps = dispatch => ({
 
 CartItem = connect(null, mapDispatchToProps)(CartItem);
 
-function Cart({ cart: { items, totalPrice } }) {
+function Cart({ cart: { items, totalPrice } }: { cart: Object }) {
   return (
     <div className="global-padding padding--top-10 flex-parent flex-grow-1 flex-col">
       {items.length === 0 &&
