@@ -43,7 +43,39 @@
   }
 }
 
+.collection {
+  position: relative;
+
+}
+
+.grid-item.collection-b {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  padding: $spacer;
+  box-sizing: border-box;
+  width: 80%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.grid-item.collection-c {
+  display: none;
+}
+
 @include tablet() {
+  .grid-item.collection-b {
+    position: relative;
+    width: auto;
+    height: auto;
+  }
+
+  .grid-item.collection-c {
+    display: flex;
+  }
   .hero {
     height: auto;
     max-width: 100%;

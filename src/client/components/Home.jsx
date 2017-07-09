@@ -64,56 +64,60 @@ class Home extends React.Component {
 
     import('velocity-animate').then(Velocity => {
       this.velocityScroll = () => {
-        Velocity(this.selection, 'scroll', {
-          duration: 1000,
-          easing: 'easeOutExpo',
-        });
-      };
-    });
-  }
+      Velocity(this.selection, 'scroll', {
+        duration: 1000,
+        easing: 'easeOutExpo',
+      });
+    };
+  });
+}
 
-  images = [`${IMAGE_ORIGIN}/hp-artisan-rugs.jpg`];
+images = [`${IMAGE_ORIGIN}/hp-artisan-rugs.jpg`];
 
-  render() {
-    return (
-      <div className="flex-parent flex-grow-1 flex-col">
-        <section className="hero">
-          <img className="main-image" alt="Handmade Artisan Rugs" src={this.images[0]} />
-          <div className="btn btn--white" onClick={() => { this.velocityScroll(); }}>Shop Selection</div>
-          <div className="hero-titles">
-            <div className="hero-title">
-              <h1 className="font-color--white">Handmade</h1>
-            </div>
-            <div className="hero-title">
-              <h1 className="font-color--white">Artisan</h1>
-            </div>
-            <div className="hero-title">
-              <h1 className="font-color--white">Rugs</h1>
-            </div>
+render() {
+  return (
+    <div className="flex-parent flex-grow-1 flex-col">
+      <section className="hero">
+        <img className="main-image" alt="Handmade Artisan Rugs" src={this.images[0]} />
+        <div className="btn btn--white" onClick={() => { this.velocityScroll(); }}>Shop Selection</div>
+        <div className="hero-titles">
+          <div className="hero-title">
+            <h1 className="font-color--white">Handmade</h1>
           </div>
-        </section>
-        <section className="content-section content-section--center">
-          <div className="content">
-            <h1>One Of A Kind, Handwoven Art That You Walk On</h1>
-            <h3 className="margin--top-3">Each rug is hand selected from the source. Since 1985 our supplier has traveled to the tribal area on the Afghan/Pakistan border and Tibet establishing lasting relationships with the very best rug weavers in those areas. These rugs are hand-woven, one-of-a-kind, and will transform any room.</h3>
-            { /* <Link to="/about" className="btn btn--first margin--top-3">More About Us</Link> */}
+          <div className="hero-title">
+            <h1 className="font-color--white">Artisan</h1>
           </div>
-        </section>
-        <section className="content-section">
-          <div className="content">
-            <h1>I was inspired by the integrity and simple grace of the Tibetan people.</h1>
-            <p className="margin--top-3">We knew little of one another and yet, we saw many things in the same way. You will see this in the way we create rugs: attention to detail, dedication to craft. Only traditional methods and the finest hand spun Tibetan wool will do. Like the integrity that defines a culture, there is integrity in this rug. It is born of pure craftsmanship. There is a magical quality too. It's in the colors, the design. It is the look of today: exciting, stirring, vital. The union of two worlds: a modern face with a soul that reaches far back in time. The only difference between this rug and other works of art is that you walk on it, you live with it, it becomes part of you. Inspiration that lasts a lifetime.</p>
+          <div className="hero-title">
+            <h1 className="font-color--white">Rugs</h1>
           </div>
-          <div className="content">
-            <img src={`${IMAGE_ORIGIN}/tibet-rugs.jpg`} alt="Handwoven, oriental rugs" />
-          </div>
-        </section>
-        <div ref={c => { this.selection = c; }}>
-          { this.state.loaded && <Shop /> }
         </div>
+      </section>
+      <section className="content-grid global-padding">
+        <div className="content-grid-inner collection">
+          <div className="grid-item collection-a"><img src="https://assets.archadon.com/6x9.2_32397_29426_v2.jpg" /></div>
+          <div className="grid-item flex-col collection-b">
+            <h1 className="align--center">The Abstract Collection</h1>
+            <p className="align--center">A blend of modern with traditional.</p>
+            <div className="btn btn--first margin--top-4">View Collection</div>
+          </div>
+          <div className="grid-item collection-c"><img src="https://assets.archadon.com/6x9_32394_29429_v2.jpg" /></div>
+        </div>
+      </section>
+      <div ref={c => { this.selection = c; }}>
+        {this.state.loaded && <Shop />}
       </div>
-    );
-  }
+      <section className="content-section">
+        <div className="content padding-m--right-5">
+          <h1>I was inspired by the integrity and simple grace of the Tibetan people.</h1>
+          <p className="margin--top-3">We knew little of one another and yet, we saw many things in the same way. You will see this in the way we create rugs: attention to detail, dedication to craft. Only traditional methods and the finest hand spun Tibetan wool will do. Like the integrity that defines a culture, there is integrity in this rug. It is born of pure craftsmanship. There is a magical quality too. It's in the colors, the design. It is the look of today: exciting, stirring, vital. The union of two worlds: a modern face with a soul that reaches far back in time. The only difference between this rug and other works of art is that you walk on it, you live with it, it becomes part of you. Inspiration that lasts a lifetime.</p>
+        </div>
+        <div className="content">
+          <img src={`${IMAGE_ORIGIN}/tibet-rugs.jpg`} alt="Handwoven, oriental rugs" />
+        </div>
+      </section>
+    </div>
+  );
+}
 }
 
 const mapDispatchToProps = dispatch => ({

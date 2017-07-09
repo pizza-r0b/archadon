@@ -5,6 +5,8 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid $light;
+  border-top: 1px solid $light;
+
   justify-content: center;
   flex-direction: column;
 
@@ -20,7 +22,40 @@
   max-width: 100%;
 }
 
+.grid-item {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+
+
 @include tablet() {
+
+  .content-grid {
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+
+    &-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 100%;
+      border: 1px solid $light;
+      box-sizing: border-box;
+      padding: $spacer * 3px;
+    }
+  }
 
   .content-section {
     justify-content: flex-start;
