@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid $light;
-  border-top: 1px solid $light;
 
   justify-content: center;
   flex-direction: column;
@@ -46,12 +45,15 @@
     display: grid;
     width: 100%;
     box-sizing: border-box;
+    padding: $spacer * 10px 0;
+    background: #f8f8f8;
+
 
     &-inner {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       height: 100%;
-      border: 1px solid $light;
+      // border: 1px solid $light;
       box-sizing: border-box;
       padding: $spacer * 3px;
     }
@@ -67,6 +69,10 @@
     .content {
       text-align: left;
       width: 50%;
+
+      &:first-child {
+        padding-right: $spacer * 3px;
+      }
 
     }
 

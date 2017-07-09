@@ -9,6 +9,7 @@ import makeStore from 'Store';
 import { AppContainer } from 'react-hot-loader';
 import fetch from 'node-fetch';
 import searchRoute, { search } from '../search';
+import batchItems from '../search/batchItems';
 import bodyParser from 'body-parser';
 
 const API_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/prod/';
@@ -21,6 +22,7 @@ app.use(express.static('public'));
 const productDetails = [];
 
 app.post('/search/products', searchRoute);
+app.post('/search/batch', batchItems);
 
 app.use('/product/:name/:id', async (req, res, next) => {
   try {

@@ -12,7 +12,7 @@ export function keyMirror(obj) {
   return out;
 }
 
-export function request(method, url, data, headers) {
+export function request(method, url, data, headers, meta) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
@@ -33,7 +33,7 @@ export function request(method, url, data, headers) {
         res = response;
       }
       if (status >= 200 && status < 400) {
-        resolve({ response: res, status });
+        resolve({ response: res, status, meta });
       } else {
         reject({ response: res, status });
       }

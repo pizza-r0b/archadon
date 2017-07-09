@@ -22,6 +22,8 @@ export const requestUpdateUserData = (ID: string, token: string, body: Object) =
 
 export const requestBatch = (Items: Array<string>) => request('POST', url('product/v1/batch'), { Items });
 
+export const requestCollection = (ids, name) => request('POST', '/search/batch', { ids }, null, { name });
+
 export const requestPurchase = ((payload: {
   Items: Array<Object>,
   UserID: ?string,

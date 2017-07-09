@@ -31,6 +31,8 @@ function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
         <div className="global-nav-link">
           <Link to="/shop">Shop</Link>
         </div>
+
+
         {user.authToken && user.ID ?
           (
             [<div className="global-nav-link" key="a">
@@ -40,13 +42,23 @@ function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
               <Link to="/logout">Log Out</Link>
             </div>]
           ) : (
-            [<div className="global-nav-link" key="c">
-              <Link to="/login">Log In</Link>
-            </div>,
-            <div className="global-nav-link" key="d">
-              <Link to="/signup">Sign Up</Link>
-            </div>]
+            [
+              <div className="global-nav-link" key="d">
+                <Link to="/signup">Sign Up</Link>
+              </div>,
+              <div className="global-nav-link" key="c">
+                <Link to="/login">Log In</Link>
+              </div>]
           )}
+        <div className="global-nav-link">
+          <Link to="/about">About</Link>
+        </div>
+        <div className="global-nav-link">
+          <Link to="/contact">Contact</Link>
+        </div>
+        <div className="global-nav-link">
+          <Link to="/about">Shipping & Returns</Link>
+        </div>
       </div>
       <Link className="cart" to="/cart">
         <div className="flex-parent flex-align-center">

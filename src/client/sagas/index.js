@@ -32,10 +32,13 @@ const {
   ON_FILTER_UPDATE,
   SET_ORDER_CONFIRMATION,
   ON_NAV_OPEN,
+  REQUEST_COLLECTION,
+  ON_COLLECTION_SUCCESS,
 } = Actions;
 import {
   requestLogin,
   requestUserData,
+  requestCollection,
   requestSignUp,
   requestBatch,
   requestProductList,
@@ -102,6 +105,26 @@ export function* getDataFromLocalStorage() {
 
 export function clearLocalStorageData() {
   window.localStorage.clear('archadonauth');
+}
+
+function all(promises) {
+  return Promise.all(promises);
+}
+
+export function* requestCollectionSaga({ payload: collections }) {
+  yield put(action(LOADING, true));
+
+  const promises = collections.map(collection => requestCollection(collection.ids, collection.name));
+  const collection = yield call(all, promises);
+  const output = {};
+
+  collection.forEach(c => {
+    const { meta: { name }, response: { results } } = c;
+    output[name] = results;
+  });
+
+  yield put(action(ON_COLLECTION_SUCCESS, output));
+  yield put(action(LOADING, false));
 }
 
 export function* logOutSaga() {
@@ -380,6 +403,7 @@ export default function* rootSaga() {
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
     takeLatest(LOG_OUT, logOutSaga),
     takeLatest(PURCHASE, purchaseSaga),
+    takeLatest(REQUEST_COLLECTION, requestCollectionSaga),
     (function* () {
       while (true) {
         yield take([ADD_TO_CART, REMOVE_FROM_CART]);
@@ -403,6 +427,11 @@ export default function* rootSaga() {
         const navOpen = yield select(getNavState);
         if (navOpen) {
           yield put(action(ON_NAV_OPEN, !navOpen));
+        }
+        if (typeof window.ga !== 'undefined') {
+          const path = yield select(getCurrentPath);
+          window.ga('set', 'page', path);
+          window.ga('send', 'pageview');
         }
       }
     }()),

@@ -19,6 +19,10 @@ import '../../scss/styles.scss';
 import spriteSheet from 'Images/spritesheet.svg';
 import classnames from 'classnames';
 import Loader from 'Components/Loader';
+import About from 'Components/About';
+import Contact from 'Components/Contact';
+import Shipping from 'Components/Shipping';
+import AbstractCollection from 'Components/AbstractCollection';
 
 const { APP_LOAD } = actions;
 
@@ -41,13 +45,38 @@ class ScrollToTop extends Component {
     match: Object,
   }
 
+  history = {
+    current: this.props.location.pathname,
+    prev: {
+      path: '',
+      scroll: 0,
+    },
+  }
+
+  y = 0
+
+  componentDidMount() {
+    window.addEventListener('scroll', () => {
+      this.y = window.scrollY;
+    });
+  }
+
   componentDidUpdate(prevProps) {
-    if (this.props.match.path === '/' || this.props.match.path === '/shop') {
+    if (prevProps.location.pathname === this.props.location.pathname) {
       return;
     }
-    if (this.props.location !== prevProps.location) {
+
+    console.log(this.history);
+
+    if (this.props.location.pathname !== this.history.prev.path) {
       window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, this.history.prev.scroll);
     }
+
+    this.history.prev.path = this.history.current;
+    this.history.prev.scroll = this.y;
+    this.history.current = this.props.location.pathname;
   }
 
   render() {
@@ -81,11 +110,15 @@ class App extends Component {
             {this.props.loading.full && <Loader />}
             <Switch>
               <Route path="/shop" component={Shop} />
+              <Route path="/about" component={About} />
               <Route path="/" exact component={Home} />
               <Route path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />
+              <Route path="/abstract-handwoven-rug-collection" component={AbstractCollection} />
               <Route path="/account" component={Account} />
               <Route path="/logout" component={Logout} />
               <Route path="/cart" component={Cart} />
+              <Route path="/contact" component={Contact} />
+              <Route path="/shipping-and-returns" component={Shipping} />
               <Route path="/checkout" component={Checkout} />
               <Route path="/product/:name/:id" component={ProductDetail} />
               <Route path="/order-confirmation" component={OrderConfirmation} />

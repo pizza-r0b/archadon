@@ -31,4 +31,6 @@ export default keyMirror({
   GET_PRODUCT_DETAILS: null,
   ON_NAV_OPEN: null,
   HOME_LOADED: null,
+  ON_COLLECTION_SUCCESS: null,
+  REQUEST_COLLECTION: null,
 });

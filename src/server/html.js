@@ -1,4 +1,17 @@
 
+const ga = process.env.NODE_ENV !== 'production' ? '' : (
+    `<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-102282562-1', 'auto');
+  ga('send', 'pageview');
+
+</script>`
+);
+
 export default function html(routerWithContext, props) {
     const filename = '/client.js';
     const src = process.env.NODE_ENV !== 'production' ? `http://localhost:${process.env.DEV_SERVER_PORT}${filename}` : filename;
@@ -28,6 +41,7 @@ export default function html(routerWithContext, props) {
                 <script>
                     Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');
                 </script>
+                ${ga}
                 <script src="${src}" defer></script>
             </body>
         </html>

@@ -18,6 +18,12 @@ h1, .h1 {
   font-family: $bodyFont;
 }
 
+.title {
+  margin: $spacer * 3px 0;
+  padding-top: $spacer;
+  border-top: 1px solid $light;
+}
+
 p {
   margin: 0;
 }

@@ -8,7 +8,7 @@ const { ON_FILTER_UPDATE } = actions;
 
 const FILTERS_ARR = [
   {
-    name: 'Pricing Order',
+    name: 'Sort By',
     options: [
       {
         copy: 'Highest to Lowest',
