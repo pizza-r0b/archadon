@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
 
-const composeEnhancers = typeof window !== 'undefined' && process.NODE_ENV !== 'production' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+let composeEnhancers = typeof window !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+
+if (process.NODE_ENV === 'production') {
+  composeEnhancers = compose;
+}
 
 
 export default function makeStore(initialState, ...middleware) {
