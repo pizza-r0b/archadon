@@ -78,6 +78,7 @@ function Cart({ cart: { items, totalPrice } }: { cart: Object }) {
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -57,7 +57,7 @@ function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
           <Link to="/contact">Contact</Link>
         </div>
         <div className="global-nav-link">
-          <Link to="/about">Shipping & Returns</Link>
+          <Link to="/shipping-and-returns">Shipping & Returns</Link>
         </div>
       </div>
       <Link className="cart" to="/cart">

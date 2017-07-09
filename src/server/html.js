@@ -20,7 +20,7 @@ export default function html(routerWithContext, props) {
             <head>
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-                <title></title>
+                <title>Hand-knotted, Artisan Rugs.</title>
                 <meta name="description" content="" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 ${
@@ -42,6 +42,7 @@ export default function html(routerWithContext, props) {
                     Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');
                 </script>
                 ${ga}
+                <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
                 <script src="${src}" defer></script>
             </body>
         </html>
