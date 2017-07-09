@@ -42,7 +42,7 @@ export default function html(routerWithContext, props) {
                     Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');
                 </script>
                 ${ga}
-                <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
+                <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
                 <script src="${src}" defer></script>
             </body>
         </html>
