@@ -422,13 +422,15 @@ export default function* rootSaga() {
       }
     }()),
     (function* () {
+      let initialLoad = true;
       while (true) {
         yield take([LOCATION_CHANGE]);
+        initialLoad = false;
         const navOpen = yield select(getNavState);
         if (navOpen) {
           yield put(action(ON_NAV_OPEN, !navOpen));
         }
-        if (typeof window.ga !== 'undefined') {
+        if (typeof window.ga !== 'undefined' && !initialLoad) {
           const path = yield select(getCurrentPath);
           window.ga('set', 'page', path);
           window.ga('send', 'pageview');
