@@ -425,7 +425,6 @@ export default function* rootSaga() {
       let initialLoad = true;
       while (true) {
         yield take([LOCATION_CHANGE]);
-        initialLoad = false;
         const navOpen = yield select(getNavState);
         if (navOpen) {
           yield put(action(ON_NAV_OPEN, !navOpen));
@@ -435,6 +434,7 @@ export default function* rootSaga() {
           window.ga('set', 'page', path);
           window.ga('send', 'pageview');
         }
+        initialLoad = false;
       }
     }()),
   ];
