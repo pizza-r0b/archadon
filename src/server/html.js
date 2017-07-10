@@ -29,6 +29,7 @@ export default function html(routerWithContext, props) {
                     :
                     ''
                 }
+                ${ga}
             </head>
             <body>
                 <div id="app">${routerWithContext}</div>
@@ -41,7 +42,7 @@ export default function html(routerWithContext, props) {
                 <script>
                     Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');
                 </script>
-                ${ga}
+
                 <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
                 <script src="${src}" defer></script>
             </body>
