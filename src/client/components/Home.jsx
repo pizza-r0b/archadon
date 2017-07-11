@@ -101,7 +101,7 @@ render() {
       <section className="content-section content-section--center">
         <div className="content">
           <h1>One of a Kind, Hand-knotted Art That You Walk On</h1>
-          <h3>Since 1985 our supplier has traveled to the regions and villages where these rugs hand made - establishing long lasting relationships with the best rug weavers in those areas. Each rug is hand selected and made from the finest organic material. With over 25 years of experience we promise to deliver only the finest pieces that we know you will love. These rugs truly are art that you walk on.</h3>
+          <h3>Since 1985 our supplier has traveled to the regions and villages where these rugs are hand made - establishing long lasting relationships with the best rug weavers in those areas. Each rug is hand selected and made from the finest organic material. With over 25 years of experience we promise to deliver only the finest hand-made rugs that we know you will love. These rugs truly are art that you walk on.</h3>
 
         </div>
 

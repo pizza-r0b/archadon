@@ -108,7 +108,6 @@ function FilterOption({ filter, onChange, filters, defaultIndex }: FilterProps) 
   if (selectedOfType) {
     selectProps.value = filter.options[selectedOfType.optionindex].copy;
   }
-  console.log(selectProps);
   return (
     <div className="filter-option">
       <label htmlFor={filter.name}><h3>{filter.name}</h3></label>
