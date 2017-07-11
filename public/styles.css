@@ -1172,14 +1172,8 @@
       width: 100%;
       height: auto;
       max-width: 100%; }
-    .hero .hero-titles {
-      flex-direction: row; }
     .hero .hero-title {
-      width: 33.33333%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center; } }
+      margin: 10px 0; } }
 
 .flex-grow-0 {
   flex-grow: 0; }

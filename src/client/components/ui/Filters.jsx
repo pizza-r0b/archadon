@@ -95,13 +95,20 @@ type FilterProps = {
   filter: Object,
   onChange: Function,
   defaultIndex: number,
+  filters: Array<*>,
 }
 
-function FilterOption({ filter, onChange, defaultIndex }: FilterProps) {
+function FilterOption({ filter, onChange, filters, defaultIndex }: FilterProps) {
   const selectProps = {};
   if (defaultIndex === 0) {
     selectProps.value = 0;
   }
+
+  const [selectedOfType] = filters.filter(f => f.field === filter.name);
+  if (selectedOfType) {
+    selectProps.value = filter.options[selectedOfType.optionindex].copy;
+  }
+  console.log(selectProps);
   return (
     <div className="filter-option">
       <label htmlFor={filter.name}><h3>{filter.name}</h3></label>
@@ -133,7 +140,7 @@ class Filters extends Component {
     const field = FILTERS_ARR[filterindex].name;
 
     this.props.updateFilter({
-      queries, type, field,
+      queries, type, field, filterindex, optionindex,
     });
   }
   render() {
@@ -147,7 +154,7 @@ class Filters extends Component {
         <div className="filters">
           {FILTERS_ARR.map((filter, i) => {
             filter.index = i;
-            return <FilterOption defaultIndex={this.props.filters.length} key={i} onChange={this.onChange} filter={filter} />;
+            return <FilterOption filters={this.props.filters} defaultIndex={this.props.filters.length} key={i} onChange={this.onChange} filter={filter} />;
           })}
         </div>
       </div>

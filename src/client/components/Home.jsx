@@ -82,13 +82,7 @@ render() {
         <div className="btn btn--white" onClick={() => { this.velocityScroll(); }}>Shop Selection</div>
         <div className="hero-titles">
           <div className="hero-title">
-            <h1 className="font-color--white">Handmade</h1>
-          </div>
-          <div className="hero-title">
-            <h1 className="font-color--white">Artisan</h1>
-          </div>
-          <div className="hero-title">
-            <h1 className="font-color--white">Rugs</h1>
+            <h1 className="font-color--white align--center">Handmade Artisan Rugs</h1>
           </div>
         </div>
       </section>
@@ -102,6 +96,26 @@ render() {
           </div>
           <div className="grid-item collection-c"><img src="https://assets.archadon.com/6x9_32394_29429_v2.jpg" /></div>
         </div>
+      </section>
+
+      <section className="content-section content-section--center">
+        <div className="content">
+          <h1>One of a Kind, Hand-knotted Art That You Walk On</h1>
+          <h3>Since 1985 our supplier has traveled to the regions and villages where these rugs hand made - establishing long lasting relationships with the best rug weavers in those areas. Each rug is hand selected and made from the finest organic material. With over 25 years of experience we promise to deliver only the finest pieces that we know you will love. These rugs truly are art that you walk on.</h3>
+
+        </div>
+
+
+      </section>
+
+      <section className="content-section content-section--center">
+        <div className="content">
+          <h1 className="margin--botom-3">Free Shipping</h1>
+          <h1 className="margin--botom-3">Free Returns</h1>
+          <h2>No Risk Rug Buying</h2>
+        </div>
+
+
       </section>
       <div ref={c => { this.selection = c; }}>
         {this.state.loaded && <Shop />}

@@ -99,14 +99,15 @@
     }
 
     .hero-titles {
-      flex-direction: row;
+      // flex-direction: row;
     }
     .hero-title {
-      width: 33.33333%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      // width: 33.33333%;
+      // height: 100%;
+      margin: 10px 0;
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
     }
   }
 }
