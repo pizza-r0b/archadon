@@ -2,7 +2,7 @@
   "scripts": {
     "deploy:prod": "NODE_ENV=production sls deploy --env prod --secrets './secrets-prod.yml' --assetUrl 'https://assets.archadon.com'",
     "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
-    "deploy:devfunction": "sls deploy function --function purchase --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
+    "deploy:devfunction": "sls deploy function --function createUser --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
     "algoliasearch": "^3.24.0",
@@ -10,6 +10,7 @@
     "bcrypt-nodejs": "^0.0.3",
     "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^7.3.0",
+    "mongoose": "^4.11.10",
     "nodemailer": "^4.0.1",
     "nodemailer-express-handlebars": "^2.0.0",
     "stripe": "^4.19.1",

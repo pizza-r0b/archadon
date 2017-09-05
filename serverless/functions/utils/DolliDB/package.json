@@ -20,6 +20,7 @@
     "aws-sdk": "^2.39.0",
     "deep-extend": "^0.4.1",
     "immutable": "4.0.0-rc.2",
+    "mongoose": "^4.11.10",
     "uuid": "^3.0.1"
   }
 }

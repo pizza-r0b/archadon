@@ -49,18 +49,6 @@ package:
   - templates/**
 
 functions:
-  onUserCreate:
-    handler: functions/handlers.onUserCreate
-    events:
-       - stream:
-          type: dynamodb
-          startingPosition: LATEST
-          arn:
-            Fn::GetAtt:
-              - UserItemTable
-              - StreamArn
-    environment:
-      USER_DATA_TABLE: ${self:custom.UserDataTable}
   getUserData:
     handler: functions/handlers.getUserData
     events:
@@ -174,6 +162,7 @@ functions:
               - X-Amz-Security-Token
     environment:
       TABLE_NAME: ${self:custom.UserItemTable}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
   loginUser:
     handler: functions/handlers.loginUser
     events:
