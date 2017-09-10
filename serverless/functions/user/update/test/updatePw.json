@@ -4,9 +4,9 @@
     "newPassword": "test"
   },
   "headers": {
-    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5MTc2MTY3MiwiZXhwIjoxNDkxNzY4ODcyfQ.l9TOuS_pQyBrFRQf8MJirwExRA_qpTRO0M6rj0MQSD0"
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjU5YjQ2NTZiZTRjMjYwNGZjMWY3ZmUyNCIsImlhdCI6MTUwNTAxMjU0OSwiZXhwIjoxNTA1MDE5NzQ5fQ.5XdrTC2-rSOk14xi_RYdtiaR6KCbYfSrjJ566o_MGGQ"
   },
   "pathParameters": {
-    "id": "62eb6cb0-1c8a-11e7-a50d-c7630e7e878a"
+    "id": "59b4656be4c2604fc1f7fe24"
   }
 }

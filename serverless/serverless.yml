@@ -103,7 +103,7 @@ functions:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   updateUserPassword:
-    handler: functions/handlers.updateUserPassword
+    handler: functions/user/update/updateUserPassword.updateUserPassword
     events:
       - http:
           path: user/v1/update/item/password/{id}
@@ -123,7 +123,7 @@ functions:
               paths:
                 id: true
     environment:
-      USER_TABLE: ${self:custom.UserItemTable}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   updateUserEmail:
     handler: functions/handlers.updateUserEmail

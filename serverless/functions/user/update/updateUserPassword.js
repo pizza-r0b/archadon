@@ -1,11 +1,9 @@
-'use strict';
+import connect from 'utils/mongoConnect';
+import comparePassword from 'utils/comparePassword';
+import verifyJwt from 'utils/verifyJwt';
+import { UserItem } from 'schemas/User';
 
-const comparePassword = require('../../utils/comparePassword');
-const verifyJwt = require('../../utils/verifyJwt');
-const bcrypt = require('bcrypt-nodejs');
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-
-function updateUserPassword(event, context, callback) {
+async function _updateUserPassword(event, context, callback) {
   let data;
   try {
     data = JSON.parse(event.body);
@@ -23,49 +21,33 @@ function updateUserPassword(event, context, callback) {
     };
     return callback(null, response);
   }
-  verifyJwt(token, userID).then(ID => DolliDB.GetItem(process.env.USER_TABLE, 'ID', ID))
-    .then(user => {
-      if (candidatePassword && newPassword && comparePassword(candidatePassword, user.Password)) {
-        return new Promise((resolve, reject) => {
-          DolliDB.docClient.update({
-            TableName: process.env.USER_TABLE,
-            Key: {
-              ID: user.ID,
-            },
-            ExpressionAttributeNames: {
-              '#p': 'Password',
-            },
-            ExpressionAttributeValues: {
-              ':p': bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10)),
-            },
-            UpdateExpression: 'SET #p = :p',
-          }, (err, res) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(res);
-            }
-          });
-        });
+
+  try {
+    const ID = await verifyJwt(token, userID);
+    const user = await UserItem.findById(ID).exec();
+    if (user) {
+      if (candidatePassword && newPassword && comparePassword(candidatePassword, user.get('Password'))) {
+        user.set({ Password: newPassword });
+        await user.save();
+        const response = {
+          statusCode: 200,
+        };
+        callback(null, response);
       } else {
-        Promise.reject();
+        throw new Error();
       }
-    })
-    .then(() => {
-      const response = {
-        statusCode: 200,
-      };
-      callback(null, response);
-    })
-    .catch((e) => {
-      const response = {
-        statusCode: 401,
-        body: JSON.stringify({
-          message: e,
-        }),
-      };
-      callback(null, response);
-    });
+    } else {
+      throw new Error('User not found');
+    }
+  } catch (e) {
+    const response = {
+      statusCode: 401,
+      body: JSON.stringify({
+        error: e,
+      }),
+    };
+    callback(null, response);
+  }
 }
 
-module.exports = updateUserPassword;
+export const updateUserPassword = connect(process.env.MONGO_URI, _updateUserPassword);
