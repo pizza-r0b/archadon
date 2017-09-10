@@ -1,10 +1,8 @@
-'use strict';
-
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-const createJwt = require('../../utils/createJwt');
-const corsRes = require('../../utils/corsRes');
-const sendMail = require('../../utils/sendMail');
-const connect = require('../../utils/mongoConnect');
+import { toPaths } from 'utils/DolliDB/build/main.min.js';
+import createJwt from 'utils/createJwt';
+import corsRes from 'utils/corsRes';
+import sendMail from 'utils/sendMail';
+import connect from 'utils/mongoConnect';
 
 const { UserItem, UserData } = require('../../../schemas/User');
 
@@ -19,7 +17,7 @@ function getRest(...args) {
   return out;
 }
 
-function createUser(event, context, callback) {
+async function _createUser(event, context, callback) {
   let data;
   try {
     data = JSON.parse(event.body);
@@ -28,8 +26,6 @@ function createUser(event, context, callback) {
   }
   const { email: Email, password: Password } = data;
   const rest = getRest('email', 'password', data);
-
-  console.log(Email, Password);
 
   // TODO: Add email validation
   if (!Email || !Password) {
@@ -41,53 +37,37 @@ function createUser(event, context, callback) {
 
   let _id;
 
-  return UserItem.findOne({ Email }).exec()
-    .then(doc => {
-      console.log(`findOne complete found ${doc}`);
-      if (doc) {
-        return Promise.reject(JSON.stringify({ body: 'User already exists' }));
-      }
+  try {
+    const doc = await UserItem.findOne({ Email }).exec();
+    if (doc) {
+      return Promise.reject(JSON.stringify({ body: 'User already exists' }));
+    }
 
-      const userItem = new UserItem({
-        Email,
-        Password,
-      });
-
-      return userItem.save();
-    })
-    .then(doc => {
-      console.log(`User item saved ${doc}`);
-      console.log(Object.keys(rest).length);
-      console.log(rest);
-      if (Object.keys(rest).length > 0) {
-        console.log('Put data');
-        _id = doc.get('_id');
-        const userData = DolliDB.toPaths(rest).map(([Path, Value]) => ({ Path, Value, Item: _id }));
-        console.log(userData);
-        return UserData.insertMany(userData);
-      } else {
-        console.log('RESOLVE WE ARE DONE');
-        return Promise.resolve();
-      }
-    })
-    .then(() => {
-      console.log('create jwt');
-      const token = createJwt({ ID: _id });
-      console.log('token created');
-      onUserCreate(Email);
-      return callback(null, corsRes({
-        statusCode: 200,
-        body: JSON.stringify({ authToken: token, ID: _id }),
-      }));
-    })
-    .catch(e => {
-      console.log('There was an error');
-      console.log(e);
-      callback(null, corsRes({
-        statusCode: 409,
-        body: e,
-      }));
+    const userItem = new UserItem({
+      Email,
+      Password,
     });
+
+    const savedDoc = await userItem.save();
+
+    if (Object.keys(rest).length > 0) {
+      _id = savedDoc.get('_id');
+      const userData = toPaths(rest).map(([Path, Value]) => ({ Path, Value, Item: _id }));
+      await UserData.insertMany(userData);
+    }
+
+    const token = createJwt({ ID: _id });
+    onUserCreate(Email);
+    callback(null, corsRes({
+      statusCode: 200,
+      body: JSON.stringify({ authToken: token, ID: _id }),
+    }));
+  } catch (e) {
+    callback(null, corsRes({
+      statusCode: 409,
+      body: JSON.stringify({ error: e }),
+    }));
+  }
 }
 
 function onUserCreate(email) {
@@ -109,7 +89,5 @@ function onUserCreate(email) {
   });
 }
 
-module.exports = {
-  onUserCreate,
-  createUser: connect(process.env.MONGO_URI, createUser),
-};
+export const createUser = connect(process.env.MONGO_URI, _createUser);
+export { onUserCreate };

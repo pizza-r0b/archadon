@@ -1,0 +1,22 @@
+{
+  "headers": {
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjU5YjQ2NTZiZTRjMjYwNGZjMWY3ZmUyNCIsImlhdCI6MTUwNTAxMjU0OSwiZXhwIjoxNTA1MDE5NzQ5fQ.5XdrTC2-rSOk14xi_RYdtiaR6KCbYfSrjJ566o_MGGQ"
+  },
+  "pathParameters": {
+    "id": "59b4656be4c2604fc1f7fe24"
+  },
+  "body": {
+    "data": {
+      "Address": {
+        "Street1": "1925 Jefferson St",
+        "Street2": "202",
+        "City": "SF",
+        "State": "CA",
+        "Zip": "94123"
+      },
+      "SomeOtherStuff": {
+        "Dog": "Harley"
+      }
+    }
+  }
+}

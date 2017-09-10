@@ -1,11 +1,13 @@
 'use strict';
 
-const comparePassword = require('../../utils/comparePassword');
-const createJwt = require('../../utils/createJwt');
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-const corsRes = require('../../utils/corsRes');
+import comparePassword from 'utils/comparePassword';
+import createJwt from 'utils/createJwt';
+import corsRes from 'utils/corsRes';
+import connect from 'utils/mongoConnect';
+import { UserItem } from 'schemas/User';
 
-function login(event, context, callback) {
+
+async function _login(event, context, callback) {
   let data;
 
   // try catch for testing, body is JSON when actually on AWS
@@ -22,29 +24,31 @@ function login(event, context, callback) {
     callback(null, corsRes({ statusCode: 400, body: JSON.stringify({ code: 400, message: 'Bad request' }) }));
     return;
   }
-  DolliDB.GetItem(process.env.TABLE_NAME, 'Email', email, { IndexName: 'gsi1' })
-    .then(user => {
-      if (user) {
-        const hash = user.Password;
-        const ID = user.ID;
-        const isMatch = comparePassword(password, hash);
-        if (isMatch) {
-          const token = createJwt({ ID });
-          const response = corsRes({
-            statusCode: 200,
-            body: JSON.stringify({ authToken: token, ID }),
-          });
-          callback(null, response);
-        } else {
-          callback(null, corsRes({ statusCode: 401 }));
-        }
-      } else {
-        callback(null, corsRes({ statusCode: 404 }));
-      }
-    }).catch(e => {
-      console.log(e);
-      callback(null, corsRes({ statusCode: 500, body: e }));
-    });
+
+  let user;
+  try {
+    user = await UserItem.findOne({ Email: email }).exec();
+  } catch (e) {
+    return callback(null, corsRes({ statusCode: 500, body: JSON.stringify({ error: e }) }));
+  }
+  if (user) {
+    const hash = user.get('Password');
+    const ID = user.get('_id');
+    console.log(password);
+    const isMatch = comparePassword(password, hash);
+    if (isMatch) {
+      const token = createJwt({ ID });
+      const response = corsRes({
+        statusCode: 200,
+        body: JSON.stringify({ authToken: token, ID }),
+      });
+      callback(null, response);
+    } else {
+      callback(null, corsRes({ statusCode: 401 }));
+    }
+  } else {
+    callback(null, corsRes({ statusCode: 404 }));
+  }
 }
 
-module.exports = login;
+export const login = connect(process.env.MONGO_URI, _login);

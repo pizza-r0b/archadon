@@ -2,6 +2,8 @@
   "scripts": {
     "deploy:prod": "NODE_ENV=production sls deploy --env prod --secrets './secrets-prod.yml' --assetUrl 'https://assets.archadon.com'",
     "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
+    "dev:start": "webpack --config ./webpack/dev.js --watch",
+    "prod:start": "webpack --config ./webpack/prod.js -p",
     "deploy:devfunction": "sls deploy function --function createUser --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
@@ -17,6 +19,9 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "raw-loader": "^0.5.1",
+    "serverless-webpack": "^3.0.0-rc.1",
+    "webpack": "^3.5.6"
   }
 }

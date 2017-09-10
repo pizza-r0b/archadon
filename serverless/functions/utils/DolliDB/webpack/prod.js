@@ -12,7 +12,7 @@ const clientConfig = base({
       path: path.resolve(__dirname, '../build'),
       filename: '[name].min.js',
       library: 'DolliDB',
-      libraryTarget: 'commonjs2',
+      libraryTarget: 'umd',
     },
     plugins: [
       // new webpack.EnvironmentPlugin(['NODE_ENV']),

@@ -12,6 +12,8 @@
 # Happy Coding!
 
 service: archadon-${self:custom.env}
+plugins:
+  - serverless-webpack
 provider:
   name: aws
   runtime: nodejs6.10
@@ -32,6 +34,7 @@ provider:
         - "ses:SendRawEmail"
       Resource: "arn:aws:ses:us-east-1:478433309488:identity/archadon.com"
 custom:
+  webpack: ./webpack/prod.js
   assetUrl: "https://assets.dev.archadon.com"
   env: ${opt:env, self:provider.stage}
   NODE_ENV: "development"
@@ -43,10 +46,11 @@ custom:
   OrderItemTable: ${self:resources.Resources.OrderItemTable.Properties.TableName}
 
 package:
- include:
-  - node_modules/**
-  - functions/utils/**
-  - templates/**
+  individually: true
+  # include:
+  #   - node_modules/**
+  #   - functions/utils/**
+  #   - templates/**
 
 functions:
   getUserData:
@@ -76,7 +80,7 @@ functions:
       ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
 
   updateUserProfile:
-    handler: functions/handlers.updateUserProfile
+    handler: functions/user/update/updateUserProfile.updateUserProfile
     events:
       - http:
           path: user/v1/update/data/{id}
@@ -96,7 +100,7 @@ functions:
               paths:
                 id: true
     environment:
-      USER_PROFILE_TABLE: ${self:custom.UserDataTable}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   updateUserPassword:
     handler: functions/handlers.updateUserPassword
@@ -145,7 +149,7 @@ functions:
       USER_TABLE: ${self:custom.UserItemTable}
 
   createUser:
-    handler: functions/handlers.createUser
+    handler: functions/user/create/index.createUser
     events:
       - http:
           path: user/v1/create
@@ -161,10 +165,9 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
     environment:
-      TABLE_NAME: ${self:custom.UserItemTable}
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
   loginUser:
-    handler: functions/handlers.loginUser
+    handler: functions/user/login/index.login
     events:
       - http:
           path: user/v1/login
@@ -180,8 +183,7 @@ functions:
               - X-Amz-Security-Token
           method: post
     environment:
-      TABLE_NAME: ${self:custom.UserItemTable}
-
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
   createProduct:
     handler: functions/handlers.createProduct
     events:

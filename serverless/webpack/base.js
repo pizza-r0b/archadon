@@ -1,0 +1,46 @@
+const path = require('path');
+const src = path.resolve(__dirname, '../');
+const slsw = require('serverless-webpack');
+// const prependSrc = pathStr => `${src}/${pathStr}`;
+
+const base = extend => {
+  const rules = [
+    {
+      test: /(\.js)$/,
+      exclude: /node_modules/,
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['env', 'es2015', 'react', 'stage-2'],
+        },
+      }],
+    },
+    {
+      test: /(\.key)$/,
+      use: 'raw-loader',
+    },
+  ];
+
+  if (extend.rules) {
+    rules.push(...extend.rules);
+  }
+
+  return Object.assign({}, {
+    entry: slsw.lib.entries,
+    // devtool: 'source-map',
+    target: 'node',
+    resolve: {
+      extensions: ['.js'],
+      modules: [src, 'node_modules'],
+      alias: {
+        utils: path.resolve(__dirname, '../functions/utils'),
+        schemas: path.resolve(__dirname, '../schemas'),
+      },
+    },
+    module: {
+      rules,
+    },
+  }, extend.config);
+};
+
+module.exports = base;
