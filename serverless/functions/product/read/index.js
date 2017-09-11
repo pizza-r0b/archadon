@@ -1,39 +1,35 @@
-'use strict';
+import cors from 'utils/corsRes';
+import connect from 'utils/mongoConnect';
+import { fromPaths } from 'utils/DolliDB/build/main.min.js';
+import { ProductData } from 'schemas/Product';
 
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-const cors = require('../../utils/corsRes');
-
-function getProductData(event, context, callback) {
+async function _getProductData(event, context, callback) {
   const params = event.pathParameters || {};
   const productID = params.id;
-  const data = {};
-  DolliDB.GetItem(process.env.PRODUCT_ITEM_TABLE, 'ID', productID, {
-    ProjectionExpression: 'CreatedAt, #N, Price',
-    ExpressionAttributeNames: {
-      '#A': 'ID',
-      '#N': 'Name',
-    },
-  }).then(item => {
-    Object.assign(data, item);
-    return DolliDB.GetData(process.env.PRODUCT_DATA_TABLE, productID);
-  }).then(productData => {
-    Object.assign(data, productData);
+
+  try {
+    const docs = await ProductData.find({ Item: productID }).populate('Item').exec();
+    const item = docs[0].toObject().Item;
+    const productData = {
+      ...fromPaths(docs.map(({ Path, Value }) => [Path, Value])),
+      ...item,
+    };
     const response = cors({
       statusCode: 200,
       body: JSON.stringify({
-        data,
+        data: productData,
       }),
     });
     callback(null, response);
-  }).catch(e => {
-    console.log(e);
-    callback(null, cors({
+  } catch (e) {
+    const response = cors({
       statusCode: 500,
-      body: {
-        message: JSON.stringify(e),
-      },
-    }));
-  });
+      body: JSON.stringify({
+        error: e,
+      }),
+    });
+    callback(null, response);
+  }
 }
 
-module.exports = getProductData;
+export const getProductData = connect(process.env.MONGO_URI, _getProductData);

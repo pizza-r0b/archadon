@@ -1,9 +1,13 @@
 {
   "body": {
-    "name": "p1",
-    "price": 100
+    "Name": "Test Product 3",
+    "Price": 100,
+    "ShortDescription": "This is a short description",
+    "LongDescription": "This is a long description",
+    "Width": 8,
+    "Height": 10.2
   },
   "headers": {
-    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYyZWI2Y2IwLTFjOGEtMTFlNy1hNTBkLWM3NjMwZTdlODc4YSIsImlhdCI6MTQ5MTg3NDk4NywiZXhwIjoxNDkxODgyMTg3fQ.rnNz_8Pip1sNgAceo66mCh_j_LVmMCaW-RhVUVEZ0mA"
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjU5YjQ2NTZiZTRjMjYwNGZjMWY3ZmUyNCIsImlhdCI6MTUwNTA3OTY3OCwiZXhwIjoxNTA1MDg2ODc4fQ.wuZczWcQbjw3hK7K0sDYDbcplgVNNhLZrttdMYRHeO4"
   }
 }

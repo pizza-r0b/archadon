@@ -1,14 +1,11 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const addCors = require('../utils/corsRes');
-const DolliDB = require('../utils/DolliDB/build/main.min.js');
-const uuid = require('uuid/v1');
-const algolia = require('algoliasearch');
+import { toPaths } from 'utils/DolliDB/build/main.min.js';
+import algolia from 'algoliasearch';
+import addCors from 'utils/corsRes';
+import _stripe from 'stripe';
+
+const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
 
 const {
-  ORDER_ITEM_TABLE,
-  ORDER_DATA_TABLE,
-  PRODUCT_ITEM_TABLE,
-  PRODUCT_DATA_TABLE,
   ALGOLIA_API_KEY,
   ALGOLIA_SECRET_KEY,
 } = process.env;
@@ -20,19 +17,7 @@ const index = algoliaClient.initIndex(indexName);
 
 let processedItems;
 
-const verifyItemInStock = items => new Promise((resolve, reject) => {
-  const outOfStock = items.filter(item => item.Qty === 0);
-  if (outOfStock.length) {
-    return reject({
-      code: 'out-of-stock',
-      items: outOfStock,
-    });
-  } else {
-    return resolve(items);
-  }
-});
-
-const createCharge = ({ token, email }) => (items) => new Promise((resolve, reject) => {
+const createCharge = (token, email, items) => new Promise((resolve, reject) => {
   processedItems = items;
   const price = items.reduce((initialPrice, item) => {
     initialPrice += item.Price;
@@ -62,66 +47,15 @@ const createCharge = ({ token, email }) => (items) => new Promise((resolve, reje
   });
 });
 
-const createOrder = (CustomerData, UserID) => ({ price, ChargeID, Brand, Last4 }) => new Promise((resolve, reject) => {
-  const ID = uuid();
-  console.log(JSON.stringify({
-    ID,
-    UserID,
-    Email: CustomerData.email,
-  }));
-  DolliDB.PutItem(ORDER_ITEM_TABLE, {
-    ID,
-    UserID,
-    CreatedAt: Date(),
-    Status: 'Processing',
-    Email: CustomerData.email,
-  }, null)
-    .then(() => resolve({ ID, price, ChargeID, Brand, Last4, CustomerData }))
-    .catch(e => reject({
-      code: 'order-creation-failure',
-      debug: e,
-    }));
-});
+const createOrder = (CustomerData, UserID) => (new OrderItem({
+  UserID,
+  Email: CustomerData.Email,
+})).save();
 
-const putOrderData = ({ ID, price, ChargeID, Brand, CustomerData, Last4 }) => new Promise((resolve, reject) => {
-  const promises = [];
-
-  processedItems.forEach(item => {
-    if (typeof item.Qty !== 'undefined') {
-      const data = {
-        Qty: item.Qty - 1,
-      };
-      promises.push(new Promise((_resolve, _reject) => {
-        DolliDB.PutData(PRODUCT_DATA_TABLE, ['ItemID', item.ID], data).then(() => {
-          index.partialUpdateObject({
-            objectID: item.SKU,
-            Qty: data.Qty,
-          }, (err) => {
-            if (err) {
-              console.log(err.message);
-              return _reject(err.message);
-            }
-            return _resolve();
-          });
-        }).catch(e => reject(e));
-      }));
-    }
-  });
-
-  Promise.all(promises).then(() => {
-    return DolliDB.PutData(ORDER_DATA_TABLE, ['ItemID', ID], {
-      Price: price,
-      ChargeID,
-      Brand,
-      Last4,
-      CustomerData,
-      Items: processedItems,
-      ChargeType: 'stripe',
-    });
-  }).then(() => resolve({ ID }))
-    .catch(e => reject({ code: 'order-creation-failure', debug: e }));
-});
-
+const putOrderData = (orderItemID, data) => {
+  const orderData = toPaths(data).map(([Path, Value]) => ({ Path, Value, Item: orderItemID }));
+  return OrderData.insertMany(orderData);
+};
 
 const notRequiredFields = ['address2'];
 
@@ -146,7 +80,7 @@ function validate(Items, CustomerData, Token) {
 }
 
 
-function purchase(event, context, callback) {
+async function _purchase(event, context, callback) {
   let body;
   try {
     body = JSON.parse(event.body);
@@ -175,49 +109,78 @@ function purchase(event, context, callback) {
     return;
   }
 
-  // get the actual price based on the products in the array
-  // entails fetching product data from database
-  // make sure product is available
-  DolliDB.GetBatch(process.env.PRODUCT_ITEM_TABLE, Items.map(item => item.ID))
-    .then(({ Responses }) => {
-      const items = Responses[PRODUCT_ITEM_TABLE] || [];
-      const promises = items.map((item) => new Promise((_resolve, _reject) => {
-        DolliDB.GetData(process.env.PRODUCT_DATA_TABLE, item.ID).then(productData => {
-          delete item.CreatedBy;
-          _resolve(Object.assign({}, item, productData));
-        }).catch(e => _reject(e));
-      }));
-      return Promise.all(promises);
-    })
-    .then(verifyItemInStock)
-    .then(createCharge({ token: Token, email: CustomerData.email }))
-    .then(createOrder(CustomerData, UserID))
-    .then(putOrderData)
-    .then(({ ID }) => {
-      // send email to customer
-      // send email to order fulfillment
-      // mark all items as purchased
-      callback(null, addCors({
-        statusCode: 200,
-        body: JSON.stringify({
-          success: true,
-          OrderID: ID,
-        }),
-      }));
-    })
-    .catch(e => {
-      console.log(e);
-      if (e && e.code === 'order-creation-failure') {
-        // send email
-        // they were charged, but order not created
-      }
-      callback(null, addCors({
-        statusCode: 500,
-        body: JSON.stringify({
-          error: e,
-        }),
-      }));
+  let docs;
+  try {
+    docs = await ProductItem.find({
+      _id: {
+        $in: Items.map(item => item.ID),
+      },
+    }).exec();
+  } catch (e) {
+    return callback(null, addCors({
+      statusCode: 500,
+      body: JSON.stringify({
+        error: e,
+      }),
+    }));
+  }
+
+
+  const outOfStockItems = docs.filter(doc => doc.get('Qty') === 0);
+  if (outOfStockItems.length > 0) {
+    return callback(null, addCors({
+      statusCode: 200,
+      body: JSON.stringify({
+        message: 'out of stock',
+        outOfStockItems,
+      }),
+    }));
+  }
+
+  const { price, ChargeID, Brand, Last4 } = await createCharge(Token, CustomerData.email, docs);
+
+  let order;
+
+  try {
+    order = await createOrder(CustomerData, UserID, docs);
+  } catch (e) {
+    return callback(null, addCors({
+      statusCode: 500,
+      body: JSON.stringify({
+        error: e,
+        code: 'charged-but-not-ordered',
+      }),
+    }));
+  }
+
+  const id = order.get('_id');
+
+  try {
+    await putOrderData(id, {
+      Price: price,
+      ChargeID,
+      Brand,
+      Last4,
+      CustomerData,
+      Items: processedItems,
+      ChargeType: 'stripe',
     });
+
+    return callback(null, addCors({
+      statusCode: 200,
+      body: JSON.stringify({
+        message: 'done',
+      }),
+    }));
+  } catch (e) {
+    return callback(null, addCors({
+      statusCode: 500,
+      body: JSON.stringify({
+        error: e,
+        code: 'charged-but-not-ordered',
+      }),
+    }));
+  }
 }
 
 module.exports = purchase;

@@ -185,7 +185,7 @@ functions:
     environment:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
   createProduct:
-    handler: functions/handlers.createProduct
+    handler: functions/product/create/index.createProduct
     events:
       - http:
           path: product/v1/create
@@ -201,8 +201,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
     environment:
-      PRODUCT_TABLE: ${self:custom.ProductItemTable}
-      USER_TABLE: ${self:custom.UserItemTable}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   updateProductData:
     handler: functions/handlers.updateProductData
@@ -317,7 +316,7 @@ functions:
       ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
 
   getProductData:
-    handler: functions/handlers.getProductData
+    handler: functions/product/read/index.getProductData
     events:
       - http:
           path: product/v1/data/{id}
@@ -337,8 +336,7 @@ functions:
               paths:
                 id: true
     environment:
-      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
-      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
 resources:
   Resources:

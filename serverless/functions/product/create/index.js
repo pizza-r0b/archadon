@@ -1,65 +1,57 @@
-'use strict';
+import { toPaths } from 'utils/DolliDB/build/main.min.js';
+import { ProductItem, ProductData } from 'schemas/Product';
+import verifyGodMode from 'utils/verifyGodMode';
+import corsRes from 'utils/corsRes';
+import connect from 'utils/mongoConnect';
 
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-const verifyGodMode = require('../../utils/verifyGodMode');
-const uuid = require('uuid/v1');
 
-const PRODUCT_TABLE = process.env.PRODUCT_TABLE;
-
-function createProduct(event, context, callback) {
+async function _createProduct(event, context, callback) {
   let data;
   try {
     data = JSON.parse(event.body);
   } catch (e) {
     data = event.body;
   }
-  const name = data.Name;
-  const price = data.Price;
+
+  const { Name, Price, ...rest } = data;
   const token = event.headers.authtoken;
 
   if (!token) {
-    callback(null, {
+    callback(null, corsRes({
       statusCode: 401,
-    });
+    }));
     return;
   }
 
-  verifyGodMode(token)
-    .then(item => {
-      if (!item.GodMode) {
-        return Promise.reject({
-          statusCode: 401,
-        });
+  try {
+    const godModeOn = await verifyGodMode(token);
+    if (godModeOn) {
+      const product = await (new ProductItem({ Name, Price })).save();
+      const Item = product.get('_id');
+
+      if (Object.keys(rest).length > 0) {
+        await ProductData.insertMany(toPaths(rest).map(([Path, Value]) => ({ Path, Value, Item })));
       }
-
-      const ID = uuid();
-
-      return DolliDB.PutItem(PRODUCT_TABLE, {
-        ID,
-        Name: name,
-        Price: price,
-        CreatedBy: item.Email,
-        CreatedAt: Date.now(),
-      }, null, { ID });
-    })
-    .then((res) => {
-      const ID = res.meta.ID;
-
-      callback(null, {
+      return callback(null, corsRes({
         statusCode: 200,
         body: JSON.stringify({
-          ID,
+          ID: Item,
         }),
-      });
-    })
-    .catch(e => {
-      callback(null, {
-        statusCode: e.statusCode || 500,
-        body: JSON.stringify({
-          message: e.body || e,
-        }),
-      });
-    });
+      }));
+    } else {
+      return callback(null, corsRes({
+        statusCode: 401,
+      }));
+    }
+  } catch (e) {
+    return callback(null, corsRes({
+      statusCode: 500,
+      body: JSON.stringify({
+        error: e,
+      }),
+    }));
+  }
 }
 
-module.exports = createProduct;
+export const createProduct = connect(process.env.MONGO_URI, _createProduct);
+
