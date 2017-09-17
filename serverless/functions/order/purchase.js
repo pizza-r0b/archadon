@@ -2,6 +2,8 @@ import { toPaths } from 'utils/DolliDB/build/main.min.js';
 import algolia from 'algoliasearch';
 import addCors from 'utils/corsRes';
 import _stripe from 'stripe';
+import connect from 'utils/mongoConnect';
+import { OrderItem, OrderData } from 'schemas/Order';
 
 const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -79,7 +81,6 @@ function validate(Items, CustomerData, Token) {
   return errors;
 }
 
-
 async function _purchase(event, context, callback) {
   let body;
   try {
@@ -124,7 +125,6 @@ async function _purchase(event, context, callback) {
       }),
     }));
   }
-
 
   const outOfStockItems = docs.filter(doc => doc.get('Qty') === 0);
   if (outOfStockItems.length > 0) {
@@ -183,4 +183,4 @@ async function _purchase(event, context, callback) {
   }
 }
 
-module.exports = purchase;
+export const purchse = connect(process.env.MONGO_URI, _purchase);

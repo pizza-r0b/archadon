@@ -3,8 +3,7 @@ import createJwt from 'utils/createJwt';
 import corsRes from 'utils/corsRes';
 import sendMail from 'utils/sendMail';
 import connect from 'utils/mongoConnect';
-
-const { UserItem, UserData } = require('../../../schemas/User');
+import { UserItem, UserData } from 'schemas/User';
 
 function getRest(...args) {
   const data = args[args.length - 1];

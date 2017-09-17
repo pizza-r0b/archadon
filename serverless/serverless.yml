@@ -18,6 +18,12 @@ provider:
   name: aws
   runtime: nodejs6.10
   profile: archadon
+  # vpc:
+  #   securityGroupIds:
+  #     - sg-6119e612
+  #   subnetIds:
+  #     - subnet-45782b49
+  #     - subnet-ba7b28b6
   environment:
     ASSET_URL: ${opt:assetUrl, self:custom.assetUrl}
     NODE_ENV: ${env:NODE_ENV, self:custom.NODE_ENV}
@@ -28,6 +34,9 @@ provider:
       Action:
         - "dynamodb:*"
         - "s3:*"
+        - ec2:DescribeNetworkInterfaces
+        - ec2:CreateNetworkInterface
+        - ec2:DeleteNetworkInterface
       Resource: "*"
     - Effect: "Allow"
       Action:
@@ -35,49 +44,44 @@ provider:
       Resource: "arn:aws:ses:us-east-1:478433309488:identity/archadon.com"
 custom:
   webpack: ./webpack/prod.js
+  webpackIncludeModules: true
   assetUrl: "https://assets.dev.archadon.com"
   env: ${opt:env, self:provider.stage}
   NODE_ENV: "development"
-  UserDataTable: ${self:resources.Resources.UserDataTable.Properties.TableName}
-  UserItemTable: ${self:resources.Resources.UserItemTable.Properties.TableName}
-  ProductDataTable: ${self:resources.Resources.ProductDataTable.Properties.TableName}
-  ProductItemTable: ${self:resources.Resources.ProductItemTable.Properties.TableName}
-  OrderDataTable: ${self:resources.Resources.OrderDataTable.Properties.TableName}
-  OrderItemTable: ${self:resources.Resources.OrderItemTable.Properties.TableName}
 
 package:
-  individually: true
+  # individually: true
   # include:
   #   - node_modules/**
   #   - functions/utils/**
   #   - templates/**
 
 functions:
-  getUserData:
-    handler: functions/handlers.getUserData
-    events:
-      - http:
-          path: user/v1/read/{id}
-          method: get
-          cors:
-            origins:
-              - '*'
-            headers:
-              - authtoken
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_PROFILE_TABLE: ${self:custom.UserDataTable}
-      USER_TABLE: ${self:custom.UserItemTable}
-      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
-      ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
+  # getUserData:
+  #   handler: functions/handlers.getUserData
+  #   events:
+  #     - http:
+  #         path: user/v1/read/{id}
+  #         method: get
+  #         cors:
+  #           origins:
+  #             - '*'
+  #           headers:
+  #             - authtoken
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     USER_PROFILE_TABLE: ${self:custom.UserDataTable}
+  #     USER_TABLE: ${self:custom.UserItemTable}
+  #     ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
+  #     ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
 
   updateUserProfile:
     handler: functions/user/update/updateUserProfile.updateUserProfile
@@ -125,28 +129,28 @@ functions:
     environment:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
-  updateUserEmail:
-    handler: functions/handlers.updateUserEmail
-    events:
-      - http:
-          path: user/v1/update/item/email/{id}
-          method: post
-          cors:
-            origins:
-              - '*'
-            headers:
-              - authtoken
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      USER_TABLE: ${self:custom.UserItemTable}
+  # updateUserEmail:
+  #   handler: functions/handlers.updateUserEmail
+  #   events:
+  #     - http:
+  #         path: user/v1/update/item/email/{id}
+  #         method: post
+  #         cors:
+  #           origins:
+  #             - '*'
+  #           headers:
+  #             - authtoken
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     USER_TABLE: ${self:custom.UserItemTable}
 
   createUser:
     handler: functions/user/create/index.createUser
@@ -166,6 +170,7 @@ functions:
               - X-Amz-Security-Token
     environment:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
+
   loginUser:
     handler: functions/user/login/index.login
     events:
@@ -184,6 +189,7 @@ functions:
           method: post
     environment:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
+
   createProduct:
     handler: functions/product/create/index.createProduct
     events:
@@ -203,48 +209,48 @@ functions:
     environment:
       MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
-  updateProductData:
-    handler: functions/handlers.updateProductData
-    events:
-      - http:
-          path: product/v1/update/data/{id}
-          method: post
-          cors:
-            origins:
-              - '*'
-            headers:
-              - authtoken
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-          request:
-            parameters:
-              paths:
-                id: true
-    environment:
-      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
-      USER_TABLE: ${self:custom.UserItemTable}
+  # updateProductData:
+  #   handler: functions/handlers.updateProductData
+  #   events:
+  #     - http:
+  #         path: product/v1/update/data/{id}
+  #         method: post
+  #         cors:
+  #           origins:
+  #             - '*'
+  #           headers:
+  #             - authtoken
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #         request:
+  #           parameters:
+  #             paths:
+  #               id: true
+  #   environment:
+  #     PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+  #     USER_TABLE: ${self:custom.UserItemTable}
 
-  getProductBatch:
-    handler: functions/handlers.getBatch
-    events:
-      - http:
-          path: product/v1/batch
-          method: post
-          cors:
-            origins:
-              - '*'
-            headers:
-              - Content-Type
-              - X-Amz-Date
-              - Authorization
-              - X-Api-Key
-              - X-Amz-Security-Token
-    environment:
-      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
-      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
+  # getProductBatch:
+  #   handler: functions/handlers.getBatch
+  #   events:
+  #     - http:
+  #         path: product/v1/batch
+  #         method: post
+  #         cors:
+  #           origins:
+  #             - '*'
+  #           headers:
+  #             - Content-Type
+  #             - X-Amz-Date
+  #             - Authorization
+  #             - X-Api-Key
+  #             - X-Amz-Security-Token
+  #   environment:
+  #     PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
+  #     PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
   # getProductList:
   #   handler: functions/handlers.getProductList
@@ -267,7 +273,7 @@ functions:
   #     PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
 
   purchase:
-    handler: functions/handlers.order
+    handler: functions/order/purchase.purchase
     events:
       - http:
           path: purchase/v1/charge
@@ -282,38 +288,35 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
     environment:
-      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
-      ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
-      PRODUCT_ITEM_TABLE: ${self:custom.ProductItemTable}
-      PRODUCT_DATA_TABLE: ${self:custom.ProductDataTable}
       STRIPE_SECRET_KEY: ${file(${opt:secrets}):stripeSecretKey}
+      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
-  emailAdmin:
-    handler: functions/handlers.emailAdmin
-    events:
-      - stream:
-          type: dynamodb
-          startingPosition: LATEST
-          arn:
-            Fn::GetAtt:
-              - OrderItemTable
-              - StreamArn
-    environment:
-      ADMIN_EMAIL: ${file(${opt:secrets}):adminEmail}
-      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
+  # emailAdmin:
+  #   handler: functions/handlers.emailAdmin
+  #   events:
+  #     - stream:
+  #         type: dynamodb
+  #         startingPosition: LATEST
+  #         arn:
+  #           Fn::GetAtt:
+  #             - OrderItemTable
+  #             - StreamArn
+  #   environment:
+  #     ADMIN_EMAIL: ${file(${opt:secrets}):adminEmail}
+  #     ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
 
-  onOrderCreate:
-    handler: functions/handlers.onOrderCreate
-    events:
-       - stream:
-          type: dynamodb
-          startingPosition: LATEST
-          arn:
-            Fn::GetAtt:
-              - OrderItemTable
-              - StreamArn
-    environment:
-      ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
+  # onOrderCreate:
+  #   handler: functions/handlers.onOrderCreate
+  #   events:
+  #      - stream:
+  #         type: dynamodb
+  #         startingPosition: LATEST
+  #         arn:
+  #           Fn::GetAtt:
+  #             - OrderItemTable
+  #             - StreamArn
+  #   environment:
+  #     ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
 
   getProductData:
     handler: functions/product/read/index.getProductData
@@ -340,12 +343,12 @@ functions:
 
 resources:
   Resources:
-    UserItemTable: ${file(./resources/User/Item.yml)}
-    UserDataTable: ${file(./resources/User/Data.yml)}
-    ProductItemTable: ${file(./resources/Product/Item.yml)}
-    ProductDataTable: ${file(./resources/Product/Data.yml)}
-    OrderItemTable: ${file(./resources/Order/Item.yml)}
-    OrderDataTable: ${file(./resources/Order/Data.yml)}
+    # UserItemTable: ${file(./resources/User/Item.yml)}
+    # UserDataTable: ${file(./resources/User/Data.yml)}
+    # ProductItemTable: ${file(./resources/Product/Item.yml)}
+    # ProductDataTable: ${file(./resources/Product/Data.yml)}
+    # OrderItemTable: ${file(./resources/Order/Item.yml)}
+    # OrderDataTable: ${file(./resources/Order/Data.yml)}
     # S3Bucket:
     #   Type: "AWS::S3::Bucket"
     #   Properties:

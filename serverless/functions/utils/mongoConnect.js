@@ -1,18 +1,27 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
+let cachedDB = null;
 
 module.exports = (url, fn) => (...args) => {
-  mongoose.connect(process.env.MONGO_URI);
+  const [, context] = args;
 
-  mongoose.connection.on('error', err => {
-    console.log('Connection Error');
-    console.log(err);
-  });
+  context.callbackWaitsForEmptyEventLoop = false;
+  if (cachedDB) {
+    fn(...args);
+  } else {
+    mongoose.connect(process.env.MONGO_URI);
 
-  mongoose.connection.once('open', () => {
-    fn(...args).then(() => {
-      mongoose.connection.close();
+    console.log('TRYING TO CONNECT');
+
+    mongoose.connection.on('error', err => {
+      console.log('Connection Error');
+      console.log(err);
     });
-  });
+
+    mongoose.connection.once('open', () => {
+      cachedDB = mongoose.connection;
+      fn(...args);
+    });
+  }
 };

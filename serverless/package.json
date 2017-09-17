@@ -4,12 +4,13 @@
     "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
     "dev:start": "webpack --config ./webpack/dev.js --watch",
     "prod:start": "webpack --config ./webpack/prod.js -p",
-    "deploy:devfunction": "sls deploy function --function createUser --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
+    "deploy:devfunction": "sls deploy function --function createProduct --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
     "algoliasearch": "^3.24.0",
     "aws-sdk": "^2.32.0",
     "bcrypt-nodejs": "^0.0.3",
+    "dotenv-webpack": "^1.5.4",
     "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.11.10",
@@ -22,6 +23,8 @@
     "chai": "^3.5.0",
     "raw-loader": "^0.5.1",
     "serverless-webpack": "^3.0.0-rc.1",
+    "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony-v2.8.22",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.6"
   }
 }
