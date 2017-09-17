@@ -1,14 +1,13 @@
-body {
-    font-family: $bodyFont;
-    margin: 0;
-    @include font-size(1.6);
-    color: $dark;
-}
-
 body, html {
     width: 100%;
     height: 100%;
     margin: 0;
+}
+
+body {
+    font-family: $bodyFont;
+    @include font-size(1.6);
+    color: $dark;
 }
 
 html {

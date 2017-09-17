@@ -11,8 +11,14 @@
 }
 
 .wrap {
-    max-width: 800px;
+    max-width: $largeDesktopWidth;
+    padding: 0 10px;
+    box-sizing: border-box;
     margin: auto;
+
+    @media (min-width: $tabletWidth) {
+        padding: 0 35px;
+    }
 }
 
 .strong {

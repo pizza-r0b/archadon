@@ -8,68 +8,47 @@ import { action } from 'Utils';
 
 const { ON_NAV_OPEN } = actions;
 
+// <div className="logo">
+// <Link to="/"><Svg variant="archadon-logo" color="#FFF" /></Link>
+// </div>
+
+// {user.authToken && user.ID ?
+
+const links = [
+  { name: 'Shop', route: '/shop' },
+  { name: 'About', route: '/about' },
+  { name: 'Contact', route: '/contact' },
+  { name: 'Shipping & Returns', route: '/shipping-and-returns' },
+  { name: 'Sign Up', route: '/account' },
+  { name: 'Log In', route: '/account' },
+]
+
 function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
   return (
-    <nav
-      style={{ position: 'fixed' }}
-      className={
-        classnames('global-nav global-padding-x flex-justify-between flex-align-center', {
-          open: navOpen,
-        })
-      }
-    >
-      <div className="logo">
-        <Link to="/"><Svg variant="archadon-logo" color="#FFF" /></Link>
-      </div>
-      <div onClick={() => { toggleNav(navOpen); }} className="ham">
-        <div className="ham-inner" />
-      </div>
-      <div className="global-nav-links flex-parent flex-align-center">
-        <div onClick={() => { toggleNav(navOpen); }} className="global-nav-link close">
-          Close
-        </div>
-        <div className="global-nav-link">
-          <Link to="/shop">Shop</Link>
-        </div>
-
-
-        {user.authToken && user.ID ?
-          (
-            [<div className="global-nav-link" key="a">
-              <Link to="/account">My Account</Link>
-            </div>,
-            <div className="global-nav-link" key="b">
-              <Link to="/logout">Log Out</Link>
-            </div>]
-          ) : (
-            [
-              <div className="global-nav-link" key="d">
-                <Link to="/signup">Sign Up</Link>
-              </div>,
-              <div className="global-nav-link" key="c">
-                <Link to="/login">Log In</Link>
-              </div>]
-          )}
-        <div className="global-nav-link">
-          <Link to="/about">About</Link>
-        </div>
-        <div className="global-nav-link">
-          <Link to="/contact">Contact</Link>
-        </div>
-        <div className="global-nav-link">
-          <Link to="/shipping-and-returns">Shipping & Returns</Link>
-        </div>
-      </div>
-      <Link className="cart" to="/cart">
-        <div className="flex-parent flex-align-center">
-          <div className="margin--right-1" style={{ width: '24px', height: '16px' }}>
-            <Svg variant="icon-cart" color="currentColor" />
-          </div>
+    <nav className={`global-nav wrap${navOpen ? ' open' : ''}`}>
+      <div style={{ zIndex: 10 }} className="menu-overlay">
+        <div className="wrap">
           <div>
-            {qty}
+            {links.map(({ name, route }) => <a key={name} href={route} className="menu-link">{name}</a>)}
+          </div>
+          <div className="bottom-links">
+            <span>hello@archadon.com</span>
+            <span>Instagram</span>
+            <span>Pinterest</span>
           </div>
         </div>
-      </Link>
+      </div>
+      <div>
+        <div style={{ zIndex: 11 }} onClick={() => toggleNav(navOpen)} className={`ham${navOpen ? ' open' : ''}`}>
+          <div className="ham-inner" />
+        </div>
+      </div>
+      <div className="logo" style={{ zIndex: 11 }}>
+        <Link to="/"><Svg variant="archadon-logo" color={navOpen ? '#FFF' : '#000'} /></Link>
+      </div>
+      <div className="cart" style={{ zIndex: 11 }}>
+        <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
+      </div>
     </nav>
   );
 }

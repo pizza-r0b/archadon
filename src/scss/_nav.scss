@@ -1,233 +1,146 @@
-
-  .global-nav {
-    height: 35px;
-    width: 100%;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    position: fixed;
-    &:after {
-      clear: both;
-      content: '';
-    }
-    display: block;
-    z-index: 999;
-    background-color: $dark;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-
-    &.root {
-      background-color: transparent;
-      box-shadow: 0 0 0;
-          transition: .25s background-color, 0.25s 0s box-shadow;
-
-    }
-    &, * {
-      transition: .25s background-color, .25s .25s box-shadow;
-    }
-    a, a:visited {
-      color: $white;
-    }
-
-  }
-
-  .logo {
-    width: 14.656rem;
-    height: 2.5rem;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    align-items: center;
-    float: left;
-  }
-
-  .cart {
-    width: 35px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    float: right;
-    margin-right: 25px;
-  }
-
-  .global-nav-links {
-    .open & {
-      transform: translateY(0);
-    }
-    flex-direction: column;
-    align-items: flex-start;
-    transform: translateY(-100%);
-    transition: transform .25s $easeInQuad;
-    width: 100%;
-    position: absolute;
-    background: $white;
-    left: 0;
-    box-shadow: 0px 0px 10px #888;
-  }
+$transitionVal: 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 
-  .global-nav-link {
-    width: 100%;
-    box-sizing: border-box;
-    padding: $spacer * 5px $spacer * 5px;
-    @include gradient;
-    color: $white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: left;
-    width: 100%;
-    border-bottom: 1px solid $light;
-    a {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-  }
-
-  .close {
-    @include gradient;
-    color: $white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: right;
-    cursor: pointer;
-  }
-
-  .ham {
-    float: right;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    color: $white;
-    width: 50px;
-    .open & {
-      transform: translateY(-50px);
-    }
-    transition: 0.15s transform;
-    opacity: 1;
-    cursor: pointer;
-    @include gradient;
-    align-items: center;
-
-    &-inner {
-      height: 12px;
-      width: 20px;
-      position: relative;
-
-      border-top: 2px solid $white;
-      border-bottom: 2px solid $white;
-      &:after {
-        position: absolute;
-        width: 100%;
-        margin: auto;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        background: $white;
-        height: 2px;
-        content: "";
-      }
-    }
-  }
-
-  .auth-nav-bar {
-    border-right: 2px solid $light;
-    width: 170px;
-    padding-right: $spacer * 5px;
-    flex-shrink: 0;
-
-    &-link {
-      display: block;
-      margin: $spacer*5px 0;
-      &.active {
-        color: $second;
-      }
-    }
-  }
-
-@include tablet() {
-  .ham {
-    display: none;
-  }
-
-  .global-nav-links {
-    flex-direction: row;
-    transform: translateY(0);
-    position: relative;
-    background: none;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    box-shadow: 0 0 0;
-  }
-
-  .close {
-    display: none;
-  }
-
-  .global-nav-link {
-    width: auto;
-    background: none;
-    font-size: 1.6rem;
-    padding: 0;
-    border: none;
-    a {
-      margin-right: 25px;
-      height: auto;
-    }
-  }
-
-  .logo {
-    float: none;
-  }
-  .global-nav {
-    height: 35px;
-    width: 100%;
-    display: flex;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    position: fixed;
-    z-index: 999;
-    background-color: $dark;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-
-    &.root {
-      background-color: transparent;
-      box-shadow: 0 0 0;
-          transition: .25s background-color, 0.25s 0s box-shadow;
-
-    }
-    &, * {
-      transition: .25s background-color, .25s .25s box-shadow;
-    }
-    a, a:visited {
-      color: $white;
-    }
-
-  }
-
-  .logo {
-    width: 14.656rem;
-    height: 2.5rem;
-  }
-
-  .auth-nav-bar {
-    border-right: 2px solid $light;
-    width: 170px;
-    padding-right: $spacer * 5px;
-    flex-shrink: 0;
-
-    &-link {
-      display: block;
-      margin: $spacer*5px 0;
-      &.active {
-        color: $second;
-      }
-    }
-  }
-
+.global-nav {
+  margin: 45px 0;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+%inner {
+  width: 60%;
+  height: 3px;
+  background: $white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 3px;
+  transform-origin: center;
+  transition: transform $transitionVal;
+}
+
+
+.menu-overlay {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: transparentize($dark, 0.1);
+  transform: scale(0.95) translateY(10px);
+  transform-origin: center;
+  pointer-events: none;
+  transition: all $transitionVal;
+  opacity: 0;
+  overflow: scroll;
+
+  .wrap {
+    transform: translateY(120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 150px);
+  }
+
+  .bottom-links {
+    color: $white;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.2rem;
+
+    span {
+      margin-right: 10%;
+    }
+  }
+
+  .menu-link {
+    color: $white;
+    font-size: 32px;
+    display: block;
+    margin: 15px 0;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s;
+
+    @for $i from 1 through 6 {
+      .open &:nth-child(#{$i}) {
+        transition-delay: $i * 0.1s;
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .open & {
+    pointer-events: all;
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.logo {
+  height: 25px;
+
+  @media (min-width: $tabletWidth) {
+    height: 35px;
+  }
+}
+
+.cart {
+  width: 35px;
+}
+
+.open .logo, .open .cart {
+  animation: fadeIn $transitionVal forwards;
+}
+
+.ham {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 45px;
+  background-color: $dark;
+  position: relative;
+  transition: background-color $transitionVal;
+
+  .open & {
+    background-color: transparent;
+
+  }
+
+
+  &-inner {
+    @extend %inner;
+    transform: translateY(-3px);
+
+    &:after {
+      content: "";
+      @extend %inner;
+      width: 100%;
+      transform: translateY(6px);
+    }
+  }
+
+  .open &-inner {
+    transform: translateY(0px) rotate(-135deg);
+
+    &:after {
+      transform: translateY(0px) rotate(270deg);
+    }
+
+  }
+}

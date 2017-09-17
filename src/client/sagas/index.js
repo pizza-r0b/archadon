@@ -388,6 +388,11 @@ export function* loadFavoritesSaga() {
   yield put(action(SET_LOADING_PAGE, ''));
 }
 
+export function* onNavOpenSaga() {
+  const navOpen = yield select(getNavState);
+  document.body.style.overflow = navOpen ? 'hidden' : 'auto';
+}
+
 export default function* rootSaga() {
   yield [
     takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
@@ -398,6 +403,7 @@ export default function* rootSaga() {
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
     takeLatest(GET_PRODUCT_DETAILS, getProductDetailSaga),
+    takeLatest(ON_NAV_OPEN, onNavOpenSaga),
     takeLatest(SIGN_UP, signUpSaga),
     takeLatest(USER_AUTH_SUCCESS, getUserDataSaga),
     takeLatest(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga),
