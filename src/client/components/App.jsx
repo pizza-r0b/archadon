@@ -106,7 +106,7 @@ class App extends Component {
       <ScrollToTopWithRouter>
         <div className="layout">
           <Navigation />
-          <div style={{ paddingTop: '35px' }} className="flex-grow-1 flex-justify-center flex-parent">
+          <div className="flex-grow-1 flex-justify-center flex-parent">
             {this.props.loading.full && <Loader />}
             <Switch>
               <Route path="/shop" component={Shop} />
