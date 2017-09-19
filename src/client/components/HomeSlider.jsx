@@ -144,13 +144,13 @@ class HomeSlider extends React.Component {
             </div>
           </div>
           <div className="featured-img img home-slider-item">
-            <div className="inner" style={{ backgroundImage: `url(${images[0].image})` }} />
+            <div className="inner" style={{ backgroundImage: `url(${images[this.state.current].image})` }} />
           </div>
           <div className="home-slider-item">
             <div className="home-slider-cta">
               <h3>{images[0].subtitle}</h3>
               <h2 className="margin--top-2 margin--bottom-5">{images[0].title}</h2>
-              <a href="#" className="btn btn--primary">Shop Now</a>
+              <a href="#" className="btn btn--primary">View Rug</a>
             </div>
           </div>
         </div>
