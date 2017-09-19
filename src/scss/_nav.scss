@@ -2,7 +2,7 @@ $transitionVal: 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 
 .global-nav {
-  margin: 45px 0;
+  margin: 45px auto 70px;
   height: 35px;
   display: flex;
   justify-content: space-between;
@@ -94,10 +94,6 @@ $transitionVal: 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 .logo {
   height: 25px;
-
-  @media (min-width: $tabletWidth) {
-    height: 35px;
-  }
 }
 
 .cart {
