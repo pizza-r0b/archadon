@@ -12,6 +12,7 @@
   cursor: pointer;
   @include font-size(1.28);
   transform-origin: center;
+  transition: 0.3s all cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .btn:focus {
@@ -19,6 +20,12 @@
 }
 
 .btn--primary {
+  @extend .btn;
   border-color: $dark;
   color: $dark;
+
+  &:hover {
+    background-color: $dark;
+    color: $white;
+  }
 }
