@@ -5,11 +5,11 @@ h4, .h4,
 h5, .h5,
 h6, .h6 {
   margin: 0;
-  font-weight: normal;
+  font-weight: 600;
 }
 
 h1, .h1, h2, .h2 {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 h1, .h1 {
@@ -19,6 +19,7 @@ h1, .h1 {
 
 .h3, h3 {
   font-family: $bodyFont;
+  font-weight: normal;
 }
 
 .title {
@@ -48,4 +49,9 @@ p {
     @include font-size(4.8);
     line-height: 46px;
   }
+}
+
+.small-caps {
+  text-transform: uppercase;
+  @include font-size(1.3);
 }

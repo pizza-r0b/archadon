@@ -33,4 +33,5 @@ export default keyMirror({
   HOME_LOADED: null,
   ON_COLLECTION_SUCCESS: null,
   REQUEST_COLLECTION: null,
+  NAV_STATE: null,
 });

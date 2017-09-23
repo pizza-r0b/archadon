@@ -23,9 +23,17 @@ const links = [
   { name: 'Log In', route: '/account' },
 ]
 
-function Navigation({ location, user, qty, scrolled, navOpen, toggleNav }) {
+function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }) {
+  const classes = classnames(
+    'global-nav',
+    'wrap',
+    {
+      open: navOpen,
+      fixed,
+    }
+  );
   return (
-    <nav className={`global-nav wrap${navOpen ? ' open' : ''}`}>
+    <nav className={classes}>
       <div style={{ zIndex: 10 }} className="menu-overlay">
         <div className="wrap">
           <div>
@@ -57,6 +65,7 @@ const mapStateToProps = state => ({
   user: state.user,
   qty: state.cart.totalQty,
   navOpen: state.navOpen,
+  fixed: state.ui.navFixed,
 });
 
 const mapDispatchToProps = dispatch => ({

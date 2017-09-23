@@ -2,6 +2,30 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fetch from 'node-fetch';
 import algolia from 'algoliasearch';
+import mongoose from 'mongoose';
+import { fromPaths } from 'dollidb';
+dotenv.config();
+mongoose.Promise = global.Promise;
+
+mongoose.connect(process.env.MONGO_URI);
+
+async function getData() {
+  const p1 = Date.now();
+  const ProductItem = mongoose.connection.db.collection('productitems');
+  const ProductData = mongoose.connection.db.collection('productdatas');
+  const items = await ProductItem.find().toArray();
+  console.log(items);
+  const promises = items.map(item => {
+    const { _id } = item;
+    return ProductData.find({ Item: _id }).toArray().then(docs => ({
+      ...fromPaths(docs.map(({ Path, Value }) => [Path, Value])),
+      ...item,
+    }));
+  });
+  const data = await Promise.all(promises);
+  console.log(`TIME: ${Date.now() - p1}ms`);
+  return data;
+}
 
 dotenv.config({
   path: path.resolve(__dirname, './.env'),
@@ -10,7 +34,6 @@ dotenv.config({
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const client = algolia(process.env.ALGOLIA_API_KEY, process.env.ALGOLIA_SECRET_KEY);
-const url = process.env.NODE_ENV === 'production' ? 'https://api.archadon.com/prod/product/v1/list' : 'https://api.archadon.com/dev/product/v1/list';
 const indexPrefix = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 const indexName = `${indexPrefix}_Products`;
 const index = client.initIndex(indexName);
@@ -31,52 +54,25 @@ desc.setSettings({
   ranking: ['desc(Price)'],
 });
 
-const fetchUrl = (u, startKey) => {
-  if (startKey) {
-    return `${u}?startKey=${startKey}`;
-  } else {
-    return u;
-  }
-};
+function getProducts() {
+  mongoose.connection.once('open', async () => {
 
-const products = [];
-
-async function getProducts(startKey) {
-  try {
-    const res = await fetch(fetchUrl(url, startKey), {
-      method: 'GET',
+    const raw = await getData();
+    console.log(raw);
+    const data = raw.map(item => {
+      item.objectID = item._id;
+      return item;
     });
-    const { Items, LastEvaluatedKey } = await res.json();
 
-    if (Items && Items.length > 0) {
-      products.push(...Items);
-    }
-
-    if (LastEvaluatedKey && LastEvaluatedKey.ID) {
-      await getProducts(LastEvaluatedKey.ID);
-    }
-  } catch (e) {
-    console.log(e);
-  }
+    index.addObjects(data, (err, content) => {
+      if (err) {
+        console.error(new Error(err));
+      } else {
+        console.log('All done');
+      }
+      mongoose.connection.close();
+    });
+  });
 }
 
-getProducts().then(() => {
-  const data = products.map(item => {
-    item.objectID = item.SKU;
-    return item;
-  });
-
-  return new Promise((resolve, reject) => {
-    index.addObjects(data, (err, content) => {
-      if (!err) {
-        return resolve(content);
-      } else {
-        return reject(err);
-      }
-    });
-  });
-}).then(content => {
-  console.log('Success');
-}).catch(e => {
-  console.log(e);
-});
+getProducts();

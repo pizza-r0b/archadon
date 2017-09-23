@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dollidb": "^1.0.5",
+    "mongoose": "^4.11.12",
     "node-fetch": "^1.6.3"
   }
 }

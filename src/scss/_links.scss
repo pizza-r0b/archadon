@@ -1,4 +1,11 @@
 a, a:visited {
-  color: $first;
+  color: $dark;
   text-decoration: none;
+}
+
+@each $var, $color in $colorMap {
+  $name: "link--#{$var}";
+  a.#{$name}, .#{$name} {
+    color: $color;
+  }
 }

@@ -1,8 +1,9 @@
-import './BodoniSvtyTwoITCTT-Bold.ttf';
-import './BodoniSvtyTwoITCTT-Bold.woff';
-import './BodoniSvtyTwoITCTT-Book.eot';
-import './BodoniSvtyTwoITCTT-Book.ttf';
-import './BodoniSvtyTwoITCTT-Book.woff';
-import './BodoniSvtyTwoITCTT-BookIta.eot';
-import './BodoniSvtyTwoITCTT-BookIta.ttf';
-import './BodoniSvtyTwoITCTT-BookIta.woff';
+import './Montserrat-SemiBold.ttf';
+import './Montserrat-SemiBold.woff';
+import './Montserrat-Regular.eot';
+import './Montserrat-Regular.ttf';
+import './Montserrat-Medium.eot';
+import './Montserrat-Medium.ttf';
+import './Montserrat-Light.eot';
+import './Montserrat-Light.ttf';
+import './Montserrat-Light.woff';

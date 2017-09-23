@@ -2,6 +2,7 @@
 import actions from 'Actions';
 const {
   HOME_LOADED,
+  NAV_STATE,
 } = actions;
 
 export default function products(state = {}, action) {
@@ -12,6 +13,11 @@ export default function products(state = {}, action) {
         homeLoaded: true,
       };
 
+    case NAV_STATE:
+      return {
+        ...state,
+        navFixed: action.payload,
+      };
     default:
       return state;
   }

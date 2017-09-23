@@ -24,7 +24,7 @@ import Contact from 'Components/Contact';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
 
-const { APP_LOAD } = actions;
+const { APP_LOAD, NAV_STATE } = actions;
 
 function Modal({ children, open }) {
   return (
@@ -95,16 +95,24 @@ class App extends Component {
     scrolled: false,
   }
 
+  handleNavUpdate = () => {
+    if (!this.props.ui.navFixed && window.pageYOffset > window.innerHeight / 2) {
+      this.props.updateNav(true);
+    } else if (this.props.ui.navFixed && window.pageYOffset < window.innerHeight / 2) {
+      this.props.updateNav(false);
+    }
+  }
 
   componentDidMount() {
     this.props.loaded();
+    window.addEventListener('scroll', this.handleNavUpdate);
   }
 
 
   render() {
     return (
       <ScrollToTopWithRouter>
-        <div className="layout">
+        <div style={ this.props.ui.navFixed ? { paddingTop: '150px' } : null} className="layout">
           <Navigation />
           <div className="flex-grow-1 flex-justify-center flex-parent">
             {this.props.loading.full && <Loader />}
@@ -134,6 +142,9 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   loaded() {
     dispatch(action(APP_LOAD));
+  },
+  updateNav(fixed) {
+    dispatch(action(NAV_STATE, fixed));
   },
 });
 
