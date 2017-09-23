@@ -13,6 +13,7 @@ const {
   LOADING,
   PRODUCT_LIST_LOADED,
   PRODUCT_DATA_LOADED,
+  PAGE_CHANGE,
   SET_REDIRECT_PATH,
   TOGGLE_FAVORITE,
   ADD_TO_CART,
@@ -229,7 +230,7 @@ export function* getProductDataSaga({ payload: product }) {
 export function* getProductDetailSaga({ payload: id }) {
   yield put(action(LOADING, true));
   const products = yield select(getProductDetails);
-  let product = products.find(p => p.ID === id);
+  let product = products.find(p => p._id === id);
   if (product) {
     yield put(push(`/product/${product.Name}/${product.ID}`));
     yield put(action(LOADING, false));
@@ -431,6 +432,9 @@ export default function* rootSaga() {
       let initialLoad = true;
       while (true) {
         yield take([LOCATION_CHANGE]);
+        if (!initialLoad) {
+          yield put(action(PAGE_CHANGE, true));
+        }
         const navOpen = yield select(getNavState);
         if (navOpen) {
           yield put(action(ON_NAV_OPEN, !navOpen));

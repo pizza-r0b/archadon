@@ -6,8 +6,10 @@ $largeDesktopWidth: 1392px;
 
 $white: #FFFFFF;
 $dark: #000;
-$light: #afafaf;
-$lighter: #dddddf;
+$light: #8c8688;
+$lighter: #afafaf;
+$lightest: #dddddf;
+$gold: #bf9b30;
 $first: #BEDBED;
 $second: #e0e0e2;
 $third: #6D3BDD;
@@ -19,9 +21,11 @@ $colorMap: (
   dark: $dark,
   light: $light,
   lighter: $lighter,
+  lightest: $lightest,
   first: $first,
   second: $second,
-  third: $third
+  third: $third,
+  gold: $gold,
 );
 
 $spacer: 5;

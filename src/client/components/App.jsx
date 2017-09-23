@@ -24,7 +24,7 @@ import Contact from 'Components/Contact';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
 
-const { APP_LOAD, NAV_STATE } = actions;
+const { APP_LOAD, NAV_STATE, PAGE_CHANGE } = actions;
 
 function Modal({ children, open }) {
   return (
@@ -115,7 +115,6 @@ class App extends Component {
         <div style={ this.props.ui.navFixed ? { paddingTop: '150px' } : null} className="layout">
           <Navigation />
           <div className="flex-grow-1 flex-justify-center flex-parent">
-            {this.props.loading.full && <Loader />}
             <Switch>
               <Route path="/shop" component={Shop} />
               <Route path="/about" component={About} />
@@ -133,6 +132,7 @@ class App extends Component {
             </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>
+          <Loader location={this.props.location} done={this.props.pageChangeDone} loading={this.props.loading.full || this.props.ui.pageChange} />
         </div>
       </ScrollToTopWithRouter>
     );
@@ -142,6 +142,9 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
   loaded() {
     dispatch(action(APP_LOAD));
+  },
+  pageChangeDone() {
+    dispatch(action(PAGE_CHANGE, false));
   },
   updateNav(fixed) {
     dispatch(action(NAV_STATE, fixed));

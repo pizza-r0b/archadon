@@ -3,6 +3,7 @@ import actions from 'Actions';
 const {
   HOME_LOADED,
   NAV_STATE,
+  PAGE_CHANGE,
 } = actions;
 
 export default function products(state = {}, action) {
@@ -17,6 +18,12 @@ export default function products(state = {}, action) {
       return {
         ...state,
         navFixed: action.payload,
+      };
+
+    case PAGE_CHANGE:
+      return {
+        ...state,
+        pageChange: action.payload,
       };
     default:
       return state;

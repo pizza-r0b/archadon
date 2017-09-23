@@ -11,11 +11,13 @@ class Home extends React.Component {
         <div className="wrap">
           <HomeSlider />
           <HomeFeaturedItems />
-          <div className="flex-parent flex-justify-start flex-align-center">
-            <h2 className="margin--right-5">Popular</h2>
-            <a href="#" className="link--light small-caps">Shop All</a>
+          <div className="slim-box">
+            <div className="flex-parent flex-justify-start flex-align-center margin--bottom-10">
+              <h2 className="margin--right-5">Popular</h2>
+              <a href="#" className="link--lighter small-caps">Shop All</a>
+            </div>
+            <ProductList products={this.props.products} />
           </div>
-          <ProductList products={this.props.products} />
         </div>
       </div>
     );
@@ -23,7 +25,7 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  products: state.products.hits.slice(0, 7),
+  products: state.products.hits.slice(0, 8),
 });
 
 export default connect(mapStateToProps)(Home);

@@ -19,6 +19,7 @@ export default keyMirror({
   TOGGLE_FAVORITE: null,
   ON_FILTER_UPDATE: null,
   REPLACE_PRODUCT_LIST: null,
+  PAGE_CHANGE: null,
   PURCHASE: null,
   LOAD_FAVORITES: null,
   FAVORITES_LOADED: null,

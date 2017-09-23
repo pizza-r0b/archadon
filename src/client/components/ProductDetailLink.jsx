@@ -14,7 +14,7 @@ type ProductDetailLinkProps = {
 
 function ProductDetailLink({ children, product, onClick }: ProductDetailLinkProps) {
   return (
-    <a href={`/product/${product.Name}/${product.ID}`} onClick={onClick(product.ID)}>
+    <a href={`/product/${product.Name}/${product._id}`} onClick={onClick(product._id)}>
       {children}
     </a>
   );
