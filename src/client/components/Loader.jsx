@@ -8,7 +8,6 @@ export default class Loader extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(this.props.location.pathname !== nextProps.location.pathname)
     if (!this.props.loading && nextProps.loading && this.state.done) {
       console.log('GO!')
       this.setState({ done: false });

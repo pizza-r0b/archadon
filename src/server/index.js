@@ -12,28 +12,30 @@ import searchRoute, { search } from '../search';
 import batchItems from '../search/batchItems';
 import bodyParser from 'body-parser';
 
-const API_URL = process.env.NODE_ENV !== 'production' ? 'https://api.archadon.com/dev/' : 'https://api.archadon.com/prod/';
+const API_URL = process.env.NODE_ENV !== 'production' ? 'https://gnr9itw1e2.execute-api.us-east-1.amazonaws.com/dev/' : 'https://api.archadon.com/prod/';
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-const productDetails = [];
-
 app.post('/search/products', searchRoute);
 app.post('/search/batch', batchItems);
 
+let productDetails = [];
+
 app.use('/product/:name/:id', async (req, res, next) => {
+  productDetails = [];
+
   try {
     const response = await fetch(`${API_URL}product/v1/data/${req.params.id}`);
     const { data } = await response.json();
     if (Object.keys(data).length > 0) {
-      data.ID = req.params.id;
       productDetails.push(data);
     }
     next();
   } catch (e) {
+    console.log(e);
     next();
   }
 });

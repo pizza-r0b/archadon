@@ -227,33 +227,31 @@ export function* getProductDataSaga({ payload: product }) {
   }
 }
 
-export function* getProductDetailSaga({ payload: id }) {
-  yield put(action(LOADING, true));
+export function* getProductDetailSaga({ payload: product }) {
+  const id = product._id;
+  yield put(action(SET_LOADING_PAGE, 'detail'));
+  yield put(push(`/product/${product.Name}/${product._id}`));
   const products = yield select(getProductDetails);
-  let product = products.find(p => p._id === id);
-  if (product) {
-    yield put(push(`/product/${product.Name}/${product.ID}`));
-    yield put(action(LOADING, false));
+  let productDetail = products.find(p => p._id === id);
+  if (productDetail) {
+    yield put(action(SET_LOADING_PAGE, ''));
     return;
   }
   const allProducts = yield select(getLoadedProducts);
-  product = allProducts.find(p => p.ID === id);
+  productDetail = allProducts.find(p => p.ID === id);
 
-  if (!product) {
+  if (!productDetail) {
     try {
       const { response: { data } } = yield call(requestProductData, id);
       if (Object.keys(data).length > 0) {
         data.ID = id;
-        product = data;
+        productDetail = data;
       }
     } catch (e) { }
   }
 
-  yield put(action(PRODUCT_DETAIL_LOADED, product));
-
-  yield put(push(`/product/${product.Name}/${product.ID}`));
-
-  yield put(action(LOADING, false));
+  yield put(action(PRODUCT_DETAIL_LOADED, productDetail));
+  yield put(action(SET_LOADING_PAGE, ''));
 }
 
 export function* addToCartLocalStorage() {

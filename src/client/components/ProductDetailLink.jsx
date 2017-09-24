@@ -14,16 +14,16 @@ type ProductDetailLinkProps = {
 
 function ProductDetailLink({ children, product, onClick }: ProductDetailLinkProps) {
   return (
-    <a href={`/product/${product.Name}/${product._id}`} onClick={onClick(product._id)}>
+    <a href={`/product/${product.Name}/${product._id}`} onClick={onClick(product)}>
       {children}
     </a>
   );
 }
 
 const mapDispatchToProps = dispatch => ({
-  onClick: id => e => {
+  onClick: product => e => {
     e.preventDefault();
-    dispatch(action(GET_PRODUCT_DETAILS, id));
+    dispatch(action(GET_PRODUCT_DETAILS, product));
   },
 });
 

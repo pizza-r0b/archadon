@@ -6,31 +6,38 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 
-function ProductDetail({ product = DEFAULT_ITEM }: { product: Object }) {
+function ProductDetail({ product = DEFAULT_ITEM, loading }: { loading: string, product: Object }) {
   if (!product) {
     return <Redirect to="/shop" />;
   }
 
   return (
-    <div className="padding--top-1 flex-parent product-detail-wrap flex-col">
-      <div className="product-detail flex-grow-1 global-padding ">
-        <div className="product-detail-image">
-          {product.Images && <img alt={product.Name} src={`${IMAGE_ORIGIN}/${product.Images[0].src}`} />}
+    <div className="full-width">
+      <section className="product-details-main">
+        <div className="wrap product-details-wrap">
+          <div className="product-details-image">
+            <img src={`${IMAGE_ORIGIN}/landscape_${product.Images[0]}`} />
+          </div>
+          <div className="product-details-title">
+            <FavoriteBtn className="heart" id={product._id} />
+            <h2 className="margin--y-3">{product.Name}</h2>
+            <p className="font-color--light margin--bottom-1">{product.LongDescription}</p>
+            <p className="font-color--light">{product.ShortDescription}</p>
+            <div className="line-break" />
+            <h2 className="font-color--light font-weight--normal">{product.Price.toLocaleString('USD', {
+              style: 'currency',
+              currency: 'USD',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</h2>
+          </div>
+          <div className="product-details-btns">
+            <div>
+              <button className="btn--primary--inverse">Add To Cart</button>
+            </div>
+          </div>
         </div>
-        <div className="product-detail-info">
-          <h1 className="margin--bottom-2 text-align-center">Hand-Knotted {product.Name}</h1>
-          <h3 className="strong">${product.Price}</h3>
-          <hr />
-          <FavoriteBtn id={product.ID} />
-          <p className="margin--top-3">{product.LongDescription}</p>
-          <p className="margin--bottom-5">{product.ShortDescription}</p>
-          {product.Qty > 0 && <AddToCartBtn className="margin--bottom-5" id={product.ID} />}
-          {product.Qty === 0 && <h3>Sold</h3>}
-        </div>
-      </div>
-      {/*<div className="next-bar">
-        <h2>Next</h2>
-      </div>*/}
+      </section>
     </div>
   );
 }
@@ -39,7 +46,8 @@ function ProductDetail({ product = DEFAULT_ITEM }: { product: Object }) {
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   return {
-    product: state.productDetails.find(product => product.ID === id),
+    product: state.productDetails.find(product => product._id === id),
+    loading: state.loading.page,
   };
 };
 

@@ -10,6 +10,14 @@
     display: block;
 }
 
+
+.line-break {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: $dark;
+    margin: 25px 0;
+}
 .wrap {
     max-width: $largeDesktopWidth;
     width: 100%;

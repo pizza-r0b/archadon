@@ -32,6 +32,14 @@ p {
   margin: 0;
 }
 
+$weights: 300, 400, 500, 600, normal;
+
+@each $weight in $weights {
+  .font-weight--#{$weight} {
+    font-weight: $weight !important;
+  }
+}
+
 @each $colorName, $hex in $colorMap {
   .font-color--#{$colorName} {
     color: $hex;

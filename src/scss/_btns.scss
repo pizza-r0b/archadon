@@ -36,4 +36,12 @@
     background-color: $dark;
     color: $white;
   }
+
+  &--inverse {
+    @extend .btn--primary;
+    background-color: $dark;
+    color: $white;
+  }
 }
+
+
