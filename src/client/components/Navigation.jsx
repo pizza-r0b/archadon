@@ -37,7 +37,7 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
       <div style={{ zIndex: 10 }} className="menu-overlay">
         <div className="wrap">
           <div>
-            {links.map(({ name, route }) => <a key={name} href={route} className="menu-link">{name}</a>)}
+            {links.map(({ name, route }) => <Link key={name} to={route} className="menu-link">{name}</Link>)}
           </div>
           <div className="bottom-links">
             <span>hello@archadon.com</span>

@@ -53,13 +53,24 @@ class ProductDetail extends React.Component {
   }
 
   render() {
+
+    console.log(this.props.loading);
+    if (this.props.loading) {
+      return (
+        <div className="flex-parent flex-justify-center flex-align-center">
+          <h2>Loading</h2>
+        </div>
+      );
+    }
+
     const { product = DEFAULT_ITEM, loading }: { loading: string, product: Object } = this.props;
+    console.log('product', product);
     let about;
-    if (product.LongDescription.toLowerCase().includes('tibetan')) {
+    if (product && product.LongDescription.toLowerCase().includes('tibetan')) {
       about = aboutCopy.tibetan;
-    } else if (product.LongDescription.toLowerCase().includes('zealand')) {
+    } else if (product && product.LongDescription.toLowerCase().includes('zealand')) {
       about = aboutCopy.newZealand;
-    } else if (product.LongDescription.toLowerCase().includes('hemp')) {
+    } else if (product && product.LongDescription.toLowerCase().includes('hemp')) {
       about = aboutCopy.hemp;
     }
 
@@ -68,6 +79,7 @@ class ProductDetail extends React.Component {
     }
 
     let imgSrc = `${IMAGE_ORIGIN}/landscape_${product.Images[0]}`;
+
 
     return (
       <div className="full-width">
@@ -135,9 +147,10 @@ class ProductDetail extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
+  console.log(ownProps);
   return {
     product: state.productDetails.find(product => product._id === id),
-    loading: state.loading.page,
+    loading: state.loading.page === 'detail',
   };
 };
 

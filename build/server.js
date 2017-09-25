@@ -3944,8 +3944,8 @@ function Navigation(_ref) {
             var name = _ref2.name,
                 route = _ref2.route;
             return _react2.default.createElement(
-              'a',
-              { key: name, href: route, className: 'menu-link' },
+              _reactRouterDom.Link,
+              { key: name, to: route, className: 'menu-link' },
               name
             );
           })
@@ -4531,17 +4531,32 @@ var ProductDetail = function (_React$Component2) {
   (0, _createClass3.default)(ProductDetail, [{
     key: 'render',
     value: function render() {
+
+      console.log(this.props.loading);
+      if (this.props.loading) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'flex-parent flex-justify-center flex-align-center' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Loading'
+          )
+        );
+      }
+
       var _props = this.props,
           _props$product = _props.product,
           product = _props$product === undefined ? _Constants.DEFAULT_ITEM : _props$product,
           loading = _props.loading;
 
+      console.log('product', product);
       var about = void 0;
-      if (product.LongDescription.toLowerCase().includes('tibetan')) {
+      if (product && product.LongDescription.toLowerCase().includes('tibetan')) {
         about = aboutCopy.tibetan;
-      } else if (product.LongDescription.toLowerCase().includes('zealand')) {
+      } else if (product && product.LongDescription.toLowerCase().includes('zealand')) {
         about = aboutCopy.newZealand;
-      } else if (product.LongDescription.toLowerCase().includes('hemp')) {
+      } else if (product && product.LongDescription.toLowerCase().includes('hemp')) {
         about = aboutCopy.hemp;
       }
 
@@ -4696,11 +4711,12 @@ var ProductDetail = function (_React$Component2) {
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   var id = ownProps.match.params.id;
 
+  console.log(ownProps);
   return {
     product: state.productDetails.find(function (product) {
       return product._id === id;
     }),
-    loading: state.loading.page
+    loading: state.loading.page === 'detail'
   };
 };
 
@@ -5036,22 +5052,59 @@ var _ProductList = __webpack_require__(13);
 
 var _ProductList2 = _interopRequireDefault(_ProductList);
 
+var _reactRedux = __webpack_require__(2);
+
+var _ProductTile = __webpack_require__(84);
+
+var _ProductTile2 = _interopRequireDefault(_ProductTile);
+
+var _Utils = __webpack_require__(3);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _Filters = __webpack_require__(85);
+
+var _Filters2 = _interopRequireDefault(_Filters);
+
+var _ClearFilterButton = __webpack_require__(83);
+
+var _ClearFilterButton2 = _interopRequireDefault(_ClearFilterButton);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Selection() {
-  return _react2.default.createElement(
-    'div',
-    { className: 'flex-grow-1 global-padding margin--y-10' },
-    _react2.default.createElement(
-      'h1',
-      { className: 'align--center' },
-      'Our Selection'
-    ),
-    _react2.default.createElement(_ProductList2.default, null)
-  );
+var LOAD_MORE = _Actions2.default.LOAD_MORE,
+    ON_CLEAR_FILTERS = _Actions2.default.ON_CLEAR_FILTERS;
+
+
+function Shop(_ref) {
+  var products = _ref.products;
+
+  return _react2.default.createElement(_ProductList2.default, { products: products });
 }
 
-var _default = Selection;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    products: state.products.hits,
+    page: state.products.page,
+    nbPages: state.products.nbPages
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    clear: function clear() {
+      dispatch((0, _Utils.action)(ON_CLEAR_FILTERS));
+    },
+    loadMore: function loadMore(page) {
+      dispatch((0, _Utils.action)(LOAD_MORE, { page: page }));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Shop);
+
 exports.default = _default;
 ;
 
@@ -5060,7 +5113,15 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Selection, 'Selection', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
+  __REACT_HOT_LOADER__.register(Shop, 'Shop', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
+
+  __REACT_HOT_LOADER__.register(LOAD_MORE, 'LOAD_MORE', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
+
+  __REACT_HOT_LOADER__.register(ON_CLEAR_FILTERS, 'ON_CLEAR_FILTERS', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
+
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/Shop.jsx');
 }();
@@ -6391,6 +6452,557 @@ module.exports = require("babel-runtime/core-js/object/assign");
 /***/ (function(module, exports) {
 
 module.exports = require("react-transition-group");
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _Utils = __webpack_require__(3);
+
+var _reactRedux = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ON_CLEAR_FILTERS = _Actions2.default.ON_CLEAR_FILTERS;
+
+
+function ClearFilterButton(_ref) {
+  var clear = _ref.clear;
+
+  return _react2.default.createElement(
+    'div',
+    { onClick: function onClick() {
+        clear();
+      }, className: 'btn btn--first' },
+    'Clear Filters'
+  );
+}
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    clear: function clear() {
+      dispatch((0, _Utils.action)(ON_CLEAR_FILTERS));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(null, mapDispatchToProps)(ClearFilterButton);
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(ClearFilterButton, 'ClearFilterButton', '/Users/realseanp1/Projects/archadon/src/client/components/ui/ClearFilterButton.jsx');
+
+  __REACT_HOT_LOADER__.register(ON_CLEAR_FILTERS, 'ON_CLEAR_FILTERS', '/Users/realseanp1/Projects/archadon/src/client/components/ui/ClearFilterButton.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/ClearFilterButton.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ui/ClearFilterButton.jsx');
+}();
+
+;
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Svg = __webpack_require__(26);
+
+var _Svg2 = _interopRequireDefault(_Svg);
+
+var _FavoriteBtn = __webpack_require__(24);
+
+var _FavoriteBtn2 = _interopRequireDefault(_FavoriteBtn);
+
+var _Utils = __webpack_require__(3);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _reactRedux = __webpack_require__(2);
+
+var _Constants = __webpack_require__(11);
+
+var _ProductDetailLink = __webpack_require__(23);
+
+var _ProductDetailLink2 = _interopRequireDefault(_ProductDetailLink);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ADD_TO_CART = _Actions2.default.ADD_TO_CART,
+    REMOVE_FROM_CART = _Actions2.default.REMOVE_FROM_CART;
+
+
+function ProductTile(_ref) {
+  var _ref$product = _ref.product,
+      product = _ref$product === undefined ? _Constants.DEFAULT_ITEM : _ref$product,
+      addToCart = _ref.addToCart,
+      cartItems = _ref.cart.items,
+      removeFromCart = _ref.removeFromCart;
+
+  var inCart = cartItems.find(function (item) {
+    if (!item) {
+      item = {};
+    }
+    return item === product.ID || item.ID === product.ID;
+  });
+
+  var cartButton = void 0;
+
+  if (product.Qty === 0) {
+    cartButton = _react2.default.createElement(
+      'p',
+      { className: 'font-color--white bold margin--left-1' },
+      'Sold'
+    );
+  } else if (inCart) {
+    cartButton = _react2.default.createElement(
+      'div',
+      { style: { cursor: 'pointer' }, onClick: removeFromCart(product.ID), className: 'flex-parent flex-align-center' },
+      _react2.default.createElement(
+        'p',
+        { className: 'font-color--white bold margin--left-1' },
+        'Remove From Cart'
+      )
+    );
+  } else {
+    cartButton = _react2.default.createElement(
+      'div',
+      { style: { cursor: 'pointer' }, onClick: addToCart(product), className: 'flex-parent flex-align-center' },
+      _react2.default.createElement(
+        'div',
+        { style: { height: '17px', width: '23px' } },
+        _react2.default.createElement(_Svg2.default, { variant: 'icon-cart' })
+      ),
+      _react2.default.createElement(
+        'p',
+        { className: 'font-color--white bold margin--left-1' },
+        'Add To Cart'
+      )
+    );
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: 'product-tile' },
+    _react2.default.createElement(
+      'div',
+      { className: 'product-tile-inner flex-parent flex-col flex-justify-between' },
+      _react2.default.createElement(
+        'div',
+        { className: 'product-tile-padding-x product-tile-padding-top' },
+        _react2.default.createElement(
+          _ProductDetailLink2.default,
+          { product: product },
+          product.Images && _react2.default.createElement('div', { style: { backgroundImage: 'url(' + (_Constants.IMAGE_ORIGIN + '/' + product.Images[0].src) + ')' }, className: 'product-tile-img flex-parent flex-align-center flex-justify-center' })
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'flex-parent flex-row flex-justify-between margin--top-1' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _ProductDetailLink2.default,
+              { product: product },
+              _react2.default.createElement(
+                'h2',
+                null,
+                'Hand-Knotted ',
+                product.Name
+              )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              product.LongDescription && '' + product.LongDescription
+            )
+          ),
+          _react2.default.createElement(_FavoriteBtn2.default, { id: product.ID })
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'flex-parent flex-align-center flex-justify-between product-tile-padding-x product-tile-price-bar margin--top-5' },
+        _react2.default.createElement(
+          'p',
+          { className: 'font-color--white bold' },
+          product.Price.toLocaleString('USD', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+        ),
+        cartButton
+      )
+    )
+  );
+}
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addToCart: function addToCart(product) {
+      return function () {
+        return dispatch((0, _Utils.action)(ADD_TO_CART, product));
+      };
+    },
+    removeFromCart: function removeFromCart(ID) {
+      return function () {
+        return dispatch((0, _Utils.action)(REMOVE_FROM_CART, ID));
+      };
+    }
+  };
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    cart: state.cart
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ProductTile);
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(ProductTile, 'ProductTile', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+
+  __REACT_HOT_LOADER__.register(ADD_TO_CART, 'ADD_TO_CART', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+
+  __REACT_HOT_LOADER__.register(REMOVE_FROM_CART, 'REMOVE_FROM_CART', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ProductTile.jsx');
+}();
+
+;
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getPrototypeOf = __webpack_require__(5);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(6);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(7);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(9);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(8);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _extends2 = __webpack_require__(10);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _slicedToArray2 = __webpack_require__(15);
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(2);
+
+var _Actions = __webpack_require__(1);
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _ClearFilterButton = __webpack_require__(83);
+
+var _ClearFilterButton2 = _interopRequireDefault(_ClearFilterButton);
+
+var _Utils = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ON_FILTER_UPDATE = _Actions2.default.ON_FILTER_UPDATE;
+
+
+var FILTERS_ARR = [{
+  name: 'Sort By',
+  options: [{
+    copy: 'Highest to Lowest',
+    queries: ['product_desc'],
+    type: 'r'
+  }, {
+    copy: 'Lowest to Highest',
+    queries: ['product_asc'],
+    type: 'r'
+  }]
+}, {
+  name: 'Price',
+  options: [{
+    copy: 'Under $80',
+    queries: ['< 80'],
+    type: 'p'
+  }, {
+    copy: '$80 - $150',
+    queries: ['>= 80', '<= 150'],
+    type: 'p'
+  }, {
+    copy: '$150 - $300',
+    queries: ['>= 150', '<= 300'],
+    type: 'p'
+  }, {
+    copy: '$300 - $800',
+    queries: ['>= 300', '<= 800'],
+    type: 'p'
+  }, {
+    copy: '$800+',
+    queries: ['>= 800'],
+    type: 'p'
+  }]
+}, {
+  name: 'Size',
+  options: [{
+    copy: '1\'11 x 3 - 2 x 4',
+    queries: ['Width >= 1 AND Width <= 2.9 AND Height >= 3 AND Height <= 4.9'],
+    type: 'raw'
+  }, {
+    copy: '3 x 4 - 3 x 5',
+    queries: ['Width >= 3 AND Width <= 4.9 AND Height >= 4 AND Height <= 5.9'],
+    type: 'raw'
+  }, {
+    copy: '4 x 5 - 4 x 6',
+    queries: ['Width >= 4 AND Width <= 4.9 AND Height >= 5 AND Height <= 6.9'],
+    type: 'raw'
+  }, {
+    copy: '5 x 7 - 5 x 9',
+    queries: ['Width >= 5 AND Width <= 5.9 AND Height >= 7 AND Height <= 9.9'],
+    type: 'raw'
+  }, {
+    copy: '6 x 6 - 6 x 9',
+    queries: ['Width >= 6 AND Width <= 6.9 AND Height >= 6 AND Height <= 9.9'],
+    type: 'raw'
+  }, {
+    copy: '7 x 9 - 8 x 10',
+    queries: ['Width >= 7 AND Width <= 8.9 AND Height >= 9 AND Height <= 10.9'],
+    type: 'raw'
+  }]
+}];
+
+FILTERS_ARR.reverse();
+
+function FilterOption(_ref) {
+  var filter = _ref.filter,
+      onChange = _ref.onChange,
+      filters = _ref.filters,
+      defaultIndex = _ref.defaultIndex;
+
+  var selectProps = {};
+  if (defaultIndex === 0) {
+    selectProps.value = 0;
+  }
+
+  var _filters$filter = filters.filter(function (f) {
+    return f.field === filter.name;
+  }),
+      _filters$filter2 = (0, _slicedToArray3.default)(_filters$filter, 1),
+      selectedOfType = _filters$filter2[0];
+
+  if (selectedOfType) {
+    selectProps.value = filter.options[selectedOfType.optionindex].copy;
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: 'filter-option' },
+    _react2.default.createElement(
+      'label',
+      { htmlFor: filter.name },
+      _react2.default.createElement(
+        'h3',
+        null,
+        filter.name
+      )
+    ),
+    _react2.default.createElement(
+      'select',
+      (0, _extends3.default)({ name: filter.name }, selectProps, { onChange: onChange }),
+      _react2.default.createElement(
+        'option',
+        null,
+        'Select ',
+        filter.name
+      ),
+      filter.options.map(function (option, i) {
+        return _react2.default.createElement(
+          'option',
+          { key: i, 'data-filterindex': filter.index, 'data-optionindex': i },
+          option.copy
+        );
+      })
+    )
+  );
+}
+
+var Filters = function (_Component) {
+  (0, _inherits3.default)(Filters, _Component);
+
+  function Filters() {
+    var _ref2;
+
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, Filters);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref2 = Filters.__proto__ || (0, _getPrototypeOf2.default)(Filters)).call.apply(_ref2, [this].concat(args))), _this), _this.onChange = function (e) {
+      var select = e.currentTarget;
+      var option = select.options[select.selectedIndex];
+      var _option$dataset = option.dataset,
+          filterindex = _option$dataset.filterindex,
+          optionindex = _option$dataset.optionindex;
+
+      if (typeof filterindex === 'undefined' || typeof optionindex === 'undefined') {
+        return;
+      }
+      var _FILTERS_ARR$filterin = FILTERS_ARR[filterindex].options[optionindex],
+          queries = _FILTERS_ARR$filterin.queries,
+          type = _FILTERS_ARR$filterin.type;
+
+      var field = FILTERS_ARR[filterindex].name;
+
+      _this.props.updateFilter({
+        queries: queries, type: type, field: field, filterindex: filterindex, optionindex: optionindex
+      });
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  (0, _createClass3.default)(Filters, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'filter-wrap' },
+        _react2.default.createElement(
+          'h2',
+          { className: 'margin--top-3 margin--bottom-3' },
+          'Filters'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'margin--bottom-3' },
+          this.props.filters.length > 0 && _react2.default.createElement(_ClearFilterButton2.default, null)
+        ),
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+          'div',
+          { className: 'filters' },
+          FILTERS_ARR.map(function (filter, i) {
+            filter.index = i;
+            return _react2.default.createElement(FilterOption, { filters: _this2.props.filters, defaultIndex: _this2.props.filters.length, key: i, onChange: _this2.onChange, filter: filter });
+          })
+        )
+      );
+    }
+  }]);
+  return Filters;
+}(_react.Component);
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateFilter: function updateFilter(filter) {
+      dispatch((0, _Utils.action)(ON_FILTER_UPDATE, { filter: filter }));
+    }
+  };
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    filters: state.filters
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Filters);
+
+exports.default = _default;
+;
+
+var _temp2 = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(FilterOption, 'FilterOption', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(ON_FILTER_UPDATE, 'ON_FILTER_UPDATE', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(FILTERS_ARR, 'FILTERS_ARR', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(Filters, 'Filters', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ui/Filters.jsx');
+}();
+
+;
 
 /***/ })
 /******/ ]);
