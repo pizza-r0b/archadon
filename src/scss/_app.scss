@@ -7,7 +7,7 @@ body, html {
 body {
     font-family: $bodyFont;
     @include font-size(1.6);
-    color: $dark;
+    color: $copyColor;
 }
 
 html {
