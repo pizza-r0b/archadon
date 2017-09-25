@@ -396,7 +396,7 @@ function ProductList(_ref) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'product-list-wrap' },
+    { className: 'product-list-wrap wrap' },
     products.map(function (product) {
       return _react2.default.createElement(
         'div',
@@ -2965,6 +2965,8 @@ var _ProductList2 = _interopRequireDefault(_ProductList);
 
 var _reactRedux = __webpack_require__(2);
 
+var _reactRouterDom = __webpack_require__(4);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Home = function (_React$Component) {
@@ -2998,8 +3000,8 @@ var Home = function (_React$Component) {
                 'Popular'
               ),
               _react2.default.createElement(
-                'a',
-                { href: '#', className: 'link--lighter small-caps' },
+                _reactRouterDom.Link,
+                { to: '/shop', className: 'link--lighter small-caps' },
                 'Shop All'
               )
             ),
@@ -4550,18 +4552,16 @@ var ProductDetail = function (_React$Component2) {
           product = _props$product === undefined ? _Constants.DEFAULT_ITEM : _props$product,
           loading = _props.loading;
 
-      console.log('product', product);
-      var about = void 0;
-      if (product && product.LongDescription.toLowerCase().includes('tibetan')) {
-        about = aboutCopy.tibetan;
-      } else if (product && product.LongDescription.toLowerCase().includes('zealand')) {
-        about = aboutCopy.newZealand;
-      } else if (product && product.LongDescription.toLowerCase().includes('hemp')) {
-        about = aboutCopy.hemp;
-      }
-
       if (!product) {
         return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/shop' });
+      }
+      var about = void 0;
+      if (product.LongDescription.toLowerCase().includes('tibetan')) {
+        about = aboutCopy.tibetan;
+      } else if (product.LongDescription.toLowerCase().includes('zealand')) {
+        about = aboutCopy.newZealand;
+      } else if (product.LongDescription.toLowerCase().includes('hemp')) {
+        about = aboutCopy.hemp;
       }
 
       var imgSrc = _Constants.IMAGE_ORIGIN + '/landscape_' + product.Images[0];

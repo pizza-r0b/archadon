@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import fetch from 'node-fetch';
 import algolia from 'algoliasearch';
 import mongoose from 'mongoose';
 import { fromPaths } from 'dollidb';

@@ -5,7 +5,7 @@ import ProductDetailLink from 'Components/ProductDetailLink';
 
 function ProductList({ products }) {
   return (
-    <div className="product-list-wrap">
+    <div className="product-list-wrap wrap">
       {products.map(product => (
         <div className="product-tile">
           <div className="product-tile-inner">

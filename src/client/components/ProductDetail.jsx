@@ -64,19 +64,18 @@ class ProductDetail extends React.Component {
     }
 
     const { product = DEFAULT_ITEM, loading }: { loading: string, product: Object } = this.props;
-    console.log('product', product);
-    let about;
-    if (product && product.LongDescription.toLowerCase().includes('tibetan')) {
-      about = aboutCopy.tibetan;
-    } else if (product && product.LongDescription.toLowerCase().includes('zealand')) {
-      about = aboutCopy.newZealand;
-    } else if (product && product.LongDescription.toLowerCase().includes('hemp')) {
-      about = aboutCopy.hemp;
-    }
-
     if (!product) {
       return <Redirect to="/shop" />;
     }
+    let about;
+    if (product.LongDescription.toLowerCase().includes('tibetan')) {
+      about = aboutCopy.tibetan;
+    } else if (product.LongDescription.toLowerCase().includes('zealand')) {
+      about = aboutCopy.newZealand;
+    } else if (product.LongDescription.toLowerCase().includes('hemp')) {
+      about = aboutCopy.hemp;
+    }
+
 
     let imgSrc = `${IMAGE_ORIGIN}/landscape_${product.Images[0]}`;
 

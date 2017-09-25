@@ -3,6 +3,7 @@ import HomeSlider from './HomeSlider';
 import HomeFeaturedItems from './HomeFeaturedBoxes';
 import ProductList from './ProductList';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
   render() {
@@ -14,7 +15,7 @@ class Home extends React.Component {
           <div className="slim-box">
             <div className="flex-parent flex-justify-start flex-align-center margin--bottom-10">
               <h2 className="margin--right-5">Popular</h2>
-              <a href="#" className="link--lighter small-caps">Shop All</a>
+              <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
             </div>
             <ProductList products={this.props.products} />
           </div>
