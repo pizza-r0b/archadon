@@ -5,6 +5,7 @@ import FavoriteBtn from 'Ui/FavoriteBtn';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
+import classnames from 'classnames';
 
 const aboutCopy = {
   tibetan: 'Tibetan wool, so cool! This rug is hand-knotted making it one of a kind. This rug is made from raw wool taken from Nepal to Tibet. Tibetan sheep live at high altitudes in extreme conditions and are known for producing some of the finest wool in the world. The wool is hand-carded, washed and hand-spun. The hand-knotting process enables us to produce a much denser pile than the finest quality machine-made rug. The rug will wear longer, be much more soil- and stain-resistant, and, once soiled, will clean up better than any machine-made counterparts.',
@@ -12,7 +13,45 @@ const aboutCopy = {
   hemp: 'Who doesn\'t like hemp?? This line is simple, versatile, and affordable. Put it inside, or put it outside. It\'s your life - live it.',
 };
 
+class ImageZoom extends React.Component {
+
+  onKeyDown = ({ key }) => {
+    if (key.toLowerCase() === 'escape' && this.props.show) {
+      this.props.onClose();
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  render() {
+    return (
+      <div onClick={this.props.onClose} className={classnames('image-zoom', { show: this.props.show })}>
+        <img src={this.props.img} />
+      </div>
+    )
+  }
+}
+
 class ProductDetail extends React.Component {
+
+  state = {}
+
+  onImageClick = () => {
+    document.body.style.overflow = 'hidden';
+    this.setState({ showImgZoom: true });
+  }
+
+  onZoomClose = () => {
+    document.body.style.overflow = 'auto';
+    this.setState({ showImgZoom: false });
+  }
+
   render() {
     const { product = DEFAULT_ITEM, loading }: { loading: string, product: Object } = this.props;
     let about;
@@ -28,12 +67,16 @@ class ProductDetail extends React.Component {
       return <Redirect to="/shop" />;
     }
 
+    let imgSrc = `${IMAGE_ORIGIN}/landscape_${product.Images[0]}`;
+
     return (
       <div className="full-width">
+        <ImageZoom show={this.state.showImgZoom} img={imgSrc} onClose={this.onZoomClose} />
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
             <div className="product-details-image">
-              <img src={`${IMAGE_ORIGIN}/landscape_${product.Images[0]}`} />
+              <img style={{ cursor: 'pointer' }} onClick={this.onImageClick} src={imgSrc} />
+              <p style={{ fontSize: '12px'}} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
             <div className="product-details-title">
               <FavoriteBtn className="heart" id={product._id} />

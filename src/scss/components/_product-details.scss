@@ -133,3 +133,26 @@
     }
   }
 }
+
+.image-zoom {
+  opacity: 0;
+  transition: 0.25s opacity;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  overflow: scroll;
+
+  img {
+    min-width: 100%;
+    height: auto;
+  }
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
