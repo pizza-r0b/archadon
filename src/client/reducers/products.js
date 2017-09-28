@@ -16,11 +16,9 @@ export default function products(state = {}, action) {
     case REPLACE_PRODUCT_LIST:
       return action.payload;
     case LOAD_MORE_DONE:
-      const lastItems = state.hits || [];
       return {
         ...state,
         ...action.payload,
-        hits: [...lastItems, ...action.payload.hits],
       };
     default:
       return state;

@@ -171,15 +171,24 @@ export function* logInSaga({ payload: { email, password } }) {
   }
 }
 
+const productDataCache = new Map();
+
 export function* getProductListSaga(actionString, { payload: { page } }) {
   const actionType = typeof actionString === 'string' ? actionString : PRODUCT_LIST_LOADED;
   const body = {};
   const filters = yield select(getFilters);
+  const cacheKey = `${JSON.stringify(filters)}:${page}`;
+  const cachedProductResponse = productDataCache.get(cacheKey);
+  if (cachedProductResponse) {
+    yield put(action(actionType, JSON.parse(cachedProductResponse)));
+    return;
+  }
   if (filters.length) {
     body.filters = filters;
   }
   const { status, response } = yield call(requestProductList, page, body);
   if (status === 200) {
+    productDataCache.set(cacheKey, JSON.stringify(response));
     yield put(action(actionType, response));
   }
 }

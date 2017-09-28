@@ -85,7 +85,7 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
 }
 
 @each $direction in top, left, right, bottom {
-    @each $num in $nums {
+    @for $num from 1 through 100 {
         .margin--x-#{$num} {
             margin: 0 #{$spacer * $num}px!important;
         }
@@ -97,6 +97,9 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
         }
         .padding--#{$direction}-#{$num} {
             padding-#{$direction}: #{$spacer * $num}px!important;
+        }
+        .padding--x-#{$num} {
+            padding: 0 #{$spacer * $num}px!important;
         }
     }
 }

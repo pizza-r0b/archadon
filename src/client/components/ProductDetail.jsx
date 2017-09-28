@@ -2,6 +2,7 @@
 import React from 'react';
 import AddToCartBtn from 'Ui/AddToCartBtn';
 import FavoriteBtn from 'Ui/FavoriteBtn';
+import Icon from 'Ui/Svg';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
@@ -54,7 +55,6 @@ class ProductDetail extends React.Component {
 
   render() {
 
-    console.log(this.props.loading);
     if (this.props.loading) {
       return (
         <div className="flex-parent flex-justify-center flex-align-center">
@@ -76,13 +76,14 @@ class ProductDetail extends React.Component {
       about = aboutCopy.hemp;
     }
 
-
-    let imgSrc = `${IMAGE_ORIGIN}/landscape_${product.Images[0]}`;
-
+    const imgSrc = `${IMAGE_ORIGIN}/landscape_${product.Images[0]}`;
 
     return (
       <div className="full-width">
         <ImageZoom show={this.state.showImgZoom} img={imgSrc} onClose={this.onZoomClose} />
+        <div className="wrap">
+          <Icon variant="right-arrow" />
+        </div>
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
             <div className="product-details-image">

@@ -12,7 +12,7 @@ export default (state = { full: false, page: '' }, action) => {
       return {
         ...state,
         page: action.payload,
-      }
+      };
     default:
       return state;
   }
