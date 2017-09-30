@@ -104,11 +104,12 @@ class CheckOut extends Component {
 
   errorBlackList = ['address2']
 
-  addError = el => {
+  addClasses = el => {
     const { props: { name } } = el;
     if (this.state.errors[name]) {
       return React.cloneElement(el, { className: 'input-error' });
     }
+    if (this.state)
     return el;
   }
 
@@ -123,7 +124,7 @@ class CheckOut extends Component {
       </p>;
 
     return (
-      <div className="flex-parent global-padding padding--top-12 flex-col flex-align-center flex-justify-start full-width">
+      <div className="wrap">
         {!this.props.items && <Redirect to="/cart" />}
         {this.props.loading && (
           <div className="flex-parent flex-grow-1 flex-justify-center flex-align-center">
@@ -131,28 +132,22 @@ class CheckOut extends Component {
           </div>
         )}
         {!this.props.loading && (
-          <div><h2 className="margin--bottom-3">Check Out</h2>
+          <div className="checkout-wrap">
+            <form className="checkout-form" onSubmit={this.submit}>
 
-            <h3 className="margin--bottom-3 strong">Total: {this.props.totalPrice.toLocaleString('USD', {
-              style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</h3>
-
-            <form className="form" onSubmit={this.submit}>
+              <h2 className="margin--bottom-3">1. Information</h2>
               <div className="form-group">
                 {error}
                 <div className="form-component margin--top-3 margin--bottom-3">
                   <h3>Personal</h3>
                 </div>
                 <div className="form-component">
+                  {this.addClasses(<input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />)}
                   <label>Full Name</label>
-                  {this.addError(<input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />)}
                 </div>
                 <div className="form-component margin--top-3">
                   <label>Email</label>
-                  {this.addError(
+                  {this.addClasses(
                     <input data-regex="email" value={this.state.data.email} onChange={this.onDataChange} name="email" type="email" />
                   )}
                 </div>
@@ -162,13 +157,13 @@ class CheckOut extends Component {
 
                 <div className="form-component">
                   <label>Address</label>
-                  {this.addError(
+                  {this.addClasses(
                     <input onChange={this.onDataChange} value={this.state.data.address1} name="address1" type="text" />
                   )}
                 </div>
                 <div className="form-component margin--top-3">
                   <label>Address Line 2</label>
-                  {this.addError(
+                  {this.addClasses(
                     <input onChange={this.onDataChange} value={this.state.data.address2} name="address2" type="text" />
                   )}
                 </div>
@@ -176,19 +171,19 @@ class CheckOut extends Component {
                 <div className="flex-parent mobile-col flex-justify-between">
                   <div className="form-component margin--top-3">
                     <label>City</label>
-                    {this.addError(
+                    {this.addClasses(
                       <input onChange={this.onDataChange} value={this.state.data.city} name="city" type="text" />
                     )}
                   </div>
                   <div className="form-component middle-input margin--top-3">
                     <label>State</label>
-                    {this.addError(
+                    {this.addClasses(
                       <input onChange={this.onDataChange} value={this.state.data.state} name="state" type="text" />
                     )}
                   </div>
                   <div className="form-component margin--top-3">
                     <label>Zip</label>
-                    {this.addError(
+                    {this.addClasses(
                       <input onChange={this.onDataChange} value={this.state.data.zip} name="zip" type="text" />
                     )}
                   </div>
@@ -200,28 +195,32 @@ class CheckOut extends Component {
 
                 <div className="form-component">
                   <label>Credit Card Number</label>
-                  {this.addError(
-                    <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />
+                  {this.addClasses(
+                    <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />,
+                    this.state.cardDetails.card
                   )}
                 </div>
 
                 <div className="flex-parent flex-row flex-justify-between">
                   <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
                     <label>Expiration Month</label>
-                    {this.addError(
-                      <input placeholder="MM" data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />
+                    {this.addClasses(
+                      <input placeholder="MM" data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />,
+                      this.state.cardDetails.expMonth
                     )}
                   </div>
                   <div className="form-component margin--top-3 margin--x-3 middle-input flex-grow-1 flex-parent flex-col flex-justify-end">
                     <label>Expiration Year</label>
-                    {this.addError(
-                      <input placeholder="YYYY" data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />
+                    {this.addClasses(
+                      <input placeholder="YYYY" data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />,
+                      this.state.cardDetails.expYear
                     )}
                   </div>
                   <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
                     <label>CVC</label>
-                    {this.addError(
-                      <input data-regex="expYear" placeholder="000(0)" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />
+                    {this.addClasses(
+                      <input data-regex="expYear" placeholder="000(0)" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />,
+                      this.state.cardDetails.cvc
                     )}
                   </div>
                 </div>

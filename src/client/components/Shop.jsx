@@ -37,10 +37,12 @@ function Shop({ products, page, nbPages, loadMore }) {
   return (
     <div className="full-width">
       <ProductList products={products} />
-      <div className="wrap flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10">
-        <div {...prevProps}>Previous</div>
-        <div>{`${(page + 1)} / ${nbPages}`}</div>
-        <div {...nextProps}>Next</div>
+      <div className="wrap">
+        <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10">
+          <div {...prevProps}>Previous</div>
+          <div>{`${(page + 1)} / ${nbPages}`}</div>
+          <div {...nextProps}>Next</div>
+        </div>
       </div>
     </div>
   );

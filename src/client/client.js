@@ -11,7 +11,7 @@ import App from 'Components/App';
 import { AppContainer } from 'react-hot-loader';
 import './fonts';
 
-// const logger = createLogger();
+const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
 const history = createHistory();
 
@@ -21,6 +21,7 @@ const store = makeStore(
   window.__INITIAL_STATE__,
   sagaMiddleware,
   routeMiddleware,
+  logger,
 );
 
 let sagaTask = sagaMiddleware.run(sagas);

@@ -7,6 +7,7 @@
   user-select: none;
   text-transform: uppercase;
   font-family: $bodyFont;
+  box-sizing: border-box;
   border: 1px solid transparent;
   background-color: transparent;
   padding: 12px 40px;
@@ -41,7 +42,7 @@
   &--inverse {
     @extend .btn--primary;
     background-color: $dark;
-    color: $white;
+    color: $white!important;
   }
 }
 

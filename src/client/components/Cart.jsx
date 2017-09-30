@@ -15,22 +15,23 @@ type CartItemProps = {
 
 let CartItem = ({ item = DEFAULT_ITEM, removeFromCart }: CartItemProps) => (
   <div className="cart-item">
-    <div className="img-wrap">
-      {item.Images && <ProductDetailLink product={item}><img alt={item.Name} src={`${IMAGE_ORIGIN}/${item.Images[0].src}`} /></ProductDetailLink>}
-      <div>
-        <div>{item.Name}</div>
-        <div>{item.Width} x {item.Height}</div>
-      </div>
-    </div>
+    {item.Images && <ProductDetailLink product={item}><img alt={item.Name} src={`${IMAGE_ORIGIN}/landscape_${item.Images[0]}`} /></ProductDetailLink>}
     <div className="details">
-      <span className="strong">{item.Price.toLocaleString('USD', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}</span>
-      <div className="margin--top-3">
-        <span onClick={removeFromCart(item.ID)} style={{ cursor: 'pointer' }} className="font-color--first">Remove</span>
+      <div onClick={removeFromCart(item._id)} style={{ cursor: 'pointer' }} className="x-btn"></div>
+      <div className="cart-details-top">
+        <div>
+          <h2 className="margin--bottom-3">{item.Name}</h2>
+          <p className="font-color--lighter">{item.LongDescription} - {item.ShortDescription} - {item.Width} x {item.Height}</p>
+        </div>
+        <h3 className="font-color--light h3">{item.Price.toLocaleString('USD', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}</h3>
+      </div>
+      <div>
+
       </div>
     </div>
   </div>
@@ -44,36 +45,33 @@ CartItem = connect(null, mapDispatchToProps)(CartItem);
 
 function Cart({ cart: { items, totalPrice } }: { cart: Object }) {
   return (
-    <div className="global-padding padding--top-10 flex-parent flex-grow-1 flex-col">
+    <div className="wrap margin--bottom-5">
       {items.length === 0 &&
         <div className="flex-parent flex-col flex-grow-1 flex-align-center flex-justify-center">
           <h2>Your cart is empty</h2>
-          <Link to="/shop" className="btn btn--first margin--top-3">Shop Now</Link>
+          <Link to="/shop" className="btn--primary margin--top-5">Shop Now</Link>
         </div>
       }
       {items.length > 0 && (
         <div>
-          <h2 className="margin--bottom-7">Shopping Cart</h2>
-
-          <div className="flex-parent flex-grow-1 cart-wrap">
-            <div className="cart-wrap-aside">
-              <h3 className="strong">
-                Total: {totalPrice.toLocaleString('USD', {
-                  style: 'currency',
-                  currency: 'USD',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </h3>
-              <p className="margin--bottom-3">
-                Shipping: FREE
-              </p>
-              <Link to="/checkout" className="btn btn--second alt flex-grow-0">
-                Check Out Now
-              </Link>
-            </div>
-            <div className="flex-parent flex-col flex-grow-1">
-              {items.map(item => <CartItem key={item.ID} item={item} />)}
+          <div className="flex-parent flex-align-center cart-header">
+            <h2 className="margin--right-10">Your Cart</h2>
+            <p className="font-color--light">{`${items.length} ${items.length === 1 ? 'Item' : 'Items'}`}</p>
+          </div>
+          {items.map(item => <CartItem key={item._id} item={item} />)}
+          <div className="cart-cont-shopping margin--y-10">
+            <Link to="/shop" className="link--underlined">Continue Shopping</Link>
+          </div>
+          <div className="cart-bottom-row">
+            <Link to="/checkout" className="btn--primary--inverse checkout-btn">Checkout Now</Link>
+            <div className="flex-parent flex-align-center">
+              <p className="margin--right-3">Total Price</p>
+              <h2 className="font-color--light">{totalPrice.toLocaleString('USD', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</h2>
             </div>
           </div>
         </div>

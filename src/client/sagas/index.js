@@ -216,10 +216,10 @@ export function* getProductDataSaga({ payload: product }) {
   // data from the server.
   if (typeof product === 'string') {
     const cartItems = yield select(getCartItems);
-    if (cartItems.find(p => p.ID === product)) return;
+    if (cartItems.find(p => p._id === product)) return;
     const allLoadedProducts = yield select(getProductDetails);
     allLoadedProducts.push(...yield select(getLoadedProducts));
-    const productObject = allLoadedProducts.find(p => p.ID === product);
+    const productObject = allLoadedProducts.find(p => p._id === product);
     if (productObject) {
       yield put(action(PRODUCT_DATA_LOADED, productObject));
       return;

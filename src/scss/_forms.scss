@@ -1,66 +1,30 @@
-// form group
-// form component
-// form label
-// inputs
-
-$formPadding: $spacer * 3;
-$formRadius: 5px;
-
-@keyframes error {
-  0% {
-    box-shadow: 0 0 1px $danger;
-  }
-  50% {
-    box-shadow: 0px 0px 25px $danger;
-  }
-  100% {
-    box-shadow: 0 0 0px $danger;
-  }
-}
-
-.form-error {
-  animation: error 1s ease-out;
-}
-
-.form {
-  max-width: 480px;
-  width: 100%;
-}
-
-.form-group {
-  border: 1px solid $light;
-  border-radius: $formRadius;
-  width: 100%;
-  padding: $formPadding;
+%input {
+  padding: 20px;
   box-sizing: border-box;
-}
-
-.form-content {
-  padding: $formPadding;
-  box-sizing: border-box;
+  @include font-size(1.6);
+  background-color: $damnNearWhite;
+  border: none;
+  outline: none;
+  color: $copyColor;
+  width: 100%;
 }
 
 .form-component {
+  position: relative;
+
   label {
-    @include font-size(1.4);
-    font-weight: bold;
-    display: block;
-    padding-left: $formPadding;
+    left: 20px;
+    position: absolute;
+    transform: translateY(100%);
+    transition: 0.25s transform;
   }
 
-  [type="text"], [type="password"], [type="email"] {
-    &.input-error {
-      border-color: $danger;
-    }
-    width: 100%;
-    border-radius: $formRadius;
-    border: 1px solid $light;
-    @include font-size(1.4);
-    padding: 10px;
+  input:focus + label, .input-filled label {
+    transform: translateY(0) scale(0.5);
+  }
 
-    &:focus {
-      outline: none;
-      border-color: darken($light, 10%);
-    }
+  input {
+    @extend %input;
   }
 }
+

@@ -23,7 +23,17 @@ const links = [
   { name: 'Log In', route: '/account' },
 ]
 
-function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }) {
+type NavProps = {
+  fixed: boolean,
+  location: Object,
+  user?: Object,
+  qty?: number,
+  scrolled?: boolean,
+  navOpen: boolean,
+  toggleNav: boolean,
+}
+
+function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }: NavProps) {
   const classes = classnames(
     'global-nav',
     'wrap',
@@ -54,9 +64,10 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
       <div className="logo" style={{ zIndex: 11 }}>
         <Link to="/"><Svg variant="archadon-logo" color={navOpen ? '#FFF' : '#000'} /></Link>
       </div>
-      <div className="cart" style={{ zIndex: 11 }}>
+      <Link to="/cart" className="cart" style={{ zIndex: 11 }}>
+        {qty > 0 && <div className="cart-qty">{qty}</div>}
         <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
-      </div>
+      </Link>
     </nav>
   );
 }

@@ -96,9 +96,9 @@ class App extends Component {
   }
 
   handleNavUpdate = () => {
-    if (!this.props.ui.navFixed && window.pageYOffset > window.innerHeight / 2) {
+    if (!this.props.ui.navFixed && window.pageYOffset > 100) {
       this.props.updateNav(true);
-    } else if (this.props.ui.navFixed && window.pageYOffset < window.innerHeight / 2) {
+    } else if (this.props.ui.navFixed && window.pageYOffset < 100) {
       this.props.updateNav(false);
     }
   }

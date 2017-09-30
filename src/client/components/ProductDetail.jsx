@@ -3,9 +3,10 @@ import React from 'react';
 import AddToCartBtn from 'Ui/AddToCartBtn';
 import FavoriteBtn from 'Ui/FavoriteBtn';
 import Icon from 'Ui/Svg';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
+import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
 
 const aboutCopy = {
@@ -41,7 +42,20 @@ class ImageZoom extends React.Component {
 
 class ProductDetail extends React.Component {
 
+  props: {
+    loading: string,
+    product: Object,
+    products: Array<*>,
+  }
+
   state = {}
+
+  recs = []
+
+  constructor(props) {
+    super();
+    this.recs = getRandom(props.products.filter(p => p !== props.match.params._id), 4);
+  }
 
   onImageClick = () => {
     document.body.style.overflow = 'hidden';
@@ -54,7 +68,6 @@ class ProductDetail extends React.Component {
   }
 
   render() {
-
     if (this.props.loading) {
       return (
         <div className="flex-parent flex-justify-center flex-align-center">
@@ -63,7 +76,10 @@ class ProductDetail extends React.Component {
       );
     }
 
-    const { product = DEFAULT_ITEM, loading }: { loading: string, product: Object } = this.props;
+    const {
+      product = DEFAULT_ITEM,
+    } = this.props;
+
     if (!product) {
       return <Redirect to="/shop" />;
     }
@@ -81,14 +97,21 @@ class ProductDetail extends React.Component {
     return (
       <div className="full-width">
         <ImageZoom show={this.state.showImgZoom} img={imgSrc} onClose={this.onZoomClose} />
-        <div className="wrap">
-          <Icon variant="right-arrow" />
+        <div className="wrap margin--bottom-10">
+          <Link to="/shop">
+            <div className="inline-flex flex-parent flex-align-center">
+              <div style={{ width: '20px', height: '20px', transform: 'rotate(180deg)' }}>
+                <Icon color="#000" variant="icon-right-arrow" />
+              </div>
+              <p className="small-caps margin--left-5">Back To Store</p>
+            </div>
+          </Link>
         </div>
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
             <div className="product-details-image">
               <img style={{ cursor: 'pointer' }} onClick={this.onImageClick} src={imgSrc} />
-              <p style={{ fontSize: '12px'}} className="margin--top-2 font-color--light">Click image to zoom.</p>
+              <p style={{ fontSize: '12px' }} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
             <div className="product-details-title">
               <FavoriteBtn className="heart" id={product._id} />
@@ -105,7 +128,7 @@ class ProductDetail extends React.Component {
             </div>
             <div className="product-details-btns">
               <div>
-                <button className="btn--primary--inverse">Add To Cart</button>
+                <AddToCartBtn id={product._id} />
               </div>
             </div>
           </div>
@@ -138,19 +161,38 @@ class ProductDetail extends React.Component {
             </div>
           </div>
         </section>
-
+        <section className="product-details-section margin--top-10">
+          <div className="wrap">
+            <h2>You Might Also Like...</h2>
+            <ProductList {...{ products: this.recs }} />
+          </div>
+        </section>
       </div>
     );
   }
 }
 
+function getRandom(arr, n) {
+  const result = new Array(n);
+  let len = arr.length;
+  const taken = new Array(len);
+  if (n > len) {
+    throw new RangeError('getRandom: more elements taken than available');
+  }
+  while (n--) {
+    const x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len;
+  }
+  return result;
+}
 
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
-  console.log(ownProps);
   return {
     product: state.productDetails.find(product => product._id === id),
     loading: state.loading.page === 'detail',
+    products: state.products.hits,
   };
 };
 

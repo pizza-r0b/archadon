@@ -37,8 +37,8 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
     action.type !== REMOVE_FROM_CART &&
     (
       (isString && state.items.includes(product)) ||
-      (isString && state.items.find(p => p.ID === product)) ||
-      (state.items.find(p => p.ID === product.ID))
+      (isString && state.items.find(p => p._id === product)) ||
+      (state.items.find(p => p._id === product._id))
     )) {
     return state;
   }
@@ -57,7 +57,7 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
       return newState;
 
     case PRODUCT_DATA_LOADED:
-      const { ID: id } = action.payload;
+      const { _id: id } = action.payload;
       newState.totalPrice += action.payload.Price;
       newState.items[
         newState.items.findIndex(p => p === id)
@@ -69,12 +69,12 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
 
     case REMOVE_FROM_CART:
       const ID = action.payload;
-      const item: Object = newState.items.find(p => p === ID || p.ID === ID) || { Price: 0 };
+      const item: Object = newState.items.find(p => p === ID || p._id === ID) || { Price: 0 };
       newState.totalQty -= 1;
       if (typeof item !== 'string') {
         newState.totalPrice -= item.Price;
       }
-      const products = newState.items.filter(p => p.ID !== ID);
+      const products = newState.items.filter(p => p._id !== ID);
       newState.items = products;
       return newState;
 

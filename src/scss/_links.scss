@@ -3,6 +3,13 @@ a, a:visited {
   text-decoration: none;
 }
 
+.link--underlined {
+  padding-bottom: 10px;
+  border-bottom: 1px solid $dark;
+  @include font-size(1.4);
+  text-transform: uppercase;
+}
+
 @each $var, $color in $colorMap {
   $name: "link--#{$var}";
   a.#{$name}, .#{$name} {

@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { action } from 'Utils';
 import actions from 'Actions';
+import { Link } from 'react-router-dom';
 
 const { ADD_TO_CART, REMOVE_FROM_CART } = actions;
 
@@ -16,9 +17,14 @@ type AddToCartProps = {
 
 function AddToCartBtn({ inCart, id, removeFromCart, addToCart, className }: AddToCartProps) {
   return (
-    <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className={`btn btn--first${className ? ` ${className}` : ''}`}>
-      {inCart ? 'Remove From Cart' : 'Add To Cart'}
-    </button>
+    <div className="flex-parent flex-col">
+      <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className={`${className ? ` ${className}` : 'btn--primary--inverse'}`}>
+        {inCart ? 'Remove From Cart' : 'Add To Cart'}
+      </button>
+      {inCart && (
+        <Link className="btn--primary margin--top-4" to="/checkout">Checkout Now</Link>
+      )}
+    </div>
   );
 }
 
@@ -31,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps;
   return {
-    inCart: state.cart.items.findIndex(item => item === id || item.ID === id) > -1,
+    inCart: state.cart.items.findIndex(item => item === id || item._id === id) > -1,
   };
 };
 
