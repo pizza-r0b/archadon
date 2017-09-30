@@ -54,7 +54,7 @@ function Cart({ cart: { items, totalPrice } }: { cart: Object }) {
       }
       {items.length > 0 && (
         <div>
-          <div className="flex-parent flex-align-center cart-header">
+          <div className="flex-parent flex-align-center underline-header">
             <h2 className="margin--right-10">Your Cart</h2>
             <p className="font-color--light">{`${items.length} ${items.length === 1 ? 'Item' : 'Items'}`}</p>
           </div>

@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'Actions';
 import { action } from 'Utils';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const { PURCHASE } = actions;
+
+function toCurrency(num) {
+  return num.toLocaleString('USD', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
 
 const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
@@ -104,13 +113,17 @@ class CheckOut extends Component {
 
   errorBlackList = ['address2']
 
-  addClasses = el => {
+  addClasses = (el, val) => {
     const { props: { name } } = el;
+    const classes = [];
     if (this.state.errors[name]) {
-      return React.cloneElement(el, { className: 'input-error' });
+      classes.push('input-error');
     }
-    if (this.state)
-    return el;
+    if (val) {
+      classes.push('input-filled');
+    }
+
+    return classes.length > 0 ? React.cloneElement(el, { className: classes.join(' ') }) : el;
   }
 
   onDataChange = this.onInputChange('data')
@@ -132,104 +145,125 @@ class CheckOut extends Component {
           </div>
         )}
         {!this.props.loading && (
-          <div className="checkout-wrap">
-            <form className="checkout-form" onSubmit={this.submit}>
+          <div className="checkout-page">
+            <div className="checkout-wrap">
+              <form className="checkout-form">
 
-              <h2 className="margin--bottom-3">1. Information</h2>
-              <div className="form-group">
-                {error}
-                <div className="form-component margin--top-3 margin--bottom-3">
-                  <h3>Personal</h3>
-                </div>
-                <div className="form-component">
-                  {this.addClasses(<input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />)}
-                  <label>Full Name</label>
-                </div>
-                <div className="form-component margin--top-3">
-                  <label>Email</label>
-                  {this.addClasses(
-                    <input data-regex="email" value={this.state.data.email} onChange={this.onDataChange} name="email" type="email" />
-                  )}
-                </div>
-                <div className="form-component margin--top-6 margin--bottom-3">
-                  <h3>Shipping</h3>
-                </div>
-
-                <div className="form-component">
-                  <label>Address</label>
-                  {this.addClasses(
-                    <input onChange={this.onDataChange} value={this.state.data.address1} name="address1" type="text" />
-                  )}
-                </div>
-                <div className="form-component margin--top-3">
-                  <label>Address Line 2</label>
-                  {this.addClasses(
-                    <input onChange={this.onDataChange} value={this.state.data.address2} name="address2" type="text" />
-                  )}
-                </div>
-
-                <div className="flex-parent mobile-col flex-justify-between">
-                  <div className="form-component margin--top-3">
-                    <label>City</label>
-                    {this.addClasses(
-                      <input onChange={this.onDataChange} value={this.state.data.city} name="city" type="text" />
-                    )}
-                  </div>
-                  <div className="form-component middle-input margin--top-3">
-                    <label>State</label>
-                    {this.addClasses(
-                      <input onChange={this.onDataChange} value={this.state.data.state} name="state" type="text" />
-                    )}
-                  </div>
-                  <div className="form-component margin--top-3">
-                    <label>Zip</label>
-                    {this.addClasses(
-                      <input onChange={this.onDataChange} value={this.state.data.zip} name="zip" type="text" />
-                    )}
-                  </div>
-                </div>
-
-                <div className="form-component margin--top-6 margin--bottom-3">
-                  <h3>Payment</h3>
-                </div>
-
-                <div className="form-component">
-                  <label>Credit Card Number</label>
-                  {this.addClasses(
-                    <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />,
-                    this.state.cardDetails.card
-                  )}
-                </div>
-
-                <div className="flex-parent flex-row flex-justify-between">
-                  <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
-                    <label>Expiration Month</label>
-                    {this.addClasses(
-                      <input placeholder="MM" data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />,
-                      this.state.cardDetails.expMonth
-                    )}
-                  </div>
-                  <div className="form-component margin--top-3 margin--x-3 middle-input flex-grow-1 flex-parent flex-col flex-justify-end">
-                    <label>Expiration Year</label>
-                    {this.addClasses(
-                      <input placeholder="YYYY" data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />,
-                      this.state.cardDetails.expYear
-                    )}
-                  </div>
-                  <div className="form-component margin--top-3 flex-grow-1 flex-parent flex-col flex-justify-end">
-                    <label>CVC</label>
-                    {this.addClasses(
-                      <input data-regex="expYear" placeholder="000(0)" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />,
-                      this.state.cardDetails.cvc
-                    )}
-                  </div>
-                </div>
-                <div className="form-component margin--y-3">
+                <h2 className="margin--bottom-5 underline-header">1. Personal</h2>
+                <div className="form-group">
                   {error}
-                  <button className="btn btn--second alt">Purchase</button>
+                  <div className="form-component">
+                    {this.addClasses(
+                      <input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />,
+                      this.state.data.name
+                    )}
+                    <label>Full Name</label>
+                  </div>
+                  <div className="form-component">
+                    {this.addClasses(
+                      <input data-regex="email" value={this.state.data.email} onChange={this.onDataChange} name="email" type="email" />,
+                      this.state.data.email
+                    )}
+                    <label>Email</label>
+                  </div>
+
+                  <div className="form-component">
+                    {this.addClasses(
+                      <input onChange={this.onDataChange} value={this.state.data.address1} name="address1" type="text" />,
+                      this.state.data.address1
+                    )}
+                    <label>Address</label>
+
+                  </div>
+                  <div className="form-component">
+                    {this.addClasses(
+                      <input onChange={this.onDataChange} value={this.state.data.address2} name="address2" type="text" />,
+                      this.state.data.address2
+                    )}
+                    <label>Address Line 2</label>
+
+                  </div>
+
+                  <div className="flex-parent mobile-col flex-justify-between">
+                    <div className="form-component">
+                      {this.addClasses(
+                        <input onChange={this.onDataChange} value={this.state.data.city} name="city" type="text" />,
+                        this.state.data.city
+                      )}
+                      <label>City</label>
+
+                    </div>
+                    <div className="form-component middle-input">
+                      {this.addClasses(
+                        <input onChange={this.onDataChange} value={this.state.data.state} name="state" type="text" />,
+                        this.state.data.state
+                      )}
+                      <label>State</label>
+                    </div>
+                    <div className="form-component">
+                      {this.addClasses(
+                        <input onChange={this.onDataChange} value={this.state.data.zip} name="zip" type="text" />,
+                        this.state.data.zip
+                      )}
+                      <label>Zip</label>
+
+                    </div>
+                  </div>
+
+                  <div className="form-component margin--top-6 margin--bottom-3">
+                    <h2 className="underline-header margin--bottom-5">2. Payment</h2>
+                  </div>
+
+                  <div className="form-component">
+                    {this.addClasses(
+                      <input onChange={this.onCardChange} value={this.state.cardDetails.card} name="card" type="text" />,
+                      this.state.cardDetails.card
+                    )}
+                    <label>Credit Card Number</label>
+                  </div>
+
+                  <div className="flex-parent mobile-col flex-row flex-justify-between">
+                    <div className="form-component">
+                      {this.addClasses(
+                        <input data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />,
+                        this.state.cardDetails.expMonth
+                      )}
+                      <label>Exp. Month (MM)</label>
+                    </div>
+                    <div className="form-component middle-input">
+                      {this.addClasses(
+                        <input data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />,
+                        this.state.cardDetails.expYear
+                      )}
+                      <label>Exp. Year (YYYY)</label>
+
+                    </div>
+                    <div className="form-component">
+                      {this.addClasses(
+                        <input data-regex="expYear" onChange={this.onCardChange} value={this.state.cardDetails.cvc} name="cvc" type="text" />,
+                        this.state.cardDetails.cvc
+                      )}
+                      <label>CVC</label>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div className="flex-grow-1">
+                <div className="flex-parent flex-justify-between underline-header">
+                  <h2>Summary</h2>
+                  <Link to="/cart" className="link--underlined">Edit Cart</Link>
+                </div>
+                <div className="flex-parent flex-justify-between underline-header">
+                  <p className="font-color--light">Total Price</p>
+                  <h2 className="font-color--light">{toCurrency(this.props.totalPrice)}</h2>
                 </div>
               </div>
-            </form>
+            </div>
+            <div className="margin--y-5">
+              {error}
+              <button onClick={this.submit} className="btn--primary--inverse">Purchase Now</button>
+            </div>
           </div>
         )}
       </div>

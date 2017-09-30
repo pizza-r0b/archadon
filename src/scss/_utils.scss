@@ -10,6 +10,11 @@
     display: block;
 }
 
+.underline-header {
+    border-bottom: 1px solid $lightest;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+  }
 
 .line-break {
     display: block;

@@ -11,15 +11,18 @@
 
 .form-component {
   position: relative;
+  @extend .margin--top-3;
 
   label {
     left: 20px;
     position: absolute;
     transform: translateY(100%);
     transition: 0.25s transform;
+    transform-origin: left;
+    pointer-events: none;
   }
 
-  input:focus + label, .input-filled label {
+  input:focus + label, .input-filled + label {
     transform: translateY(0) scale(0.5);
   }
 

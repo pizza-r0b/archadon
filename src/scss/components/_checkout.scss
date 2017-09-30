@@ -4,13 +4,28 @@
 
 .checkout-wrap {
   display: flex;
+  @media (max-width: 1076px) {
+    flex-direction: column;
 
+  }
+}
+
+.checkout-page {
+  @media (max-width: 1076px) {
+    .btn--primary--inverse {
+      width: 100%;
+    }
+  }
 }
 
 .checkout-form {
   width: 100%;
   max-width: 730px;
   margin-right: 30px;
+  @media (max-width: 1076px) {
+    margin-right: 0;
+    max-width: 100%;
+  }
 }
 
 @include largeMobile() {
