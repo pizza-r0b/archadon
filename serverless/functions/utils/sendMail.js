@@ -10,12 +10,13 @@ const transporter = nodemailer.createTransport({
 
 transporter.use('compile', hbs({
   viewEngine: exphbs(),
-  viewPath: path.resolve(__dirname, '../../templates'),
+  viewPath: path.resolve(path.resolve(), './templates'),
   extName: '.hbs',
 }));
 
 function sendMail(options) {
   return new Promise((resolve, reject) => {
+    console.log(path.resolve());
     console.log('begin send mail');
     transporter.sendMail(Object.assign({
       from: 'no-reply@archadon.com',

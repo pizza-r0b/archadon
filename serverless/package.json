@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "algoliasearch": "^3.24.0",
+    "aws-sdk": "^2.125.0",
     "bcrypt-nodejs": "^0.0.3",
     "dotenv-webpack": "^1.5.4",
     "express-handlebars": "^3.0.0",
     "jsonwebtoken": "^7.3.0",
-    "lodash": "^4.17.4",
     "mongoose": "^4.11.10",
     "nodemailer": "^4.0.1",
     "nodemailer-express-handlebars": "^2.0.0",

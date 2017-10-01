@@ -24,7 +24,7 @@ export function sendOrderConfirmationEmailToCustomer(items, customerData, price,
 export function sendAdminEmail(items, customerData, price, ID, chargeID) {
   return sendMail({
     to: process.env.ADMIN_EMAIL,
-    subject: 'New Archadon Order',
+    subject: 'New Archadon Order!! 🙌 🙌',
     template: 'new-order',
     from: 'neworder@archadon.com',
     context: {

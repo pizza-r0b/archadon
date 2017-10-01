@@ -6,7 +6,7 @@ import _stripe from 'stripe';
 import connect from 'utils/mongoConnect';
 import { OrderItem, OrderData } from 'schemas/Order';
 import { ProductItem } from 'schemas/Product';
-// import { sendOrderConfirmationEmailToCustomer, sendAdminEmail } from './sendEmails';
+import { sendOrderConfirmationEmailToCustomer, sendAdminEmail } from './sendEmails';
 
 const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -85,6 +85,7 @@ function validate(Items, CustomerData, Token) {
 }
 
 async function _purchase(event, context, callback) {
+  processedItems = null;
   const { Items = [], UserID = '', CustomerData = {}, Token = '' } = JSON.parse(event.body);
   const errors = validate(Items, CustomerData, Token);
 
@@ -154,6 +155,9 @@ async function _purchase(event, context, callback) {
       ChargeType: 'stripe',
     });
 
+    await sendOrderConfirmationEmailToCustomer(processedItems, CustomerData, price, id);
+    await sendAdminEmail(processedItems, CustomerData, price, id, ChargeID);
+
     callback(null, addCors({
       statusCode: 200,
       body: JSON.stringify({
@@ -162,8 +166,7 @@ async function _purchase(event, context, callback) {
       }),
     }));
 
-    // await sendOrderConfirmationEmailToCustomer(Items, CustomerData, price, id);
-    // await sendAdminEmail(Items, CustomerData, price, ChargeID);
+
   } catch (e) {
     return callback(null, addCors({
       statusCode: 500,

@@ -31,6 +31,7 @@ provider:
     ALGOLIA_SECRET_KEY: ${file(${opt:secrets}):ALGOLIA_SECRET_KEY}
     MONGO_URI: ${file(${opt:secrets}):MONGO_URI}
     STRIPE_SECRET_KEY: ${file(${opt:secrets}):STRIPE_SECRET_KEY}
+    ADMIN_EMAIL: ${file(${opt:secrets}):ADMIN_EMAIL}
   iamRoleStatements:
     - Effect: "Allow"
       Action:

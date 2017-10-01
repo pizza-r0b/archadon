@@ -325,8 +325,8 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
       Token,
     };
     const { response } = yield call(requestPurchase, payload);
+    window.localStorage.clear(CART_VAR);
     if (response.id) {
-      localStorage.clear(CART_VAR);
       yield put(action(SET_ORDER_CONFIRMATION, {
         orderID: response.id,
         email: CustomerData.email,
