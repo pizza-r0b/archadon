@@ -5,7 +5,6 @@ module.exports = create('Order', {
   Email: {
     type: String,
     required: true,
-    unique: true,
     index: true,
     lowercase: true,
     trim: true,

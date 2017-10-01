@@ -45,14 +45,16 @@ class OrderConfirmation extends React.Component {
     const { orderID, email } = this.props;
 
     return (
-      <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
+      <div className="wrap">
         <div>
           {(!orderID && !email) && <Redirect to="/" />}
           <h2>Thanks For Your Order</h2>
-          <h3 className="margin--bottom-3">{`You're going to like it.`}</h3>
-          <p className="margin--bottom-1">{`We've sent a confirmation email to `}<span className="strong">{email}</span></p>
-          <p>{`You're reference number is `}<span className="strong">{orderID}</span></p>
-          <Link to="/" className="btn btn--first margin--top-3">Done</Link>
+          <h3 className="margin--bottom-3 font-color--light underline-header">{`We think you'll like it.`}</h3>
+          <div className="margin--y-5">
+            <p className="margin--bottom-1">{`We've sent a confirmation email to `}<span className="strong">{email}</span></p>
+            <p>{`You're reference number is `}<span className="strong">{orderID}</span></p>
+          </div>
+          <Link to="/" className="btn--primary margin--top-3">Done</Link>
         </div>
       </div>
     );

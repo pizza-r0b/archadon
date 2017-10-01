@@ -29,6 +29,8 @@ provider:
     NODE_ENV: ${env:NODE_ENV, self:custom.NODE_ENV}
     ALGOLIA_API_KEY: ${file(${opt:secrets}):ALGOLIA_API_KEY}
     ALGOLIA_SECRET_KEY: ${file(${opt:secrets}):ALGOLIA_SECRET_KEY}
+    MONGO_URI: ${file(${opt:secrets}):MONGO_URI}
+    STRIPE_SECRET_KEY: ${file(${opt:secrets}):STRIPE_SECRET_KEY}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -51,10 +53,8 @@ custom:
 
 package:
   # individually: true
-  # include:
-  #   - node_modules/**
-  #   - functions/utils/**
-  #   - templates/**
+  include:
+    - templates/**
 
 functions:
   # getUserData:
@@ -103,8 +103,6 @@ functions:
             parameters:
               paths:
                 id: true
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   updateUserPassword:
     handler: functions/user/update/updateUserPassword.updateUserPassword
@@ -126,8 +124,6 @@ functions:
             parameters:
               paths:
                 id: true
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   # updateUserEmail:
   #   handler: functions/handlers.updateUserEmail
@@ -168,8 +164,6 @@ functions:
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   loginUser:
     handler: functions/user/login/index.login
@@ -187,8 +181,6 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
           method: post
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   createProduct:
     handler: functions/product/create/index.createProduct
@@ -206,8 +198,6 @@ functions:
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   # updateProductData:
   #   handler: functions/handlers.updateProductData
@@ -287,9 +277,6 @@ functions:
               - Authorization
               - X-Api-Key
               - X-Amz-Security-Token
-    environment:
-      STRIPE_SECRET_KEY: ${file(${opt:secrets}):stripeSecretKey}
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
   # emailAdmin:
   #   handler: functions/handlers.emailAdmin
@@ -338,8 +325,6 @@ functions:
             parameters:
               paths:
                 id: true
-    environment:
-      MONGO_URI:  ${file(${opt:secrets}):MONGO_URI}
 
 resources:
   Resources:

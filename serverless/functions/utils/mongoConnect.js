@@ -10,6 +10,7 @@ module.exports = (url, fn) => (...args) => {
   if (cachedDB) {
     fn(...args);
   } else {
+
     mongoose.connect(process.env.MONGO_URI);
 
     console.log('TRYING TO CONNECT');

@@ -39,6 +39,11 @@ export function request(method, url, data, headers, meta) {
       }
     });
 
+    xhr.addEventListener('error', () => {
+      const { response, status } = xhr;
+      reject({ response, status });
+    });
+
     if (data) {
       xhr.send(JSON.stringify(data));
     } else {

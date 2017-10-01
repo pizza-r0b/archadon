@@ -57,7 +57,7 @@ const getAuthData = state => ({
 
 const getCartItems = state => state.cart.items;
 
-const getItemsForCheckout = state => state.cart.items.map(item => ({ ID: item.ID }));
+const getItemsForCheckout = state => state.cart.items.map(item => ({ _id: item._id }));
 
 const getLoadingState = state => state.loading.full;
 
@@ -325,15 +325,16 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
       Token,
     };
     const { response } = yield call(requestPurchase, payload);
-    if (response.success) {
+    if (response.id) {
       localStorage.clear(CART_VAR);
       yield put(action(SET_ORDER_CONFIRMATION, {
-        orderID: response.OrderID,
+        orderID: response.id,
         email: CustomerData.email,
       }));
       yield put(push('/order-confirmation'));
     }
   } catch (e) {
+    console.log("ERROR", e);
     const { error = {}, response = { error: { code: '' } } } = e;
     if (
       (response.error && response.error.code && response.error.code === 'stripe-charge-failure') ||
@@ -346,7 +347,7 @@ export function* purchaseSaga({ payload: { data: CustomerData, cardDetails } }) 
     } else {
       yield put(action(SET_ERROR, {
         type: 'checkout',
-        error: 'Oops. Your order wasn\'t processed. Please verify your information is correct or try again.',
+        error: 'Oops. Your order wasn\'t processed. Please verify your information is correct and try again. If the problem persists then it\'s probably our fault. Sorry. Contact us and we will help you out.',
       }));
     }
   }

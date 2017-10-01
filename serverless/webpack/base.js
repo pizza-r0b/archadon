@@ -3,6 +3,12 @@ const src = path.resolve(__dirname, '../');
 const slsw = require('serverless-webpack');
 const nodeExternals = require('webpack-node-externals');
 
+Object.entries(slsw.lib.serverless.service.provider.environment).forEach(([key, val]) => {
+  process.env[key] = val;
+});
+
+console.log(process.env);
+
 // const prependSrc = pathStr => `${src}/${pathStr}`;
 
 const base = extend => {
@@ -32,6 +38,7 @@ const base = extend => {
     // devtool: 'source-map',
     target: 'node',
     externals: [nodeExternals()],
+    // devtool: 'source-map',
     resolve: {
       extensions: ['.js'],
       modules: [src, 'node_modules'],

@@ -16,12 +16,15 @@ transporter.use('compile', hbs({
 
 function sendMail(options) {
   return new Promise((resolve, reject) => {
+    console.log('begin send mail');
     transporter.sendMail(Object.assign({
       from: 'no-reply@archadon.com',
     }, options), (err, info) => {
       if (err) {
+        console.log('ERR', err);
         return reject(err);
       }
+      console.log('No error', info);
       return resolve(info);
     });
   });

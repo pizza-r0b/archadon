@@ -1,9 +1,12 @@
+// import "source-map-support/register"
 import { toPaths } from 'utils/DolliDB/build/main.min.js';
 import algolia from 'algoliasearch';
 import addCors from 'utils/corsRes';
 import _stripe from 'stripe';
 import connect from 'utils/mongoConnect';
 import { OrderItem, OrderData } from 'schemas/Order';
+import { ProductItem } from 'schemas/Product';
+// import { sendOrderConfirmationEmailToCustomer, sendAdminEmail } from './sendEmails';
 
 const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -49,9 +52,9 @@ const createCharge = (token, email, items) => new Promise((resolve, reject) => {
   });
 });
 
-const createOrder = (CustomerData, UserID) => (new OrderItem({
+const createOrder = (Email, UserID) => (new OrderItem({
   UserID,
-  Email: CustomerData.Email,
+  Email,
 })).save();
 
 const putOrderData = (orderItemID, data) => {
@@ -82,22 +85,7 @@ function validate(Items, CustomerData, Token) {
 }
 
 async function _purchase(event, context, callback) {
-  let body;
-  try {
-    body = JSON.parse(event.body);
-  } catch (e) {
-    console.log(e);
-    callback(null, addCors({
-      statusCode: 500,
-      body: JSON.stringify({
-        error: e,
-      }),
-    }));
-    return;
-  }
-
-  const { Items = [], UserID = '', CustomerData = {}, Token = '' } = body;
-
+  const { Items = [], UserID = '', CustomerData = {}, Token = '' } = JSON.parse(event.body);
   const errors = validate(Items, CustomerData, Token);
 
   if (errors.hasErrors) {
@@ -114,7 +102,7 @@ async function _purchase(event, context, callback) {
   try {
     docs = await ProductItem.find({
       _id: {
-        $in: Items.map(item => item.ID),
+        $in: Items.map(item => item._id),
       },
     }).exec();
   } catch (e) {
@@ -142,7 +130,7 @@ async function _purchase(event, context, callback) {
   let order;
 
   try {
-    order = await createOrder(CustomerData, UserID, docs);
+    order = await createOrder(CustomerData.email, UserID);
   } catch (e) {
     return callback(null, addCors({
       statusCode: 500,
@@ -166,12 +154,16 @@ async function _purchase(event, context, callback) {
       ChargeType: 'stripe',
     });
 
-    return callback(null, addCors({
+    callback(null, addCors({
       statusCode: 200,
       body: JSON.stringify({
         message: 'done',
+        id,
       }),
     }));
+
+    // await sendOrderConfirmationEmailToCustomer(Items, CustomerData, price, id);
+    // await sendAdminEmail(Items, CustomerData, price, ChargeID);
   } catch (e) {
     return callback(null, addCors({
       statusCode: 500,
@@ -183,4 +175,4 @@ async function _purchase(event, context, callback) {
   }
 }
 
-export const purchse = connect(process.env.MONGO_URI, _purchase);
+export const purchase = connect(process.env.MONGO_URI, _purchase);

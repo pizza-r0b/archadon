@@ -10,3 +10,4 @@ secrets-dev.yml
 .serverless
 deployDev.sh
 *.env
+build

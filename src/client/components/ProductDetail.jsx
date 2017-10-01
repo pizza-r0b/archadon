@@ -70,7 +70,7 @@ class ProductDetail extends React.Component {
   render() {
     if (this.props.loading) {
       return (
-        <div className="flex-parent flex-justify-center flex-align-center">
+        <div className="flex-parent flex-justify-center flex-align-center flex-grow-1">
           <h2>Loading</h2>
         </div>
       );

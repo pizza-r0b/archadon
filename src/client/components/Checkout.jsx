@@ -77,6 +77,7 @@ class CheckOut extends Component {
 
   submit = e => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     if (this.isValid()) {
       this.props.purchase({
         data: this.state.data,
@@ -133,7 +134,7 @@ class CheckOut extends Component {
     const error =
       (Object.keys(this.state.errors).length > 0 || this.props.error) &&
       <p className="font-color--danger margin--bottom-3">
-        {this.props.error || 'Please fill in fields marked with red.'}
+        {Object.keys(this.state.errors).length > 0 ? 'Please fill in fields marked with red.' : this.props.error}
       </p>;
 
     return (
@@ -151,7 +152,7 @@ class CheckOut extends Component {
 
                 <h2 className="margin--bottom-5 underline-header">1. Personal</h2>
                 <div className="form-group">
-                  {error}
+                  <p className="small-caps">{error}</p>
                   <div className="form-component">
                     {this.addClasses(
                       <input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />,
@@ -261,7 +262,6 @@ class CheckOut extends Component {
               </div>
             </div>
             <div className="margin--y-5">
-              {error}
               <button onClick={this.submit} className="btn--primary--inverse">Purchase Now</button>
             </div>
           </div>
