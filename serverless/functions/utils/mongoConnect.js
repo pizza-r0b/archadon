@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 let cachedDB = null;
 
-module.exports = (url, fn) => (...args) => {
+module.exports = fn => (...args) => {
   const [, context] = args;
 
   context.callbackWaitsForEmptyEventLoop = false;
+
   if (cachedDB) {
     fn(...args);
   } else {
-
     mongoose.connect(process.env.MONGO_URI);
 
     console.log('TRYING TO CONNECT');

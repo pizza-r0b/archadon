@@ -7,8 +7,6 @@ Object.entries(slsw.lib.serverless.service.provider.environment).forEach(([key, 
   process.env[key] = val;
 });
 
-console.log(process.env);
-
 // const prependSrc = pathStr => `${src}/${pathStr}`;
 
 const base = extend => {

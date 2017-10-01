@@ -16,6 +16,17 @@
   transform-origin: center;
   transition: 0.3s all cubic-bezier(0.645, 0.045, 0.355, 1);
 
+  &[disabled] {
+    transition: none;
+    background: $lightest!important;
+    color: $light!important;
+    border: 1px solid $lightest!important;
+  }
+
+  @media (max-width: 1000px) {
+    padding: 12px 20px;
+  }
+
   &--alt {
     @extend .btn;
     border: none;

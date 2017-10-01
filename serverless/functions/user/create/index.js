@@ -88,5 +88,5 @@ function onUserCreate(email) {
   });
 }
 
-export const createUser = connect(process.env.MONGO_URI, _createUser);
+export const createUser = connect(_createUser);
 export { onUserCreate };

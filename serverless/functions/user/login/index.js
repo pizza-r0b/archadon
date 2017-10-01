@@ -51,4 +51,4 @@ async function _login(event, context, callback) {
   }
 }
 
-export const login = connect(process.env.MONGO_URI, _login);
+export const login = connect(_login);

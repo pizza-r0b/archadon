@@ -178,4 +178,4 @@ async function _purchase(event, context, callback) {
   }
 }
 
-export const purchase = connect(process.env.MONGO_URI, _purchase);
+export const purchase = connect(_purchase);

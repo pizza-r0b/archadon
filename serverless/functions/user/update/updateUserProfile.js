@@ -59,4 +59,4 @@ async function _updateUserProfile(event, context, callback) {
   }
 }
 
-export const updateUserProfile = connect(process.env.MONGO_URI, _updateUserProfile);
+export const updateUserProfile = connect(_updateUserProfile);

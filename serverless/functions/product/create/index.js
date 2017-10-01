@@ -64,5 +64,5 @@ async function _createProduct(event, context, callback) {
   }
 }
 
-export const createProduct = connect(process.env.MONGO_URI, _createProduct);
+export const createProduct = connect(_createProduct);
 

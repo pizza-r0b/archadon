@@ -9,6 +9,7 @@ $maxWidthProductDetail: 958px;
     &-title {
       padding: $padding;
       color: $dark;
+      font-weight: 400;
       text-transform: uppercase;
       border-bottom: 1px solid $dark;
     }

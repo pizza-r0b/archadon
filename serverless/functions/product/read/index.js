@@ -32,4 +32,4 @@ async function _getProductData(event, context, callback) {
   }
 }
 
-export const getProductData = connect(process.env.MONGO_URI, _getProductData);
+export const getProductData = connect(_getProductData);

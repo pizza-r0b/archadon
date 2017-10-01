@@ -50,4 +50,4 @@ async function _updateUserPassword(event, context, callback) {
   }
 }
 
-export const updateUserPassword = connect(process.env.MONGO_URI, _updateUserPassword);
+export const updateUserPassword = connect(_updateUserPassword);

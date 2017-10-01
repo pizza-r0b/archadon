@@ -1,99 +1,60 @@
-'use strict';
+import verifyJwt from 'utils/verifyJwt';
+import corsHeaders from 'utils/corsRes';
+import { fromPaths } from 'utils/DolliDB/build/main.min.js';
+import { OrderData, OrderItem } from 'schemas/Order';
+import { UserData } from 'schemas/User';
+import connect from 'utils/mongoConnect';
 
-const verifyJwt = require('../../utils/verifyJwt');
-const corsHeaders = require('../../utils/corsRes');
-const DolliDB = require('../../utils/DolliDB/build/main.min.js');
-
-const { ORDER_ITEM_TABLE, ORDER_DATA_TABLE } = process.env;
-
-function getOrderItems(id) {
-  return new Promise((resolve, reject) => {
-    DolliDB.docClient.query({
-      TableName: ORDER_ITEM_TABLE,
-      IndexName: 'userId',
-      KeyConditionExpression: 'UserID = :idKey',
-      ExpressionAttributeValues: {
-        ':idKey': id,
-      },
-    }, (err, data) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(data.Items);
-    });
-  });
-}
-
-function getOrderData(orderArr) {
-  const promises = [];
-
-  orderArr.forEach(order => {
-    promises.push(new Promise((resolve, reject) => {
-      DolliDB.GetData(ORDER_DATA_TABLE, order.ID).then(data => {
-        resolve(Object.assign(order, data));
-      }).catch(reject);
-    }));
-  });
-
-  return Promise.all(promises);
-}
-
-function getUserData(event, context, callback) {
-  console.log('STARTING');
+export async function _getUserData(event, context, callback) {
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
   const userID = params.id;
+
   if (!token) {
     return callback(null, corsHeaders({
       statusCode: 401,
     }));
   }
+
   const data = {};
-  console.log('Verifying Token');
-  verifyJwt(token, userID).then(ID => {
-    if (ID !== userID) {
-      Promise.reject('Token rejected');
-    } else {
-      return DolliDB.GetItem(process.env.USER_TABLE, 'ID', userID, {
-        ProjectionExpression: 'Email',
-      });
-      // TODO:
-      // get user favorites
-      // get user orders
-    }
-  }).then(responseFromGetUserByID => {
-    Object.assign(data, responseFromGetUserByID);
-    return DolliDB.GetData(process.env.USER_PROFILE_TABLE, userID);
-  }).then(responseFromGetUserProfile => {
-    Object.assign(data, responseFromGetUserProfile);
-    return new Promise((resolve, reject) => {
-      getOrderItems(userID).then(orderArr => {
-        if (orderArr.length) {
-          getOrderData(orderArr).then((orders) => {
-            resolve(orders);
-          }).catch(reject);
-        } else {
-          resolve([]);
-        }
-      });
-    });
-  }).then(orders => {
-    Object.assign(data, { orders });
-    const response = corsHeaders({
-      statusCode: 200,
-      body: JSON.stringify({
-        data,
-      }),
-    });
-    callback(null, response);
-  })
-    .catch(e => {
-      console.log(e);
-      const body = JSON.stringify({
-        error: e,
-      });
-      callback(null, corsHeaders({ statusCode: 401, body }));
-    });
+  let _id;
+
+  try {
+    _id = await verifyJwt(token, userID);
+  } catch(e) {
+    return callback(null, corsHeaders({
+      statusCode: 401,
+    }));
+  }
+
+  const docs = await UserData.find({ Item: _id }).lean().populate('Item').exec();
+  const item = docs[0].Item;
+  const userData = {
+    ...fromPaths(docs.map(({ Path, Value }) => [Path, Value])),
+    ...item,
+  };
+
+  const orderItems = await OrderItem.find({ Email: item.Email }).lean().exec();
+  const orders = await Promise.all(orderItems.map(async (item) => {
+    const { _id } = item;
+    const data = await OrderData.find({ Item: _id }).lean().exec();
+    return {
+      ...fromPaths(data.map(({ Path, Value }) => [Path, Value])),
+      ...item,
+    };
+  }));
+
+  const response = corsHeaders({
+    statusCode: 200,
+    body: JSON.stringify({
+      data: {
+        ...userData,
+        orders
+      }
+    }),
+  });
+
+  callback(null, response);
 }
 
-module.exports = getUserData;
+export const getUserData = connect(_getUserData);

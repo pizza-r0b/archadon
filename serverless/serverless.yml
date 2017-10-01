@@ -1,16 +1,3 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: archadon-${self:custom.env}
 plugins:
   - serverless-webpack
@@ -58,31 +45,26 @@ package:
     - templates/**
 
 functions:
-  # getUserData:
-  #   handler: functions/handlers.getUserData
-  #   events:
-  #     - http:
-  #         path: user/v1/read/{id}
-  #         method: get
-  #         cors:
-  #           origins:
-  #             - '*'
-  #           headers:
-  #             - authtoken
-  #             - Content-Type
-  #             - X-Amz-Date
-  #             - Authorization
-  #             - X-Api-Key
-  #             - X-Amz-Security-Token
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
-  #   environment:
-  #     USER_PROFILE_TABLE: ${self:custom.UserDataTable}
-  #     USER_TABLE: ${self:custom.UserItemTable}
-  #     ORDER_DATA_TABLE: ${self:custom.OrderDataTable}
-  #     ORDER_ITEM_TABLE: ${self:custom.OrderItemTable}
+  getUserData:
+    handler: functions/user/read/getUserData.getUserData
+    events:
+      - http:
+          path: user/v1/read/{id}
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+          request:
+            parameters:
+              paths:
+                id: true
 
   updateUserProfile:
     handler: functions/user/update/updateUserProfile.updateUserProfile

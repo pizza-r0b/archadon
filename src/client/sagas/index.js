@@ -138,7 +138,7 @@ export function* clearAuthenticationDataSaga() {
 }
 
 export function* logInSaga({ payload: { email, password } }) {
-  yield put(action(LOADING, true));
+  yield put(action(SET_LOADING_PAGE, 'login'));
   yield put(action(SET_ERROR, {
     type: 'login',
     error: null,
@@ -155,15 +155,15 @@ export function* logInSaga({ payload: { email, password } }) {
     let error;
     switch (status) {
       case 401:
-        error = 'Invalid username or password. Try again 😊';
+        error = 'Invalid username or password. Try again!';
         break;
       case 404:
         error = 'That account doesn\'t exist.';
         break;
       default:
-        error = 'Oops something went wrong 💩 Try again later.';
+        error = 'Oops something went wrong. Try again later.';
     }
-    yield put(action(LOADING, false));
+    yield put(action(SET_LOADING_PAGE, ''));
     yield put(action(SET_ERROR, {
       type: 'login',
       error,

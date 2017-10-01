@@ -8,6 +8,8 @@ import classnames from 'classnames';
 
 const { LOG_IN } = Actions;
 
+const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
 class LogInForm extends React.Component {
 
   props: {
@@ -18,39 +20,87 @@ class LogInForm extends React.Component {
   state = {
     email: '',
     password: '',
+    errors: {},
   }
 
   onChange = ({ currentTarget: { value, name: key } }) => {
     this.setState({ [key]: value });
   }
 
+  isValid = () => {
+    const errors = [];
+
+    if (!emailRegex.test(this.state.email)) {
+      errors.push({ email: true });
+    }
+
+    if (!this.state.password) {
+      errors.push({ password: true });
+    }
+
+    const valid = errors.length === 0;
+
+    if (!valid) {
+      this.setState({
+        errors: errors.reduce((a, b) => { return { ...a, ...b } }, {}),
+      });
+    }
+
+    return errors.length === 0;
+  }
+
   submit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    this.setState({ errors: {} }, () => {
+      if (!this.isValid()) return;
+      this.props.login(this.state.email, this.state.password);
+    });
   }
 
   render() {
+    const btnProps = {};
+
+    if (this.props.loading) {
+      btnProps.disabled = true;
+    }
+
     return (
-      <div className="flex-parent flex-col flex-align-center flex-justify-start full-width">
-        <h2 className="margin--bottom-7">Enter Your Credentials</h2>
-        <form className="form" onSubmit={this.submit}>
-          <div className={classnames('form-group', { 'form-error': this.props.error })}>
-            <div className="form-component">
-              <label htmlFor="email">Email</label>
-              <input onChange={this.onChange} name="email" value={this.state.email} type="text" />
-            </div>
-            <div className="form-component margin--top-3">
-              <label htmlFor="password">Password</label>
-              <input onChange={this.onChange} name="password" value={this.state.password} type="password" />
-            </div>
+      <form className="form margin--bottom-0" onSubmit={this.submit}>
+        <div className={classnames('form-group', { 'form-error': this.props.error })}>
+          <div className="form-component">
+            <input
+              onChange={this.onChange}
+              className={classnames({
+                'input-filled': this.state.email,
+                'input-error': this.state.errors.email,
+              })}
+              name="email" value={this.state.email}
+              type="text"
+            />
+            <label htmlFor="email">Email</label>
           </div>
-          <div className="form-content">
-            {this.props.error && <p className="font-color--danger margin--bottom-3">{this.props.error}</p>}
-            <button className="btn btn--first">Log In</button>
-            <div className="margin--top-3"><span>{'Don\'t have an account?'} <Link to="/signup">Register now</Link>.</span></div>
+          <div className="form-component">
+            <input
+              onChange={this.onChange}
+              className={classnames({
+                'input-filled': this.state.password,
+                'input-error': this.state.errors.password,
+              })}
+              name="password"
+              value={this.state.password}
+              type="password"
+            />
+            <label htmlFor="password">Password</label>
           </div>
-        </form>
-      </div>
+        </div>
+        <div className="margin--top-3">
+          {this.props.error && <p className="font-color--danger margin--bottom-3 small-caps">{this.props.error}</p>}
+          <div className="signin-btns">
+            <button {...btnProps} className="btn--primary--inverse">{btnProps.disabled ? 'Please Wait' : 'Sign In'}</button>
+            <button className="btn--primary">Forgot Password</button>
+          </div>
+        </div>
+      </form>
     );
   }
 }
@@ -62,6 +112,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   error: state.errors.login,
+  loading: state.loading.page === 'login',
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInForm);
