@@ -39,7 +39,7 @@ async function _createUser(event, context, callback) {
   try {
     const doc = await UserItem.findOne({ Email }).exec();
     if (doc) {
-      return Promise.reject(JSON.stringify({ body: 'User already exists' }));
+      throw new Error('User already exists');
     }
 
     const userItem = new UserItem({
@@ -49,14 +49,15 @@ async function _createUser(event, context, callback) {
 
     const savedDoc = await userItem.save();
 
-    if (Object.keys(rest).length > 0) {
-      _id = savedDoc.get('_id');
-      const userData = toPaths(rest).map(([Path, Value]) => ({ Path, Value, Item: _id }));
-      await UserData.insertMany(userData);
-    }
+    _id = savedDoc.get('_id');
+
+    // if (Object.keys(rest).length > 0) {
+    //   const userData = toPaths(rest).map(([Path, Value]) => ({ Path, Value, Item: _id }));
+    //   await UserData.insertMany(userData);
+    // }
 
     const token = createJwt({ ID: _id });
-    onUserCreate(Email);
+    await onUserCreate(Email);
     callback(null, corsRes({
       statusCode: 200,
       body: JSON.stringify({ authToken: token, ID: _id }),
@@ -64,7 +65,7 @@ async function _createUser(event, context, callback) {
   } catch (e) {
     callback(null, corsRes({
       statusCode: 409,
-      body: JSON.stringify({ error: e }),
+      body: JSON.stringify({ error: e.message }),
     }));
   }
 }

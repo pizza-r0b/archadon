@@ -5187,9 +5187,13 @@ var _regenerator = __webpack_require__(15);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _extends2 = __webpack_require__(10);
+var _slicedToArray2 = __webpack_require__(13);
 
-var _extends3 = _interopRequireDefault(_extends2);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _entries = __webpack_require__(22);
+
+var _entries2 = _interopRequireDefault(_entries);
 
 var _asyncToGenerator2 = __webpack_require__(14);
 
@@ -5198,6 +5202,10 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var _defineProperty2 = __webpack_require__(18);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = __webpack_require__(10);
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _getPrototypeOf = __webpack_require__(5);
 
@@ -5271,8 +5279,13 @@ var LogInForm = function (_React$Component) {
       email: '',
       password: '',
       confirmPassword: '',
-      errors: {},
+      errors: (0, _extends3.default)({}, _this2.initialErrorState),
       errorMessage: []
+    };
+    _this2.initialErrorState = {
+      email: false,
+      password: false,
+      confirmPassword: false
     };
     _this2._setState = setState.call(_this2);
 
@@ -5314,37 +5327,74 @@ var LogInForm = function (_React$Component) {
                 errorMessage.push('Passwords don\'t match.');
 
               case 8:
-                if (!emailRegex.test(_this2.state.email)) {
-                  _this2._setState({
-                    errors: (0, _extends3.default)({}, _this2.state.errors, {
-                      email: true
-                    })
-                  });
-
-                  errorMessage.push('Please enter a valid email.');
-                }
-
-                if (!(_this2.state.errorMessage.length !== errorMessage.length)) {
-                  _context.next = 12;
+                if (!(_this2.state.password.trim() === '' || _this2.state.confirmPassword.trim() === '' || _this2.state.email === '')) {
+                  _context.next = 13;
                   break;
                 }
 
+                console.log((0, _entries2.default)(_this2.state.errors).reduce(function (a, _ref3) {
+                  var _ref4 = (0, _slicedToArray3.default)(_ref3, 1),
+                      key = _ref4[0];
+
+                  if (!_this2.state[key]) {
+                    a[key] = true;
+                  }
+                  return a;
+                }, {}));
                 _context.next = 12;
-                return _this2._setState({ errorMessage: errorMessage });
+                return _this2._setState({
+                  errors: (0, _entries2.default)(_this2.initialErrorState).reduce(function (a, _ref5) {
+                    var _ref6 = (0, _slicedToArray3.default)(_ref5, 1),
+                        key = _ref6[0];
+
+                    a[key] = true;
+                    return a;
+                  }, {})
+                });
 
               case 12:
+
+                errorMessage.push('Please fill in all fields.');
+
+              case 13:
+                if (emailRegex.test(_this2.state.email)) {
+                  _context.next = 17;
+                  break;
+                }
+
+                _context.next = 16;
+                return _this2._setState({
+                  errors: (0, _extends3.default)({}, _this2.state.errors, {
+                    email: true
+                  })
+                });
+
+              case 16:
+
+                errorMessage.push('Please enter a valid email.');
+
+              case 17:
+                if (!(_this2.state.errorMessage.length !== errorMessage.length)) {
+                  _context.next = 20;
+                  break;
+                }
+
+                _context.next = 20;
+                return _this2._setState({ errorMessage: errorMessage });
+
+              case 20:
                 if (!(errorMessage.length > 0)) {
-                  _context.next = 14;
+                  _context.next = 22;
                   break;
                 }
 
                 return _context.abrupt('return');
 
-              case 14:
+              case 22:
 
                 _this2.props.signup(_this2.state.email, _this2.state.password);
 
-              case 15:
+              case 23:
               case 'end':
                 return _context.stop();
             }
@@ -5363,6 +5413,10 @@ var LogInForm = function (_React$Component) {
   (0, _createClass3.default)(LogInForm, [{
     key: 'render',
     value: function render() {
+      var btnProps = {};
+      if (this.props.loading) {
+        btnProps.disabled = true;
+      }
       return _react2.default.createElement(
         'form',
         { className: 'form', onSubmit: this.submit },
@@ -5410,8 +5464,8 @@ var LogInForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { className: 'btn--primary--inverse margin--top-3 full-width' },
-            'Sign Up'
+            (0, _extends3.default)({}, btnProps, { className: 'btn--primary--inverse margin--top-3 full-width' }),
+            this.props.loading ? 'Please Wait' : 'Sign Up'
           )
         ),
         _react2.default.createElement(
@@ -5679,7 +5733,7 @@ function Shop(_ref) {
       { className: 'wrap' },
       _react2.default.createElement(
         'div',
-        { className: 'flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10' },
+        { className: 'flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps' },
         _react2.default.createElement(
           'div',
           prevProps,

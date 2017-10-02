@@ -28,12 +28,18 @@ class LogInForm extends React.Component {
     email: '',
     password: '',
     confirmPassword: '',
-    errors: {},
+    errors: { ...this.initialErrorState },
     errorMessage: [],
   }
 
   constructor() {
     super();
+  }
+
+  initialErrorState = {
+    email: false,
+    password: false,
+    confirmPassword: false,
   }
 
   _setState = setState.call(this);
@@ -58,8 +64,24 @@ class LogInForm extends React.Component {
 
       errorMessage.push('Passwords don\'t match.');
     }
+    if (this.state.password.trim() === '' || this.state.confirmPassword.trim() === '' || this.state.email === '') {
+      console.log(Object.entries(this.state.errors).reduce((a, [key]) => {
+        if (!this.state[key]) {
+          a[key] = true;
+        }
+        return a;
+      }, {}));
+      await this._setState({
+        errors: Object.entries(this.initialErrorState).reduce((a, [key]) => {
+          a[key] = true;
+          return a;
+        }, {}),
+      });
+
+      errorMessage.push('Please fill in all fields.');
+    }
     if (!emailRegex.test(this.state.email)) {
-      this._setState({
+      await this._setState({
         errors: {
           ...this.state.errors,
           email: true,
@@ -79,6 +101,10 @@ class LogInForm extends React.Component {
   }
 
   render() {
+    const btnProps = {};
+    if (this.props.loading) {
+      btnProps.disabled = true;
+    }
     return (
       <form className="form" onSubmit={this.submit}>
         <div className="form-group">
@@ -99,7 +125,7 @@ class LogInForm extends React.Component {
         </div>
         <div>
           {(this.props.error || this.state.errorMessage.length > 0) && <p className="font-color--danger small-caps margin--top-3">{this.props.error || this.state.errorMessage.join(' ')}</p>}
-          <button className="btn--primary--inverse margin--top-3 full-width">Sign Up</button>
+          <button {...btnProps} className="btn--primary--inverse margin--top-3 full-width">{ this.props.loading ? 'Please Wait' : 'Sign Up'}</button>
         </div>
         <p className="small-caps font-color--lighter margin--top-3">
           <span className="font-color--light">Pro Tip:</span> When creating a password on a website you should make it unique from any other password you have. It should be a complex password utilizing different characters (uppercase, lowercase, numbers, symbols). You don't need to remember all your passwords - just keep track of them by writing them down and storing them in a secure location.

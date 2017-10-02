@@ -38,7 +38,7 @@ function Shop({ products, page, nbPages, loadMore }) {
     <div className="full-width">
       <ProductList products={products} />
       <div className="wrap">
-        <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10">
+        <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps">
           <div {...prevProps}>Previous</div>
           <div>{`${(page + 1)} / ${nbPages}`}</div>
           <div {...nextProps}>Next</div>

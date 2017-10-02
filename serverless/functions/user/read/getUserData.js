@@ -28,21 +28,32 @@ export async function _getUserData(event, context, callback) {
   }
 
   const docs = await UserData.find({ Item: _id }).lean().populate('Item').exec();
-  const item = docs[0].Item;
-  const userData = {
-    ...fromPaths(docs.map(({ Path, Value }) => [Path, Value])),
-    ...item,
-  };
+  let userData = {};
+  let userItem = {};
 
-  const orderItems = await OrderItem.find({ Email: item.Email }).lean().exec();
-  const orders = await Promise.all(orderItems.map(async (item) => {
-    const { _id } = item;
-    const data = await OrderData.find({ Item: _id }).lean().exec();
-    return {
-      ...fromPaths(data.map(({ Path, Value }) => [Path, Value])),
-      ...item,
+  if (docs.length > 0) {
+    userItem = docs[0].Item;
+    userData = {
+      ...fromPaths(docs.map(({ Path, Value }) => [Path, Value])),
+      ...userItem,
     };
-  }));
+  }
+
+  const orderItems = userItem.Email ? await OrderItem.find({ Email: userItem.Email }).lean().exec() : [];
+  const orders = [];
+
+  if (orderItems.length > 0) {
+    let orderDocs = await Promise.all(orderItems.map(async (item = {}) => {
+      const { _id } = item;
+      const data = await OrderData.find({ Item: _id }).lean().exec();
+      return {
+        ...fromPaths(data.map(({ Path, Value }) => [Path, Value])),
+        ...item,
+      };
+    }));
+
+    orders.push(...orderDocs);
+  }
 
   const response = corsHeaders({
     statusCode: 200,

@@ -284,9 +284,9 @@ export function* signUpSaga({ payload: { email, password } }) {
     }));
     yield put(push('/account'));
     yield call(saveToLocalStorage, authToken, ID);
-  } catch ({ status, response: { body } }) {
+  } catch ({ status }) {
     let error;
-    if (body === 'User already exists' && status === 409) {
+    if (status === 409) {
       error = 'Oops. Looks like that user already exists. Try logging in';
     } else {
       error = 'Oops. Something went wrong. Try again later.';
