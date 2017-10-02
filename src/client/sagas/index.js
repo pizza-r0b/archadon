@@ -269,7 +269,7 @@ export function* addToCartLocalStorage() {
 }
 
 export function* signUpSaga({ payload: { email, password } }) {
-  yield put(action(LOADING, true));
+  yield put(action(SET_LOADING_PAGE, 'signup'));
   yield put(action(SET_ERROR, {
     type: 'signup',
     error: null,
@@ -291,11 +291,12 @@ export function* signUpSaga({ payload: { email, password } }) {
     } else {
       error = 'Oops. Something went wrong. Try again later.';
     }
-    yield put(action(LOADING, false));
     yield put(action(SET_ERROR, {
       type: 'signup',
       error,
     }));
+  } finally {
+    yield put(action(SET_LOADING_PAGE, ''));
   }
 }
 

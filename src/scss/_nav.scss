@@ -33,6 +33,7 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   }
 }
 
+
 .cart-qty {
   width: 18px;
   height: 18px;
@@ -42,15 +43,10 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   @include font-size(1.4);
   position: absolute;
   right: -13px;
-  top: -3px;
+  top: 0px;
   align-items: center;
   justify-content: center;
   color: $dark;
-
-  .fixed & {
-    top: 6px;
-    right: -10px;
-  }
 }
 
 %inner {
@@ -138,6 +134,11 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 .logo {
   height: 25px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 300px;
 }
 
 .cart {
@@ -148,6 +149,12 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 .open .logo, .open .cart {
   animation: fadeIn $transitionVal forwards;
+}
+
+.account-link {
+  @media (max-width: 575px) {
+    display: none;
+  }
 }
 
 .ham {

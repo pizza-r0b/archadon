@@ -7,6 +7,15 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
 const { SIGN_UP } = Actions;
+const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+function setState() {
+  return function (newState) {
+    return new Promise((resolve, reject) => {
+      this.setState(newState, resolve);
+    });
+  }.bind(this);
+}
 
 class LogInForm extends React.Component {
 
@@ -19,53 +28,83 @@ class LogInForm extends React.Component {
     email: '',
     password: '',
     confirmPassword: '',
-    error: {},
+    errors: {},
+    errorMessage: [],
   }
+
+  constructor() {
+    super();
+  }
+
+  _setState = setState.call(this);
 
   onChange = ({ currentTarget: { value, name: key } }) => {
     this.setState({ [key]: value });
   }
 
-  submit = (e) => {
+  submit = async (e) => {
     e.preventDefault();
+    const errorMessage = [];
+
+    await this._setState({ errors: {}, errorMessage: [] });
+
     if (this.state.password !== this.state.confirmPassword) {
-      this.setState({
-        error: {
-          type: 'confirm',
-          msg: 'Passwords do not match.',
+      await this._setState({
+        errors: {
+          ...this.state.errors,
+          password: true,
         },
       });
-      return;
+
+      errorMessage.push('Passwords don\'t match.');
     }
+    if (!emailRegex.test(this.state.email)) {
+      this._setState({
+        errors: {
+          ...this.state.errors,
+          email: true,
+        }
+      });
+
+      errorMessage.push('Please enter a valid email.');
+    }
+
+    if (this.state.errorMessage.length !== errorMessage.length) {
+      await this._setState({ errorMessage });
+    }
+
+    if (errorMessage.length > 0) return;
+
     this.props.signup(this.state.email, this.state.password);
   }
 
   render() {
     return (
-      <div className="flex-parent flex-col flex-align-center flex-justify-start full-width">
-        <h2 className="margin--bottom-7">Sign Up</h2>
-        <form className="form" onSubmit={this.submit}>
-          <div className={classnames('form-group', { 'form-error': this.props.error })}>
-            <div className="form-component">
-              <label htmlFor="email">Email</label>
-              <input onChange={this.onChange} name="email" value={this.state.email} type="text" />
-            </div>
-            <div className="form-component margin--top-3">
-              <label htmlFor="password">Password</label>
-              <input className={classnames({ 'input-error': this.state.error.type === 'confirm' })} onChange={this.onChange} name="password" value={this.state.password} type="password" />
-            </div>
-            <div className="form-component margin--top-3">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input className={classnames({ 'input-error': this.state.error.type === 'confirm' })} onChange={this.onChange} name="confirmPassword" value={this.state.confirmPassword} type="password" />
-            </div>
+      <form className="form" onSubmit={this.submit}>
+        <div className="form-group">
+          <div className="form-component">
+            <input onChange={this.onChange} className={classnames({ 'input-filled': this.state.email, 'input-error': this.state.errors.email })} name="email" value={this.state.email} type="text" />
+            <label htmlFor="email">Email</label>
+
           </div>
-          <div className="form-content">
-            {(this.props.error || this.state.error.msg) && <p className="font-color--danger margin--top-0 margin--bottom-3">{this.props.error || this.state.error.msg}</p>}
-            <button className="btn btn--first">Sign Up</button>
-            <div className="margin--top-3"><span>{'Have an account?'} <Link to="/login">Log in</Link>.</span></div>
+          <div className="form-component margin--top-3">
+            <input className={classnames({ 'input-filled': this.state.password, 'input-error': this.state.errors.password })} onChange={this.onChange} name="password" value={this.state.password} type="password" />
+            <label htmlFor="password">Password</label>
+
           </div>
-        </form>
-      </div>
+          <div className="form-component margin--top-3">
+            <input className={classnames({ 'input-filled': this.state.confirmPassword, 'input-error': this.state.errors.password })} onChange={this.onChange} name="confirmPassword" value={this.state.confirmPassword} type="password" />
+            <label htmlFor="confirmPassword">Confirm Password</label>
+          </div>
+        </div>
+        <div>
+          {(this.props.error || this.state.errorMessage.length > 0) && <p className="font-color--danger small-caps margin--top-3">{this.props.error || this.state.errorMessage.join(' ')}</p>}
+          <button className="btn--primary--inverse margin--top-3 full-width">Sign Up</button>
+        </div>
+        <p className="small-caps font-color--lighter margin--top-3">
+          <span className="font-color--light">Pro Tip:</span> When creating a password on a website you should make it unique from any other password you have. It should be a complex password utilizing different characters (uppercase, lowercase, numbers, symbols). You don't need to remember all your passwords - just keep track of them by writing them down and storing them in a secure location.
+        </p>
+      </form>
     );
   }
 }
@@ -77,6 +116,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   error: state.errors.signup,
+  loading: state.loading.page === 'signup',
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInForm);

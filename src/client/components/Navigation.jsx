@@ -57,17 +57,20 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
         </div>
       </div>
       <div>
-        <div style={{ zIndex: 11 }} onClick={() => toggleNav(navOpen)} className={`ham${navOpen ? ' open' : ''}`}>
+        <div style={{ zIndex: 12 }} onClick={() => toggleNav(navOpen)} className={`ham${navOpen ? ' open' : ''}`}>
           <div className="ham-inner" />
         </div>
       </div>
       <div className="logo" style={{ zIndex: 11 }}>
         <Link to="/"><Svg variant="archadon-logo" color={navOpen ? '#FFF' : '#000'} /></Link>
       </div>
-      <Link to="/cart" className="cart" style={{ zIndex: 11 }}>
+      <div className="flex-parent flex-align-center" style={{ zIndex: 12 }}>
+        <Link to="/login" className="margin--right-10 small-caps account-link">Account</Link>
+        <Link to="/cart" className="cart">
         {qty > 0 && <div className="cart-qty">{qty}</div>}
         <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
-      </Link>
+        </Link>
+      </div>
     </nav>
   );
 }
