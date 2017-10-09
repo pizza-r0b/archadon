@@ -17,7 +17,7 @@ const clientConfig = base({
         use: [{ loader: 'css-loader' }, {
           loader: 'sass-loader',
           options: {
-            data: '$env: ' + process.env.NODE_ENV + ';',
+            data: '$env: "production";'
           },
         }],
         fallback: 'style-loader',

@@ -11,7 +11,7 @@ const serverConfig = base({
       use: ['css-loader', {
         loader: 'sass-loader',
         options: {
-          data: '$env: ' + process.env.NODE_ENV + ';',
+          data: '$env: "production";'
         },
       }],
     },
