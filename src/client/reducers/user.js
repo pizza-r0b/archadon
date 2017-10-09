@@ -16,6 +16,9 @@ type StateType = {
 export default function user(state: StateType = { Favorites: [], FavoritesDetail: [] }, action: Object) {
   switch (action.type) {
     case SET_USER_DATA:
+      if (Array.isArray(action.payload.orders)) {
+        action.payload.orders.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : ((a.createdAt < b.createdAt) ? 1 : 0)); // eslint-disable-line
+      }
       return {
         ...state,
         ...action.payload,

@@ -3,6 +3,14 @@ a, a:visited {
   text-decoration: none;
 }
 
+.link, a.link {
+  color: darken($first, 20);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .link--underlined {
   padding-bottom: 10px;
   border-bottom: 1px solid $dark;

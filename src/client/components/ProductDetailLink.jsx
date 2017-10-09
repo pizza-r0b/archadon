@@ -10,11 +10,12 @@ type ProductDetailLinkProps = {
   children: React.Element<*>,
   product: Object,
   onClick: Function,
+  className?: string,
 }
 
-function ProductDetailLink({ children, product, onClick }: ProductDetailLinkProps) {
+function ProductDetailLink({ children, product, onClick, className }: ProductDetailLinkProps) {
   return (
-    <a href={`/product/${product.Name}/${product._id}`} onClick={onClick(product)}>
+    <a className={className} href={`/product/${product.Name}/${product._id}`} onClick={onClick(product)}>
       {children}
     </a>
   );

@@ -3,7 +3,7 @@ import { IMAGE_ORIGIN } from 'Constants';
 import { CSSTransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import { throttle } from 'Utils';
-import { Link } from 'react-router-dom';
+import ProductDetailLink from 'Components/ProductDetailLink';
 
 const images = [
   {
@@ -160,7 +160,7 @@ class HomeSlider extends React.Component {
                 </CSSTransitionGroup>
               </div>
               <div>
-                <Link to={`/product/featured/${images[this.state.current].id}`} className="btn btn--primary">View Rug</Link>
+                <ProductDetailLink product={{ Name: 'featured', _id: images[this.state.current].id }} className="btn btn--primary">View Rug</ProductDetailLink>
               </div>
             </div>
           </div>

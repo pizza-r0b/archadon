@@ -43,7 +43,7 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
   @include font-size(1.4);
   position: absolute;
   right: -13px;
-  top: 0px;
+  top: -10px;
   align-items: center;
   justify-content: center;
   color: $dark;
@@ -143,6 +143,7 @@ $transitionVal: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 .cart {
   width: 35px;
+  height: 25px;
   cursor: pointer;
   position: relative;
 }

@@ -16,12 +16,11 @@ export async function _getUserData(event, context, callback) {
     }));
   }
 
-  const data = {};
   let _id;
 
   try {
     _id = await verifyJwt(token, userID);
-  } catch(e) {
+  } catch (e) {
     return callback(null, corsHeaders({
       statusCode: 401,
     }));
@@ -43,9 +42,10 @@ export async function _getUserData(event, context, callback) {
   const orders = [];
 
   if (orderItems.length > 0) {
-    let orderDocs = await Promise.all(orderItems.map(async (item = {}) => {
-      const { _id } = item;
-      const data = await OrderData.find({ Item: _id }).lean().exec();
+    const orderDocs = await Promise.all(orderItems.map(async (item = {}) => {
+      const { _id: itemId } = item;
+      const data = await OrderData.find({ Item: itemId }).lean().exec();
+
       return {
         ...fromPaths(data.map(({ Path, Value }) => [Path, Value])),
         ...item,
