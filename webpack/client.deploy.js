@@ -37,15 +37,9 @@ const clientConfig = base({
       new Dotenv({
         path: path.resolve(__dirname, '../.env_dev'),
       }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('development'),
-        },
-      }),
-      new UglifyJSPlugin(),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
-      new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),
+      new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT', 'DEV_DEPLOY']),
     ],
   },
 });

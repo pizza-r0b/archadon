@@ -14,7 +14,7 @@ const ga = process.env.NODE_ENV !== 'production' ? '' : (
 
 export default function html(routerWithContext, props) {
     const filename = '/client.js';
-    const src = process.env.NODE_ENV !== 'production' ? `http://localhost:${process.env.DEV_SERVER_PORT}${filename}` : filename;
+    const src = process.env.NODE_ENV !== 'production' && !process.env.DEV_DEPLOY ? `http://localhost:${process.env.DEV_SERVER_PORT}${filename}` : filename;
     return `
         <html>
             <head>
@@ -24,7 +24,7 @@ export default function html(routerWithContext, props) {
                 <meta name="description" content="" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 ${
-                    process.env.NODE_ENV === 'production' ?
+                    process.env.NODE_ENV === 'production' || process.env.DEV_DEPLOY ?
                     `<link rel="stylesheet" href="/styles.css" />`
                     :
                     ''

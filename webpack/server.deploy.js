@@ -30,7 +30,6 @@ const serverConfig = base({
           NODE_ENV: JSON.stringify('development'),
         },
       }),
-      new webpack.optimize.UglifyJsPlugin(),
       new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     externals: [nodeExternals({

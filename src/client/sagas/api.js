@@ -1,6 +1,6 @@
 import { request } from 'Utils';
 
-const REQUEST_URL = process.env.NODE_ENV !== 'production' ? 'https://gnr9itw1e2.execute-api.us-east-1.amazonaws.com/dev' : 'https://api.archadon.com/prod';
+const REQUEST_URL = process.env.NODE_ENV !== 'production' || process.env.DEV_DEPLOY ? 'https://gnr9itw1e2.execute-api.us-east-1.amazonaws.com/dev' : 'https://api.archadon.com/prod';
 
 const url = path => `${REQUEST_URL}/${path}`;
 
