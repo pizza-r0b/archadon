@@ -14,8 +14,8 @@
   }
 
   @media (max-width: 1000px) {
-    grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
   }
 
   &:last-child {
@@ -32,10 +32,13 @@
 
   &-link {
     margin-left: $spacer * 2;
+  }
 
-    @media (max-width: 1000px) {
-      margin-left: 0;
+  @media (max-width: 1000px) {
+    &-link {
+      margin: 0;
     }
+    margin: 0;
   }
 
   &:nth-child(1) {
@@ -54,22 +57,5 @@
 
   .details {
     margin-right: 0;
-  }
-}
-
-
-@include tablet() {
-  .order-item {
-    flex-direction: row;
-    img {
-      max-width: 150px;
-    }
-  }
-  .item-box {
-    flex-direction: row;
-
-    .details {
-      margin-right: $spacer * 3px;
-    }
   }
 }

@@ -9,6 +9,8 @@ const defaults = base({});
 
 const outputPath = path.resolve(__dirname, '../public');
 
+process.env.DEV_DEPLOY = true
+
 const clientConfig = base({
   rules: [
     {

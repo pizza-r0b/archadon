@@ -19,9 +19,18 @@ const links = [
   { name: 'About', route: '/about' },
   { name: 'Contact', route: '/contact' },
   { name: 'Shipping & Returns', route: '/shipping-and-returns' },
+];
+
+const nonAuth = [
   { name: 'Sign Up', route: '/account' },
-  { name: 'Log In', route: '/account' },
-]
+  { name: 'Sign In', route: '/account' },
+];
+
+const auth = [
+  { name: 'Recent Orders', route: '/account/orders' },
+  { name: 'Favorites', route: '/account/favorites' },
+  { name: 'Sign Out', route: '/signout' },
+];
 
 type NavProps = {
   fixed: boolean,
@@ -42,12 +51,13 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
       fixed,
     }
   );
+  const linkArr = [...links, ...(user ? auth : nonAuth)];
   return (
     <nav className={classes}>
       <div style={{ zIndex: 10 }} className="menu-overlay">
         <div className="wrap">
           <div>
-            {links.map(({ name, route }) => <Link key={name} to={route} className="menu-link">{name}</Link>)}
+            {linkArr.map(({ name, route }) => <Link key={name} to={route} className="menu-link">{name}</Link>)}
           </div>
           <div className="bottom-links">
             <span>hello@archadon.com</span>
@@ -65,7 +75,7 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
         <Link to="/"><Svg variant="archadon-logo" color={navOpen ? '#FFF' : '#000'} /></Link>
       </div>
       <div className="flex-parent flex-align-center" style={{ zIndex: 12 }}>
-        <Link to="/login" className="margin--right-10 small-caps account-link">Account</Link>
+        <Link to={user ? '/account': '/login'} className="margin--right-10 small-caps account-link">Account</Link>
         <Link to="/cart" className="cart">
         {qty > 0 && <div className="cart-qty">{qty}</div>}
         <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
