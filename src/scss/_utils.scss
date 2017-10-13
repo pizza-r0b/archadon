@@ -89,6 +89,49 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
     }
 }
 
+.max-width-100 {
+    max-width: 100%;
+    height: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.stripe-image {
+    position: relative;
+    img {
+        z-index: 2;
+        position: relative;
+    }
+    &:after {
+        position: absolute;
+        z-index: 1;
+        width: 50%;
+        height: 50%;
+        flex: 1;
+        content: "";
+        bottom: 0;
+        right: 0;
+        transform: translate(25%, 25%);
+        opacity: 0.25;
+        background-size: 6px;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAOUlEQVQYV43MQQ4AIAgDQfv/R4OYaFChsOfJYvQSNJxMgwouZDMGD2LwQhn8UARD9MIUeUjRhiUyqPw8Cgq7TDlmAAAAAElFTkSuQmCC);
+
+    }
+
+    &--left {
+        @extend .stripe-image;
+        &:after {
+            @extend .stripe-image:after;
+            right: auto; left: 0;
+            transform: translate(-25%, 25%);
+        }
+    }
+}
+
+
+
 @each $direction in top, left, right, bottom {
     @for $num from 0 through 100 {
         .margin--x-#{$num} {

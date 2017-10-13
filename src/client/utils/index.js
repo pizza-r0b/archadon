@@ -1,3 +1,7 @@
+import { IMAGE_ORIGIN } from 'Constants';
+
+export const src = path => `${IMAGE_ORIGIN}/${path}`;
+
 export function action(type = '', payload = {}, meta = null, error = null) {
   return {
     type, payload, meta, error,
