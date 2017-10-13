@@ -36,6 +36,7 @@ function Shop({ products, page, nbPages, loadMore }) {
   };
   return (
     <div className="full-width">
+      <Filters />
       <ProductList products={products} />
       <div className="wrap">
         <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps">

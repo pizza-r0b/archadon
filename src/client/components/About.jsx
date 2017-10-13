@@ -2,9 +2,6 @@ import React from 'react';
 import { src } from 'Utils';
 import { Link } from 'react-router-dom';
 
-//          <h3>We take pride in our collection. Each of our rugs are hand-picked from the source. We promise to deliver only high-quality, hand-made, rugs. We want to give you something that you can take pride in. Since 1985 our supplier has traveled to the tribal area on the Afghan/Pakistan border and Tibet establishing lasting relationships with the very best rug weavers in those areas.</h3>
-
-
 function About() {
   return (
     <div className="full-width overflow-hidden">

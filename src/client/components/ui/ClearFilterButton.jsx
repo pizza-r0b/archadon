@@ -7,7 +7,7 @@ const { ON_CLEAR_FILTERS } = actions;
 
 function ClearFilterButton({ clear }) {
   return (
-    <div onClick={() => { clear(); }} className="btn btn--first">Clear Filters</div>
+    <div onClick={() => { clear(); }} className="btn btn--primary">Clear Filters</div>
   );
 }
 

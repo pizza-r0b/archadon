@@ -8,15 +8,15 @@ const { ON_FILTER_UPDATE } = actions;
 
 const FILTERS_ARR = [
   {
-    name: 'Sort By',
+    name: 'Sort',
     options: [
       {
-        copy: 'Highest to Lowest',
+        copy: 'Price: Highest to Lowest',
         queries: ['product_desc'],
         type: 'r',
       },
       {
-        copy: 'Lowest to Highest',
+        copy: 'Price: Lowest to Highest',
         queries: ['product_asc'],
         type: 'r',
       },
@@ -56,7 +56,7 @@ const FILTERS_ARR = [
     name: 'Size',
     options: [
       {
-        copy: `1'11 x 3 - 2 x 4`,
+        copy: `2 x 3 - 2 x 4`,
         queries: ['Width >= 1 AND Width <= 2.9 AND Height >= 3 AND Height <= 4.9'],
         type: 'raw',
       },
@@ -110,7 +110,7 @@ function FilterOption({ filter, onChange, filters, defaultIndex }: FilterProps) 
   }
   return (
     <div className="filter-option">
-      <label htmlFor={filter.name}><h3>{filter.name}</h3></label>
+      <label className="small-caps margin--bottom-1" htmlFor={filter.name}>{filter.name}</label>
       <select name={filter.name} {...selectProps} onChange={onChange}>
         <option>Select {filter.name}</option>
         {filter.options.map((option, i) => (
@@ -144,12 +144,11 @@ class Filters extends Component {
   }
   render() {
     return (
-      <div className="filter-wrap">
-        <h2 className="margin--top-3 margin--bottom-3">Filters</h2>
+
+      <div className="filter-wrap wrap">
         <div className="margin--bottom-3">
           {this.props.filters.length > 0 && <ClearFilterButton />}
         </div>
-        <hr />
         <div className="filters">
           {FILTERS_ARR.map((filter, i) => {
             filter.index = i;

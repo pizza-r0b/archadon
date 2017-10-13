@@ -110,7 +110,9 @@ class ProductDetail extends React.Component {
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
             <div className="product-details-image">
-              <img style={{ cursor: 'pointer' }} onClick={this.onImageClick} src={imgSrc} />
+              <div className="stripe-image--left">
+                <img style={{ cursor: 'pointer' }} onClick={this.onImageClick} src={imgSrc} />
+              </div>
               <p style={{ fontSize: '12px' }} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
             <div className="product-details-title">
