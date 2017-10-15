@@ -4,6 +4,8 @@ const base = require('./base.js');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
+process.env.DEV_DEPLOY = true;
+
 const serverConfig = base({
   rules: [
     {
@@ -11,7 +13,7 @@ const serverConfig = base({
       use: ['css-loader', {
         loader: 'sass-loader',
         options: {
-          data: '$env: "production";'
+          data: '$env: "production";',
         },
       }],
     },

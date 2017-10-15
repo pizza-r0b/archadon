@@ -2,14 +2,13 @@ const base = require('./base');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 const defaults = base({});
 
 const outputPath = path.resolve(__dirname, '../public');
 
-process.env.DEV_DEPLOY = true
+process.env.DEV_DEPLOY = true;
 
 const clientConfig = base({
   rules: [
