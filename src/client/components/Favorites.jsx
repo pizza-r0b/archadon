@@ -21,7 +21,7 @@ class Favorites extends Component {
   }
   render() {
     return (
-      <div className="flex-parent flex-grow-1">
+      <div className="full-width">
         {this.props.loading.page === 'favorites' ?
           (
             <div className="flex-parent flex-grow-1 flex-align-center flex-justify-center">
@@ -30,24 +30,16 @@ class Favorites extends Component {
           )
           :
           (
-            <div>
-              <h2 className="title margin--bottom-3">Favorites</h2>
+            <div className="wrap">
+              <h2 className="margin--bottom-3">Favorited Items</h2>
               {
-                this.props.favorites.length > 0 ?
-                  (
-                    <div className="favorites">
-                      <ProductList hideFav className="flex-justify-start margin--top-3" hideBtn products={this.props.favorites} />
-                    </div>
-                  )
-                  :
-                  (
-                    <div className="flex-grow-1">
-                      <p className="margin--bottom-8">Aww. You haven't favorited anything yet.</p>
-                      <Link to="/shop" className="btn btn--first">Shop Now</Link>
-                    </div>
-                  )
+                this.props.favorites.length > 0 ? <ProductList products={this.props.favorites} /> : (
+                  <div className="flex-grow-1">
+                    <p className="margin--bottom-8">Aww. You haven't favorited anything yet.</p>
+                    <Link to="/shop" className="btn--primary">Shop Now</Link>
+                  </div>
+                )
               }
-
             </div>
           )
         }

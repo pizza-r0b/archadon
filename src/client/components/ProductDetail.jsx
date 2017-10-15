@@ -116,7 +116,7 @@ class ProductDetail extends React.Component {
               <p style={{ fontSize: '12px' }} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
             <div className="product-details-title">
-              <FavoriteBtn className="heart" id={product._id} />
+              <FavoriteBtn className="heart" productId={product._id} />
               <h2 className="margin--y-3">{product.Name}</h2>
               <p className="font-color--copyColor margin--bottom-1">{product.LongDescription}</p>
               <p className="font-color--copyColor">{product.ShortDescription}</p>

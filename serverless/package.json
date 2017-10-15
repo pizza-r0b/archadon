@@ -4,7 +4,7 @@
     "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
     "dev:start": "webpack --config ./webpack/dev.js --watch",
     "prod:start": "webpack --config ./webpack/prod.js -p",
-    "deploy:devfunction": "sls deploy function --function getUserData --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
+    "deploy:devfunction": "sls deploy function --function getUserFavorites --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
     "algoliasearch": "^3.24.0",

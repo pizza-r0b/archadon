@@ -57,7 +57,7 @@ function Orders({ orders }: { orders: Array<Object> }) {
       {orders.length === 0 && (
         <div className="full-width">
           <p className="margin--bottom-8">You don't have any recent orders.</p>
-          <Link to="/shop" className="btn btn--first">Shop Now</Link>
+          <Link to="/shop" className="btn--primary">Shop Now</Link>
         </div>
       )}
       {orders.length > 0 && orders.map(order => (

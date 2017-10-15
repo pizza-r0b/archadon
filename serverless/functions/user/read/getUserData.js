@@ -60,8 +60,8 @@ export async function _getUserData(event, context, callback) {
     body: JSON.stringify({
       data: {
         ...userData,
-        orders
-      }
+        orders,
+      },
     }),
   });
 

@@ -12,6 +12,11 @@ export const requestUserData = (ID: string, token: string) => request('GET', url
   authtoken: token,
 });
 
+
+export const requestUserFavorites = (_id: string, authtoken: string) => request('POST', url(`user/v1/getFavorites/${_id}`), null, {
+  authtoken,
+});
+
 export const requestProductList = (page: string, body = {}) => request('POST', `/search/products${page ? `?page=${page}` : ''}`, body);
 
 export const requestProductData = (ID: string) => request('GET', url(`product/v1/data/${ID}`));

@@ -52,6 +52,21 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
     }
   );
   const linkArr = [...links, ...(user ? auth : nonAuth)];
+
+  let accountLink;
+
+  if (user.ID && user.authToken) {
+    accountLink = [
+      <Link key="signout" to={'/signout'} className="margin--right-10 small-caps account-link">Sign Out</Link>,
+      <Link key="favs" to='/account/favorites' className="margin--right-10 small-caps account-link">
+        <div style={{ cursor: 'pointer' }} className="heart">
+          <Svg color="#bf9b30" variant="icon-heart-filled" />
+        </div>
+      </Link>,
+    ];
+  } else {
+    accountLink = <Link to='/login' className="margin--right-10 small-caps account-link">Account</Link>;
+  }
   return (
     <nav className={classes}>
       <div style={{ zIndex: 10 }} className="menu-overlay">
@@ -75,10 +90,10 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
         <Link to="/"><Svg variant="archadon-logo" color={navOpen ? '#FFF' : '#000'} /></Link>
       </div>
       <div className="flex-parent flex-align-center" style={{ zIndex: 12 }}>
-        <Link to={user ? '/account': '/login'} className="margin--right-10 small-caps account-link">Account</Link>
+        {accountLink}
         <Link to="/cart" className="cart">
-        {qty > 0 && <div className="cart-qty">{qty}</div>}
-        <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
+          {qty > 0 && <div className="cart-qty">{qty}</div>}
+          <Svg variant="icon-cart" color={navOpen ? '#FFF' : '#000'} />
         </Link>
       </div>
     </nav>

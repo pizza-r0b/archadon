@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductList from 'Components/ProductList';
 import { connect } from 'react-redux';
-import ProductTile from 'Components/ProductTile';
 import { action } from 'Utils';
 import actions from 'Actions';
 import Filters from 'Ui/Filters';

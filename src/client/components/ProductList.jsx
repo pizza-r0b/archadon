@@ -7,7 +7,7 @@ function ProductList({ products }) {
   return (
     <div className="product-list-wrap wrap">
       {products.map(product => (
-        <div className="product-tile">
+        <div key={product._id} className="product-tile">
           <div className="product-tile-inner">
             <ProductDetailLink product={product}>
               <div className="product-tile-img">
@@ -21,7 +21,7 @@ function ProductList({ products }) {
 
             <div className="margin--top-2 flex-parent flex-justify-between">
               <p className="product-tile-title font-color--light">{(product.Price).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
-              <FavoriteBtn className="heart" id={product.ID} />
+              <FavoriteBtn className="heart" productId={product._id} />
             </div>
           </div>
         </div>

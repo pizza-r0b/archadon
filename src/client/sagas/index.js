@@ -41,7 +41,7 @@ import {
   requestUserData,
   requestCollection,
   requestSignUp,
-  requestBatch,
+  requestUserFavorites,
   requestProductList,
   requestProductData,
   requestPurchase,
@@ -390,7 +390,7 @@ export function* loadFavoritesSaga() {
       yield put(action(SET_LOADING_PAGE, ''));
       return;
     }
-    const { response: data } = yield call(requestBatch, favorites);
+    const { response: { data: { favorites: data } } } = yield call(requestUserFavorites, ID, authToken);
     yield put(action(FAVORITES_LOADED, data));
   } catch (e) {
     yield put(action(SET_LOADING_PAGE, ''));

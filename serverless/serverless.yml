@@ -148,6 +148,27 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
 
+  getUserFavorites:
+    handler: functions/user/read/getFavorites.getUserFavorites
+    events:
+      - http:
+          path: user/v1/getFavorites/{id}
+          method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+          request:
+            parameters:
+              paths:
+                id: true
+
   loginUser:
     handler: functions/user/login/index.login
     events:

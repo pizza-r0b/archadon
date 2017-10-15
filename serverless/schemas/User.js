@@ -1,12 +1,9 @@
 const create = require('./create');
 const bcrypt = require('bcrypt-nodejs');
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
 const User = create('User', {
   GodMode: { type: Boolean, required: true, default: false },
   Password: { type: String, required: true },
-  Favorites: [{ type: Schema.Types.ObjectId, ref: 'ProductItem' }],
   Email: {
     type: String,
     required: true,
