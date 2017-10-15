@@ -13,7 +13,7 @@ export const requestUserData = (ID: string, token: string) => request('GET', url
 });
 
 
-export const requestUserFavorites = (_id: string, authtoken: string) => request('POST', url(`user/v1/getFavorites/${_id}`), null, {
+export const requestUserFavorites = (_id: string, authtoken: string) => request('GET', url(`user/v1/getFavorites/${_id}`), null, {
   authtoken,
 });
 

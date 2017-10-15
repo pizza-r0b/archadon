@@ -45480,7 +45480,7 @@ var requestUserData = exports.requestUserData = function requestUserData(ID, tok
 };
 
 var requestUserFavorites = exports.requestUserFavorites = function requestUserFavorites(_id, authtoken) {
-  return (0, _Utils.request)('POST', url('user/v1/getFavorites/' + _id), null, {
+  return (0, _Utils.request)('GET', url('user/v1/getFavorites/' + _id), null, {
     authtoken: authtoken
   });
 };

@@ -36,8 +36,6 @@ export default function html(routerWithContext, props) {
                 <script>
                     window.__INITIAL_STATE__ = ${JSON.stringify(props)};
                 </script>
-                <script src="https://use.typekit.net/vgi7zyh.js"></script>
-                <script>try{Typekit.load({ async: true });}catch(e){}</script>
                 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
                 <script>
                     Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');

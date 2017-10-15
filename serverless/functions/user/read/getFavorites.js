@@ -4,6 +4,13 @@ import { UserData } from 'schemas/User';
 import getProductById from 'utils/getProductById';
 import connect from 'utils/mongoConnect';
 
+export function getFavoriteDocuments(_id) {
+  return UserData.find({
+    Item: _id,
+    Path: { $regex: '^Favorites' },
+  }).lean().exec();
+}
+
 export async function _getUserFavorites(event, context, callback) {
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
@@ -25,10 +32,7 @@ export async function _getUserFavorites(event, context, callback) {
     }));
   }
 
-  const docs = await UserData.find({
-    Item: _id,
-    Path: { $regex: '^Favorites' },
-  }).lean().exec();
+  const docs = await getFavoriteDocuments(_id);
 
   const promises = docs.map(async ({ Value }) => {
     if (Value) {

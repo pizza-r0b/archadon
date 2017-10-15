@@ -2,7 +2,9 @@ import verifyJwt from 'utils/verifyJwt';
 import addCorsHeaders from 'utils/corsRes';
 import connect from 'utils/mongoConnect';
 import { UserItem, UserData } from 'schemas/User';
+import { getFavoriteDocuments } from '../read/getFavorites';
 import { toPaths } from 'utils/DolliDB/build/main.min.js';
+import getDeletedDiff from 'utils/DolliDB/src/utils/getDeleted';
 
 async function _updateUserProfile(event, context, callback) {
   let body;
@@ -35,13 +37,30 @@ async function _updateUserProfile(event, context, callback) {
     const ID = await verifyJwt(token, userID);
     const user = await UserItem.findById(ID).exec();
     if (user) {
+      const deleteStatements = [];
+      if (data.Favorites) {
+        const preFavorites = await getFavoriteDocuments(ID);
+        if (data.Favorites.length < preFavorites.length) {
+          deleteStatements.push(
+            ...Object.keys(getDeletedDiff(preFavorites, data.Favorites)).map((index) => ({
+              deleteOne: {
+                filter: { Item: ID, Path: `Favorites.${index}` },
+              },
+            }))
+          );
+        }
+      }
       const bulkWriteStatements = toPaths(data).map(([Path, Value]) => ({
         updateOne: {
-          filter: { Item: user.get('_id'), Path },
+          filter: { Item: ID, Path },
           update: { Value },
           upsert: true,
         },
       }));
+
+      if (deleteStatements.length) {
+        bulkWriteStatements.unshift(...deleteStatements);
+      }
 
       await UserData.bulkWrite(bulkWriteStatements);
 
@@ -54,7 +73,7 @@ async function _updateUserProfile(event, context, callback) {
   } catch (e) {
     callback(null, addCorsHeaders({
       statusCode: 401,
-      body: JSON.stringify({ error: e }),
+      body: JSON.stringify({ error: e.message }),
     }));
   }
 }

@@ -1,14 +1,19 @@
-# Redux Server Rendering Starter
-## Now With Hot Module Reloading, Redux Sagas, and React Router 4
+# archadon.com website
 
 ```bash
 yarn install
 ```
 
 ```bash
-npm start
+yarn run dev:start
 ```
 
-App will run at http://localhost:3000 when done building.
+## Deploying to Dev Environment
 
-![now we here](http://i.giphy.com/l3V0pGcu4HosNs57a.gif)
+```bash
+yarn run dev:predeploy:build
+```
+After this step you will need to commit to github for elastic beanstalk. After committing run:
+```bash
+  yarn run dev:deploy
+```
