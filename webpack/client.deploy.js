@@ -8,8 +8,6 @@ const defaults = base({});
 
 const outputPath = path.resolve(__dirname, '../public');
 
-process.env.DEV_DEPLOY = true;
-
 const clientConfig = base({
   rules: [
     {
@@ -36,11 +34,11 @@ const clientConfig = base({
     }),
     plugins: [
       new Dotenv({
-        path: path.resolve(__dirname, '../.env_dev'),
+        path: path.resolve(__dirname, '../.env_deploy_dev'),
       }),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
-      new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT', 'DEV_DEPLOY']),
+      // new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT', 'DEV_DEPLOY']),
     ],
   },
 });

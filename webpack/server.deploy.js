@@ -4,8 +4,6 @@ const base = require('./base.js');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
-process.env.DEV_DEPLOY = true;
-
 const serverConfig = base({
   rules: [
     {
@@ -25,7 +23,7 @@ const serverConfig = base({
     target: 'node',
     plugins: [
       new Dotenv({
-        path: path.resolve(__dirname, '../.env_dev'),
+        path: path.resolve(__dirname, '../.env_deploy_dev'),
       }),
       new webpack.DefinePlugin({
         'process.env': {
