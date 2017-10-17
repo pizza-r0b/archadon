@@ -6321,6 +6321,7 @@
         justify-content: space-between;
         flex-direction: column;
         padding-top: 200px;
+        z-index: 5;
         transform: translateY(-10%); }
         .home-slider-item:nth-child(1) .headlines .line {
           height: 60px;
@@ -6388,7 +6389,8 @@
   position: relative; }
 
 .main-headline {
-  position: absolute; }
+  position: absolute;
+  background-color: #FFFFFF; }
 
 .homeslider-headline-transition-enter:not(.healines-link-wrap) {
   opacity: 0;
@@ -6493,12 +6495,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px 0 100px; }
+  margin: 25px 0 100px; }
   .home-slider-btns .ball {
     cursor: pointer;
     margin: 0 10px;
-    width: 5px;
-    height: 5px;
+    width: 8px;
+    height: 8px;
     border-radius: 15px;
     border: 1px solid #000;
     background-color: #FFFFFF;

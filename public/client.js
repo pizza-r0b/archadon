@@ -39184,12 +39184,12 @@ function About() {
             _react2.default.createElement(
               'h1',
               null,
-              'About Us'
+              'About'
             ),
             _react2.default.createElement(
               'h2',
               null,
-              'Hand woven, one of a kind, beautiful rugs.'
+              'Art beneath your feet'
             ),
             _react2.default.createElement(
               'div',
@@ -39213,9 +39213,47 @@ function About() {
           )
         ),
         _react2.default.createElement(
-          'p',
+          'div',
           { className: 'margin--top-15' },
-          'We take pride in our collection. Each of our rugs are hand-picked from the source. We promise to deliver only high-quality, hand-made, rugs. We want to give you something that you can take pride in. Since 1985 our supplier has traveled to the tribal area on the Afghan/Pakistan border and Tibet establishing lasting relationships with the very best rug weavers in those areas.'
+          _react2.default.createElement(
+            'p',
+            null,
+            'There was a time in your life when dorm-level decorating was ',
+            _react2.default.createElement(
+              'i',
+              null,
+              'still cool'
+            ),
+            '. Remember that? Before you ',
+            _react2.default.createElement(
+              'i',
+              null,
+              'grew up'
+            ),
+            ' and developed ',
+            _react2.default.createElement(
+              'i',
+              null,
+              'awesome taste'
+            ),
+            '.'
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'margin--top-3' },
+            'Now? Well, it\u2019s time to live it up. Level up. Time to tie the room together. A handcrafted, heirloom-quality rug is a piece of art steeped in tradition, one that evokes faraway places and a whiff of the exotic.'
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'margin--top-3' },
+            'It\u2019s classy, classic, cultured \u2014 ',
+            _react2.default.createElement(
+              'i',
+              null,
+              'just like you'
+            ),
+            '.'
+          )
         )
       )
     ),
@@ -39228,12 +39266,32 @@ function About() {
         _react2.default.createElement(
           'h1',
           { className: 'margin--bottom-10' },
-          'I was inspired by the integrity and simple grace of the Tibetan people.'
+          'Modern classics, old souls'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Each handcrafted rug in our collection is the product of timeless, traditional craftsmanship, great attention to detail, and only the world\u2019s finest hand-spun wool. We travel thousands of miles to far-flung places to handpick them directly at the source. We also build relationships with the best weavers in the world, collaborating with them on vibrant, appealing designs.'
         ),
         _react2.default.createElement(
           'p',
           { className: 'margin--top-3' },
-          'We knew little of one another and yet, we saw many things in the same way. You will see this in the way we create rugs: attention to detail, dedication to craft. Only traditional methods and the finest hand spun Tibetan wool will do. Like the integrity that defines a culture, there is integrity in this rug. It is born of pure craftsmanship. There is a magical quality too. It\'s in the colors, the design. It is the look of today: exciting, stirring, vital. The union of two worlds: a modern face with a soul that reaches far back in time. The only difference between this rug and other works of art is that you walk on it, you live with it, it becomes part of you. Inspiration that lasts a lifetime.'
+          'The result is nothing short of art\u2014for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.'
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'margin--top-3' },
+          'If that\u2019s not sophistication, we don\u2019t know what is.'
+        ),
+        _react2.default.createElement(
+          'p',
+          { className: 'margin--top-3' },
+          'Come on\u2014let\u2019s go shopping.'
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/shop', className: 'btn--primary margin--top-6' },
+          'Shop'
         )
       ),
       _react2.default.createElement(
@@ -40930,6 +40988,20 @@ var Home = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'wrap' },
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10' },
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Art for your floors'
+            ),
+            _react2.default.createElement(
+              'h2',
+              { className: 'font-color--lighter small-caps' },
+              'Handcrafted fine wool rugs'
+            )
+          ),
           _react2.default.createElement(_HomeSlider2.default, null),
           _react2.default.createElement(_HomeFeaturedBoxes2.default, null),
           _react2.default.createElement(
@@ -41001,6 +41073,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Constants = __webpack_require__("./src/client/constants.js");
 
+var _reactRouterDom = __webpack_require__("./node_modules/react-router-dom/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function HomeFeaturedBoxes() {
@@ -41024,21 +41098,21 @@ function HomeFeaturedBoxes() {
           _react2.default.createElement(
             'h2',
             null,
-            'Nice'
+            'Modern Classics'
           ),
           _react2.default.createElement(
             'h3',
             { className: 'font-color--lighter uppercase' },
-            'Really nice'
+            'with old souls'
           )
         ),
         _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
-            'a',
-            { href: '#', className: 'btn btn--alt' },
-            'Shop'
+            _reactRouterDom.Link,
+            { to: '/about', className: 'btn btn--alt' },
+            'About our rugs'
           )
         )
       ),
@@ -41061,12 +41135,12 @@ function HomeFeaturedBoxes() {
           _react2.default.createElement(
             'h2',
             null,
-            'Cool'
+            'Find'
           ),
           _react2.default.createElement(
             'h3',
             { className: 'font-color--lighter uppercase' },
-            'And Lively'
+            'Your favorite'
           )
         ),
         _react2.default.createElement(
@@ -41157,27 +41231,27 @@ var _ProductDetailLink2 = _interopRequireDefault(_ProductDetailLink);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var images = [{
-  headline: 'Art',
-  title: 'No, Floor Art',
-  subtitle: 'Wall Art?',
+  headline: 'Arty',
+  title: 'Floor Art',
+  subtitle: 'Bold, beautiful',
   image: _Constants.IMAGE_ORIGIN + '/6x9_32963_29737.jpg',
   id: '59bdbf4f857c5b78b3a4c4ee'
 }, {
   headline: 'Abstract',
-  title: 'So Cool',
-  subtitle: 'Tibetan Wool',
+  title: 'Wild imaginations',
+  subtitle: 'A canvas for',
   image: _Constants.IMAGE_ORIGIN + '/3.1x5.1_32438_29431.jpg',
   id: '59bdbf4f857c5b78b3a4c440'
 }, {
   headline: 'Classic',
-  title: 'For Classy People',
-  subtitle: 'The Classic Rug',
+  title: 'For classy people',
+  subtitle: 'Classic styles',
   image: _Constants.IMAGE_ORIGIN + '/6x9_S_2081_50.jpg',
   id: '59bdbf4f857c5b78b3a4c4f0'
 }, {
-  headline: 'More Classic',
-  title: 'Oh My',
-  subtitle: 'Red Dye',
+  headline: 'Contemporary',
+  title: 'Off the beaten path',
+  subtitle: 'A little bit',
   image: _Constants.IMAGE_ORIGIN + '/6.1x9.1_S_2090_59.jpg',
   id: '59bdbf4f857c5b78b3a4c49d'
 }].map(function (image, i) {
@@ -41276,6 +41350,11 @@ var HomeSlider = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'headlines' },
+              _react2.default.createElement(
+                'h2',
+                null,
+                'What\'s your style?'
+              ),
               _react2.default.createElement(
                 _reactTransitionGroup.CSSTransitionGroup,
                 {
@@ -41918,7 +41997,7 @@ var ON_NAV_OPEN = _Actions2.default.ON_NAV_OPEN;
 
 var links = [{ name: 'Shop', route: '/shop' }, { name: 'About', route: '/about' }, { name: 'Contact', route: '/contact' }, { name: 'Shipping & Returns', route: '/shipping-and-returns' }];
 
-var nonAuth = [{ name: 'Sign Up', route: '/account' }, { name: 'Sign In', route: '/account' }];
+var nonAuth = [{ name: 'Sign Up', route: '/signup' }, { name: 'Log In', route: '/login' }];
 
 var auth = [{ name: 'Recent Orders', route: '/account/orders' }, { name: 'Favorites', route: '/account/favorites' }, { name: 'Sign Out', route: '/signout' }];
 
@@ -41935,7 +42014,7 @@ function Navigation(_ref) {
     open: navOpen,
     fixed: fixed
   });
-  var linkArr = [].concat(links, (0, _toConsumableArray3.default)(user ? auth : nonAuth));
+  var linkArr = [].concat(links, (0, _toConsumableArray3.default)(user.ID && user.authToken ? auth : nonAuth));
 
   var accountLink = void 0;
 
@@ -42538,9 +42617,18 @@ var _classnames2 = _interopRequireDefault(_classnames);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var aboutCopy = {
-  tibetan: 'Tibetan wool, so cool! This rug is hand-knotted making it one of a kind. This rug is made from raw wool taken from Nepal to Tibet. Tibetan sheep live at high altitudes in extreme conditions and are known for producing some of the finest wool in the world. The wool is hand-carded, washed and hand-spun. The hand-knotting process enables us to produce a much denser pile than the finest quality machine-made rug. The rug will wear longer, be much more soil- and stain-resistant, and, once soiled, will clean up better than any machine-made counterparts.',
-  newZealand: 'Talk about whoa! This rug is hand-knotted making it one of a kind. This rug is made from raw wool from our friends (sheep) in New Zealand. The wool is hand-carded, washed and hand-spun. The hand-knotting process enables us to produce a much denser pile than the finest quality machine-made rug. The rug will wear longer, be much more soil- and stain-resistant, and, once soiled, will clean up better than any machine-made counterparts.',
-  hemp: 'Who doesn\'t like hemp?? This line is simple, versatile, and affordable. Put it inside, or put it outside. It\'s your life - live it.'
+  tibetan: {
+    title: 'About Tibetan Wool',
+    paragraphs: ['Close your eyes and be transported to a wild, rugged place thousands of miles away. Home to Mt. Everest, Tibet is the highest area on earth, with an average elevation of over three miles above sea level. Tibetan sheep live at these lofty altitudes in extreme conditions. The “shear” toughness it takes to survive this climate produces some of the finest wool in the world.', 'After it’s shorn, the wool is hand-carded, washed, and hand-spun. The hand-knotting process creates a much denser pile than even the finest-quality machine-made rug. Your Tibetan wool rug will outlast any machine-made rug and is far more soil- and stain-resistant.', 'Go on—don’t be sheepish. Shop and save your faves. Which one makes your heart bleat faster?']
+  },
+  newZealand: {
+    title: 'About New Zealand Wool',
+    paragraphs: ['Kiwi sheep produce fine fleece. It’s true—we aren’t pulling the wool over your eyes. New Zealand’s cool climate, dominated by the mountains and sea, creates lush grazing lands. Good stuff in, good stuff out, we say.', 'After the sheep are shorn, their wool is hand-carded, washed, and hand-spun. It’s then made into a one-of-a-kind rug. The hand-knotting process enables us to create a much denser pile than even the finest-quality machine-made rug. Your New Zealand wool rug will wear longer and be much more soil- and stain-resistant than any machine-made product.', 'Come now, let’s shepherd you through our selection. Shop and save your faves.']
+  },
+  hemp: {
+    title: 'Hemp Rugs',
+    paragraphs: ['Who doesn\'t like hemp? This line is simple, versatile, and affordable. Put it inside, or put it outside. It\'s your life - live it.']
+  }
 };
 
 var ImageZoom = function (_React$Component) {
@@ -42745,14 +42833,16 @@ var ProductDetail = function (_React$Component2) {
             { className: 'product-details-about' },
             _react2.default.createElement(
               'h2',
-              { className: 'margin--bottom-5' },
-              'About this rug'
+              { className: 'margin--bottom-2' },
+              about.title
             ),
-            _react2.default.createElement(
-              'p',
-              null,
-              about
-            )
+            about.paragraphs.map(function (p) {
+              return _react2.default.createElement(
+                'p',
+                { className: 'margin--top-3' },
+                p
+              );
+            })
           ),
           _react2.default.createElement(
             'div',
@@ -43425,37 +43515,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Shipping() {
   return _react2.default.createElement(
     "div",
-    { className: "global-padding" },
+    { className: "wrap" },
     _react2.default.createElement(
       "h1",
       null,
-      "Shipping & Returns"
+      "We like making people happy."
     ),
     _react2.default.createElement(
       "h2",
-      { className: "title" },
+      null,
+      "Free shipping + easy returns tend to do it."
+    ),
+    _react2.default.createElement(
+      "h3",
+      { className: "underline-header margin--top-10" },
       "Shipping"
     ),
     _react2.default.createElement(
       "p",
       null,
-      "We offer FREE shipping in the US."
+      "All shipping on US orders is free\u2014for you. Isn\u2019t that cool? We think so, too."
     ),
     _react2.default.createElement(
-      "h2",
-      { className: "title" },
+      "h3",
+      { className: "underline-header margin--top-10" },
       "Returns"
     ),
     _react2.default.createElement(
       "p",
       null,
-      "Not happy with your rug? Email us within 30 days at ",
+      "That rug should really tie the room together. If you\u2019re not happy, neither are we. Email us at ",
       _react2.default.createElement(
-        "strong",
-        null,
+        "span",
+        { className: "strong" },
         "returns@archadon.com"
       ),
-      " and we will send you a shipping label. You will receive a full refund if the rug is returned to us like new."
+      " within 30 days and we\u2019ll send you a return shipping label. As long as your rug is returned to us in like-new condition, you\u2019ll receive a full refund."
     )
   );
 }
@@ -43711,7 +43806,9 @@ function SignInForm(_ref) {
   var signupmarkup = void 0;
   var loginmarkup = void 0;
 
-  if (path === '/signup') {
+  var isSignUp = path === '/signup';
+
+  if (isSignUp) {
     signupmarkup = _react2.default.createElement(_Register2.default, null);
   } else {
     signupmarkup = _react2.default.createElement(
@@ -43725,7 +43822,7 @@ function SignInForm(_ref) {
       _react2.default.createElement(
         'h2',
         { className: 'underline-header' },
-        'Your Account'
+        'Login'
       ),
       _react2.default.createElement(_Login2.default, null)
     );
@@ -43733,32 +43830,64 @@ function SignInForm(_ref) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'wrap flex-parent flex-align-center' },
+    { className: 'wrap' },
+    !isSignUp && _react2.default.createElement(
+      'div',
+      { className: 'margin--bottom-10' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        'Welcome back!'
+      ),
+      _react2.default.createElement(
+        'h2',
+        null,
+        'It\u2019s always nice to see an old friend.'
+      )
+    ),
     _react2.default.createElement(
       'div',
-      { className: 'signin flex-grow-1' },
-      loginmarkup,
+      { className: 'flex-parent flex-align-center' },
       _react2.default.createElement(
         'div',
-        { className: 'signin-section flex-parent' },
+        { className: 'signin flex-grow-1' },
+        loginmarkup,
+        isSignUp && _react2.default.createElement(
+          'div',
+          { className: 'margin--bottom-5' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Don\u2019t be sheepish'
+          ),
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Shopping is easier when you create an account'
+          )
+        ),
         _react2.default.createElement(
           'div',
-          { className: 'signin-create flex-parent flex-grow-1 flex-col flex-justify-between' },
+          { className: 'signin-section flex-parent' },
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'signin-create flex-parent flex-grow-1 flex-col flex-justify-between' },
             _react2.default.createElement(
-              'h2',
-              { className: 'underline-header' },
-              'Create Account'
-            ),
-            _react2.default.createElement(
-              'p',
+              'div',
               null,
-              'Create an account and you will be able to save your favorite rugs and view them later! You can also save your address for quicker checkout. We\'ll send you the occasional promo code - or cool update. We will never spam you, or sell your data.'
-            )
-          ),
-          signupmarkup
+              _react2.default.createElement(
+                'h2',
+                { className: 'underline-header' },
+                'Create an account'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                'Make shopping easier. Save your faves and view them later\u2014and speed up checkout when you\u2019ve found the rug of your dreams. We\u2019ll never spam you or sell your data. What we will do is send you the occasional awesome promo code or cool update.'
+              )
+            ),
+            signupmarkup
+          )
         )
       )
     )
