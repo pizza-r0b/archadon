@@ -10,6 +10,10 @@ class Home extends React.Component {
     return (
       <div style={{ width: '100%' }}>
         <div className="wrap">
+          <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
+            <h1>Art for your floors</h1>
+            <h2 className="font-color--lighter small-caps">Handcrafted fine wool rugs</h2>
+          </div>
           <HomeSlider />
           <HomeFeaturedItems />
           <div className="slim-box">

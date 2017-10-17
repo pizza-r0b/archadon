@@ -34,7 +34,7 @@ export async function _getUserFavorites(event, context, callback) {
 
   const docs = await getFavoriteDocuments(_id);
 
-  const promises = docs.map(async ({ Value }) => {
+  const promises = docs.filter(({ Value }) => Value !== '<<EmptyArray>>').map(async ({ Value }) => {
     if (Value) {
       const product = await getProductById(Value);
       return product;

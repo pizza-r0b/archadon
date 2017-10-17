@@ -10,9 +10,28 @@ import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
 
 const aboutCopy = {
-  tibetan: 'Tibetan wool, so cool! This rug is hand-knotted making it one of a kind. This rug is made from raw wool taken from Nepal to Tibet. Tibetan sheep live at high altitudes in extreme conditions and are known for producing some of the finest wool in the world. The wool is hand-carded, washed and hand-spun. The hand-knotting process enables us to produce a much denser pile than the finest quality machine-made rug. The rug will wear longer, be much more soil- and stain-resistant, and, once soiled, will clean up better than any machine-made counterparts.',
-  newZealand: 'Talk about whoa! This rug is hand-knotted making it one of a kind. This rug is made from raw wool from our friends (sheep) in New Zealand. The wool is hand-carded, washed and hand-spun. The hand-knotting process enables us to produce a much denser pile than the finest quality machine-made rug. The rug will wear longer, be much more soil- and stain-resistant, and, once soiled, will clean up better than any machine-made counterparts.',
-  hemp: 'Who doesn\'t like hemp?? This line is simple, versatile, and affordable. Put it inside, or put it outside. It\'s your life - live it.',
+  tibetan: {
+    title: 'About Tibetan Wool',
+    paragraphs: [
+      'Close your eyes and be transported to a wild, rugged place thousands of miles away. Home to Mt. Everest, Tibet is the highest area on earth, with an average elevation of over three miles above sea level. Tibetan sheep live at these lofty altitudes in extreme conditions. The “shear” toughness it takes to survive this climate produces some of the finest wool in the world.',
+      'After it’s shorn, the wool is hand-carded, washed, and hand-spun. The hand-knotting process creates a much denser pile than even the finest-quality machine-made rug. Your Tibetan wool rug will outlast any machine-made rug and is far more soil- and stain-resistant.',
+      'Go on—don’t be sheepish. Shop and save your faves. Which one makes your heart bleat faster?',
+    ],
+  },
+  newZealand: {
+    title: 'About New Zealand Wool',
+    paragraphs: [
+      'Kiwi sheep produce fine fleece. It’s true—we aren’t pulling the wool over your eyes. New Zealand’s cool climate, dominated by the mountains and sea, creates lush grazing lands. Good stuff in, good stuff out, we say.',
+      'After the sheep are shorn, their wool is hand-carded, washed, and hand-spun. It’s then made into a one-of-a-kind rug. The hand-knotting process enables us to create a much denser pile than even the finest-quality machine-made rug. Your New Zealand wool rug will wear longer and be much more soil- and stain-resistant than any machine-made product.',
+      'Come now, let’s shepherd you through our selection. Shop and save your faves.',
+    ],
+  },
+  hemp: {
+    title: 'Hemp Rugs',
+    paragraphs: [
+      'Who doesn\'t like hemp? This line is simple, versatile, and affordable. Put it inside, or put it outside. It\'s your life - live it.',
+    ],
+  },
 };
 
 class ImageZoom extends React.Component {
@@ -138,8 +157,10 @@ class ProductDetail extends React.Component {
 
         <section className="wrap product-details-about-wrap margin--top-5">
           <div className="product-details-about">
-            <h2 className="margin--bottom-5">About this rug</h2>
-            <p>{about}</p>
+            <h2 className="margin--bottom-2">{about.title}</h2>
+            {about.paragraphs.map(p => (
+              <p className="margin--top-3">{p}</p>
+            ))}
           </div>
           <div className="product-details-materials">
             <div className="accordian">

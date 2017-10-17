@@ -1,5 +1,6 @@
 import React from 'react';
 import { IMAGE_ORIGIN } from 'Constants';
+import { Link } from 'react-router-dom';
 
 function HomeFeaturedBoxes() {
   return (
@@ -10,11 +11,11 @@ function HomeFeaturedBoxes() {
         </div>
         <div className="section-1">
           <div>
-            <h2>Nice</h2>
-            <h3 className="font-color--lighter uppercase">Really nice</h3>
+            <h2>Modern Classics</h2>
+            <h3 className="font-color--lighter uppercase">with old souls</h3>
           </div>
           <div>
-            <a href="#" className="btn btn--alt">Shop</a>
+            <Link to="/about" className="btn btn--alt">About our rugs</Link>
           </div>
         </div>
         <div className="inner" />
@@ -25,8 +26,8 @@ function HomeFeaturedBoxes() {
         </div>
         <div className="section-1">
           <div>
-            <h2>Cool</h2>
-            <h3 className="font-color--lighter uppercase">And Lively</h3>
+            <h2>Find</h2>
+            <h3 className="font-color--lighter uppercase">Your favorite</h3>
           </div>
           <div>
             <a href="#" className="btn btn--alt">Shop</a>

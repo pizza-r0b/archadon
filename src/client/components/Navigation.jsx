@@ -22,8 +22,8 @@ const links = [
 ];
 
 const nonAuth = [
-  { name: 'Sign Up', route: '/account' },
-  { name: 'Sign In', route: '/account' },
+  { name: 'Sign Up', route: '/signup' },
+  { name: 'Log In', route: '/login' },
 ];
 
 const auth = [
@@ -51,7 +51,7 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
       fixed,
     }
   );
-  const linkArr = [...links, ...(user ? auth : nonAuth)];
+  const linkArr = [...links, ...(user.ID && user.authToken ? auth : nonAuth)];
 
   let accountLink;
 

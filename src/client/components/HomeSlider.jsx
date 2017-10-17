@@ -7,30 +7,30 @@ import ProductDetailLink from 'Components/ProductDetailLink';
 
 const images = [
   {
-    headline: 'Art',
-    title: 'No, Floor Art',
-    subtitle: 'Wall Art?',
+    headline: 'Arty',
+    title: 'Floor Art',
+    subtitle: 'Bold, beautiful',
     image: `${IMAGE_ORIGIN}/6x9_32963_29737.jpg`,
     id: '59bdbf4f857c5b78b3a4c4ee',
   },
   {
     headline: 'Abstract',
-    title: 'So Cool',
-    subtitle: 'Tibetan Wool',
+    title: 'Wild imaginations',
+    subtitle: 'A canvas for',
     image: `${IMAGE_ORIGIN}/3.1x5.1_32438_29431.jpg`,
     id: '59bdbf4f857c5b78b3a4c440',
   },
   {
     headline: 'Classic',
-    title: 'For Classy People',
-    subtitle: 'The Classic Rug',
+    title: 'For classy people',
+    subtitle: 'Classic styles',
     image: `${IMAGE_ORIGIN}/6x9_S_2081_50.jpg`,
     id: '59bdbf4f857c5b78b3a4c4f0',
   },
   {
-    headline: 'More Classic',
-    title: 'Oh My',
-    subtitle: 'Red Dye',
+    headline: 'Contemporary',
+    title: 'Off the beaten path',
+    subtitle: 'A little bit',
     image: `${IMAGE_ORIGIN}/6.1x9.1_S_2090_59.jpg`,
     id: '59bdbf4f857c5b78b3a4c49d',
   },
@@ -105,6 +105,7 @@ class HomeSlider extends React.Component {
         <div className="home-slider">
           <div className="home-slider-item">
             <div className="headlines">
+              <h2>What's your style?</h2>
               <CSSTransitionGroup
                 transitionName="homeslider-headline-transition"
                 transitionEnterTimeout={920}

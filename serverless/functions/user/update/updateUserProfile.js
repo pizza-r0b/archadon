@@ -41,13 +41,21 @@ async function _updateUserProfile(event, context, callback) {
       if (data.Favorites) {
         const preFavorites = await getFavoriteDocuments(ID);
         if (data.Favorites.length < preFavorites.length) {
-          deleteStatements.push(
-            ...Object.keys(getDeletedDiff(preFavorites, data.Favorites)).map((index) => ({
+          if (!data.Favorites.length) {
+            deleteStatements.push({
               deleteOne: {
-                filter: { Item: ID, Path: `Favorites.${index}` },
+                filter: { Item: ID, Path: 'Favorites' },
               },
-            }))
-          );
+            });
+          } else {
+            deleteStatements.push(
+              ...Object.keys(getDeletedDiff(preFavorites, data.Favorites)).map((index) => ({
+                deleteOne: {
+                  filter: { Item: ID, Path: `Favorites.${index}` },
+                },
+              }))
+            );
+          }
         }
       }
       const bulkWriteStatements = toPaths(data).map(([Path, Value]) => ({
