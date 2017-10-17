@@ -26,6 +26,11 @@ const {
   REPLACE_CART,
   PRODUCT_DETAIL_LOADED,
   ON_CLEAR_FILTERS,
+  CLEAR_REDIRECT_PATH,
+  REQUEST_START,
+  REQUEST_DONE,
+  REQUEST_ERROR,
+  UPDATE_USER_DATA,
   REMOVE_FROM_CART,
   LOAD_MORE_DONE,
   LOAD_MORE,
@@ -204,6 +209,7 @@ export function* getUserDataSaga() {
 
     if (redirectPath) {
       yield put(push(redirectPath));
+      // yield put(action(CLEAR_REDIRECT_PATH));
     }
   } catch (e) {
     yield put(action(CLEAR_AUTHENTICATION_DATA));
@@ -377,6 +383,24 @@ export function* toggleFavoriteSaga() {
   }
 }
 
+export function* updateUserDataSaga({ payload: { data: payload, id } }) {
+  const { authToken, ID } = yield select(getAuthData);
+  yield put(action(REQUEST_START, id));
+  if (authToken && ID) {
+    try {
+      const res = yield call(requestUpdateUserData, ID, authToken, payload);
+      yield put(action(SET_USER_DATA, payload));
+      yield put(action(REQUEST_DONE, id));
+    } catch (e) {
+      yield put(action(REQUEST_ERROR, id));
+      yield put(action(SET_ERROR, {
+        type: 'profile',
+        error: `Uh oh - something went wrong on the backend. Try again and rest assured we are working on a fix.`,
+      }));
+    }
+  }
+}
+
 export function* loadFavoritesSaga() {
   yield put(action(SET_LOADING_PAGE, 'favorites'));
   const { authToken, ID } = yield select(getAuthData);
@@ -412,6 +436,7 @@ export default function* rootSaga() {
     takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
+    takeLatest(UPDATE_USER_DATA, updateUserDataSaga),
     takeLatest(GET_PRODUCT_DETAILS, getProductDetailSaga),
     takeLatest(ON_NAV_OPEN, onNavOpenSaga),
     takeLatest(SIGN_UP, signUpSaga),

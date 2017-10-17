@@ -29,6 +29,7 @@ const nonAuth = [
 const auth = [
   { name: 'Recent Orders', route: '/account/orders' },
   { name: 'Favorites', route: '/account/favorites' },
+  { name: 'Account', route: '/account/profile' },
   { name: 'Sign Out', route: '/signout' },
 ];
 

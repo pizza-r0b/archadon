@@ -22,8 +22,10 @@ export default keyMirror({
   PAGE_CHANGE: null,
   PURCHASE: null,
   LOAD_FAVORITES: null,
+  CLEAR_REDIRECT_PATH: null,
   FAVORITES_LOADED: null,
   SET_LOADING_PAGE: null,
+  UPDATE_USER_DATA: null,
   SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
   LOAD_MORE: null,
@@ -35,4 +37,7 @@ export default keyMirror({
   ON_COLLECTION_SUCCESS: null,
   REQUEST_COLLECTION: null,
   NAV_STATE: null,
+  REQUEST_START: null,
+  REQUEST_DONE: null,
+  REQUEST_ERROR: null,
 });

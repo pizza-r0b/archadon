@@ -31,12 +31,14 @@ class Favorites extends Component {
           :
           (
             <div className="wrap">
-              <h2 className="margin--bottom-3">Favorited Items</h2>
+              <h1 className="margin--bottom-1">All Your Faves</h1>
+              <h2 className="margin--bottom-6">{this.props.favorites.length > 0 ? `Here's what you love` : `Here's where we'll save the rugs you love` }</h2>
               {
                 this.props.favorites.length > 0 ? <ProductList products={this.props.favorites} /> : (
                   <div className="flex-grow-1">
-                    <p className="margin--bottom-8">Aww. You haven't favorited anything yet.</p>
-                    <Link to="/shop" className="btn--primary">Shop Now</Link>
+                    <p>Saving your faves is easy. All you need to do is click the heart icon when browsing rugs, or on the rug detail page.</p>
+                    <p className="margin--top-3 margin--bottom-5">So what are you waiting for? Go find rugs you love.</p>
+                    <Link to="/shop" className="btn--primary">Browse Rugs</Link>
                   </div>
                 )
               }

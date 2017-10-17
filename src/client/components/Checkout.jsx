@@ -44,8 +44,26 @@ class CheckOut extends Component {
 
   constructor(props) {
     super();
-    if (props.user && props.user.Email) {
-      this.state.data.email = props.user.Email;
+    if (props.user) {
+      const {
+        Email: email,
+        Address1: address1,
+        Address2: address2,
+        City: city,
+        FullName: name,
+        State: state,
+        Zip: zip,
+      } = props.user;
+      this.state.data = {
+        ...this.state.data,
+        email,
+        address1,
+        address2,
+        city,
+        state,
+        name,
+        zip,
+      };
     }
   }
 

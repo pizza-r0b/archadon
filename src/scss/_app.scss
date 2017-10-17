@@ -42,7 +42,8 @@ hr {
     outline: 0;
     border: 0;
     height: 1px;
-    background-color: $light;
+    background-color: $lightest;
+    @extend .margin--y-8;
 }
 
 .global-margin {

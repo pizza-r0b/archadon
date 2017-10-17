@@ -107,7 +107,7 @@ $transitionVal: 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     transform: translateY(5px);
     transition: all 0.3s;
 
-    @for $i from 1 through 7 {
+    @for $i from 1 through 10 {
       .open &:nth-child(#{$i}) {
         transition-delay: $i * 0.1s;
         opacity: 1;

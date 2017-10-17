@@ -158,8 +158,8 @@ class ProductDetail extends React.Component {
         <section className="wrap product-details-about-wrap margin--top-5">
           <div className="product-details-about">
             <h2 className="margin--bottom-2">{about.title}</h2>
-            {about.paragraphs.map(p => (
-              <p className="margin--top-3">{p}</p>
+            {about.paragraphs.map((p, i) => (
+              <p key={i} className="margin--top-3">{p}</p>
             ))}
           </div>
           <div className="product-details-materials">

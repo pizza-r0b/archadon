@@ -89,6 +89,10 @@ class HomeSlider extends React.Component {
     }, 8000);
   }
 
+  componentWillUnmount() {
+    this.loops.forEach(id => window.cancelAnimationFrame(id));
+  }
+
   componentDidMount() {
     this.startInterval();
     this.line.classList.add('grow');

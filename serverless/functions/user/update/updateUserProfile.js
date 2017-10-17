@@ -43,8 +43,8 @@ async function _updateUserProfile(event, context, callback) {
         if (data.Favorites.length < preFavorites.length) {
           if (!data.Favorites.length) {
             deleteStatements.push({
-              deleteOne: {
-                filter: { Item: ID, Path: 'Favorites' },
+              deleteMany: {
+                filter: { Item: ID, Path: { $regex: '^Favorites' } },
               },
             });
           } else {
