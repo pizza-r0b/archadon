@@ -17,6 +17,12 @@
   }
 }
 
+.about-blurb-a {
+  @media (min-width: 1000px) {
+    max-width: 50%;
+  }
+}
+
 .top-content-right {
   padding-left: 10px;
 

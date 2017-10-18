@@ -60,6 +60,24 @@ class Profile extends React.Component {
         showNameForm: false,
       });
     }
+
+    if (this.props.requests[this.passwordReqId] === 'started' && nextProps.requests[this.passwordReqId] === 'done') {
+      this.setState({
+        data: {
+          ...this.state.data,
+          oldPassword: '',
+          newPassword: '',
+          confirmNewPassword: '',
+        },
+        passwordSuccess: true,
+        passwordError: false,
+      });
+    } else if (this.props.requests[this.passwordReqId] === 'started' && nextProps.requests[this.passwordReqId] === 'error') {
+      this.setState({
+        passwordSuccess: false,
+        passwordError: true,
+      });
+    }
   }
 
   checkData = obj => {
@@ -107,6 +125,7 @@ class Profile extends React.Component {
       if (this.state.data.newPassword !== this.state.data.confirmNewPassword) {
         this.setState({
           passwordError: true,
+          passwordSuccess: false,
         });
       } else {
         this.props.updatePassword({
@@ -118,8 +137,6 @@ class Profile extends React.Component {
         });
       }
     }
-
-    console.log(payload);
   }
 
   showForm = name => () => {
@@ -133,7 +150,6 @@ class Profile extends React.Component {
   ))
 
   render() {
-
     let nameForm;
     let addressForm;
     const addressProps = {};
@@ -265,6 +281,7 @@ class Profile extends React.Component {
             {this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct', this.state.passwordError)}
 
             <h3 className="small-caps font-color--light">Password</h3>
+            {this.state.passwordSuccess && <p className="font-color--success small-caps">Your password has been updated 👏!</p>}
             <form className="flex-parent flex-col" onSubmit={this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword'], ['password', 'newPassword'], this.passwordReqId, true)}>
               <div className="form-group">
                 <div className="form-component">
@@ -290,7 +307,7 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="flex-parent flex-justify-end">
-                <button type="submit" className="btn--alt margin--top-3">Update Password</button>
+                <button disabled={this.props.requests[this.passwordReqId] === 'started'} type="submit" className="btn--alt margin--top-3">Update Password</button>
               </div>
             </form>
 
