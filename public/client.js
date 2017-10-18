@@ -38790,6 +38790,187 @@ function symbolObservablePonyfill(root) {
 
 /***/ }),
 
+/***/ "./node_modules/uuid/lib/bytesToUuid.js":
+/***/ (function(module, exports) {
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+var byteToHex = [];
+for (var i = 0; i < 256; ++i) {
+  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+}
+
+function bytesToUuid(buf, offset) {
+  var i = offset || 0;
+  var bth = byteToHex;
+  return  bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] + '-' +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]] +
+          bth[buf[i++]] + bth[buf[i++]];
+}
+
+module.exports = bytesToUuid;
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/lib/rng-browser.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {// Unique ID creation requires a high quality random # generator.  In the
+// browser this is a little complicated due to unknown quality of Math.random()
+// and inconsistent support for the `crypto` API.  We do the best we can via
+// feature-detection
+var rng;
+
+var crypto = global.crypto || global.msCrypto; // for IE 11
+if (crypto && crypto.getRandomValues) {
+  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+  var rnds8 = new Uint8Array(16);
+  rng = function whatwgRNG() {
+    crypto.getRandomValues(rnds8);
+    return rnds8;
+  };
+}
+
+if (!rng) {
+  // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().  It's fast, but is of unspecified
+  // quality.
+  var  rnds = new Array(16);
+  rng = function() {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return rnds;
+  };
+}
+
+module.exports = rng;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/uuid/v1.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Unique ID creation requires a high quality random # generator.  We feature
+// detect to determine the best RNG source, normalizing to a function that
+// returns 128-bits of randomness, since that's what's usually required
+var rng = __webpack_require__("./node_modules/uuid/lib/rng-browser.js");
+var bytesToUuid = __webpack_require__("./node_modules/uuid/lib/bytesToUuid.js");
+
+// **`v1()` - Generate time-based UUID**
+//
+// Inspired by https://github.com/LiosK/UUID.js
+// and http://docs.python.org/library/uuid.html
+
+// random #'s we need to init node and clockseq
+var _seedBytes = rng();
+
+// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+var _nodeId = [
+  _seedBytes[0] | 0x01,
+  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+];
+
+// Per 4.2.2, randomize (14 bit) clockseq
+var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+
+// Previous uuid creation time
+var _lastMSecs = 0, _lastNSecs = 0;
+
+// See https://github.com/broofa/node-uuid for API details
+function v1(options, buf, offset) {
+  var i = buf && offset || 0;
+  var b = buf || [];
+
+  options = options || {};
+
+  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+  // Per 4.2.1.2, use count of uuid's generated during the current clock
+  // cycle to simulate higher resolution clock
+  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+  // Time since last uuid creation (in msecs)
+  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+  // Per 4.2.1.2, Bump clockseq on clock regression
+  if (dt < 0 && options.clockseq === undefined) {
+    clockseq = clockseq + 1 & 0x3fff;
+  }
+
+  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+  // time interval
+  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+    nsecs = 0;
+  }
+
+  // Per 4.2.1.2 Throw error if too many uuids are requested
+  if (nsecs >= 10000) {
+    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+  }
+
+  _lastMSecs = msecs;
+  _lastNSecs = nsecs;
+  _clockseq = clockseq;
+
+  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+  msecs += 12219292800000;
+
+  // `time_low`
+  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+  b[i++] = tl >>> 24 & 0xff;
+  b[i++] = tl >>> 16 & 0xff;
+  b[i++] = tl >>> 8 & 0xff;
+  b[i++] = tl & 0xff;
+
+  // `time_mid`
+  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+  b[i++] = tmh >>> 8 & 0xff;
+  b[i++] = tmh & 0xff;
+
+  // `time_high_and_version`
+  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+  b[i++] = tmh >>> 16 & 0xff;
+
+  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+  b[i++] = clockseq >>> 8 | 0x80;
+
+  // `clock_seq_low`
+  b[i++] = clockseq & 0xff;
+
+  // `node`
+  var node = options.node || _nodeId;
+  for (var n = 0; n < 6; ++n) {
+    b[i + n] = node[n];
+  }
+
+  return buf ? buf : bytesToUuid(b);
+}
+
+module.exports = v1;
+
+
+/***/ }),
+
 /***/ "./node_modules/value-equal/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -39001,10 +39182,13 @@ var _default = (0, _Utils.keyMirror)({
   PAGE_CHANGE: null,
   PURCHASE: null,
   LOAD_FAVORITES: null,
+  CLEAR_REDIRECT_PATH: null,
   FAVORITES_LOADED: null,
   SET_LOADING_PAGE: null,
+  UPDATE_USER_DATA: null,
   SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
+  UPDATE_USER_PASSWORD: null,
   LOAD_MORE: null,
   LOAD_MORE_DONE: null,
   PRODUCT_DETAIL_LOADED: null,
@@ -39013,7 +39197,10 @@ var _default = (0, _Utils.keyMirror)({
   HOME_LOADED: null,
   ON_COLLECTION_SUCCESS: null,
   REQUEST_COLLECTION: null,
-  NAV_STATE: null
+  NAV_STATE: null,
+  REQUEST_START: null,
+  REQUEST_DONE: null,
+  REQUEST_ERROR: null
 });
 
 exports.default = _default;
@@ -39214,7 +39401,7 @@ function About() {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'margin--top-15' },
+          { className: 'margin--top-15 about-blurb-a' },
           _react2.default.createElement(
             'p',
             null,
@@ -39631,6 +39818,10 @@ var _Favorites = __webpack_require__("./src/client/components/Favorites.jsx");
 
 var _Favorites2 = _interopRequireDefault(_Favorites);
 
+var _Profile = __webpack_require__("./src/client/components/Profile.jsx");
+
+var _Profile2 = _interopRequireDefault(_Profile);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // {/*} <div className="auth-nav-bar">
@@ -39650,7 +39841,8 @@ function AccountLayout() {
         _reactRouterDom.Switch,
         null,
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/account/(orders)?', component: _Orders2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/account/favorites', component: _Favorites2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/account/favorites', component: _Favorites2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/account/profile', component: _Profile2.default })
       )
     )
   );
@@ -40423,8 +40615,25 @@ var CheckOut = function (_Component) {
     _this.onDataChange = _this.onInputChange('data');
     _this.onCardChange = _this.onInputChange('cardDetails');
 
-    if (props.user && props.user.Email) {
-      _this.state.data.email = props.user.Email;
+    if (props.user) {
+      var _props$user = props.user,
+          email = _props$user.Email,
+          address1 = _props$user.Address1,
+          address2 = _props$user.Address2,
+          city = _props$user.City,
+          name = _props$user.FullName,
+          state = _props$user.State,
+          zip = _props$user.Zip;
+
+      _this.state.data = (0, _extends5.default)({}, _this.state.data, {
+        email: email,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        name: name,
+        zip: zip
+      });
     }
     return _this;
   }
@@ -40854,22 +41063,32 @@ var Favorites = function (_Component) {
           'div',
           { className: 'wrap' },
           _react2.default.createElement(
+            'h1',
+            { className: 'margin--bottom-1' },
+            'All Your Faves'
+          ),
+          _react2.default.createElement(
             'h2',
-            { className: 'margin--bottom-3' },
-            'Favorited Items'
+            { className: 'margin--bottom-6' },
+            this.props.favorites.length > 0 ? 'Here\'s what you love' : 'Here\'s where we\'ll save the rugs you love'
           ),
           this.props.favorites.length > 0 ? _react2.default.createElement(_ProductList2.default, { products: this.props.favorites }) : _react2.default.createElement(
             'div',
             { className: 'flex-grow-1' },
             _react2.default.createElement(
               'p',
-              { className: 'margin--bottom-8' },
-              'Aww. You haven\'t favorited anything yet.'
+              null,
+              'Saving your faves is easy. All you need to do is click the heart icon when browsing rugs, or on the rug detail page.'
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'margin--top-3 margin--bottom-5' },
+              'So what are you waiting for? Go find rugs you love.'
             ),
             _react2.default.createElement(
               _reactRouterDom.Link,
               { to: '/shop', className: 'btn--primary' },
-              'Shop Now'
+              'Browse Rugs'
             )
           )
         )
@@ -41328,6 +41547,13 @@ var HomeSlider = function (_React$Component) {
   }
 
   (0, _createClass3.default)(HomeSlider, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.loops.forEach(function (id) {
+        return window.cancelAnimationFrame(id);
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.startInterval();
@@ -41999,7 +42225,7 @@ var links = [{ name: 'Shop', route: '/shop' }, { name: 'About', route: '/about' 
 
 var nonAuth = [{ name: 'Sign Up', route: '/signup' }, { name: 'Log In', route: '/login' }];
 
-var auth = [{ name: 'Recent Orders', route: '/account/orders' }, { name: 'Favorites', route: '/account/favorites' }, { name: 'Sign Out', route: '/signout' }];
+var auth = [{ name: 'Recent Orders', route: '/account/orders' }, { name: 'Favorites', route: '/account/favorites' }, { name: 'Account', route: '/account/profile' }, { name: 'Sign Out', route: '/signout' }];
 
 function Navigation(_ref) {
   var fixed = _ref.fixed,
@@ -42836,10 +43062,10 @@ var ProductDetail = function (_React$Component2) {
               { className: 'margin--bottom-2' },
               about.title
             ),
-            about.paragraphs.map(function (p) {
+            about.paragraphs.map(function (p, i) {
               return _react2.default.createElement(
                 'p',
-                { className: 'margin--top-3' },
+                { key: i, className: 'margin--top-3' },
                 p
               );
             })
@@ -43135,6 +43361,591 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(ProductList, 'ProductList', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./src/client/components/Profile.jsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _keys = __webpack_require__("./node_modules/babel-runtime/core-js/object/keys.js");
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _slicedToArray2 = __webpack_require__("./node_modules/babel-runtime/helpers/slicedToArray.js");
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _entries = __webpack_require__("./node_modules/babel-runtime/core-js/object/entries.js");
+
+var _entries2 = _interopRequireDefault(_entries);
+
+var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers/defineProperty.js");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends3 = __webpack_require__("./node_modules/babel-runtime/helpers/extends.js");
+
+var _extends4 = _interopRequireDefault(_extends3);
+
+var _getPrototypeOf = __webpack_require__("./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__("./node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__("./node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__("./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__("./node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/es/index.js");
+
+var _Actions = __webpack_require__("./src/client/actions/index.js");
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _Utils = __webpack_require__("./src/client/utils/index.js");
+
+var _v = __webpack_require__("./node_modules/uuid/v1.js");
+
+var _v2 = _interopRequireDefault(_v);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UPDATE_USER_DATA = _Actions2.default.UPDATE_USER_DATA,
+    UPDATE_USER_PASSWORD = _Actions2.default.UPDATE_USER_PASSWORD;
+
+var Profile = function (_React$Component) {
+  (0, _inherits3.default)(Profile, _React$Component);
+
+  function Profile(props) {
+    (0, _classCallCheck3.default)(this, Profile);
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (Profile.__proto__ || (0, _getPrototypeOf2.default)(Profile)).call(this));
+
+    _this.onInputChange = function (key) {
+      return function (_ref) {
+        var currentTarget = _ref.currentTarget;
+        var name = currentTarget.name,
+            value = currentTarget.value;
+
+        if (value.length > 52) {
+          return;
+        }
+        _this.setState((0, _defineProperty3.default)({}, key, (0, _extends4.default)({}, _this.state[key], (0, _defineProperty3.default)({}, name, value))));
+      };
+    };
+
+    _this.onDataChange = _this.onInputChange('data');
+
+    _this.addClasses = function (el, val) {
+      var name = el.props.name;
+
+      var classes = [];
+      if (_this.state.errors[name]) {
+        classes.push('input-error');
+      }
+      if (val) {
+        classes.push('input-filled');
+      }
+
+      return classes.length > 0 ? _react2.default.cloneElement(el, { className: classes.join(' ') }) : el;
+    };
+
+    _this.checkData = function (obj) {
+      (0, _entries2.default)(obj).forEach(function (_ref2) {
+        var _ref3 = (0, _slicedToArray3.default)(_ref2, 2),
+            name = _ref3[0],
+            value = _ref3[1];
+
+        if (value === '' || value == void 0) {
+          _this.errors[name] = true;
+        }
+      });
+    };
+
+    _this.isValid = function (data) {
+      _this.errors = {};
+
+      _this.checkData(data);
+      if ((0, _keys2.default)(_this.errors).length) {
+        _this.setState({ errors: _this.errors });
+        return false;
+      } else {
+        if ((0, _keys2.default)(_this.state.errors).length) {
+          _this.setState({ errors: {} });
+        }
+        return true;
+      }
+    };
+
+    _this.onSubmit = function (data, keys, reqId, isPassword) {
+      return function (e) {
+        e.preventDefault();
+        var payload = {};
+        var obj = data.reduce(function (a, b, i) {
+          a[b] = _this.state.data[b];
+          payload[keys[i]] = a[b];
+          return a;
+        }, {});
+
+        if (!_this.isValid(obj)) {
+          return;
+        }
+
+        if (!isPassword) {
+          _this.props.updateData({
+            data: payload,
+            id: reqId
+          });
+        } else {
+          if (_this.state.data.newPassword !== _this.state.data.confirmNewPassword) {
+            _this.setState({
+              passwordError: true,
+              passwordSuccess: false
+            });
+          } else {
+            _this.props.updatePassword({
+              data: {
+                password: _this.state.data.oldPassword,
+                newPassword: _this.state.data.newPassword
+              },
+              id: _this.passwordReqId
+            });
+          }
+        }
+      };
+    };
+
+    _this.showForm = function (name) {
+      return function () {
+        _this.setState((0, _defineProperty3.default)({}, name, true));
+      };
+    };
+
+    _this.renderError = function (keys, msg, show) {
+      return ((0, _entries2.default)(_this.state.errors).some(function (_ref4) {
+        var _ref5 = (0, _slicedToArray3.default)(_ref4, 2),
+            key = _ref5[0],
+            value = _ref5[1];
+
+        return keys.includes(key) && value;
+      }) || show) && _react2.default.createElement(
+        'p',
+        { className: 'font-color--danger margin--bottom-3 small-caps' },
+        msg || 'Please fill in fields marked with red.'
+      );
+    };
+
+    _this.state = {
+      data: {
+        name: props.name || '',
+        oldPassword: '',
+        newPassword: '',
+        confirmNewPassword: ''
+      },
+      errors: {}
+    };
+
+    _this.nameFormReqId = (0, _v2.default)();
+    _this.passwordReqId = (0, _v2.default)();
+    _this.addressReqId = (0, _v2.default)();
+    return _this;
+  }
+
+  (0, _createClass3.default)(Profile, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.requests[this.nameFormReqId] === 'started' && nextProps.requests[this.nameFormReqId] === 'done') {
+        this.setState({
+          showNameForm: false
+        });
+      }
+
+      if (this.props.requests[this.passwordReqId] === 'started' && nextProps.requests[this.passwordReqId] === 'done') {
+        this.setState({
+          data: (0, _extends4.default)({}, this.state.data, {
+            oldPassword: '',
+            newPassword: '',
+            confirmNewPassword: ''
+          }),
+          passwordSuccess: true,
+          passwordError: false
+        });
+      } else if (this.props.requests[this.passwordReqId] === 'started' && nextProps.requests[this.passwordReqId] === 'error') {
+        this.setState({
+          passwordSuccess: false,
+          passwordError: true
+        });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var nameForm = void 0;
+      var addressForm = void 0;
+      var addressProps = {};
+      var nameProps = {};
+
+      if (this.props.user.FullName && !this.state.showNameForm) {
+        nameForm = _react2.default.createElement(
+          'div',
+          { className: 'flex-parent flex-justify-between flex-align-center' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.user.FullName
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'div',
+              { onClick: this.showForm('showNameForm'), className: 'btn--alt' },
+              'Edit'
+            )
+          )
+        );
+      } else {
+        if (this.props.requests[this.nameFormReqId] === 'started') {
+          nameProps.disabled = true;
+        }
+        nameForm = _react2.default.createElement(
+          'form',
+          { className: 'flex-parent flex-col', onSubmit: this.onSubmit(['name'], ['FullName'], this.nameFormReqId) },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-component' },
+              this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.name, name: 'name', type: 'text' }), this.state.data.name),
+              _react2.default.createElement(
+                'label',
+                null,
+                'Full Name'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-parent flex-justify-end' },
+            _react2.default.createElement(
+              'button',
+              (0, _extends4.default)({}, nameProps, { type: 'submit', className: 'btn--alt margin--top-3' }),
+              'Save Name'
+            )
+          )
+        );
+      }
+
+      if (this.props.user.Address1 && !this.state.showAddressForm) {
+        addressForm = _react2.default.createElement(
+          'div',
+          { className: 'flex-parent flex-justify-between flex-align-center' },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.user.Address1
+            ),
+            this.props.user.Address2 !== void 0 && _react2.default.createElement(
+              'p',
+              null,
+              this.props.user.Address2
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.user.City,
+              ', ',
+              this.props.user.State,
+              ', ',
+              this.props.user.Zip
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'div',
+              { onClick: this.showForm('showAddressForm'), className: 'btn--alt' },
+              'Edit'
+            )
+          )
+        );
+      } else {
+        if (this.props.requests[this.addressReqId] === 'started') {
+          addressProps.disabled = true;
+        }
+        addressForm = _react2.default.createElement(
+          'form',
+          { onSubmit: this.onSubmit(['address1', 'city', 'state', 'zip'], ['Address1', 'City', 'State', 'Zip'], this.addressReqId) },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-component' },
+            this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.address1, name: 'address1', type: 'text' }), this.state.data.address1),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Address'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-component' },
+            this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.address2, name: 'address2', type: 'text' }), this.state.data.address2),
+            _react2.default.createElement(
+              'label',
+              null,
+              'Address Line 2'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-parent mobile-col flex-justify-between' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-component' },
+              this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.city, name: 'city', type: 'text' }), this.state.data.city),
+              _react2.default.createElement(
+                'label',
+                null,
+                'City'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-component middle-input' },
+              this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.state, name: 'state', type: 'text' }), this.state.data.state),
+              _react2.default.createElement(
+                'label',
+                null,
+                'State'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-component' },
+              this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.zip, name: 'zip', type: 'text' }), this.state.data.zip),
+              _react2.default.createElement(
+                'label',
+                null,
+                'Zip'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'flex-parent flex-justify-end' },
+            _react2.default.createElement(
+              'button',
+              (0, _extends4.default)({}, addressProps, { type: 'submit', className: 'btn--alt margin--top-3' }),
+              'Save Address'
+            )
+          )
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'full-width' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Account'
+        ),
+        _react2.default.createElement(
+          'h2',
+          { className: 'margin--bottom-8' },
+          'Change your password / save some information to breeze through checkout'
+        ),
+        this.props.error && _react2.default.createElement(
+          'p',
+          { className: 'margin--y-3 small-caps font-color--danger' },
+          this.props.error
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'flex-parent mobile-col' },
+          _react2.default.createElement(
+            'div',
+            { className: 'margin--right-4 account-section-left' },
+            _react2.default.createElement(
+              'h2',
+              { className: 'underline-header' },
+              'Profile'
+            ),
+            _react2.default.createElement(
+              'h3',
+              { className: 'small-caps font-color--light' },
+              'Email'
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.user.Email
+            ),
+            _react2.default.createElement('hr', null),
+            this.renderError(['name']),
+            _react2.default.createElement(
+              'h3',
+              { className: 'small-caps font-color--light' },
+              'Name'
+            ),
+            nameForm,
+            _react2.default.createElement('hr', null),
+            this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct', this.state.passwordError),
+            _react2.default.createElement(
+              'h3',
+              { className: 'small-caps font-color--light' },
+              'Password'
+            ),
+            this.state.passwordSuccess && _react2.default.createElement(
+              'p',
+              { className: 'font-color--success small-caps' },
+              'Your password has been updated \uD83D\uDC4F!'
+            ),
+            _react2.default.createElement(
+              'form',
+              { className: 'flex-parent flex-col', onSubmit: this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword'], ['password', 'newPassword'], this.passwordReqId, true) },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-component' },
+                  this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.oldPassword, name: 'oldPassword', type: 'password' }), this.state.data.oldPassword),
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Current Password'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-component' },
+                  this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.newPassword, name: 'newPassword', type: 'password' }), this.state.data.newPassword),
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'New Password'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-component' },
+                  this.addClasses(_react2.default.createElement('input', { onChange: this.onDataChange, value: this.state.data.confirmNewPassword, name: 'confirmNewPassword', type: 'password' }), this.state.data.confirmNewPassword),
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Confirm Password'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'flex-parent flex-justify-end' },
+                _react2.default.createElement(
+                  'button',
+                  { disabled: this.props.requests[this.passwordReqId] === 'started', type: 'submit', className: 'btn--alt margin--top-3' },
+                  'Update Password'
+                )
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'account-section account-section-right' },
+            _react2.default.createElement(
+              'h2',
+              { className: 'underline-header' },
+              'Address'
+            ),
+            this.renderError(['address1', 'city', 'state', 'zip']),
+            _react2.default.createElement(
+              'h3',
+              { className: 'small-caps font-color--light' },
+              'Shipping Address'
+            ),
+            addressForm
+          )
+        )
+      );
+    }
+  }]);
+  return Profile;
+}(_react2.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user,
+    error: state.errors.profile,
+    requests: state.requests
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateData: function updateData(data) {
+      dispatch((0, _Utils.action)(UPDATE_USER_DATA, data));
+    },
+    updatePassword: function updatePassword(data) {
+      dispatch((0, _Utils.action)(UPDATE_USER_PASSWORD, data));
+    }
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Profile);
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(UPDATE_USER_DATA, 'UPDATE_USER_DATA', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(UPDATE_USER_PASSWORD, 'UPDATE_USER_PASSWORD', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(Profile, 'Profile', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
 }();
 
 ;
@@ -45088,6 +45899,10 @@ var _collections = __webpack_require__("./src/client/reducers/collections.js");
 
 var _collections2 = _interopRequireDefault(_collections);
 
+var _requests = __webpack_require__("./src/client/reducers/requests.js");
+
+var _requests2 = _interopRequireDefault(_requests);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ON_NAV_OPEN = _Actions2.default.ON_NAV_OPEN;
@@ -45118,7 +45933,8 @@ var _default = (0, _redux.combineReducers)({
   errors: _errors2.default,
   loading: _loading2.default,
   products: _products2.default,
-  collections: _collections2.default
+  collections: _collections2.default,
+  requests: _requests2.default
 });
 
 exports.default = _default;
@@ -45378,7 +46194,8 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SET_REDIRECT_PATH = _Actions2.default.SET_REDIRECT_PATH;
+var SET_REDIRECT_PATH = _Actions2.default.SET_REDIRECT_PATH,
+    CLEAR_REDIRECT_PATH = _Actions2.default.CLEAR_REDIRECT_PATH;
 
 var _default = function _default() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -45387,6 +46204,8 @@ var _default = function _default() {
   switch (action.type) {
     case SET_REDIRECT_PATH:
       return action.payload;
+    case CLEAR_REDIRECT_PATH:
+      return null;
     default:
       return state;
   }
@@ -45402,7 +46221,74 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(SET_REDIRECT_PATH, 'SET_REDIRECT_PATH', '/Users/realseanp1/Projects/archadon/src/client/reducers/redirectPath.js');
 
+  __REACT_HOT_LOADER__.register(CLEAR_REDIRECT_PATH, 'CLEAR_REDIRECT_PATH', '/Users/realseanp1/Projects/archadon/src/client/reducers/redirectPath.js');
+
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/reducers/redirectPath.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./src/client/reducers/requests.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _defineProperty2 = __webpack_require__("./node_modules/babel-runtime/helpers/defineProperty.js");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends5 = __webpack_require__("./node_modules/babel-runtime/helpers/extends.js");
+
+var _extends6 = _interopRequireDefault(_extends5);
+
+var _Actions = __webpack_require__("./src/client/actions/index.js");
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var REQUEST_START = _Actions2.default.REQUEST_START,
+    REQUEST_DONE = _Actions2.default.REQUEST_DONE,
+    REQUEST_ERROR = _Actions2.default.REQUEST_ERROR;
+
+var _default = function _default() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  switch (action.type) {
+    case REQUEST_START:
+      return (0, _extends6.default)({}, state, (0, _defineProperty3.default)({}, action.payload, 'started'));
+    case REQUEST_DONE:
+      return (0, _extends6.default)({}, state, (0, _defineProperty3.default)({}, action.payload, 'done'));
+    case REQUEST_ERROR:
+      return (0, _extends6.default)({}, state, (0, _defineProperty3.default)({}, action.payload, 'error'));
+    default:
+      return state;
+  }
+};
+
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(REQUEST_START, 'REQUEST_START', '/Users/realseanp1/Projects/archadon/src/client/reducers/requests.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_DONE, 'REQUEST_DONE', '/Users/realseanp1/Projects/archadon/src/client/reducers/requests.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_ERROR, 'REQUEST_ERROR', '/Users/realseanp1/Projects/archadon/src/client/reducers/requests.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/reducers/requests.js');
 }();
 
 ;
@@ -45584,7 +46470,7 @@ var _temp = function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.requestPurchase = exports.requestCollection = exports.requestBatch = exports.requestUpdateUserData = exports.requestProductData = exports.requestProductList = exports.requestUserFavorites = exports.requestUserData = exports.requestSignUp = exports.requestLogin = undefined;
+exports.requestPurchase = exports.requestCollection = exports.requestBatch = exports.requestUpdateUserData = exports.requestProductData = exports.requestProductList = exports.requestUserFavorites = exports.requestUpdatePassword = exports.requestUserData = exports.requestSignUp = exports.requestLogin = undefined;
 
 var _Utils = __webpack_require__("./src/client/utils/index.js");
 
@@ -45605,6 +46491,12 @@ var requestSignUp = exports.requestSignUp = function requestSignUp(email, passwo
 var requestUserData = exports.requestUserData = function requestUserData(ID, token) {
   return (0, _Utils.request)('GET', url('user/v1/read/' + ID), null, {
     authtoken: token
+  });
+};
+
+var requestUpdatePassword = exports.requestUpdatePassword = function requestUpdatePassword(id, authtoken, body) {
+  return (0, _Utils.request)('POST', url('user/v1/update/item/password/' + id), body, {
+    authtoken: authtoken
   });
 };
 
@@ -45652,6 +46544,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(requestSignUp, 'requestSignUp', '/Users/realseanp1/Projects/archadon/src/client/sagas/api.js');
 
   __REACT_HOT_LOADER__.register(requestUserData, 'requestUserData', '/Users/realseanp1/Projects/archadon/src/client/sagas/api.js');
+
+  __REACT_HOT_LOADER__.register(requestUpdatePassword, 'requestUpdatePassword', '/Users/realseanp1/Projects/archadon/src/client/sagas/api.js');
 
   __REACT_HOT_LOADER__.register(requestUserFavorites, 'requestUserFavorites', '/Users/realseanp1/Projects/archadon/src/client/sagas/api.js');
 
@@ -45726,6 +46620,8 @@ exports.addToCartLocalStorage = addToCartLocalStorage;
 exports.signUpSaga = signUpSaga;
 exports.purchaseSaga = purchaseSaga;
 exports.toggleFavoriteSaga = toggleFavoriteSaga;
+exports.updateUserDataSaga = updateUserDataSaga;
+exports.updateUserPasswordSaga = updateUserPasswordSaga;
 exports.loadFavoritesSaga = loadFavoritesSaga;
 exports.onNavOpenSaga = onNavOpenSaga;
 exports.default = rootSaga;
@@ -45744,7 +46640,7 @@ var _api = __webpack_require__("./src/client/sagas/api.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _marked = [getDataFromLocalStorage, requestCollectionSaga, logOutSaga, clearAuthenticationDataSaga, logInSaga, getProductListSaga, getUserDataSaga, getProductDataSaga, getProductDetailSaga, addToCartLocalStorage, signUpSaga, purchaseSaga, toggleFavoriteSaga, loadFavoritesSaga, onNavOpenSaga, rootSaga].map(_regenerator2.default.mark);
+var _marked = [getDataFromLocalStorage, requestCollectionSaga, logOutSaga, clearAuthenticationDataSaga, logInSaga, getProductListSaga, getUserDataSaga, getProductDataSaga, getProductDetailSaga, addToCartLocalStorage, signUpSaga, purchaseSaga, toggleFavoriteSaga, updateUserDataSaga, updateUserPasswordSaga, loadFavoritesSaga, onNavOpenSaga, rootSaga].map(_regenerator2.default.mark);
 
 var LOG_IN = _Actions2.default.LOG_IN,
     LOG_OUT = _Actions2.default.LOG_OUT,
@@ -45756,6 +46652,7 @@ var LOG_IN = _Actions2.default.LOG_IN,
     LOADING = _Actions2.default.LOADING,
     PRODUCT_LIST_LOADED = _Actions2.default.PRODUCT_LIST_LOADED,
     PRODUCT_DATA_LOADED = _Actions2.default.PRODUCT_DATA_LOADED,
+    UPDATE_USER_PASSWORD = _Actions2.default.UPDATE_USER_PASSWORD,
     PAGE_CHANGE = _Actions2.default.PAGE_CHANGE,
     SET_REDIRECT_PATH = _Actions2.default.SET_REDIRECT_PATH,
     TOGGLE_FAVORITE = _Actions2.default.TOGGLE_FAVORITE,
@@ -45769,6 +46666,11 @@ var LOG_IN = _Actions2.default.LOG_IN,
     REPLACE_CART = _Actions2.default.REPLACE_CART,
     PRODUCT_DETAIL_LOADED = _Actions2.default.PRODUCT_DETAIL_LOADED,
     ON_CLEAR_FILTERS = _Actions2.default.ON_CLEAR_FILTERS,
+    CLEAR_REDIRECT_PATH = _Actions2.default.CLEAR_REDIRECT_PATH,
+    REQUEST_START = _Actions2.default.REQUEST_START,
+    REQUEST_DONE = _Actions2.default.REQUEST_DONE,
+    REQUEST_ERROR = _Actions2.default.REQUEST_ERROR,
+    UPDATE_USER_DATA = _Actions2.default.UPDATE_USER_DATA,
     REMOVE_FROM_CART = _Actions2.default.REMOVE_FROM_CART,
     LOAD_MORE_DONE = _Actions2.default.LOAD_MORE_DONE,
     LOAD_MORE = _Actions2.default.LOAD_MORE,
@@ -46664,241 +47566,367 @@ function toggleFavoriteSaga() {
   }, _marked[12], this, [[20, 25]]);
 }
 
-function loadFavoritesSaga() {
-  var _ref20, authToken, ID, favorites, _ref21, data;
+function updateUserDataSaga(_ref20) {
+  var _ref20$payload = _ref20.payload,
+      payload = _ref20$payload.data,
+      id = _ref20$payload.id;
 
-  return _regenerator2.default.wrap(function loadFavoritesSaga$(_context14) {
+  var _ref21, authToken, ID;
+
+  return _regenerator2.default.wrap(function updateUserDataSaga$(_context14) {
     while (1) {
       switch (_context14.prev = _context14.next) {
         case 0:
           _context14.next = 2;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, 'favorites'));
-
-        case 2:
-          _context14.next = 4;
           return (0, _effects.select)(getAuthData);
 
-        case 4:
-          _ref20 = _context14.sent;
-          authToken = _ref20.authToken;
-          ID = _ref20.ID;
+        case 2:
+          _ref21 = _context14.sent;
+          authToken = _ref21.authToken;
+          ID = _ref21.ID;
+          _context14.next = 7;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_START, id));
 
-          if (!(!authToken || !ID)) {
-            _context14.next = 11;
+        case 7:
+          if (!(authToken && ID)) {
+            _context14.next = 23;
             break;
           }
 
-          _context14.next = 10;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
-
-        case 10:
-          return _context14.abrupt('return');
+          _context14.prev = 8;
+          _context14.next = 11;
+          return (0, _effects.call)(_api.requestUpdateUserData, ID, authToken, payload);
 
         case 11:
-          _context14.prev = 11;
-          _context14.next = 14;
-          return (0, _effects.select)(getUserFavorites);
+          _context14.next = 13;
+          return (0, _effects.put)((0, _Utils.action)(SET_USER_DATA, payload));
 
-        case 14:
-          favorites = _context14.sent;
+        case 13:
+          _context14.next = 15;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_DONE, id));
 
-          if (favorites.length) {
-            _context14.next = 19;
-            break;
-          }
-
-          _context14.next = 18;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
-
-        case 18:
-          return _context14.abrupt('return');
-
-        case 19:
-          _context14.next = 21;
-          return (0, _effects.call)(_api.requestUserFavorites, ID, authToken);
-
-        case 21:
-          _ref21 = _context14.sent;
-          data = _ref21.response.data.favorites;
-          _context14.next = 25;
-          return (0, _effects.put)((0, _Utils.action)(FAVORITES_LOADED, data));
-
-        case 25:
-          _context14.next = 31;
+        case 15:
+          _context14.next = 23;
           break;
 
-        case 27:
-          _context14.prev = 27;
-          _context14.t0 = _context14['catch'](11);
-          _context14.next = 31;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+        case 17:
+          _context14.prev = 17;
+          _context14.t0 = _context14['catch'](8);
+          _context14.next = 21;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_ERROR, id));
 
-        case 31:
-          _context14.next = 33;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+        case 21:
+          _context14.next = 23;
+          return (0, _effects.put)((0, _Utils.action)(SET_ERROR, {
+            type: 'profile',
+            error: 'Uh oh - something went wrong on the backend. Try again and rest assured we are working on a fix.'
+          }));
 
-        case 33:
+        case 23:
         case 'end':
           return _context14.stop();
       }
     }
-  }, _marked[13], this, [[11, 27]]);
+  }, _marked[13], this, [[8, 17]]);
 }
 
-function onNavOpenSaga() {
-  var navOpen;
-  return _regenerator2.default.wrap(function onNavOpenSaga$(_context15) {
+function updateUserPasswordSaga(_ref22) {
+  var _ref22$payload = _ref22.payload,
+      payload = _ref22$payload.data,
+      id = _ref22$payload.id;
+
+  var _ref23, authToken, ID;
+
+  return _regenerator2.default.wrap(function updateUserPasswordSaga$(_context15) {
     while (1) {
       switch (_context15.prev = _context15.next) {
         case 0:
           _context15.next = 2;
+          return (0, _effects.select)(getAuthData);
+
+        case 2:
+          _ref23 = _context15.sent;
+          authToken = _ref23.authToken;
+          ID = _ref23.ID;
+          _context15.next = 7;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_START, id));
+
+        case 7:
+          if (!(authToken && ID)) {
+            _context15.next = 22;
+            break;
+          }
+
+          _context15.prev = 8;
+          _context15.next = 11;
+          return (0, _effects.call)(_api.requestUpdatePassword, ID, authToken, payload);
+
+        case 11:
+          _context15.next = 13;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_DONE, id));
+
+        case 13:
+          _context15.next = 22;
+          break;
+
+        case 15:
+          _context15.prev = 15;
+          _context15.t0 = _context15['catch'](8);
+
+          console.log(_context15.t0);
+          _context15.next = 20;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_ERROR, id));
+
+        case 20:
+          _context15.next = 22;
+          return (0, _effects.put)((0, _Utils.action)(SET_ERROR, {
+            type: 'updatepassword',
+            error: 'Please make sure you password is correct'
+          }));
+
+        case 22:
+        case 'end':
+          return _context15.stop();
+      }
+    }
+  }, _marked[14], this, [[8, 15]]);
+}
+
+function loadFavoritesSaga() {
+  var _ref24, authToken, ID, favorites, _ref25, data;
+
+  return _regenerator2.default.wrap(function loadFavoritesSaga$(_context16) {
+    while (1) {
+      switch (_context16.prev = _context16.next) {
+        case 0:
+          _context16.next = 2;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, 'favorites'));
+
+        case 2:
+          _context16.next = 4;
+          return (0, _effects.select)(getAuthData);
+
+        case 4:
+          _ref24 = _context16.sent;
+          authToken = _ref24.authToken;
+          ID = _ref24.ID;
+
+          if (!(!authToken || !ID)) {
+            _context16.next = 11;
+            break;
+          }
+
+          _context16.next = 10;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+
+        case 10:
+          return _context16.abrupt('return');
+
+        case 11:
+          _context16.prev = 11;
+          _context16.next = 14;
+          return (0, _effects.select)(getUserFavorites);
+
+        case 14:
+          favorites = _context16.sent;
+
+          if (favorites.length) {
+            _context16.next = 19;
+            break;
+          }
+
+          _context16.next = 18;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+
+        case 18:
+          return _context16.abrupt('return');
+
+        case 19:
+          _context16.next = 21;
+          return (0, _effects.call)(_api.requestUserFavorites, ID, authToken);
+
+        case 21:
+          _ref25 = _context16.sent;
+          data = _ref25.response.data.favorites;
+          _context16.next = 25;
+          return (0, _effects.put)((0, _Utils.action)(FAVORITES_LOADED, data));
+
+        case 25:
+          _context16.next = 31;
+          break;
+
+        case 27:
+          _context16.prev = 27;
+          _context16.t0 = _context16['catch'](11);
+          _context16.next = 31;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+
+        case 31:
+          _context16.next = 33;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+
+        case 33:
+        case 'end':
+          return _context16.stop();
+      }
+    }
+  }, _marked[15], this, [[11, 27]]);
+}
+
+function onNavOpenSaga() {
+  var navOpen;
+  return _regenerator2.default.wrap(function onNavOpenSaga$(_context17) {
+    while (1) {
+      switch (_context17.prev = _context17.next) {
+        case 0:
+          _context17.next = 2;
           return (0, _effects.select)(getNavState);
 
         case 2:
-          navOpen = _context15.sent;
+          navOpen = _context17.sent;
 
           document.body.style.overflow = navOpen ? 'hidden' : 'auto';
 
         case 4:
         case 'end':
-          return _context15.stop();
+          return _context17.stop();
       }
     }
-  }, _marked[14], this);
+  }, _marked[16], this);
 }
 
 function rootSaga() {
-  return _regenerator2.default.wrap(function rootSaga$(_context19) {
+  return _regenerator2.default.wrap(function rootSaga$(_context21) {
     while (1) {
-      switch (_context19.prev = _context19.next) {
+      switch (_context21.prev = _context21.next) {
         case 0:
-          _context19.next = 2;
-          return [(0, _effects.takeLatest)(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE), (0, _effects.takeLatest)([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST), (0, _effects.takeLatest)(LOAD_FAVORITES, loadFavoritesSaga), (0, _effects.takeLatest)(LOG_IN, logInSaga), (0, _effects.takeLatest)(APP_LOAD, getDataFromLocalStorage), (0, _effects.takeLatest)(ADD_TO_CART, getProductDataSaga), (0, _effects.takeLatest)(TOGGLE_FAVORITE, toggleFavoriteSaga), (0, _effects.takeLatest)(GET_PRODUCT_DETAILS, getProductDetailSaga), (0, _effects.takeLatest)(ON_NAV_OPEN, onNavOpenSaga), (0, _effects.takeLatest)(SIGN_UP, signUpSaga), (0, _effects.takeLatest)(USER_AUTH_SUCCESS, getUserDataSaga), (0, _effects.takeLatest)(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga), (0, _effects.takeLatest)(LOG_OUT, logOutSaga), (0, _effects.takeLatest)(PURCHASE, purchaseSaga), (0, _effects.takeLatest)(REQUEST_COLLECTION, requestCollectionSaga), _regenerator2.default.mark(function _callee() {
-            return _regenerator2.default.wrap(function _callee$(_context16) {
+          _context21.next = 2;
+          return [(0, _effects.takeLatest)(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE), (0, _effects.takeLatest)([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST), (0, _effects.takeLatest)(LOAD_FAVORITES, loadFavoritesSaga), (0, _effects.takeLatest)(LOG_IN, logInSaga), (0, _effects.takeLatest)(UPDATE_USER_PASSWORD, updateUserPasswordSaga), (0, _effects.takeLatest)(APP_LOAD, getDataFromLocalStorage), (0, _effects.takeLatest)(ADD_TO_CART, getProductDataSaga), (0, _effects.takeLatest)(TOGGLE_FAVORITE, toggleFavoriteSaga), (0, _effects.takeLatest)(UPDATE_USER_DATA, updateUserDataSaga), (0, _effects.takeLatest)(GET_PRODUCT_DETAILS, getProductDetailSaga), (0, _effects.takeLatest)(ON_NAV_OPEN, onNavOpenSaga), (0, _effects.takeLatest)(SIGN_UP, signUpSaga), (0, _effects.takeLatest)(USER_AUTH_SUCCESS, getUserDataSaga), (0, _effects.takeLatest)(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga), (0, _effects.takeLatest)(LOG_OUT, logOutSaga), (0, _effects.takeLatest)(PURCHASE, purchaseSaga), (0, _effects.takeLatest)(REQUEST_COLLECTION, requestCollectionSaga), _regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context18) {
               while (1) {
-                switch (_context16.prev = _context16.next) {
+                switch (_context18.prev = _context18.next) {
                   case 0:
                     if (false) {
-                      _context16.next = 7;
+                      _context18.next = 7;
                       break;
                     }
 
-                    _context16.next = 3;
+                    _context18.next = 3;
                     return (0, _effects.take)([ADD_TO_CART, REMOVE_FROM_CART]);
 
                   case 3:
-                    _context16.next = 5;
+                    _context18.next = 5;
                     return (0, _effects.call)(addToCartLocalStorage);
 
                   case 5:
-                    _context16.next = 0;
+                    _context18.next = 0;
                     break;
 
                   case 7:
                   case 'end':
-                    return _context16.stop();
+                    return _context18.stop();
                 }
               }
             }, _callee, this);
           })(), _regenerator2.default.mark(function _callee2() {
             var loading;
-            return _regenerator2.default.wrap(function _callee2$(_context17) {
+            return _regenerator2.default.wrap(function _callee2$(_context19) {
               while (1) {
-                switch (_context17.prev = _context17.next) {
+                switch (_context19.prev = _context19.next) {
                   case 0:
                     if (false) {
-                      _context17.next = 9;
+                      _context19.next = 9;
                       break;
                     }
 
-                    _context17.next = 3;
+                    _context19.next = 3;
                     return (0, _effects.take)(LOADING);
 
                   case 3:
-                    _context17.next = 5;
+                    _context19.next = 5;
                     return (0, _effects.select)(getLoadingState);
 
                   case 5:
-                    loading = _context17.sent;
+                    loading = _context19.sent;
 
                     if (loading) {
                       document.body.style.overflow = 'hidden';
                     } else {
                       document.body.style.overflow = 'initial';
                     }
-                    _context17.next = 0;
+                    _context19.next = 0;
                     break;
 
                   case 9:
                   case 'end':
-                    return _context17.stop();
+                    return _context19.stop();
                 }
               }
             }, _callee2, this);
           })(), _regenerator2.default.mark(function _callee3() {
             var initialLoad, navOpen, path;
-            return _regenerator2.default.wrap(function _callee3$(_context18) {
+            return _regenerator2.default.wrap(function _callee3$(_context20) {
               while (1) {
-                switch (_context18.prev = _context18.next) {
+                switch (_context20.prev = _context20.next) {
                   case 0:
                     initialLoad = true;
 
                   case 1:
                     if (false) {
-                      _context18.next = 22;
+                      _context20.next = 22;
                       break;
                     }
 
-                    _context18.next = 4;
+                    _context20.next = 4;
                     return (0, _effects.take)([_reactRouterRedux.LOCATION_CHANGE]);
 
                   case 4:
                     if (initialLoad) {
-                      _context18.next = 7;
+                      _context20.next = 7;
                       break;
                     }
 
-                    _context18.next = 7;
+                    _context20.next = 7;
                     return (0, _effects.put)((0, _Utils.action)(PAGE_CHANGE, true));
 
                   case 7:
-                    _context18.next = 9;
+                    _context20.next = 9;
                     return (0, _effects.select)(getNavState);
 
                   case 9:
-                    navOpen = _context18.sent;
+                    navOpen = _context20.sent;
 
                     if (!navOpen) {
-                      _context18.next = 13;
+                      _context20.next = 13;
                       break;
                     }
 
-                    _context18.next = 13;
+                    _context20.next = 13;
                     return (0, _effects.put)((0, _Utils.action)(ON_NAV_OPEN, !navOpen));
 
                   case 13:
                     if (!(typeof window.ga !== 'undefined' && !initialLoad)) {
-                      _context18.next = 19;
+                      _context20.next = 19;
                       break;
                     }
 
-                    _context18.next = 16;
+                    _context20.next = 16;
                     return (0, _effects.select)(getCurrentPath);
 
                   case 16:
-                    path = _context18.sent;
+                    path = _context20.sent;
 
                     window.ga('set', 'page', path);
                     window.ga('send', 'pageview');
 
                   case 19:
                     initialLoad = false;
-                    _context18.next = 1;
+                    _context20.next = 1;
                     break;
 
                   case 22:
                   case 'end':
-                    return _context18.stop();
+                    return _context20.stop();
                 }
               }
             }, _callee3, this);
@@ -46906,10 +47934,10 @@ function rootSaga() {
 
         case 2:
         case 'end':
-          return _context19.stop();
+          return _context21.stop();
       }
     }
-  }, _marked[15], this);
+  }, _marked[17], this);
 }
 ;
 
@@ -46950,6 +47978,10 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(toggleFavoriteSaga, 'toggleFavoriteSaga', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
+  __REACT_HOT_LOADER__.register(updateUserDataSaga, 'updateUserDataSaga', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(updateUserPasswordSaga, 'updateUserPasswordSaga', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
   __REACT_HOT_LOADER__.register(loadFavoritesSaga, 'loadFavoritesSaga', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(onNavOpenSaga, 'onNavOpenSaga', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
@@ -46976,6 +48008,8 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(PRODUCT_DATA_LOADED, 'PRODUCT_DATA_LOADED', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
+  __REACT_HOT_LOADER__.register(UPDATE_USER_PASSWORD, 'UPDATE_USER_PASSWORD', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
   __REACT_HOT_LOADER__.register(PAGE_CHANGE, 'PAGE_CHANGE', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(SET_REDIRECT_PATH, 'SET_REDIRECT_PATH', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
@@ -47001,6 +48035,16 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(PRODUCT_DETAIL_LOADED, 'PRODUCT_DETAIL_LOADED', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(ON_CLEAR_FILTERS, 'ON_CLEAR_FILTERS', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(CLEAR_REDIRECT_PATH, 'CLEAR_REDIRECT_PATH', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_START, 'REQUEST_START', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_DONE, 'REQUEST_DONE', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_ERROR, 'REQUEST_ERROR', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(UPDATE_USER_DATA, 'UPDATE_USER_DATA', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(REMOVE_FROM_CART, 'REMOVE_FROM_CART', '/Users/realseanp1/Projects/archadon/src/client/sagas/index.js');
 
