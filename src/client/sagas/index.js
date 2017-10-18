@@ -13,6 +13,7 @@ const {
   LOADING,
   PRODUCT_LIST_LOADED,
   PRODUCT_DATA_LOADED,
+  UPDATE_USER_PASSWORD,
   PAGE_CHANGE,
   SET_REDIRECT_PATH,
   TOGGLE_FAVORITE,
@@ -48,6 +49,7 @@ import {
   requestSignUp,
   requestUserFavorites,
   requestProductList,
+  requestUpdatePassword,
   requestProductData,
   requestPurchase,
   requestUpdateUserData,
@@ -388,7 +390,7 @@ export function* updateUserDataSaga({ payload: { data: payload, id } }) {
   yield put(action(REQUEST_START, id));
   if (authToken && ID) {
     try {
-      const res = yield call(requestUpdateUserData, ID, authToken, payload);
+      yield call(requestUpdateUserData, ID, authToken, payload);
       yield put(action(SET_USER_DATA, payload));
       yield put(action(REQUEST_DONE, id));
     } catch (e) {
@@ -396,6 +398,24 @@ export function* updateUserDataSaga({ payload: { data: payload, id } }) {
       yield put(action(SET_ERROR, {
         type: 'profile',
         error: `Uh oh - something went wrong on the backend. Try again and rest assured we are working on a fix.`,
+      }));
+    }
+  }
+}
+
+export function* updateUserPasswordSaga({ payload: { data: payload, id } }) {
+  const { authToken, ID } = yield select(getAuthData);
+  yield put(action(REQUEST_START, id));
+  if (authToken && ID) {
+    try {
+      yield call(requestUpdatePassword, ID, authToken, payload);
+      yield put(action(REQUEST_DONE, id));
+    } catch (e) {
+      console.log(e);
+      yield put(action(REQUEST_ERROR, id));
+      yield put(action(SET_ERROR, {
+        type: 'updatepassword',
+        error: `Please make sure you password is correct`,
       }));
     }
   }
@@ -433,6 +453,7 @@ export default function* rootSaga() {
     takeLatest([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST),
     takeLatest(LOAD_FAVORITES, loadFavoritesSaga),
     takeLatest(LOG_IN, logInSaga),
+    takeLatest(UPDATE_USER_PASSWORD, updateUserPasswordSaga),
     takeLatest(APP_LOAD, getDataFromLocalStorage),
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),

@@ -12,6 +12,9 @@ export const requestUserData = (ID: string, token: string) => request('GET', url
   authtoken: token,
 });
 
+export const requestUpdatePassword = (id, authtoken, body) => request('POST', url(`user/v1/update/item/password/${id}`), body, {
+  authtoken,
+});
 
 export const requestUserFavorites = (_id: string, authtoken: string) => request('GET', url(`user/v1/getFavorites/${_id}`), null, {
   authtoken,

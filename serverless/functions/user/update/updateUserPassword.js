@@ -2,6 +2,7 @@ import connect from 'utils/mongoConnect';
 import comparePassword from 'utils/comparePassword';
 import verifyJwt from 'utils/verifyJwt';
 import { UserItem } from 'schemas/User';
+import addCorsHeaders from 'utils/corsRes';
 
 async function _updateUserPassword(event, context, callback) {
   let data;
@@ -32,7 +33,7 @@ async function _updateUserPassword(event, context, callback) {
         const response = {
           statusCode: 200,
         };
-        callback(null, response);
+        callback(null, addCorsHeaders(response));
       } else {
         throw new Error();
       }
@@ -46,7 +47,7 @@ async function _updateUserPassword(event, context, callback) {
         error: e,
       }),
     };
-    callback(null, response);
+    callback(null, addCorsHeaders(response));
   }
 }
 

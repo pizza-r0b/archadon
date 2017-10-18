@@ -28,6 +28,7 @@ export default keyMirror({
   UPDATE_USER_DATA: null,
   SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
+  UPDATE_USER_PASSWORD: null,
   LOAD_MORE: null,
   LOAD_MORE_DONE: null,
   PRODUCT_DETAIL_LOADED: null,

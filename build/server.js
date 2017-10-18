@@ -114,6 +114,7 @@ var _default = (0, _Utils.keyMirror)({
   UPDATE_USER_DATA: null,
   SET_ORDER_CONFIRMATION: null,
   REPLACE_CART: null,
+  UPDATE_USER_PASSWORD: null,
   LOAD_MORE: null,
   LOAD_MORE_DONE: null,
   PRODUCT_DETAIL_LOADED: null,
@@ -7606,7 +7607,8 @@ var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var UPDATE_USER_DATA = _Actions2.default.UPDATE_USER_DATA;
+var UPDATE_USER_DATA = _Actions2.default.UPDATE_USER_DATA,
+    UPDATE_USER_PASSWORD = _Actions2.default.UPDATE_USER_PASSWORD;
 
 var Profile = function (_React$Component) {
   (0, _inherits3.default)(Profile, _React$Component);
@@ -7691,7 +7693,21 @@ var Profile = function (_React$Component) {
             data: payload,
             id: reqId
           });
-        } else {}
+        } else {
+          if (_this.state.data.newPassword !== _this.state.data.confirmNewPassword) {
+            _this.setState({
+              passwordError: true
+            });
+          } else {
+            _this.props.updatePassword({
+              data: {
+                password: _this.state.data.oldPassword,
+                newPassword: _this.state.data.newPassword
+              },
+              id: _this.passwordReqId
+            });
+          }
+        }
 
         console.log(payload);
       };
@@ -7703,14 +7719,14 @@ var Profile = function (_React$Component) {
       };
     };
 
-    _this.renderError = function (keys, msg) {
-      return (0, _entries2.default)(_this.state.errors).some(function (_ref4) {
+    _this.renderError = function (keys, msg, show) {
+      return ((0, _entries2.default)(_this.state.errors).some(function (_ref4) {
         var _ref5 = (0, _slicedToArray3.default)(_ref4, 2),
             key = _ref5[0],
             value = _ref5[1];
 
         return keys.includes(key) && value;
-      }) && _react2.default.createElement(
+      }) || show) && _react2.default.createElement(
         'p',
         { className: 'font-color--danger margin--bottom-3 small-caps' },
         msg || 'Please fill in fields marked with red.'
@@ -7919,7 +7935,7 @@ var Profile = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'wrap' },
+        { className: 'full-width' },
         _react2.default.createElement(
           'h1',
           null,
@@ -7965,7 +7981,7 @@ var Profile = function (_React$Component) {
             ),
             nameForm,
             _react2.default.createElement('hr', null),
-            this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct'),
+            this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct', this.state.passwordError),
             _react2.default.createElement(
               'h3',
               { className: 'small-caps font-color--light' },
@@ -7973,7 +7989,7 @@ var Profile = function (_React$Component) {
             ),
             _react2.default.createElement(
               'form',
-              { className: 'flex-parent flex-col', onSubmit: this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword']) },
+              { className: 'flex-parent flex-col', onSubmit: this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword'], ['password', 'newPassword'], this.passwordReqId, true) },
               _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
@@ -8054,6 +8070,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     updateData: function updateData(data) {
       dispatch((0, _Utils.action)(UPDATE_USER_DATA, data));
+    },
+    updatePassword: function updatePassword(data) {
+      dispatch((0, _Utils.action)(UPDATE_USER_PASSWORD, data));
     }
   };
 };
@@ -8069,6 +8088,8 @@ var _temp = function () {
   }
 
   __REACT_HOT_LOADER__.register(UPDATE_USER_DATA, 'UPDATE_USER_DATA', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
+
+  __REACT_HOT_LOADER__.register(UPDATE_USER_PASSWORD, 'UPDATE_USER_PASSWORD', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
 
   __REACT_HOT_LOADER__.register(Profile, 'Profile', '/Users/realseanp1/Projects/archadon/src/client/components/Profile.jsx');
 

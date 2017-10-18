@@ -4,7 +4,7 @@ import actions from 'Actions';
 import { action } from 'Utils';
 import uuid from 'uuid/v1';
 
-const { UPDATE_USER_DATA } = actions;
+const { UPDATE_USER_DATA, UPDATE_USER_PASSWORD } = actions;
 
 class Profile extends React.Component {
 
@@ -104,7 +104,19 @@ class Profile extends React.Component {
         id: reqId,
       });
     } else {
-
+      if (this.state.data.newPassword !== this.state.data.confirmNewPassword) {
+        this.setState({
+          passwordError: true,
+        });
+      } else {
+        this.props.updatePassword({
+          data: {
+            password: this.state.data.oldPassword,
+            newPassword: this.state.data.newPassword,
+          },
+          id: this.passwordReqId,
+        });
+      }
     }
 
     console.log(payload);
@@ -114,7 +126,7 @@ class Profile extends React.Component {
     this.setState({ [name]: true });
   }
 
-  renderError = (keys, msg) => (Object.entries(this.state.errors).some(([key, value]) => keys.includes(key) && value) && (
+  renderError = (keys, msg, show) => ((Object.entries(this.state.errors).some(([key, value]) => keys.includes(key) && value) || show) && (
     <p className="font-color--danger margin--bottom-3 small-caps">
       {msg || 'Please fill in fields marked with red.'}
     </p>
@@ -230,7 +242,7 @@ class Profile extends React.Component {
     }
 
     return (
-      <div className="wrap">
+      <div className="full-width">
         <h1>Account</h1>
         <h2 className="margin--bottom-8">Change your password / save some information to breeze through checkout</h2>
 
@@ -250,10 +262,10 @@ class Profile extends React.Component {
             {nameForm}
 
             <hr />
-            {this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct')}
+            {this.renderError(['oldPassword', 'newPassword', 'confirmNewPassword'], 'Please fill in fields marked with red / Make sure passwords match / Make sure password is correct', this.state.passwordError)}
 
             <h3 className="small-caps font-color--light">Password</h3>
-            <form className="flex-parent flex-col" onSubmit={this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword'])}>
+            <form className="flex-parent flex-col" onSubmit={this.onSubmit(['oldPassword', 'newPassword', 'confirmNewPassword'], ['password', 'newPassword'], this.passwordReqId, true)}>
               <div className="form-group">
                 <div className="form-component">
                   {this.addClasses(
@@ -306,6 +318,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateData(data) {
     dispatch(action(UPDATE_USER_DATA, data));
+  },
+  updatePassword(data) {
+    dispatch(action(UPDATE_USER_PASSWORD, data));
   },
 });
 
