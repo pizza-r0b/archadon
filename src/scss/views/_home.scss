@@ -3,26 +3,6 @@ $smallBreak: 500px;
 
 @import "homeslider";
 
-.featured-boxes {
-  @media (min-width: 590px) {
-    display: flex;
-    justify-content: space-between;
-
-    .featured-box {
-      width: 100%;
-      &:first-child {
-        margin-right: 25px;
-      }
-      &:nth-child(2) {
-        margin-left: 25px;
-      }
-      .img {
-        max-width: 282px;
-        align-self: flex-end;
-      }
-    }
-  }
-}
 
 .slim-box {
   width: 100%;

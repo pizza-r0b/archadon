@@ -30,7 +30,7 @@ function HomeFeaturedBoxes() {
             <h3 className="font-color--lighter uppercase">Your favorite</h3>
           </div>
           <div>
-            <a href="#" className="btn btn--alt">Shop</a>
+            <Link to="/shop" className="btn btn--alt">Shop</Link>
           </div>
         </div>
         <div className="inner" />

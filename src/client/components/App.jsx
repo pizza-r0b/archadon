@@ -23,6 +23,7 @@ import About from 'Components/About';
 import Contact from 'Components/Contact';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
+import SignOut from 'Components/SignOut';
 
 const { APP_LOAD, NAV_STATE, PAGE_CHANGE } = actions;
 
@@ -129,6 +130,7 @@ class App extends Component {
               <Route path="/checkout" component={Checkout} />
               <Route path="/product/:name/:id" component={ProductDetail} />
               <Route path="/order-confirmation" component={OrderConfirmation} />
+              <Route path="/signout" component={SignOut} />
             </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>

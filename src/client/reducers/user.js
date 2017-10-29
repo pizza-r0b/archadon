@@ -7,13 +7,16 @@ const {
   CLEAR_AUTHENTICATION_DATA,
   TOGGLE_FAVORITE,
   FAVORITES_LOADED,
+  SIGN_OUT,
 } = actions;
 
 type StateType = {
   Favorites: Array<Object>
- };
+};
 
-export default function user(state: StateType = { Favorites: [], FavoritesDetail: [] }, action: Object) {
+const INITIAL_STATE = { Favorites: [], FavoritesDetail: [] };
+
+export default function user(state: StateType = INITIAL_STATE, action: Object) {
   switch (action.type) {
     case SET_USER_DATA:
       if (Array.isArray(action.payload.orders)) {
@@ -28,6 +31,8 @@ export default function user(state: StateType = { Favorites: [], FavoritesDetail
         ...state,
         FavoritesDetail: action.payload || [],
       };
+    case SIGN_OUT:
+      return INITIAL_STATE;
     case TOGGLE_FAVORITE:
       if (!state.authToken) return state;
       const ID = action.payload;

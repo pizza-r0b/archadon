@@ -22,7 +22,7 @@ const images = [
   },
   {
     headline: 'Classic',
-    title: 'For classy people',
+    title: 'For classic people',
     subtitle: 'Classic styles',
     image: `${IMAGE_ORIGIN}/6x9_S_2081_50.jpg`,
     id: '59bdbf4f857c5b78b3a4c4f0',

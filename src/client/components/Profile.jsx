@@ -61,6 +61,19 @@ class Profile extends React.Component {
       });
     }
 
+    if (this.props.requests[this.addressReqId] === 'started' && nextProps.requests[this.addressReqId] === 'done') {
+      this.setState({
+        addressSuccess: true,
+      });
+    }
+
+    if (this.props.requests[this.addressReqId] === 'started' && nextProps.requests[this.addressReqId] === 'error') {
+      this.setState({
+        addressSuccess: false,
+        addressError: true,
+      });
+    }
+
     if (this.props.requests[this.passwordReqId] === 'started' && nextProps.requests[this.passwordReqId] === 'done') {
       this.setState({
         data: {
@@ -318,11 +331,13 @@ class Profile extends React.Component {
             </h2>
             {this.renderError(['address1', 'city', 'state', 'zip'])}
             <h3 className="small-caps font-color--light">Shipping Address</h3>
+            {this.state.addressSuccess && <p className="font-color--success small-caps">Your address has been updated 👏!</p>}
+            {this.state.addressError && <p className="font-color--danger small-caps">Oops. Something went wrong. Try again.</p>}
             {addressForm}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
