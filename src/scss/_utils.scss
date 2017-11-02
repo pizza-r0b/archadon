@@ -10,6 +10,10 @@
     display: block;
 }
 
+img {
+    max-width: 100%;
+}
+
 .underline-header {
     border-bottom: 1px solid $lightest;
     padding-bottom: 30px;
@@ -45,6 +49,22 @@
 
 .full-width {
     width: 100%;
+}
+
+.flex-col-break {
+    display: flex;
+    &--m {
+        margin-left: $spacer * 5px;
+        margin-top: 0;
+    }
+    @media (max-width: 640px) {
+        &--m {
+            margin-top: $spacer * 5px;
+            margin-left: 0;
+
+        }
+        flex-direction: column;
+    }
 }
 
 .item-box {
@@ -106,7 +126,7 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
     }
     &:after {
         position: absolute;
-        z-index: 1;
+        z-index: 0;
         width: 50%;
         height: 50%;
         flex: 1;

@@ -14,13 +14,16 @@ function About() {
               <div className="stripe-image">
                 <img className="max-width-100" src={src('bottlecap-rug-on-floor.jpg')} />
                 <Link style={{ fontSize: '12px' }} className="margin--top-2 font-color--light link small-caps" to="/product/8x10'1 Bottle Caps Putty/59c8631b907d2a0d06a4d5c1">
-                  Award winning bottle cap design
+                  Award winning bottle cap design - View This Rug
                 </Link>
               </div>
             </div>
             <div className="top-content-right">
               <div className="stripe-image">
-                <img className="max-width-100" src={src('oriental-rug-in-hallway_002.jpg')} />
+                <img style={{ maxWidth: '400px' }} className="max-width-100" src={src('room-with-rug_001.jpg')} />
+                <Link style={{ fontSize: '12px' }} className="margin--top-2 font-color--light link small-caps" to="/product/5'11x9'2/59c8631b907d2a0d06a4d63b">
+                  View This Rug
+              </Link>
               </div>
             </div>
           </div>
