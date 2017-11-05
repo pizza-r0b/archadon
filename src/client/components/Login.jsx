@@ -97,7 +97,7 @@ class LogInForm extends React.Component {
           {this.props.error && <p className="font-color--danger margin--bottom-3 small-caps">{this.props.error}</p>}
           <div className="signin-btns">
             <button {...btnProps} className="btn--primary--inverse">{btnProps.disabled ? 'Please Wait' : 'Sign In'}</button>
-            <button className="btn--primary">Forgot Password</button>
+            {/*<button className="btn--primary">Forgot Password</button>*/}
           </div>
         </div>
       </form>
