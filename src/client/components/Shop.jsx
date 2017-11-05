@@ -9,8 +9,8 @@ const { LOAD_MORE, ON_CLEAR_FILTERS } = actions;
 function Shop({ products, page, nbPages, loadMore }) {
   const nextProps = {
     style: { cursor: page === nbPages ? 'auto' : 'pointer' },
-    className: page === nbPages ? 'font-color--lighter' : '',
-    onClick: page === nbPages ? null : async () => {
+    className: page + 1 === nbPages ? 'font-color--lighter' : '',
+    onClick: page + 1 === nbPages ? null : () => {
       loadMore(page + 1);
       window.scrollTo(0, 0);
     },
@@ -19,7 +19,7 @@ function Shop({ products, page, nbPages, loadMore }) {
   const prevProps = {
     className: page === 0 ? 'font-color--lighter' : '',
     style: { cursor: page === 0 ? 'auto' : 'pointer' },
-    onClick: page === 0 ? null : async () => {
+    onClick: page === 0 ? null : () => {
       loadMore(page - 1);
       window.scrollTo(0, 0);
     },
