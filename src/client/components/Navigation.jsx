@@ -77,8 +77,8 @@ function Navigation({ fixed, location, user, qty, scrolled, navOpen, toggleNav }
           </div>
           <div className="bottom-links">
             <span>hello@archadon.com</span>
-            <span>Instagram</span>
-            <span>Pinterest</span>
+            {/*<span>Instagram</span>
+            <span>Pinterest</span>*/}
           </div>
         </div>
       </div>

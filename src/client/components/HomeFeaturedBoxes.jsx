@@ -7,7 +7,7 @@ function HomeFeaturedBoxes() {
     <div className="featured-boxes">
       <div className="featured-box--lightest">
         <div className="img">
-          <div className="img--inner" style={{ backgroundImage: `url(${IMAGE_ORIGIN}/6x9_32963_29737.jpg)` }} />
+          <div className="img--inner" style={{ backgroundImage: `url(${IMAGE_ORIGIN}/6x9.2_32397_29426.jpg)` }} />
         </div>
         <div className="section-1">
           <div>
@@ -22,7 +22,7 @@ function HomeFeaturedBoxes() {
       </div>
       <div className="featured-box--first">
         <div className="img">
-          <div className="img--inner" style={{ backgroundImage: `url(${IMAGE_ORIGIN}/6x9_32963_29737.jpg)` }} />
+          <div className="img--inner" style={{ backgroundImage: `url(${IMAGE_ORIGIN}/6.1x9_S_2093_62.jpg)` }} />
         </div>
         <div className="section-1">
           <div>

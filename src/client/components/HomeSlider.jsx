@@ -11,28 +11,28 @@ const images = [
     title: 'Floor Art',
     subtitle: 'Bold, beautiful',
     image: `${IMAGE_ORIGIN}/6x9_32963_29737.jpg`,
-    id: '59bdbf4f857c5b78b3a4c4ee',
+    id: '59c8631b907d2a0d06a4d59d',
   },
   {
     headline: 'Abstract',
     title: 'Wild imaginations',
     subtitle: 'A canvas for',
-    image: `${IMAGE_ORIGIN}/3.1x5.1_32438_29431.jpg`,
-    id: '59bdbf4f857c5b78b3a4c440',
+    image: `${IMAGE_ORIGIN}/6x9.1_32929_3694.jpg`,
+    id: '59c8631b907d2a0d06a4d5ab',
   },
   {
     headline: 'Classic',
     title: 'For classic people',
     subtitle: 'Classic styles',
-    image: `${IMAGE_ORIGIN}/6x9_S_2081_50.jpg`,
-    id: '59bdbf4f857c5b78b3a4c4f0',
+    image: `${IMAGE_ORIGIN}/6.2.x9.2_S_1964_1235.jpg`,
+    id: '59c8631b907d2a0d06a4d553',
   },
   {
     headline: 'Contemporary',
     title: 'Off the beaten path',
     subtitle: 'A little bit',
-    image: `${IMAGE_ORIGIN}/6.1x9.1_S_2090_59.jpg`,
-    id: '59bdbf4f857c5b78b3a4c49d',
+    image: `${IMAGE_ORIGIN}/6x8.11_27318_25588.jpg`,
+    id: '59c8631b907d2a0d06a4d56c',
   },
 ].map((image, i) => ({ ...image, ...{ i } }));
 
@@ -145,7 +145,12 @@ class HomeSlider extends React.Component {
               component="div"
               className="featured-img"
             >
-              <div key={images[this.state.current].id} className="inner" style={{ backgroundImage: `url(${images[this.state.current].image})` }} />
+              <ProductDetailLink
+                key={images[this.state.current].id}
+                product={{ _id: images[this.state.current].id }}
+                className="inner"
+                style={{ backgroundImage: `url(${images[this.state.current].image})` }}
+              />
             </CSSTransitionGroup>
           </div>
           <div className="home-slider-item">

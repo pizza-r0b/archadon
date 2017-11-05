@@ -5,12 +5,12 @@ provider:
   name: aws
   runtime: nodejs6.10
   profile: archadon
-  # vpc:
-  #   securityGroupIds:
-  #     - sg-6119e612
-  #   subnetIds:
-  #     - subnet-45782b49
-  #     - subnet-ba7b28b6
+  vpc:
+    securityGroupIds:
+      - sg-52201920
+    subnetIds:
+      - subnet-1705f34a
+      - subnet-e918eeb4
   environment:
     ASSET_URL: ${opt:assetUrl, self:custom.assetUrl}
     NODE_ENV: ${env:NODE_ENV, self:custom.NODE_ENV}

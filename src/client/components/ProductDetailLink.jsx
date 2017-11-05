@@ -13,9 +13,9 @@ type ProductDetailLinkProps = {
   className?: string,
 }
 
-function ProductDetailLink({ children, product, onClick, className }: ProductDetailLinkProps) {
+function ProductDetailLink({ children, product, onClick, className, ...attrs }: ProductDetailLinkProps) {
   return (
-    <a className={className} href={`/product/${product.Name}/${product._id}`} onClick={onClick(product)}>
+    <a className={className} href={`/product/${product._id}`} onClick={onClick(product)} {...attrs}>
       {children}
     </a>
   );

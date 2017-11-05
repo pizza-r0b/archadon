@@ -24,7 +24,7 @@ app.post('/search/batch', batchItems);
 
 let productDetails = [];
 
-app.use('/product/:name/:id', async (req, res, next) => {
+app.use('/product/:id', async (req, res, next) => {
   productDetails = [];
 
   try {
@@ -32,10 +32,11 @@ app.use('/product/:name/:id', async (req, res, next) => {
     const { data } = await response.json();
     if (Object.keys(data).length > 0) {
       productDetails.push(data);
+    } else {
+      res.redirect('/');
     }
     next();
   } catch (e) {
-    console.log(e);
     next();
   }
 });

@@ -8,6 +8,7 @@
     "deploy": "eb deploy",
     "dev:predeploy:build": "npm run dev:server:command; npm run dev:client:command",
     "dev:deploy": "eb deploy archadon-dev",
+    "prod:deploy": "eb deploy archadon-prod",
     "start": "npm run prod:start",
     "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 npm run sprite && run-p dev:client:build dev:server:build dev:server:delay",
     "dev:server:delay": "run-s delay dev:server:start",

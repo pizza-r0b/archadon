@@ -128,7 +128,7 @@ class App extends Component {
               <Route path="/contact" component={Contact} />
               <Route path="/shipping-and-returns" component={Shipping} />
               <Route path="/checkout" component={Checkout} />
-              <Route path="/product/:name/:id" component={ProductDetail} />
+              <Route path="/product/:id" component={ProductDetail} />
               <Route path="/order-confirmation" component={OrderConfirmation} />
               <Route path="/signout" component={SignOut} />
             </Switch>

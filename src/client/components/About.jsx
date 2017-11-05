@@ -1,6 +1,7 @@
 import React from 'react';
 import { src } from 'Utils';
 import { Link } from 'react-router-dom';
+import ProductDetailLink from 'Components/ProductDetailLink';
 
 function About() {
   return (
@@ -13,17 +14,13 @@ function About() {
               <h2>Art beneath your feet</h2>
               <div className="stripe-image">
                 <img className="max-width-100" src={src('bottlecap-rug-on-floor.jpg')} />
-                <Link style={{ fontSize: '12px' }} className="margin--top-2 font-color--light link small-caps" to="/product/8x10'1 Bottle Caps Putty/59c8631b907d2a0d06a4d5c1">
-                  Award winning bottle cap design - View This Rug
-                </Link>
+                <ProductDetailLink product={{ _id: '59c8631b907d2a0d06a4d5c1' }} className="margin--top-2 font-color--light link small-caps">Award winning bottle cap design - View This Rug</ProductDetailLink>
               </div>
             </div>
             <div className="top-content-right">
               <div className="stripe-image">
                 <img style={{ maxWidth: '400px' }} className="max-width-100" src={src('room-with-rug_001.jpg')} />
-                <Link style={{ fontSize: '12px' }} className="margin--top-2 font-color--light link small-caps" to="/product/5'11x9'2/59c8631b907d2a0d06a4d63b">
-                  View This Rug
-              </Link>
+                <ProductDetailLink product={{ _id: '59c8631b907d2a0d06a4d63b' }} className="margin--top-2 font-color--light link small-caps">View This Rug</ProductDetailLink>
               </div>
             </div>
           </div>

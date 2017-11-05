@@ -13,7 +13,6 @@ async function getData() {
   const ProductItem = mongoose.connection.db.collection('productitems');
   const ProductData = mongoose.connection.db.collection('productdatas');
   const items = await ProductItem.find().toArray();
-  console.log(items);
   const promises = items.map(item => {
     const { _id } = item;
     return ProductData.find({ Item: _id }).toArray().then(docs => ({
@@ -57,7 +56,6 @@ function getProducts() {
   mongoose.connection.once('open', async () => {
 
     const raw = await getData();
-    console.log(raw);
     const data = raw.map(item => {
       item.objectID = item._id;
       return item;

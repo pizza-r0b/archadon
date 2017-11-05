@@ -247,7 +247,7 @@ export function* getProductDataSaga({ payload: product }) {
 export function* getProductDetailSaga({ payload: product }) {
   const id = product._id;
   yield put(action(SET_LOADING_PAGE, 'detail'));
-  yield put(push(`/product/${product.Name}/${product._id}`));
+  yield put(push(`/product/${product._id}`));
   const products = yield select(getProductDetails);
   let productDetail = products.find(p => p._id === id);
   if (productDetail) {
@@ -263,6 +263,8 @@ export function* getProductDetailSaga({ payload: product }) {
       if (Object.keys(data).length > 0) {
         data.ID = id;
         productDetail = data;
+      } else {
+        yield put(push('/'));
       }
     } catch (e) { }
   }
