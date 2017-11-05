@@ -3,7 +3,7 @@ import React from 'react';
 import html from './html';
 import App from 'Components/App';
 import { renderToString } from 'react-dom/server';
-import { readFileSync } from 'fs';
+import compression from 'compression';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import makeStore from 'Store';
@@ -18,6 +18,7 @@ const API_URL = process.env.NODE_ENV !== 'production' ? 'https://gnr9itw1e2.exec
 const app = express();
 
 app.use(bodyParser.json());
+app.use(compression());
 app.use(express.static('public'));
 
 app.post('/search/products', searchRoute);
