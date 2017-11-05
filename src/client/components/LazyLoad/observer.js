@@ -24,6 +24,8 @@ function intersectionCb(entries, observer) {
       observer.unobserve(entry.target);
       loadImage(node.dataset.src).then(() => {
         node.src = node.dataset.src;
+      }).catch(() => {
+        // noop
       });
     }
   }
