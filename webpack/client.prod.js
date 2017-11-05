@@ -2,8 +2,8 @@ const base = require('./base');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const defaults = base({});
 
@@ -32,6 +32,7 @@ const clientConfig = base({
     },
     output: Object.assign(defaults.output, {
       path: outputPath,
+      publicPath: '/',
     }),
     plugins: [
       new Dotenv({
@@ -42,7 +43,7 @@ const clientConfig = base({
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      // new UglifyJSPlugin(),
+      new UglifyJSPlugin(),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),

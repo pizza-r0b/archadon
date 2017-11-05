@@ -56,13 +56,13 @@ class CheckOut extends Component {
       } = props.user;
       this.state.data = {
         ...this.state.data,
-        email,
-        address1,
-        address2,
-        city,
-        state,
-        name,
-        zip,
+        email: email || '',
+        address1: address1 || '',
+        address2: address2 || '',
+        city: city || '',
+        state: state || '',
+        name: name || '',
+        zip: zip || '',
       };
     }
   }
@@ -151,7 +151,7 @@ class CheckOut extends Component {
   render() {
     const error =
       (Object.keys(this.state.errors).length > 0 || this.props.error) &&
-      <p className="font-color--danger margin--bottom-3">
+      <p className="font-color--danger margin--bottom-3 small-caps">
         {Object.keys(this.state.errors).length > 0 ? 'Please fill in fields marked with red.' : this.props.error}
       </p>;
 
@@ -170,7 +170,7 @@ class CheckOut extends Component {
 
                 <h2 className="margin--bottom-5 underline-header">1. Personal</h2>
                 <div className="form-group">
-                  <p className="small-caps">{error}</p>
+                  {error}
                   <div className="form-component">
                     {this.addClasses(
                       <input onChange={this.onDataChange} value={this.state.data.name} name="name" type="text" />,
