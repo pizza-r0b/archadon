@@ -2,6 +2,7 @@ import React from 'react';
 import { IMAGE_ORIGIN } from 'Constants';
 import FavoriteBtn from 'Ui/FavoriteBtn';
 import ProductDetailLink from 'Components/ProductDetailLink';
+import LazyLoad from './LazyLoad';
 
 function ProductList({ products }) {
   return (
@@ -11,7 +12,9 @@ function ProductList({ products }) {
           <div className="product-tile-inner">
             <ProductDetailLink product={product}>
               <div className="product-tile-img">
-                <img src={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
+                <LazyLoad>
+                  <img data-src={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
+                </LazyLoad>
               </div>
               <div className="margin--top-3">
                 <p className="product-tile-title">{product.Name || 'Cool Rug'}</p>

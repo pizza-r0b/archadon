@@ -42,7 +42,7 @@ const clientConfig = base({
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      new UglifyJSPlugin(),
+      // new UglifyJSPlugin(),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),

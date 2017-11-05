@@ -17,12 +17,17 @@ const history = createHistory();
 
 const routeMiddleware = routerMiddleware(history);
 
-const store = makeStore(
+const middleware = [
   window.__INITIAL_STATE__,
   sagaMiddleware,
   routeMiddleware,
-  logger,
-);
+];
+
+if (process.env.NODE_ENV !== 'production') {
+  middleware.push(logger);
+}
+
+const store = makeStore(...middleware);
 
 let sagaTask = sagaMiddleware.run(sagas);
 

@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { action } from 'Utils';
 import actions from 'Actions';
 import Filters from 'Ui/Filters';
-import ClearFilterButton from 'Ui/ClearFilterButton';
-let Velocity;
 const { LOAD_MORE, ON_CLEAR_FILTERS } = actions;
-
 
 function Shop({ products, page, nbPages, loadMore }) {
   const nextProps = {
@@ -15,10 +12,7 @@ function Shop({ products, page, nbPages, loadMore }) {
     className: page === nbPages ? 'font-color--lighter' : '',
     onClick: page === nbPages ? null : async () => {
       loadMore(page + 1);
-      if (!Velocity) {
-        Velocity = await import('velocity-animate');
-      }
-      Velocity(document.body, 'scroll', { offset: 0, mobileHA: false });
+      window.scrollTo(0, 0);
     },
   };
 
@@ -27,10 +21,7 @@ function Shop({ products, page, nbPages, loadMore }) {
     style: { cursor: page === 0 ? 'auto' : 'pointer' },
     onClick: page === 0 ? null : async () => {
       loadMore(page - 1);
-      if (!Velocity) {
-        Velocity = await import('velocity-animate');
-      }
-      Velocity(document.body, 'scroll', { offset: 0, mobileHA: false });
+      window.scrollTo(0, 0);
     },
   };
   return (

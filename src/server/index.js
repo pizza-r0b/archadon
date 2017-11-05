@@ -3,6 +3,7 @@ import React from 'react';
 import html from './html';
 import App from 'Components/App';
 import { renderToString } from 'react-dom/server';
+import { readFileSync } from 'fs';
 import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import makeStore from 'Store';
@@ -40,6 +41,7 @@ app.use('/product/:id', async (req, res, next) => {
     next();
   }
 });
+
 
 app.use(async (req, res, next) => {
   const products = await search({ filters: 'Qty > 0' });
