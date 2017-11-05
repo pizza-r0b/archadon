@@ -23,6 +23,8 @@ export default function html(routerWithContext, props) {
                 <title>Hand-knotted, Artisan Rugs.</title>
                 <meta name="description" content="" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="https://assets.archadon.com/favicon.png">
+                <link rel="apple-touch-icon" href="https://assets.archadon.com/favicon.png">
                 ${
                     process.env.NODE_ENV === 'production' || process.env.DEV_DEPLOY ?
                     `<link rel="stylesheet" href="/styles.css" />`

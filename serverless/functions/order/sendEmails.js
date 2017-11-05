@@ -21,6 +21,18 @@ export function sendOrderConfirmationEmailToCustomer(items, customerData, price,
   });
 }
 
+export function sendError(error) {
+  return sendMail({
+    to: process.env.ADMIN_EMAIL,
+    subject: 'ERROR!',
+    template: 'error',
+    from: 'error@archadon.com',
+    context: {
+      error,
+    },
+  });
+}
+
 export function sendAdminEmail(items, customerData, price, ID, chargeID) {
   return sendMail({
     to: process.env.ADMIN_EMAIL,

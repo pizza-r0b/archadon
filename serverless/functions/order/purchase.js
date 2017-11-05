@@ -6,7 +6,7 @@ import _stripe from 'stripe';
 import connect from 'utils/mongoConnect';
 import { OrderItem, OrderData } from 'schemas/Order';
 import { ProductItem } from 'schemas/Product';
-import { sendOrderConfirmationEmailToCustomer, sendAdminEmail } from './sendEmails';
+import { sendOrderConfirmationEmailToCustomer, sendAdminEmail, sendError } from './sendEmails';
 
 const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -21,6 +21,42 @@ const indexName = `${indexPrefix}_Products`;
 const index = algoliaClient.initIndex(indexName);
 
 let processedItems;
+
+function algoliaUpdateQty(items) {
+  const updates = items.map(item => ({
+    Qty: item.Qty - 1,
+    objectID: item._id,
+  }));
+
+  return new Promise((resolve, reject) => {
+    index.partialUpdateObjects(updates, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve();
+    });
+  });
+}
+
+function updateDbQty(items) {
+  const updates = items.map(item => ({
+    updateOne: {
+      filter: { _id: item._id },
+      update: { Qty: item.Qty - 1 },
+    },
+  }));
+
+  return ProductItem.bulkWrite(updates);
+}
+
+async function decrementQty(items) {
+  try {
+    await algoliaUpdateQty(items);
+    await updateDbQty(items);
+  } catch (e) {
+    await sendError(`Decrement qty error ${e.message}, ${e.stack}`);
+  }
+}
 
 const createCharge = (token, email, items) => new Promise((resolve, reject) => {
   processedItems = items;
@@ -105,7 +141,7 @@ async function _purchase(event, context, callback) {
       _id: {
         $in: Items.map(item => item._id),
       },
-    }).exec();
+    }).lean().exec();
   } catch (e) {
     return callback(null, addCors({
       statusCode: 500,
@@ -115,7 +151,7 @@ async function _purchase(event, context, callback) {
     }));
   }
 
-  const outOfStockItems = docs.filter(doc => doc.get('Qty') === 0);
+  const outOfStockItems = docs.filter(doc => doc.Qty === 0);
   if (outOfStockItems.length > 0) {
     return callback(null, addCors({
       statusCode: 200,
@@ -127,6 +163,8 @@ async function _purchase(event, context, callback) {
   }
 
   const { price, ChargeID, Brand, Last4 } = await createCharge(Token, CustomerData.email, docs);
+
+  await decrementQty(docs);
 
   let order;
 
@@ -165,8 +203,6 @@ async function _purchase(event, context, callback) {
         id,
       }),
     }));
-
-
   } catch (e) {
     return callback(null, addCors({
       statusCode: 500,
