@@ -12,6 +12,10 @@ export function getFavoriteDocuments(_id) {
 }
 
 export async function _getUserFavorites(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
   const userID = params.id;

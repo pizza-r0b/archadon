@@ -7,6 +7,10 @@ import { toPaths } from 'utils/DolliDB/build/main.min.js';
 import getDeletedDiff from 'utils/DolliDB/src/utils/getDeleted';
 
 async function _updateUserProfile(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   let body;
   try {
     body = JSON.parse(event.body);

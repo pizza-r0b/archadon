@@ -1,9 +1,8 @@
-import { toPaths } from 'utils/DolliDB/build/main.min.js';
 import createJwt from 'utils/createJwt';
 import corsRes from 'utils/corsRes';
 import sendMail from 'utils/sendMail';
 import connect from 'utils/mongoConnect';
-import { UserItem, UserData } from 'schemas/User';
+import { UserItem } from 'schemas/User';
 
 function getRest(...args) {
   const data = args[args.length - 1];
@@ -17,6 +16,10 @@ function getRest(...args) {
 }
 
 async function _createUser(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   let data;
   try {
     data = JSON.parse(event.body);

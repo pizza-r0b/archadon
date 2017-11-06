@@ -121,6 +121,10 @@ function validate(Items, CustomerData, Token) {
 }
 
 async function _purchase(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   processedItems = null;
   const { Items = [], UserID = '', CustomerData = {}, Token = '' } = JSON.parse(event.body);
   const errors = validate(Items, CustomerData, Token);

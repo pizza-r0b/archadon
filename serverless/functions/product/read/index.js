@@ -3,6 +3,10 @@ import connect from 'utils/mongoConnect';
 import getProductById from 'utils/getProductById';
 
 async function _getProductData(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   const params = event.pathParameters || {};
   const productID = params.id;
 

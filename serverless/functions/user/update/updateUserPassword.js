@@ -5,6 +5,10 @@ import { UserItem } from 'schemas/User';
 import addCorsHeaders from 'utils/corsRes';
 
 async function _updateUserPassword(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   let data;
   try {
     data = JSON.parse(event.body);

@@ -42,7 +42,6 @@ export default function html(routerWithContext, props) {
               <script>
                   window.__INITIAL_STATE__ = ${JSON.stringify(props)};
               </script>
-              <script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
               <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
               <script>
                   Stripe.setPublishableKey('${process.env.STRIPE_PUBLIC_KEY}');

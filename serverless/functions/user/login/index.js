@@ -8,6 +8,10 @@ import { UserItem } from 'schemas/User';
 
 
 async function _login(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   let data;
 
   // try catch for testing, body is JSON when actually on AWS

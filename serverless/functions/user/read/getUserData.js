@@ -6,6 +6,10 @@ import { UserData } from 'schemas/User';
 import connect from 'utils/mongoConnect';
 
 export async function _getUserData(event, context, callback) {
+  if (event.source === 'serverless-plugin-warmup') {
+    return callback();
+  }
+
   const token = event.headers.authtoken;
   const params = event.pathParameters || {};
   const userID = params.id;
