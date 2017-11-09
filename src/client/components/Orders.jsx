@@ -59,16 +59,15 @@ function Orders({ orders, loading }: { orders: Array<Object> }) {
           <div className="loading-indicator" />
           <h2 className="align--center">Checking for recent orders</h2>
         </div>
+      ) : orders.length === 0 ? (
+        <div className="full-width">
+        <p className="margin--bottom-8">You don't have any recent orders.</p>
+        <Link to="/shop" className="btn--primary">Shop Now</Link>
+      </div>
       ) : (
-        {orders.length === 0 && (
-          <div className="full-width">
-            <p className="margin--bottom-8">You don't have any recent orders.</p>
-            <Link to="/shop" className="btn--primary">Shop Now</Link>
-          </div>
-        )}
-        {orders.length > 0 && orders.map(order => (
+        orders.map(order => (
           <OrderBox key={order._id} order={order} />
-        ))}
+        ))
       )}
 
     </div>

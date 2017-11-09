@@ -101,9 +101,10 @@ class ProductDetail extends React.Component {
       product = DEFAULT_ITEM,
     } = this.props;
 
-    // if (!product) {
-    //   return <Redirect to="/shop" />;
-    // }
+    if (!product) {
+      return <Redirect to="/shop" />;
+    }
+
     let about = {};
     if (product.LongDescription.toLowerCase().includes('tibetan')) {
       about = aboutCopy.tibetan;
