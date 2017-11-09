@@ -89,8 +89,10 @@ class ProductDetail extends React.Component {
   render() {
     if (this.props.loading) {
       return (
-        <div className="flex-parent flex-justify-center flex-align-center flex-grow-1">
+        <div className="flex-parent flex-justify-center flex-col flex-align-center flex-grow-1 padding--x-5">
+          <div className="loading-indicator" />
           <h2>Loading</h2>
+          <p className="align--center">Please be patient. We are working on making this faster.</p>
         </div>
       );
     }
@@ -99,10 +101,10 @@ class ProductDetail extends React.Component {
       product = DEFAULT_ITEM,
     } = this.props;
 
-    if (!product) {
-      return <Redirect to="/shop" />;
-    }
-    let about;
+    // if (!product) {
+    //   return <Redirect to="/shop" />;
+    // }
+    let about = {};
     if (product.LongDescription.toLowerCase().includes('tibetan')) {
       about = aboutCopy.tibetan;
     } else if (product.LongDescription.toLowerCase().includes('zealand')) {
@@ -158,7 +160,7 @@ class ProductDetail extends React.Component {
         <section className="wrap product-details-about-wrap margin--top-5">
           <div className="product-details-about">
             <h2 className="margin--bottom-2">{about.title}</h2>
-            {about.paragraphs.map((p, i) => (
+            {about.paragraphs && about.paragraphs.map((p, i) => (
               <p key={i} className="margin--top-3">{p}</p>
             ))}
           </div>

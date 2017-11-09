@@ -3,7 +3,7 @@ import connect from 'utils/mongoConnect';
 import getProductById from 'utils/getProductById';
 
 async function _getProductData(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

@@ -201,7 +201,7 @@ export function* getProductListSaga(actionString, { payload: { page } }) {
 }
 
 export function* getUserDataSaga() {
-  yield put(action(LOADING, true));
+  yield put(action(GET_USER_DATA_START));
   const { authToken, ID } = yield select(getAuthData);
   try {
     const { response: { data } } = yield call(requestUserData, ID, authToken);
@@ -216,7 +216,7 @@ export function* getUserDataSaga() {
   } catch (e) {
     yield put(action(CLEAR_AUTHENTICATION_DATA));
   }
-  yield put(action(LOADING, false));
+  yield put(action(GET_USER_DATA_END));
 }
 
 export function* getProductDataSaga({ payload: product }) {

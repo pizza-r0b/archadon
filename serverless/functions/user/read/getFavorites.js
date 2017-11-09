@@ -12,7 +12,7 @@ export function getFavoriteDocuments(_id) {
 }
 
 export async function _getUserFavorites(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

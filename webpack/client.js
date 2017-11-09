@@ -26,6 +26,12 @@ const clientConfig = base({
         'react-hot-loader/patch',
         './src/client/client.js',
       ],
+      vendor: [
+        'react',
+        'react-router-redux',
+        'react-redux',
+        'react-router-dom',
+      ],
     },
     output: Object.assign(defaults.output, {
       path: outputPath,

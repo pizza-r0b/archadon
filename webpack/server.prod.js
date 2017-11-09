@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const base = require('./base.js');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
+const PackerPlugin = require('packer-webpack-plugin');
 
 const serverConfig = base({
   rules: [
@@ -30,7 +31,8 @@ const serverConfig = base({
           NODE_ENV: JSON.stringify('production'),
         },
       }),
-      new webpack.optimize.UglifyJsPlugin(),
+      // new webpack.optimize.UglifyJsPlugin(),
+      new PackerPlugin(),
       new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
     ],
     externals: [nodeExternals({

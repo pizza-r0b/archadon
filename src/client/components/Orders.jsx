@@ -44,7 +44,7 @@ function OrderBox({ order }: { order: Object }) {
   );
 }
 
-function Orders({ orders }: { orders: Array<Object> }) {
+function Orders({ orders, loading }: { orders: Array<Object> }) {
   return (
     <div className="margin--bottom-8 full-width">
       <h2 className="margin--bottom-8">Recent Orders</h2>
@@ -54,21 +54,30 @@ function Orders({ orders }: { orders: Array<Object> }) {
         <div className="small-caps font-color--lighter">Date</div>
         <div className="small-caps font-color--lighter">Price</div>
       </div>
-      {orders.length === 0 && (
-        <div className="full-width">
-          <p className="margin--bottom-8">You don't have any recent orders.</p>
-          <Link to="/shop" className="btn--primary">Shop Now</Link>
+      { loading ? (
+        <div>
+          <div className="loading-indicator" />
+          <h2 className="align--center">Checking for recent orders</h2>
         </div>
+      ) : (
+        {orders.length === 0 && (
+          <div className="full-width">
+            <p className="margin--bottom-8">You don't have any recent orders.</p>
+            <Link to="/shop" className="btn--primary">Shop Now</Link>
+          </div>
+        )}
+        {orders.length > 0 && orders.map(order => (
+          <OrderBox key={order._id} order={order} />
+        ))}
       )}
-      {orders.length > 0 && orders.map(order => (
-        <OrderBox key={order._id} order={order} />
-      ))}
+
     </div>
   );
 }
 
 const mapStateToProps = state => ({
   orders: state.user.orders || [],
+  loading: state.loading.page === 'user',
 });
 
 export default connect(mapStateToProps)(Orders);

@@ -8,7 +8,7 @@ module.exports = fn => (...args) => {
 
   context.callbackWaitsForEmptyEventLoop = false;
 
-  if (cachedDB) {
+  if (cachedDB && cachedDB.readyState != 0 && cachedDB.readyState != 3) {
     fn(...args);
   } else {
     mongoose.connect(process.env.MONGO_URI);

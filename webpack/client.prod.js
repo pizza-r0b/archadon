@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const PackerPlugin = require('packer-webpack-plugin');
 
 const defaults = base({});
 
@@ -29,6 +30,14 @@ const clientConfig = base({
       client: [
         './src/client/client.js',
       ],
+      vendor: [
+        'react',
+        'react-redux',
+        'react-router-redux',
+        'react-router',
+        'react-router-dom',
+        'classnames',
+      ],
     },
     output: Object.assign(defaults.output, {
       path: outputPath,
@@ -44,6 +53,15 @@ const clientConfig = base({
         },
       }),
       new UglifyJSPlugin(),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: "vendor",
+        // filename: "vendor.js"
+        // (Give the chunk a different name)
+
+        minChunks: Infinity,
+        // (with more entries, this ensures that no other module
+        //  goes into the vendor chunk)
+      }),
       new ExtractTextPlugin('styles.css'),
       new webpack.NamedModulesPlugin(),
       new webpack.EnvironmentPlugin(['NODE_ENV', 'DEV_SERVER_PORT']),

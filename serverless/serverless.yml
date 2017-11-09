@@ -1,7 +1,6 @@
 service: archadon-${self:custom.env}
 plugins:
   - serverless-webpack
-  - serverless-plugin-warmup
 provider:
   name: aws
   runtime: nodejs6.10
@@ -48,7 +47,6 @@ package:
 
 functions:
   getUserData:
-    warmup: true
     handler: functions/user/read/getUserData.getUserData
     events:
       - http:
@@ -71,7 +69,6 @@ functions:
 
   updateUserProfile:
     handler: functions/user/update/updateUserProfile.updateUserProfile
-    warmup: true
     events:
       - http:
           path: user/v1/update/data/{id}
@@ -93,7 +90,6 @@ functions:
 
   updateUserPassword:
     handler: functions/user/update/updateUserPassword.updateUserPassword
-    warmup: true
     events:
       - http:
           path: user/v1/update/item/password/{id}
@@ -138,7 +134,6 @@ functions:
 
   createUser:
     handler: functions/user/create/index.createUser
-    warmup: true
     events:
       - http:
           path: user/v1/create
@@ -156,7 +151,6 @@ functions:
 
   getUserFavorites:
     handler: functions/user/read/getFavorites.getUserFavorites
-    warmup: true
     events:
       - http:
           path: user/v1/getFavorites/{id}
@@ -178,7 +172,6 @@ functions:
 
   loginUser:
     handler: functions/user/login/index.login
-    warmup: true
     events:
       - http:
           path: user/v1/login
@@ -276,7 +269,6 @@ functions:
 
   purchase:
     handler: functions/order/purchase.purchase
-    warmup: true
     events:
       - http:
           path: purchase/v1/charge
@@ -320,7 +312,6 @@ functions:
 
   getProductData:
     handler: functions/product/read/index.getProductData
-    warmup: true
     events:
       - http:
           path: product/v1/data/{id}

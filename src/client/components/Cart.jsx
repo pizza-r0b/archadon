@@ -60,7 +60,7 @@ function Cart({ cart: { items, totalPrice } }: { cart: Object }) {
           </div>
           {items.map(item => <CartItem key={item._id} item={item} />)}
           <div className="cart-cont-shopping margin--y-10">
-            <Link to="/shop" className="link--underlined">Continue Shopping</Link>
+            <Link to="/shop" className="btn--alt">Continue Shopping</Link>
           </div>
           <div className="cart-bottom-row">
             <Link to="/checkout" className="btn--primary--inverse checkout-btn">Checkout Now</Link>

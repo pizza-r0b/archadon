@@ -4,9 +4,13 @@ import FavoriteBtn from 'Ui/FavoriteBtn';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import LazyLoad from './LazyLoad';
 
-function ProductList({ products }) {
+function ProductList({ products, loading }) {
   return (
     <div className="product-list-wrap wrap">
+      <div className={`product-list-loader ${loading ? 'show' : 'hide'}`}>
+        <div className="loading-indicator" />
+        <h2 className="align--center">Loading</h2>
+      </div>
       {products.map(product => (
         <div key={product._id} className="product-tile">
           <div className="product-tile-inner">

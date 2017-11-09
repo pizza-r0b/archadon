@@ -8,7 +8,7 @@ import { UserItem } from 'schemas/User';
 
 
 async function _login(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

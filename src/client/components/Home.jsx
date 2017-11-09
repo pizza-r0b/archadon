@@ -15,6 +15,12 @@ class Home extends React.Component {
             <h2 className="font-color--lighter small-caps">Handcrafted fine wool rugs</h2>
           </div>
           <HomeSlider />
+
+          <div className="margin--bottom-10" style={{ width: '100%', maxWidth: '650px', margin: 'auto' }}>
+            <h2 className="align--center">Hello there, and welcome!</h2>
+            <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
+          </div>
+
           <HomeFeaturedItems />
           <div className="slim-box">
             <div className="flex-parent flex-justify-start flex-align-center margin--bottom-10">
@@ -22,6 +28,10 @@ class Home extends React.Component {
               <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
             </div>
             <ProductList products={this.props.products} />
+            <div className="flex-parent flex-align-center flex-justify-center margin--bottom-20">
+              <Link to="/shop" className="btn--alt">Shop All</Link>
+            </div>
+
           </div>
         </div>
       </div>

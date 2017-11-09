@@ -16,7 +16,7 @@ function getRest(...args) {
 }
 
 async function _createUser(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

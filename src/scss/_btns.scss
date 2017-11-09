@@ -30,9 +30,32 @@
   &--alt {
     @extend .btn;
     border: none;
-    border-bottom: 1px solid $dark;
+    position: relative;
+    overflow: hidden;
+    // border-bottom: 1px solid $dark;
     padding-bottom: 10px;
     padding-top: 10px;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: calc(100% - 1px);
+      background: $dark;
+      width: 100%;
+      bottom: 0;
+      z-index: -1;
+      left: 0;
+      transform: translateY(calc(100% - 1px));
+      transition: transform 0.25s;
+    }
+
+    &:hover {
+      color: $white;
+      &:before {
+        transform: translateY(0);
+      }
+
+    }
   }
 }
 

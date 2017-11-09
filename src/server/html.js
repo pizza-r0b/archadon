@@ -15,10 +15,12 @@ const ga = process.env.NODE_ENV !== 'production' ? '' : (
 );
 
 const css = readFileSync(resolve(resolve(), './public/styles.css'));
+const vendor = readFileSync(resolve(resolve(), './public/vendor.js'));
 
 export default function html(routerWithContext, props) {
-  const filename = '/client.js';
-  const src = process.env.NODE_ENV !== 'production' && !process.env.DEV_DEPLOY ? `http://localhost:${process.env.DEV_SERVER_PORT}${filename}` : filename;
+  const client = '/client.js';
+//   const vendor = '/vendor.js';
+  const src = name => process.env.NODE_ENV !== 'production' && !process.env.DEV_DEPLOY ? `http://localhost:${process.env.DEV_SERVER_PORT}${name}` : name;
   return `
       <html>
           <head>
@@ -48,7 +50,8 @@ export default function html(routerWithContext, props) {
               </script>
 
               <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
-              <script src="${src}" defer></script>
+              <script>${vendor}</script>
+              <script src="${src(client)}" defer></script>
           </body>
       </html>
   `;

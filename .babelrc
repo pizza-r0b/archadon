@@ -1,5 +1,10 @@
 {
     "presets": [["es2015", {"loose": true}], "react", "stage-0"],
+    "env": {
+        "development": {
+            "plugins": ["react-hot-loader/babel"]
+        }
+    },
     "plugins": [
         // ["module-resolver", {
         //     "root": ["./src"],
@@ -19,7 +24,6 @@
         //         "query": "server/queryUtils"
         //     }
         // }],
-        ["react-hot-loader/babel"],
         ["transform-runtime"]
     ]
 }

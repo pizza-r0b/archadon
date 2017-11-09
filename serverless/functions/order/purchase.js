@@ -121,7 +121,7 @@ function validate(Items, CustomerData, Token) {
 }
 
 async function _purchase(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

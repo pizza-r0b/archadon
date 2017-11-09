@@ -6,7 +6,7 @@ import { UserData } from 'schemas/User';
 import connect from 'utils/mongoConnect';
 
 export async function _getUserData(event, context, callback) {
-  if (event.source === 'serverless-plugin-warmup') {
+  if (event.source === 'cloudwatch-event') {
     return callback();
   }
 

@@ -6,7 +6,7 @@ import actions from 'Actions';
 import Filters from 'Ui/Filters';
 const { LOAD_MORE, ON_CLEAR_FILTERS } = actions;
 
-function Shop({ products, page, nbPages, loadMore }) {
+function Shop({ products, page, nbPages, loadMore, loading }) {
   const nextProps = {
     style: { cursor: page === nbPages ? 'auto' : 'pointer' },
     className: page + 1 === nbPages ? 'font-color--lighter' : '',
@@ -27,7 +27,7 @@ function Shop({ products, page, nbPages, loadMore }) {
   return (
     <div className="full-width">
       <Filters />
-      <ProductList products={products} />
+      <ProductList loading={loading} products={products} />
       <div className="wrap">
         <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps">
           <div {...prevProps}>Previous</div>
@@ -43,6 +43,7 @@ const mapStateToProps = (state) => ({
   products: state.products.hits,
   page: state.products.page,
   nbPages: state.products.nbPages,
+  loading: state.loading.page === 'products',
 });
 
 const mapDispatchToProps = dispatch => ({
