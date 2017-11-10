@@ -32,7 +32,7 @@ class Home extends React.Component {
           <div>
             <h1>Find the perfect rug to tie their room together this holiday season.</h1>
             <h1 className="font-color--lighter">We won't tell if you get one for you too.</h1>
-            <Link className="btn--alt margin--top-5" to="/shop?tid=hp1">Find Rugs You Love</Link>
+            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find Rugs You Love</Link>
           </div>
           </div>
 
