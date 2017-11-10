@@ -39,6 +39,13 @@ class OrderConfirmation extends React.Component {
         google_remarketing_only: false,
       });
     }
+
+    if (window.fbq) {
+      try {
+        window.fbq('track', 'Purchase');
+      } catch (e) {
+      }
+    }
   }
 
   render() {
