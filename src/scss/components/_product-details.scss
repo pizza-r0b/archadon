@@ -122,8 +122,8 @@ $maxWidthProductDetail: 958px;
     grid-column: 1 / 2;
     grid-rows: 1 / 4;
     img {
-      height: 480px;
-      width: auto;
+      height: auto;
+      width: 100%;
     }
     @media (max-width: $maxWidthProductDetail) {
       order: 2;

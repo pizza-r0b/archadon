@@ -17,7 +17,7 @@ function ProductList({ products, loading }) {
             <ProductDetailLink product={product}>
               <div className="product-tile-img">
                 <LazyLoad>
-                  <img data-src={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
+                  <img data-srcset="" data-webpsrcset="" data-fallbacksrc={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
                 </LazyLoad>
               </div>
               <div className="margin--top-3">
