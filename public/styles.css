@@ -6583,6 +6583,20 @@ img {
   width: 100%;
   margin: auto; }
 
+.hp-christmas {
+  padding: 25px 0;
+  border-top: 1px solid #dddddf;
+  border-bottom: 1px solid #dddddf; }
+  .hp-christmas div {
+    width: 50%; }
+  .hp-christmas img {
+    transform: rotate(180deg);
+    width: 80%;
+    height: auto; }
+  @media (max-width: 640px) {
+    .hp-christmas div, .hp-christmas img {
+      width: 100%; } }
+
 .signin {
   display: flex;
   margin-bottom: 50px; }
