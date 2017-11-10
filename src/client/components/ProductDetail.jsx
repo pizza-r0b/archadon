@@ -9,6 +9,8 @@ import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
 
+const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_landscape_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/landscape_${sku}.${ext} 1315w`;
+
 const aboutCopy = {
   tibetan: {
     title: 'About Tibetan Wool',
@@ -36,9 +38,27 @@ const aboutCopy = {
 
 class ImageZoom extends React.Component {
 
+  state = {}
+
   onKeyDown = ({ key }) => {
     if (key.toLowerCase() === 'escape' && this.props.show) {
       this.props.onClose();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.show && !this.props.show && !this.state.img) {
+      const img = new Image();
+      const src = this.props.img;
+      new Promise((resolve, reject) => {
+        img.addEventListener('load', resolve);
+        img.addEventListener('error', reject);
+      }).then(() => {
+        this.setState({ img: src });
+      }).catch(() => {
+        this.props.onClose();
+      });
+      img.src = src;
     }
   }
 
@@ -53,7 +73,7 @@ class ImageZoom extends React.Component {
   render() {
     return (
       <div onClick={this.props.onClose} className={classnames('image-zoom', { show: this.props.show })}>
-        <img src={this.props.img} />
+        <img src={this.state.img} style={{ maxWidth: 'none' }} />
       </div>
     )
   }
@@ -84,6 +104,10 @@ class ProductDetail extends React.Component {
   onZoomClose = () => {
     document.body.style.overflow = 'auto';
     this.setState({ showImgZoom: false });
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
@@ -133,7 +157,11 @@ class ProductDetail extends React.Component {
           <div className="wrap product-details-wrap">
             <div className="product-details-image">
               <div className="stripe-image--left">
-                <img style={{ cursor: 'pointer' }} onClick={this.onImageClick} src={imgSrc} />
+                <img
+                  style={{ cursor: 'pointer' }}
+                  onClick={this.onImageClick}
+                  srcSet={returnSrcSet(product.SKU)}
+                />
               </div>
               <p style={{ fontSize: '12px' }} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
