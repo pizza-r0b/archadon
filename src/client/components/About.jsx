@@ -40,7 +40,7 @@ function About() {
           <p className="margin--top-3">The result is nothing short of art—for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.</p>
           <p className="margin--top-3">If that’s not sophistication, we don’t know what is.</p>
           <p className="margin--top-3">Come on—let’s go shopping.</p>
-          <Link to="/shop" className="btn--alt margin--top-6">Shop Now</Link>
+          <Link to="/shop" className="btn--alt margin--top-6"><span className="text">Shop Now</span></Link>
 
           <Guarantee />
         </div>

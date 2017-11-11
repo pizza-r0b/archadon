@@ -155,32 +155,39 @@ class ProductDetail extends React.Component {
         </div>
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
-            <div className="product-details-image">
-              <div className="stripe-image--left">
-                <img
-                  style={{ cursor: 'pointer' }}
-                  onClick={this.onImageClick}
-                  srcSet={returnSrcSet(product.SKU)}
-                />
+            <div className="product-details-left">
+              <div className="product-details-image">
+                <div className="stripe-image--left">
+                  <img
+                    style={{ cursor: 'pointer' }}
+                    onClick={this.onImageClick}
+                    srcSet={returnSrcSet(product.SKU)}
+                  />
+                </div>
               </div>
-              <p style={{ fontSize: '12px' }} className="margin--top-2 font-color--light">Click image to zoom.</p>
             </div>
-            <div className="product-details-title">
-              <FavoriteBtn className="heart" productId={product._id} />
-              <h2 className="margin--y-3">{product.Name}</h2>
-              <p className="font-color--copyColor margin--bottom-1">{product.LongDescription}</p>
-              <p className="font-color--copyColor">{product.ShortDescription}</p>
-              <div className="line-break" />
-              <h2 className="font-color--dark font-weight--normal">{product.Price.toLocaleString('USD', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}</h2>
-            </div>
-            <div className="product-details-btns">
-              <div>
-                <AddToCartBtn id={product._id} />
+            <div className="product-details-right">
+              <div className="product-details-title">
+                <div className="heart-parent">
+                  <FavoriteBtn className="heart" productId={product._id} />
+                  <p className="small-caps font-color--light margin--left-3">Click the heart to save this rug to your favorites!</p>
+
+                </div>
+                <h2 className="margin--y-3">{product.Name}</h2>
+                <p className="font-color--copyColor margin--bottom-1">{product.LongDescription}</p>
+                <p className="font-color--copyColor">{product.ShortDescription}</p>
+                <div className="line-break" />
+                <h2 className="font-color--dark font-weight--normal">{product.Price.toLocaleString('USD', {
+                  style: 'currency',
+                  currency: 'USD',
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}</h2>
+              </div>
+              <div className="product-details-btns">
+                <div>
+                  <AddToCartBtn id={product._id} />
+                </div>
               </div>
             </div>
           </div>
@@ -215,11 +222,14 @@ class ProductDetail extends React.Component {
             </div>
           </div>
         </section>
-        <section className="product-details-section margin--top-10">
+        <section className="product-details-section margin--top-5">
           <div className="wrap">
             <h2>You Might Also Like...</h2>
             <ProductList {...{ products: this.recs }} />
-          </div>
+            <div className="flex-parent flex-justify-center">
+              <Link to="/shop" className="btn--alt margin--y-5"><span className="text">Shop All Rugs</span></Link>
+            </div>
+            </div>
         </section>
       </div>
     );

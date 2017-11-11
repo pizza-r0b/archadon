@@ -44,7 +44,7 @@ class Home extends React.Component {
             </div>
             <ProductList products={this.props.products} />
             <div className="flex-parent flex-align-center flex-justify-center margin--bottom-20">
-              <Link to="/shop" className="btn--alt">Shop All</Link>
+              <Link to="/shop" className="btn--alt"><span className="text">Shop All</span></Link>
             </div>
 
           </div>

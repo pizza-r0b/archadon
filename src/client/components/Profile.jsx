@@ -175,7 +175,7 @@ class Profile extends React.Component {
             <p>{this.props.user.FullName}</p>
           </div>
           <div>
-            <div onClick={this.showForm('showNameForm')} className="btn--alt">Edit</div>
+            <div onClick={this.showForm('showNameForm')} className="btn--alt"><span className="text">Edit</span></div>
           </div>
         </div>
       )
@@ -195,7 +195,7 @@ class Profile extends React.Component {
             </div>
           </div>
           <div className="flex-parent flex-justify-end">
-            <button {...nameProps} type="submit" className="btn--alt margin--top-3">Save Name</button>
+            <button {...nameProps} type="submit" className="btn--alt margin--top-3"><span className="text">Save Name</span></button>
           </div>
         </form>
       )
@@ -210,7 +210,7 @@ class Profile extends React.Component {
             <p>{this.props.user.City}, {this.props.user.State}, {this.props.user.Zip}</p>
           </div>
           <div>
-          <div onClick={this.showForm('showAddressForm')} className="btn--alt">Edit</div>
+          <div onClick={this.showForm('showAddressForm')} className="btn--alt"><span className="text">Edit</span></div>
 
           </div>
         </div>
@@ -264,7 +264,7 @@ class Profile extends React.Component {
             </div>
           </div>
           <div className="flex-parent flex-justify-end">
-            <button {...addressProps} type="submit" className="btn--alt margin--top-3">Save Address</button>
+            <button {...addressProps} type="submit" className="btn--alt margin--top-3"><span className="text">Save Address</span></button>
           </div>
         </form>
       )
@@ -320,7 +320,7 @@ class Profile extends React.Component {
                 </div>
               </div>
               <div className="flex-parent flex-justify-end">
-                <button disabled={this.props.requests[this.passwordReqId] === 'started'} type="submit" className="btn--alt margin--top-3">Update Password</button>
+                <button disabled={this.props.requests[this.passwordReqId] === 'started'} type="submit" className="btn--alt margin--top-3"><span className="text">Update Password</span></button>
               </div>
             </form>
 

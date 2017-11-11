@@ -4,7 +4,12 @@ mongoose.Promise = global.Promise;
 let cachedDB = null;
 
 module.exports = fn => (...args) => {
-  const [, context] = args;
+  const [event, context, cb] = args;
+
+  if (event.source === 'cloudwatch-event') {
+    cb();
+    return;
+  }
 
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -13,10 +18,7 @@ module.exports = fn => (...args) => {
   } else {
     mongoose.connect(process.env.MONGO_URI);
 
-    console.log('TRYING TO CONNECT');
-
     mongoose.connection.on('error', err => {
-      console.log('Connection Error');
       console.log(err);
     });
 

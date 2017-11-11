@@ -247,14 +247,14 @@ class CheckOut extends Component {
                         <input data-regex="expMonth" value={this.state.cardDetails.expMonth} onChange={this.onCardChange} name="expMonth" type="text" />,
                         this.state.cardDetails.expMonth
                       )}
-                      <label>Exp. Month (MM)</label>
+                      <label>MM</label>
                     </div>
-                    <div className="form-component middle-input">
+                    <div className="form-component margin--top-3 margin--left-3 margin--right-3">
                       {this.addClasses(
                         <input data-regex="expYear" value={this.state.cardDetails.expYear} onChange={this.onCardChange} name="expYear" type="text" />,
                         this.state.cardDetails.expYear
                       )}
-                      <label>Exp. Year (YYYY)</label>
+                      <label>YYYY</label>
 
                     </div>
                     <div className="form-component">

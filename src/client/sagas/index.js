@@ -500,7 +500,8 @@ export default function* rootSaga() {
         }
         if (typeof window.ga !== 'undefined' && !initialLoad) {
           const path = yield select(getCurrentPath);
-          window.ga('set', 'page', path);
+          const search = yield select(state => state.location.pathname.search);
+          window.ga('set', 'page', `${path}${search}`);
           window.ga('send', 'pageview');
         }
         initialLoad = false;

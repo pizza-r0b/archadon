@@ -18,12 +18,16 @@ type AddToCartProps = {
 function AddToCartBtn({ inCart, id, removeFromCart, addToCart, className }: AddToCartProps) {
   return (
     <div className="flex-parent flex-col">
-      <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className={`${className ? ` ${className}` : 'btn--primary--inverse'}`}>
-        {inCart ? 'Remove From Cart' : 'Add To Cart'}
-      </button>
-      {inCart && (
-        <Link className="btn--primary margin--top-4" to="/checkout">Checkout Now</Link>
-      )}
+      <div>
+        <button onClick={inCart ? removeFromCart(id) : addToCart(id)} className={`${className ? ` ${className}` : 'btn--primary'}`}>
+          {inCart ? 'Remove From Cart' : '+ Add To Cart'}
+        </button>
+      </div>
+      <div>
+        {inCart && (
+          <Link className="btn--primary--inverse margin--top-4" to="/checkout">Checkout Now</Link>
+        )}
+      </div>
     </div>
   );
 }
