@@ -5,6 +5,7 @@ import ProductList from './ProductList';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
+import LazyLoad from './LazyLoad';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/lg_${sku}.${ext} 1315w`;
 
@@ -27,7 +28,11 @@ class Home extends React.Component {
 
           <div className="flex-parent flex-col-break hp-christmas margin--bottom-10">
           <div className="align--center margin--bottom-5">
-            <Link to="/shop?tid=hp2"><img srcSet={returnSrcSet('christmas-rugs')} /></Link>
+            <Link to="/shop?tid=hp2">
+              <LazyLoad>
+                <img data-srcset={returnSrcSet('christmas-rugs')} />
+              </LazyLoad>
+            </Link>
           </div>
           <div>
             <h1>Find the perfect rug to tie their room together this holiday season.</h1>

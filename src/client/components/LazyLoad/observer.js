@@ -35,8 +35,8 @@ function intersectionCb(entries, observer) {
         }).catch(() => {
           // noop
         });
-      } else if (srcset) {
-        node.srcset = webpSupport ? webpsrcset : srcset;
+      } else if (srcset || webpsrcset) {
+        node.srcset = webpSupport && webpsrcset ? webpsrcset : srcset;
       }
     }
   }
