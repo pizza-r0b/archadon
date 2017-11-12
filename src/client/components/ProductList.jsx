@@ -9,7 +9,7 @@ const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329
 function ProductList({ products, loading }) {
   return (
     <div className="product-list-wrap wrap">
-      <div className={`product-list-loader ${loading ? 'show' : 'hide'}`}>
+      <div className={`loading-indicator-wrap product-list-loader ${loading ? 'show' : 'hide'}`}>
         <div className="loading-indicator" />
         <h2 className="align--center">Loading</h2>
       </div>

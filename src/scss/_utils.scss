@@ -179,6 +179,9 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
 }
 
 .loading-indicator {
+    &-wrap {
+        perspective: 9999;
+    }
     width: 40px;
     position: relative;
     z-index: 1;
@@ -190,18 +193,18 @@ $nums: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;
   }
 
   @-webkit-keyframes sk-rotateplane {
-    0% { -webkit-transform: perspective(120px) }
-    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+    0% { -webkit-transform: perspective(120px); }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg); }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg); }
   }
 
   @keyframes sk-rotateplane {
     0% {
       transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+      -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
     } 50% {
       transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+      -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
     } 100% {
       transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
       -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);

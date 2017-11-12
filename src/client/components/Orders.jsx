@@ -55,7 +55,7 @@ function Orders({ orders, loading }: { orders: Array<Object> }) {
         <div className="small-caps font-color--lighter">Price</div>
       </div>
       { loading ? (
-        <div>
+        <div className="loading-indicator-wrap">
           <div className="loading-indicator" />
           <h2 className="align--center">Checking for recent orders</h2>
         </div>
