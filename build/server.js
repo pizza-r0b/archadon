@@ -509,6 +509,11 @@ var _LazyLoad2 = _interopRequireDefault(_LazyLoad);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var returnSrcSet = function returnSrcSet(sku) {
+  var ext = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'jpg';
+  return _Constants.IMAGE_ORIGIN + '/sm_' + sku + '.' + ext + ' 329w, ' + _Constants.IMAGE_ORIGIN + '/md_' + sku + '.' + ext + ' 658w, ' + _Constants.IMAGE_ORIGIN + '/' + sku + '.' + ext + ' 1315w';
+};
+
 function ProductList(_ref) {
   var products = _ref.products,
       loading = _ref.loading;
@@ -542,7 +547,7 @@ function ProductList(_ref) {
               _react2.default.createElement(
                 _LazyLoad2.default,
                 null,
-                _react2.default.createElement('img', { 'data-src': _Constants.IMAGE_ORIGIN + '/' + (product.Images && product.Images[0]) })
+                _react2.default.createElement('img', { 'data-srcset': returnSrcSet(product.SKU), 'data-webpsrcset': returnSrcSet(product.SKU, 'webp'), 'data-fallbacksrc': _Constants.IMAGE_ORIGIN + '/' + (product.Images && product.Images[0]) })
               )
             ),
             _react2.default.createElement(
@@ -584,6 +589,8 @@ var _temp = function () {
   if (typeof __REACT_HOT_LOADER__ === 'undefined') {
     return;
   }
+
+  __REACT_HOT_LOADER__.register(returnSrcSet, 'returnSrcSet', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 
   __REACT_HOT_LOADER__.register(ProductList, 'ProductList', '/Users/realseanp1/Projects/archadon/src/client/components/ProductList.jsx');
 
@@ -3835,8 +3842,11 @@ var LazyLoad = function (_React$Component) {
       _this4.observer = observer;
       _this4.lazyRefs.forEach(function (child) {
         if (child) {
-          var src = child.dataset.src;
-          if (src) {
+          var _child$dataset = child.dataset,
+              src = _child$dataset.src,
+              srcset = _child$dataset.srcset;
+
+          if (src || srcset) {
             observe((0, _reactDom.findDOMNode)(child));
           }
         }

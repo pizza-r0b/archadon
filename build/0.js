@@ -25,6 +25,8 @@ var options = {
   threshold: 0.01
 };
 
+var webpSupport = void 0;
+
 function loadImage(src) {
   return new _promise2.default(function (resolve, reject) {
     var img = new Image();
@@ -34,6 +36,8 @@ function loadImage(src) {
   });
 }
 
+//          const { webpsrcset, src, fallbacksrc, srcset } = child.dataset;
+
 function intersectionCb(entries, observer) {
   var i = entries.length;
 
@@ -42,11 +46,23 @@ function intersectionCb(entries, observer) {
     var node = entry.target;
     if (entry.intersectionRatio > 0) {
       observer.unobserve(entry.target);
-      loadImage(node.dataset.src).then(function () {
-        node.src = node.dataset.src;
-      }).catch(function () {
-        // noop
-      });
+
+      var _node$dataset = node.dataset,
+          webpsrcset = _node$dataset.webpsrcset,
+          src = _node$dataset.src,
+          fallbacksrc = _node$dataset.fallbacksrc,
+          srcset = _node$dataset.srcset;
+
+
+      if (src) {
+        loadImage(node.dataset.src).then(function () {
+          node.src = node.dataset.src;
+        }).catch(function () {
+          // noop
+        });
+      } else if (srcset) {
+        node.srcset = webpSupport ? webpsrcset : srcset;
+      }
     }
   };
 
@@ -58,7 +74,35 @@ function intersectionCb(entries, observer) {
 var observer = exports.observer = new IntersectionObserver(intersectionCb, options);
 
 function observe(node) {
-  observer.observe(node);
+  if (webpSupport === void 0) {
+    checkWebP().then(function (isSupported) {
+      webpSupport = isSupported;
+      observer.observe(node);
+    });
+  } else {
+    observer.observe(node);
+  }
+}
+
+function checkWebP() {
+  var kTestImages = {
+    lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+    alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+    animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
+  };
+
+  return new _promise2.default(function (resolve) {
+    var img = new Image();
+    img.onload = function () {
+      var result = img.width > 0 && img.height > 0;
+      resolve(result);
+    };
+    img.onerror = function () {
+      resolve(false);
+    };
+    img.src = 'data:image/webp;base64,' + kTestImages.lossy;
+  });
 }
 
 var _default = observe;
@@ -72,6 +116,8 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(options, 'options', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
 
+  __REACT_HOT_LOADER__.register(webpSupport, 'webpSupport', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
+
   __REACT_HOT_LOADER__.register(loadImage, 'loadImage', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
 
   __REACT_HOT_LOADER__.register(intersectionCb, 'intersectionCb', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
@@ -79,6 +125,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(observer, 'observer', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
 
   __REACT_HOT_LOADER__.register(observe, 'observe', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(checkWebP, 'checkWebP', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/src/client/components/LazyLoad/observer.js');
 }();

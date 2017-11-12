@@ -109,14 +109,12 @@ $maxWidthProductDetail: 958px;
 
   &-title {
 
-
   }
 
   &-btns {
     @media (max-width: $maxWidthProductDetail) {
       margin-top: $spacer * 5px;
     }
-
   }
 }
 

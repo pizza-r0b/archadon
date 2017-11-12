@@ -9,8 +9,8 @@ export default class LazyLoad extends React.Component {
       this.observer = observer;
       this.lazyRefs.forEach(child => {
         if (child) {
-          const src = child.dataset.src;
-          if (src) {
+          const { src, srcset } = child.dataset;
+          if (src || srcset) {
             observe(findDOMNode(child));
           }
         }

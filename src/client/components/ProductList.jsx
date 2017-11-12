@@ -4,6 +4,8 @@ import FavoriteBtn from 'Ui/FavoriteBtn';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import LazyLoad from './LazyLoad';
 
+const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/${sku}.${ext} 1315w`;
+
 function ProductList({ products, loading }) {
   return (
     <div className="product-list-wrap wrap">
@@ -17,7 +19,7 @@ function ProductList({ products, loading }) {
             <ProductDetailLink product={product}>
               <div className="product-tile-img">
                 <LazyLoad>
-                  <img data-src={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
+                  <img data-srcset={returnSrcSet(product.SKU)} data-webpsrcset={returnSrcSet(product.SKU, 'webp')} data-fallbacksrc={`${IMAGE_ORIGIN}/${product.Images && product.Images[0]}`} />
                 </LazyLoad>
               </div>
               <div className="margin--top-3">
