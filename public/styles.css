@@ -6320,6 +6320,8 @@ img {
   margin: 10px auto;
   -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
   animation: sk-rotateplane 1.2s infinite ease-in-out; }
+  .loading-indicator-wrap {
+    perspective: 9999; }
 
 @-webkit-keyframes sk-rotateplane {
   0% {
