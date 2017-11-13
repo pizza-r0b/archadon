@@ -142,7 +142,7 @@ class App extends Component {
             </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>
-          <Loader done={this.props.pageChangeDone} loading={this.props.ui.pageChange} />
+          {/*<Loader done={this.props.pageChangeDone} loading={this.props.ui.pageChange} />*/}
         </div>
       </ScrollToTopWithRouter>
     );
