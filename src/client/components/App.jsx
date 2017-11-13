@@ -57,6 +57,14 @@ class ScrollToTop extends Component {
   y = 0
 
   componentDidMount() {
+    try {
+      window.Intercom('boot', {
+        app_id: 'g40b1b4p',
+      });
+    } catch (e) {
+
+    }
+
     window.addEventListener('scroll', () => {
       this.y = window.scrollY;
     });

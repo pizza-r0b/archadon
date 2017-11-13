@@ -491,6 +491,9 @@ export default function* rootSaga() {
       let initialLoad = true;
       while (true) {
         yield take([LOCATION_CHANGE]);
+        try {
+          window.Intercom('update');
+        } catch (e) {}
         if (!initialLoad) {
           yield put(action(PAGE_CHANGE, true));
         }
