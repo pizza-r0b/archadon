@@ -20,7 +20,7 @@ export default class LazyLoad extends React.Component {
 
   componentWillUnmount() {
     this.lazyRefs.forEach(node => {
-      if (node) {
+      if (node && this.observer) {
         this.observer.unobserve(node);
       }
     });

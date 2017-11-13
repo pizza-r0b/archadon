@@ -61,7 +61,7 @@ async function decrementQty(items) {
 const createCharge = (token, email, items) => new Promise((resolve, reject) => {
   processedItems = items;
   const price = items.reduce((initialPrice, item) => {
-    initialPrice += item.Price;
+    initialPrice += parseFloat(parseFloat(item.Price).toFixed(2));
     return initialPrice;
   }, 0);
   const priceInCents = 100 * price;

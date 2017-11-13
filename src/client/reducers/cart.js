@@ -28,6 +28,8 @@ const INITIAL_STATE: InitialStateType = {
   items: [],
 };
 
+const toFixed = num => parseFloat(parseFloat(num).toFixed(2));
+
 export default function (state: InitialStateType = INITIAL_STATE, action: ActionType) {
   if (!action.payload) return state;
   const newState = Object.assign({}, state);
@@ -52,13 +54,13 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
       newState.items.push(action.payload);
       newState.totalQty = newState.items.length;
       if (!isString) {
-        newState.totalPrice += product.Price;
+        newState.totalPrice += toFixed(product.Price);
       }
       return newState;
 
     case PRODUCT_DATA_LOADED:
       const { _id: id } = action.payload;
-      newState.totalPrice += action.payload.Price;
+      newState.totalPrice += toFixed(action.payload.Price);
       newState.items[
         newState.items.findIndex(p => p === id)
       ] = action.payload;
@@ -72,7 +74,7 @@ export default function (state: InitialStateType = INITIAL_STATE, action: Action
       const item: Object = newState.items.find(p => p === ID || p._id === ID) || { Price: 0 };
       newState.totalQty -= 1;
       if (typeof item !== 'string') {
-        newState.totalPrice -= item.Price;
+        newState.totalPrice -= toFixed(item.Price);
       }
       const products = newState.items.filter(p => p._id !== ID);
       newState.items = products;

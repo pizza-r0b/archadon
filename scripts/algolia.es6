@@ -3,6 +3,7 @@ import path from 'path';
 import algolia from 'algoliasearch';
 import mongoose from 'mongoose';
 import { fromPaths } from 'dollidb';
+// import { ProductItem, mongoose } from '../serverless/schemas/Product';
 dotenv.config();
 mongoose.Promise = global.Promise;
 
@@ -12,7 +13,13 @@ async function getData() {
   const p1 = Date.now();
   const ProductItem = mongoose.connection.db.collection('productitems');
   const ProductData = mongoose.connection.db.collection('productdatas');
-  const items = await ProductItem.find().toArray();
+  let items = await ProductItem.find().toArray();
+  items = items.map(i => {
+    if (typeof i.Price === 'string') {
+      i.Price = Number(i.Price);
+    }
+    return i;
+  });
   const promises = items.map(item => {
     const { _id } = item;
     return ProductData.find({ Item: _id }).toArray().then(docs => ({
@@ -72,4 +79,4 @@ function getProducts() {
   });
 }
 
-getProducts();
+// getProducts();

@@ -7,9 +7,8 @@ function createItemSchema(name, extend, methods) {
     Value: mongoose.Schema.Types.Mixed,
   }, extend), {
     timestamps: true,
-    });
+  });
 
-  console.log(methods);
 
   if (methods) {
     Object.keys(methods).forEach((method) => {

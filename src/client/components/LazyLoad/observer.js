@@ -25,6 +25,7 @@ function intersectionCb(entries, observer) {
     const entry = entries[i];
     const node = entry.target;
     if (entry.intersectionRatio > 0) {
+      if (!observer) return;
       observer.unobserve(entry.target);
 
       const { webpsrcset, src, fallbacksrc, srcset } = node.dataset;
