@@ -6883,7 +6883,7 @@ hr {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  margin-bottom: 75px; }
+  padding-bottom: 75px; }
 
 @media (min-width: 600px) {
   .global-padding {

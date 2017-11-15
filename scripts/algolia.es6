@@ -3,11 +3,44 @@ import path from 'path';
 import algolia from 'algoliasearch';
 import mongoose from 'mongoose';
 import { fromPaths } from 'dollidb';
+var ObjectId = require('mongodb').ObjectId;
 // import { ProductItem, mongoose } from '../serverless/schemas/Product';
 dotenv.config();
 mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.MONGO_URI);
+
+
+
+// const ProductItem = mongoose.connection.db.collection('productitems');
+// ProductItem.findById('59c8631b907d2a0d06a4d573').then(doc => {
+//   doc.set(doc, parseInt(doc.Price, 10));
+//   doc.save().then(d => {
+//     console.log(d, 'saved');
+//   })
+// })
+
+mongoose.connection.once('open', () => {
+  const ProductItem = mongoose.connection.db.collection('productitems');
+
+  ProductItem.find({ Price: { $type: "string" } }).toArray().then(items => {
+    const updates = items.map(item => {
+      return {
+        updateOne: {
+          filter: { _id: ObjectId(item._id) },
+          update: {
+            $set: {
+              Price: parseInt(item.Price),
+            },
+          },
+        },
+      };
+    });
+    ProductItem.bulkWrite(updates);
+    console.log('done');
+  });
+});
+
 
 async function getData() {
   const p1 = Date.now();
