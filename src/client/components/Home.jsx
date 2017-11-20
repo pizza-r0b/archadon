@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
 import LazyLoad from './LazyLoad';
+import WhyBuy from 'Components/WhyBuy';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/lg_${sku}.${ext} 1315w`;
 
@@ -26,8 +27,10 @@ class Home extends React.Component {
             <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
           </div>
 
-          <div className="flex-parent flex-col-break hp-christmas margin--bottom-10">
-          <div className="align--center margin--bottom-5">
+          <hr />
+
+          <div className="flex-parent flex-col-break hp-christmas ">
+          <div className="align--center">
             <Link to="/shop?tid=hp2">
               <LazyLoad>
                 <img data-srcset={returnSrcSet('christmas-rugs')} />
@@ -35,24 +38,30 @@ class Home extends React.Component {
             </Link>
           </div>
           <div>
-            <h1>Find the perfect rug to tie their room together this holiday season.</h1>
-            <h1 className="font-color--lighter">We won't tell if you get one for you too.</h1>
-            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find Rugs You Love</Link>
+            <h1>Give the gift of a rug that ties the room together this holiday season.</h1>
+            <h1 className="font-color--lighter">We won't tell if you buy one for you, too.</h1>
+            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
           </div>
           </div>
 
-          <HomeFeaturedItems />
+          <hr />
+          <div className="margin--top-10">
+            <HomeFeaturedItems />
+          </div>
           <div className="slim-box">
-            <div className="flex-parent flex-justify-start flex-align-center margin--bottom-10">
+            <div className="flex-parent flex-justify-start flex-align-center">
               <h2 className="margin--right-5">Popular</h2>
               <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
             </div>
             <ProductList products={this.props.products} />
-            <div className="flex-parent flex-align-center flex-justify-center margin--bottom-20">
-              <Link to="/shop" className="btn--alt"><span className="text">Shop All</span></Link>
+            <div className="flex-parent flex-align-center flex-justify-center margin--bottom-10">
+              <Link to="/shop" className="btn--primary--inverse"><span className="text">Shop All</span></Link>
             </div>
-
           </div>
+          <hr />
+          <WhyBuy />
+          <hr />
+
         </div>
       </div>
     );

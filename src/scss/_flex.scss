@@ -6,6 +6,11 @@
         flex-shrink: #{$i};
     }
 }
+
+.flex-1 {
+    flex: 1;
+}
+
 .flex-parent {
     display: flex;
     flex-wrap: nowrap;

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
+import { Helmet } from 'react-helmet';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_landscape_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/landscape_${sku}.${ext} 1315w`;
 
@@ -142,6 +143,9 @@ class ProductDetail extends React.Component {
 
     return (
       <div className="full-width">
+        <Helmet>
+          <title>{product.Name} - {product.LongDescription} - Archadon - HANDCRAFTED FINE WOOL RUGS</title>
+        </Helmet>
         <ImageZoom show={this.state.showImgZoom} img={imgSrc} onClose={this.onZoomClose} />
         <div className="wrap margin--bottom-10">
           <Link to="/shop">
@@ -220,6 +224,12 @@ class ProductDetail extends React.Component {
                 </div>
               </div>
             </div>
+
+            <h2 className="margin--top-5 margin--bottom-4">Why Buy from Us?</h2>
+            <p className="small-caps margin--left-3 margin--bottom-2">• Risk-free rug buying—free shipping and easy returns</p>
+            <p className="small-caps margin--left-3 margin--bottom-2">• Ethical sourcing</p>
+            <p className="small-caps margin--left-3 margin--bottom-2">• Extensive selection</p>
+            <p className="small-caps margin--left-3 margin--bottom-2">• Quality and durability</p>
           </div>
         </section>
         <section className="product-details-section margin--top-5">

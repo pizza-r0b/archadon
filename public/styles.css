@@ -37,6 +37,7 @@
   white-space: nowrap;
   vertical-align: middle;
   font-weight: 400;
+  border-radius: 0;
   user-select: none;
   text-transform: uppercase;
   font-family: Montserrat, sans-serif;
@@ -6591,9 +6592,7 @@ img {
   margin: auto; }
 
 .hp-christmas {
-  padding: 25px 0;
-  border-top: 1px solid #dddddf;
-  border-bottom: 1px solid #dddddf; }
+  padding: 25px 0; }
   .hp-christmas div {
     width: 50%; }
   .hp-christmas img {
@@ -6764,6 +6763,9 @@ img {
 
 .flex-shrink-12 {
   flex-shrink: 12; }
+
+.flex-1 {
+  flex: 1; }
 
 .flex-parent {
   display: flex;
@@ -7143,7 +7145,7 @@ h1, .h1 {
 
 p {
   margin: 0;
-  line-height: 2; }
+  line-height: 1.5; }
 
 .font-weight--300 {
   font-weight: 300 !important; }

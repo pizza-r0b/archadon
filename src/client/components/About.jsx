@@ -3,6 +3,7 @@ import { src } from 'Utils';
 import { Link } from 'react-router-dom';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import Guarantee from 'Components/Guarantee';
+import WhyBuy from 'Components/WhyBuy';
 
 function About() {
   return (
@@ -33,6 +34,8 @@ function About() {
         </div>
       </div>
 
+      <WhyBuy />
+
       <div className="wrap d-flex about-content-bottom margin--bottom-10 margin--top-20">
         <div className="top-content-left">
           <h1 className="margin--bottom-10">Modern classics, old souls</h1>
@@ -40,7 +43,6 @@ function About() {
           <p className="margin--top-3">The result is nothing short of art—for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.</p>
           <p className="margin--top-3">If that’s not sophistication, we don’t know what is.</p>
           <p className="margin--top-3">Come on—let’s go shopping.</p>
-          <Link to="/shop" className="btn--alt margin--top-6"><span className="text">Shop Now</span></Link>
 
           <Guarantee />
         </div>
@@ -49,6 +51,9 @@ function About() {
             <img className="max-width-100" src={src('tibet-rugs.jpg')} />
           </div>
         </div>
+      </div>
+      <div className="flex-parent flex-align-center flex-justify-center">
+        <Link to="/shop" className="btn--primary--inverse margin--top-6 margin--x-auto"><span className="text">Shop Now</span></Link>
       </div>
     </div>
   );
