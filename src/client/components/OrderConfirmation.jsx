@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 // <!-- Google Code for rug purchase Conversion Page -->
 // <script type="text/javascript">
@@ -55,6 +56,9 @@ class OrderConfirmation extends React.Component {
       <div className="wrap">
         <div>
           {(!orderID && !email) && <Redirect to="/" />}
+          <Helmet>
+            <title>Thanks For Your Order! - Archadon - Art for your floors - Handcrafted fine wool rugs</title>
+          </Helmet>
           <h2>Thanks For Your Order</h2>
           <h3 className="margin--bottom-3 font-color--light underline-header">{`We think you'll like it.`}</h3>
           <div className="margin--y-5">

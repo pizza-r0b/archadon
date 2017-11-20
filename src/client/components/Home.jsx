@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
 import LazyLoad from './LazyLoad';
 import WhyBuy from 'Components/WhyBuy';
+import { Helmet } from 'react-helmet';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/lg_${sku}.${ext} 1315w`;
 
@@ -15,6 +16,9 @@ class Home extends React.Component {
   render() {
     return (
       <div style={{ width: '100%' }}>
+        <Helmet>
+          <title>Archadon - Art for your floors - Handcrafted fine wool rugs - Home</title>
+        </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
             <h1>Art for your floors</h1>

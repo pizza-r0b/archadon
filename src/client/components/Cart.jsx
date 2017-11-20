@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { action } from 'Utils';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import ProductList from 'Components/ProductList';
+import { Helmet } from 'react-helmet';
 
 const { REMOVE_FROM_CART } = actions;
 
@@ -47,6 +48,9 @@ CartItem = connect(null, mapDispatchToProps)(CartItem);
 function Cart({ products, cart: { items, totalPrice } }: { cart: Object, products: Object }) {
   return (
     <div className="wrap margin--bottom-5">
+      <Helmet>
+        <title>{`(${items.length}) Cart - Archadon - Art for your floors - Handcrafted fine wool rugs`}</title>
+      </Helmet>
       {items.length === 0 &&
         <div className="flex-parent flex-col flex-grow-1 flex-align-start flex-justify-center">
           <h1>Your cart is empty</h1>

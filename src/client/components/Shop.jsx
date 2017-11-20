@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { action } from 'Utils';
 import actions from 'Actions';
 import Filters from 'Ui/Filters';
+import { Helmet } from 'react-helmet';
 const { LOAD_MORE, ON_CLEAR_FILTERS } = actions;
 
 function Shop({ products, page, nbPages, loadMore, loading }) {
@@ -26,6 +27,9 @@ function Shop({ products, page, nbPages, loadMore, loading }) {
   };
   return (
     <div className="full-width">
+      <Helmet>
+        <title>Archadon - Art for your floors - Handcrafted fine wool rugs - Shop</title>
+      </Helmet>
       <Filters />
       <ProductList loading={loading} products={products} />
       <div className="wrap">

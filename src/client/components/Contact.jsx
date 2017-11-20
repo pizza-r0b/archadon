@@ -1,8 +1,12 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 export default function Contact() {
   return (
     <div className="wrap">
+      <Helmet>
+        <title>Archadon - Art for your floors - Handcrafted fine wool rugs - Contact</title>
+      </Helmet>
       <div className="margin--bottom-5">
         <h1>Get In Touch</h1>
         <h3>Have a question, want to provide feedback, or just want to say hello?</h3>

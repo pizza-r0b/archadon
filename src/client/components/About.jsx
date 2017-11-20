@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import Guarantee from 'Components/Guarantee';
 import WhyBuy from 'Components/WhyBuy';
+import { Helmet } from 'react-helmet';
 
 function About() {
   return (
     <div className="full-width overflow-hidden">
+      <Helmet>
+        <title>Archadon - Art for your floors - Handcrafted fine wool rugs - About</title>
+      </Helmet>
       <div className="product-details-section margin--bottom-10">
         <div className="wrap">
           <div className="d-flex">

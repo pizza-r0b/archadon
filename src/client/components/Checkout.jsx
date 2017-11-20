@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import actions from 'Actions';
 import { action } from 'Utils';
 import { Redirect, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const { PURCHASE } = actions;
 
@@ -165,6 +166,9 @@ class CheckOut extends Component {
         )}
         {!this.props.loading && (
           <div className="checkout-page">
+            <Helmet>
+              <title>Archadon - Art for your floors - Handcrafted fine wool rugs - Checkout</title>
+            </Helmet>
             <div className="checkout-wrap">
               <form className="checkout-form">
 
