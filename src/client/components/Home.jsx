@@ -63,8 +63,12 @@ class Home extends React.Component {
             </div>
           </div>
           <hr />
-          <WhyBuy />
+          <h2 className="align--center">About Us</h2>
+          <p className="align--center margin--top-3">Archadon is made with love in the beautiful city of San Francisco and we have a warehouse underneath the slopes in Northern Utah.</p>
+          <div className="flex-parent flex-align-center flex-justify-center margin--top-3"><Link to="/about" className="btn--primary">Learn More</Link></div>
           <hr />
+          <p className="align--center margin--top-6">Have questions or want to say hello?</p>
+          <p className="align--center">Email us at hello@archadon.com</p>
 
         </div>
       </div>

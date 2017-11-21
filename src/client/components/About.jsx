@@ -5,6 +5,7 @@ import ProductDetailLink from 'Components/ProductDetailLink';
 import Guarantee from 'Components/Guarantee';
 import WhyBuy from 'Components/WhyBuy';
 import { Helmet } from 'react-helmet';
+import Who from 'Components/Who';
 
 function About() {
   return (
@@ -31,6 +32,9 @@ function About() {
             </div>
           </div>
           <div className="margin--top-15 about-blurb-a">
+
+            <Who />
+            <hr />
             <p>There was a time in your life when dorm-level decorating was <i>still cool</i>. Remember that? Before you <i>grew up</i> and developed <i>awesome taste</i>.</p>
             <p className="margin--top-3">Now? Well, it’s time to live it up. Level up. Time to tie the room together. A handcrafted, heirloom-quality rug is a piece of art steeped in tradition, one that evokes faraway places and a whiff of the exotic.</p>
             <p className="margin--top-3">It’s classy, classic, cultured — <i>just like you</i>.</p>

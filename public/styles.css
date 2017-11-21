@@ -6367,6 +6367,7 @@ img {
       .home-slider .featured-img {
         height: 475px; } }
   .home-slider-item {
+    overflow-x: hidden;
     flex-grow: 1;
     width: 33.3333%; }
     .home-slider-item:nth-child(3) {
