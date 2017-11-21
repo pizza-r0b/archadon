@@ -22,7 +22,7 @@ class Home extends React.Component {
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
             <h1>Art for your floors</h1>
-            <h2 className="font-color--lighter small-caps">Handcrafted fine wool rugs</h2>
+            <h3 className="font-color--lighter">Handcrafted fine wool rugs</h3>
           </div>
           <HomeSlider />
 
@@ -34,18 +34,18 @@ class Home extends React.Component {
           <hr />
 
           <div className="flex-parent flex-col-break hp-christmas ">
-          <div className="align--center">
-            <Link to="/shop?tid=hp2">
-              <LazyLoad>
-                <img data-srcset={returnSrcSet('christmas-rugs')} />
-              </LazyLoad>
-            </Link>
-          </div>
-          <div>
-            <h1>Give the gift of a rug that ties the room together this holiday season.</h1>
-            <h1 className="font-color--lighter">We won't tell if you buy one for you, too.</h1>
-            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
-          </div>
+            <div className="align--center">
+              <Link to="/shop?tid=hp2">
+                <LazyLoad>
+                  <img data-srcset={returnSrcSet('christmas-rugs')} />
+                </LazyLoad>
+              </Link>
+            </div>
+            <div>
+              <h1>Give the gift of a rug that ties the room together this holiday season.</h1>
+              <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
+              <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
+            </div>
           </div>
 
           <hr />
@@ -62,13 +62,22 @@ class Home extends React.Component {
               <Link to="/shop" className="btn--primary--inverse"><span className="text">Shop All</span></Link>
             </div>
           </div>
-          <hr />
+          <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>
           <p className="align--center margin--top-3">Archadon is made with love in the beautiful city of San Francisco and we have a warehouse underneath the slopes in Northern Utah.</p>
+          <p className="align--center">Buy with confidence—learn more about risk-free rug buying with Archadon.</p>
           <div className="flex-parent flex-align-center flex-justify-center margin--top-3"><Link to="/about" className="btn--primary">Learn More</Link></div>
-          <hr />
-          <p className="align--center margin--top-6">Have questions or want to say hello?</p>
-          <p className="align--center">Email us at hello@archadon.com</p>
+          <hr className="margin--y-20" />
+          <h2 className="align--center margin--top-6">Have questions or want to say hello?</h2>
+          <p className="align--center margin--top-3">Email us at hello@archadon.com</p>
+          <hr className="margin--y-20" />
+
+          <h2 className="align--center">Community-focused Giving</h2>
+
+          <p className="align--center margin--top-3">Archadon supports the Nepal Cleft and Burn Center. This facility is Nepal’s first teaching hospital specializing in deformity-correcting reconstructive survey. A portion of all proceeds is donated towards equipment and medical staff costs.</p>
+          <div className="flex-parent flex-align-center flex-justify-center margin--top-3">
+            <a className="btn--primary" rel="noopener noreferrer" target="_blank" href="http://www.nepalcleftandburncenter.org/">Donate on their website</a>
+          </div>
 
         </div>
       </div>

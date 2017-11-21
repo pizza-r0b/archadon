@@ -44,14 +44,15 @@ function About() {
 
       <WhyBuy />
 
-      <div className="wrap d-flex about-content-bottom margin--bottom-10 margin--top-20">
+      <hr />
+
+      <div className="wrap d-flex about-content-bottom margin--bottom-10">
         <div className="top-content-left">
-          <h1 className="margin--bottom-10">Modern classics, old souls</h1>
+          <h1 className="margin--bottom-3">Modern classics, old souls</h1>
           <p>Each handcrafted rug in our collection is the product of timeless, traditional craftsmanship, great attention to detail, and only the world’s finest hand-spun wool. We travel thousands of miles to far-flung places, including Tibet and India, to handpick them directly at the source. We also build relationships with the best weavers in the world, collaborating with them on vibrant, appealing designs.</p>
           <p className="margin--top-3">The result is nothing short of art—for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.</p>
           <p className="margin--top-3">If that’s not sophistication, we don’t know what is.</p>
           <p className="margin--top-3">Come on—let’s go shopping.</p>
-
           <Guarantee />
         </div>
         <div>

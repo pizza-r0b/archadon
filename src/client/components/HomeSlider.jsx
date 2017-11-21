@@ -4,6 +4,7 @@ import { CSSTransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
 import { throttle } from 'Utils';
 import ProductDetailLink from 'Components/ProductDetailLink';
+import { Link } from 'react-router-dom';
 
 const images = [
   {
@@ -164,7 +165,7 @@ class HomeSlider extends React.Component {
                   className="featured-img"
                 >
                   <div key={images[this.state.current].id}>
-                    <h3>{images[this.state.current].subtitle}</h3>
+                    <h3 className="font-color--lighter">{images[this.state.current].subtitle}</h3>
                     <h2 className="margin--top-2 margin--bottom-5">{images[this.state.current].title}</h2>
                   </div>
                 </CSSTransitionGroup>

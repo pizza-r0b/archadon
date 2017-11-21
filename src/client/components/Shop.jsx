@@ -31,14 +31,23 @@ function Shop({ products, page, nbPages, loadMore, loading }) {
         <title>Archadon - Art for your floors - Handcrafted fine wool rugs - Shop</title>
       </Helmet>
       <Filters />
-      <ProductList loading={loading} products={products} />
-      <div className="wrap">
-        <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps">
-          <div {...prevProps}>Previous</div>
-          <div>{`${(page + 1)} / ${nbPages}`}</div>
-          <div {...nextProps}>Next</div>
+      {products.length > 0 && <ProductList loading={loading} products={products} />}
+      {products.length === 0 && (
+        <div className="margin--top-5">
+          <h2 key="1" className="align--center">Your search returned zero results! Try clearing your filters.</h2>
+          <h3 key="2" className="align--center font-color--lighter">We are working hard to make filtering better for you.</h3>
+          <p className="align--center margin--top-5">Provide feedback at hello@archadon.com</p>
         </div>
-      </div>
+      )}
+      {products.length > 0 &&
+        <div className="wrap">
+          <div className="flex-parent flex-justify-between flex-align-center padding--x-9 margin--y-10 small-caps">
+            <div {...prevProps}>Previous</div>
+            <div>{`${(page + 1)} / ${nbPages}`}</div>
+            <div {...nextProps}>Next</div>
+          </div>
+        </div>
+      }
     </div>
   );
 }
