@@ -9,9 +9,9 @@ function Shipping() {
       </div>
       <div className="flex-col-break">
         <div>
-          <h3 className="underline-header">Shipping</h3>
+          <h2 className="underline-header">Shipping</h2>
           <p>All shipping on US orders is free—for you. Isn’t that cool? We think so, too.</p>
-          <h3 className="underline-header margin--top-10">Returns</h3>
+          <h2 className="underline-header margin--top-10">Returns</h2>
           <p>That rug should really tie the room together. If you’re not happy, neither are we. Email us at <span className="strong">returns@archadon.com</span> within 30 days and we’ll send you a return shipping label. As long as your rug is returned to us in like-new condition, you’ll receive a full refund.</p>
           <p className="margin--top-3">You can also exchange a like-new rug for another one you have your eye on—and pay the difference between the two.</p>
         </div>

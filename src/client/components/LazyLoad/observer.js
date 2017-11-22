@@ -2,7 +2,7 @@ import './poly';
 
 const options = {
   root: null,
-  rootMargin: '50px 0px',
+  rootMargin: '150px 0px',
   threshold: 0.01,
 };
 

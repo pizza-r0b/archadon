@@ -24,6 +24,7 @@ import Contact from 'Components/Contact';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
 import SignOut from 'Components/SignOut';
+import { Link } from 'react-router-dom';
 
 const { APP_LOAD, NAV_STATE, PAGE_CHANGE } = actions;
 
@@ -143,6 +144,17 @@ class App extends Component {
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
           </div>
           {/*<Loader done={this.props.pageChangeDone} loading={this.props.ui.pageChange} />*/}
+          <footer className="footer wrap">
+            <div className="footer-inner">
+              <Link to="/home">Home</Link>
+              <Link to="/shop">Shop</Link>
+              <Link to="/about">About</Link>
+              <Link to="/account">Account</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/shipping-and-returns">Shipping & Returns</Link>
+
+            </div>
+          </footer>
         </div>
       </ScrollToTopWithRouter>
     );

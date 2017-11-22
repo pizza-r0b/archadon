@@ -226,10 +226,13 @@ class ProductDetail extends React.Component {
             </div>
 
             <h2 className="margin--top-5 margin--bottom-4">Why Buy from Us?</h2>
-            <p className="small-caps margin--left-3 margin--bottom-2">• Risk-free rug buying—free shipping and easy returns</p>
-            <p className="small-caps margin--left-3 margin--bottom-2">• Ethical sourcing</p>
-            <p className="small-caps margin--left-3 margin--bottom-2">• Extensive selection</p>
-            <p className="small-caps margin--left-3 margin--bottom-2">• Quality and durability</p>
+            <p className="small-caps margin--bottom-2">• Risk-free rug buying — free shipping and free returns</p>
+            <p className="small-caps margin--bottom-2">• Established and experienced</p>
+            <p className="small-caps margin--bottom-2">• Fair Pricing</p>
+            <p className="small-caps margin--bottom-2">• Community-focused giving</p>
+            <p className="small-caps margin--bottom-2">• Ethical sourcing</p>
+            <p className="small-caps margin--bottom-2">• Extensive selection</p>
+            <p className="small-caps margin--bottom-2">• Quality and durability</p>
           </div>
         </section>
         <section className="product-details-section margin--top-5">

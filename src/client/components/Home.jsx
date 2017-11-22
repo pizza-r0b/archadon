@@ -6,14 +6,29 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
 import LazyLoad from './LazyLoad';
-import WhyBuy from 'Components/WhyBuy';
 import { Helmet } from 'react-helmet';
-
-const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/lg_${sku}.${ext} 1315w`;
-
+import { action } from 'Utils';
+import actions from 'Actions';
+const { LOAD_MORE } = actions;
 
 class Home extends React.Component {
   render() {
+    const { page, loadMore, nbPages, loading } = this.props;
+    const nextProps = {
+      style: { cursor: page === nbPages ? 'auto' : 'pointer' },
+      className: `small-caps margin--left-3 ${page + 1 === nbPages ? 'font-color--lighter' : ''}`,
+      onClick: page + 1 === nbPages ? null : () => {
+        loadMore(page + 1);
+      },
+    };
+
+    const prevProps = {
+      className: `small-caps ${page === 0 ? 'font-color--lighter' : ''}`,
+      style: { cursor: page === 0 ? 'auto' : 'pointer' },
+      onClick: page === 0 ? null : () => {
+        loadMore(page - 1);
+      },
+    };
     return (
       <div style={{ width: '100%' }}>
         <Helmet>
@@ -21,7 +36,7 @@ class Home extends React.Component {
         </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
-            <h1>Art for your floors</h1>
+            <h1 className="align--center">Art for your floors</h1>
             <h3 className="font-color--lighter">Handcrafted fine wool rugs</h3>
           </div>
           <HomeSlider />
@@ -34,11 +49,22 @@ class Home extends React.Component {
           <hr />
 
           <div className="slim-box">
-            <div className="flex-parent flex-justify-start flex-align-center">
-              <h2 className="margin--right-5">Popular</h2>
-              <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
+            <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
+              <div className="flex-parent flex-justify-start flex-align-center">
+                <h2 className="margin--right-5">Popular</h2>
+                <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
+              </div>
+              <div className="flex-parent">
+
+                <div {...prevProps}>Previous</div>
+                <div {...nextProps}>Next</div>
+              </div>
             </div>
-            <ProductList products={this.props.products} />
+            <ProductList loading={loading} products={this.props.products} />
+            <div className="flex-parent flex-justify-between">
+              <div {...prevProps}>Previous</div>
+              <div {...nextProps}>Next</div>
+            </div>
             {/*<div className="flex-parent flex-align-center flex-justify-center margin--bottom-10">
               <Link to="/shop" className="btn--primary--inverse"><span className="text">Shop All</span></Link>
     </div>*/}
@@ -68,7 +94,7 @@ class Home extends React.Component {
 
           <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>
-          <p className="align--center margin--top-3">Archadon is made with love in the beautiful city of San Francisco and we have a warehouse underneath the slopes in Northern Utah.</p>
+          <p className="align--center margin--top-3">Archadon is an online company based in San Francisco and we ship our rugs from Utah.</p>
           <p className="align--center">Buy with confidence—learn more about risk-free rug buying with Archadon.</p>
           <div className="flex-parent flex-align-center flex-justify-center margin--top-3"><Link to="/about" className="btn--primary">Learn More</Link></div>
           <hr className="margin--y-20" />
@@ -78,7 +104,7 @@ class Home extends React.Component {
 
           <h2 className="align--center">Community-focused Giving</h2>
 
-          <p className="align--center margin--top-3">Archadon supports the Nepal Cleft and Burn Center. This facility is Nepal’s first teaching hospital specializing in deformity-correcting reconstructive survey. A portion of all proceeds is donated towards equipment and medical staff costs.</p>
+          <p className="align--center margin--top-3">Archadon supports the Nepal Cleft and Burn Center. This facility is Nepal’s first teaching hospital specializing in deformity-correcting reconstructive survey. A portion of all rug sales are donated by Archadon to the Center.</p>
           <div className="flex-parent flex-align-center flex-justify-center margin--top-3">
             <a className="btn--primary" rel="noopener noreferrer" target="_blank" href="http://www.nepalcleftandburncenter.org/">Donate on their website</a>
           </div>
@@ -91,6 +117,15 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   products: state.products.hits.slice(0, 8),
+  loading: state.loading.page === 'products',
+  page: state.products.page,
+  nbPages: state.products.nbPages,
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => ({
+  loadMore(page) {
+    dispatch(action(LOAD_MORE, { page }));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -73,3 +73,25 @@ hr {
     }
 }
 
+.footer {
+    padding: 100px 0 0;
+
+    &-inner {
+        width: 100%;
+        max-width: 600px;
+        flex-wrap: wrap;
+        display: flex;
+        margin: auto;
+        align-items: center;
+        padding: 0px 10px 20px;
+        box-sizing: border-box;
+        justify-content: space-between;
+
+        a {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: $lighter!important;
+        }
+    }
+}
+

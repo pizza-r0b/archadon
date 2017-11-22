@@ -6,6 +6,7 @@ import Guarantee from 'Components/Guarantee';
 import WhyBuy from 'Components/WhyBuy';
 import { Helmet } from 'react-helmet';
 import Who from 'Components/Who';
+import LazyLoad from 'Components/LazyLoad';
 
 function About() {
   return (
@@ -20,13 +21,17 @@ function About() {
               <h1>About</h1>
               <h2>Art beneath your feet</h2>
               <div className="stripe-image">
-                <img className="max-width-100" src={src('bottlecap-rug-on-floor.jpg')} />
+                <LazyLoad>
+                  <img className="max-width-100" data-src={src('bottlecap-rug-on-floor.jpg')} />
+                </LazyLoad>
                 <ProductDetailLink product={{ _id: '59c8631b907d2a0d06a4d5c1' }} className="margin--top-2 font-color--light link small-caps">Award winning bottle cap design - View This Rug</ProductDetailLink>
               </div>
             </div>
             <div className="top-content-right">
               <div className="stripe-image">
-                <img style={{ maxWidth: '400px' }} className="max-width-100" src={src('room-with-rug_001.jpg')} />
+                <LazyLoad>
+                  <img style={{ maxWidth: '400px' }} className="max-width-100" data-src={src('room-with-rug_001.jpg')} />
+                </LazyLoad>
                 <ProductDetailLink product={{ _id: '59c8631b907d2a0d06a4d63b' }} className="margin--top-2 font-color--light link small-caps">View This Rug</ProductDetailLink>
               </div>
             </div>
@@ -35,9 +40,9 @@ function About() {
 
             <Who />
             <hr />
-            <p>There was a time in your life when dorm-level decorating was <i>still cool</i>. Remember that? Before you <i>grew up</i> and developed <i>awesome taste</i>.</p>
+            <p>There was a time in your life when dorm-level decorating was still cool. Remember that? Before you grew up and developed awesome taste.</p>
             <p className="margin--top-3">Now? Well, it’s time to live it up. Level up. Time to tie the room together. A handcrafted, heirloom-quality rug is a piece of art steeped in tradition, one that evokes faraway places and a whiff of the exotic.</p>
-            <p className="margin--top-3">It’s classy, classic, cultured — <i>just like you</i>.</p>
+            <p className="margin--top-3">It’s classy, classic, cultured — just like you.</p>
           </div>
         </div>
       </div>
@@ -57,7 +62,10 @@ function About() {
         </div>
         <div>
           <div className="stripe-image--left">
-            <img className="max-width-100" src={src('tibet-rugs.jpg')} />
+            <LazyLoad>
+              <img className="max-width-100" data-src={src('tibet-rugs.jpg')} />
+            </LazyLoad>
+            <p className="small-caps font-color--light">Full disclosure: this is the only picture on this site that doesn't feature an Archadon rug, but we thought you might like it. We know we do.</p>
           </div>
         </div>
       </div>
