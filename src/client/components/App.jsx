@@ -146,7 +146,7 @@ class App extends Component {
           {/*<Loader done={this.props.pageChangeDone} loading={this.props.ui.pageChange} />*/}
           <footer className="footer wrap">
             <div className="footer-inner">
-              <Link to="/home">Home</Link>
+              <Link to="/">Home</Link>
               <Link to="/shop">Shop</Link>
               <Link to="/about">About</Link>
               <Link to="/account">Account</Link>
