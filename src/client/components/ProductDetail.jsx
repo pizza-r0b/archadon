@@ -14,7 +14,7 @@ const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.
 
 const aboutCopy = {
   tibetan: {
-    title: 'About Tibetan Wool',
+    title: 'About This Rug - Tibetan Wool',
     paragraphs: [
       'Close your eyes and be transported to a wild, rugged place thousands of miles away. Home to Mt. Everest, Tibet is the highest area on earth, with an average elevation of over three miles above sea level. Tibetan sheep live at these lofty altitudes in extreme conditions. The “shear” toughness it takes to survive this climate produces some of the finest wool in the world.',
       'After it’s shorn, the wool is hand-carded, washed, and hand-spun. The hand-knotting process creates a much denser pile than even the finest-quality machine-made rug. Your Tibetan wool rug will outlast any machine-made rug and is far more soil- and stain-resistant.',
@@ -22,7 +22,7 @@ const aboutCopy = {
     ],
   },
   newZealand: {
-    title: 'About New Zealand Wool',
+    title: 'About This Rug - New Zealand Wool',
     paragraphs: [
       'Kiwi sheep produce fine fleece. It’s true—we aren’t pulling the wool over your eyes. New Zealand’s cool climate, dominated by the mountains and sea, creates lush grazing lands. Good stuff in, good stuff out, we say.',
       'After the sheep are shorn, their wool is hand-carded, washed, and hand-spun. It’s then made into a one-of-a-kind rug. The hand-knotting process enables us to create a much denser pile than even the finest-quality machine-made rug. Your New Zealand wool rug will wear longer and be much more soil- and stain-resistant than any machine-made product.',
@@ -178,9 +178,10 @@ class ProductDetail extends React.Component {
 
                 </div>
                 <h2 className="margin--y-3">{product.Name}</h2>
-                <p className="font-color--copyColor margin--bottom-1">{product.LongDescription}</p>
+                <p className="font-color--copyColor margin--bottom-1">Handmade - {product.LongDescription}</p>
                 <p className="font-color--copyColor">{product.ShortDescription}</p>
                 <div className="line-break" />
+
                 <h2 className="font-color--dark font-weight--normal">{product.Price.toLocaleString('USD', {
                   style: 'currency',
                   currency: 'USD',
