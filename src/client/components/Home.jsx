@@ -33,16 +33,29 @@ class Home extends React.Component {
 
           <hr />
 
+          <div className="slim-box">
+            <div className="flex-parent flex-justify-start flex-align-center">
+              <h2 className="margin--right-5">Popular</h2>
+              <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
+            </div>
+            <ProductList products={this.props.products} />
+            {/*<div className="flex-parent flex-align-center flex-justify-center margin--bottom-10">
+              <Link to="/shop" className="btn--primary--inverse"><span className="text">Shop All</span></Link>
+    </div>*/}
+          </div>
+
+          <hr />
+
           <div className="flex-parent flex-col-break hp-christmas ">
             <div className="align--center">
               <Link to="/shop?tid=hp2">
                 <LazyLoad>
-                  <img data-srcset={returnSrcSet('christmas-rugs')} />
+                  <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
                 </LazyLoad>
               </Link>
             </div>
             <div>
-              <h1>Give the gift of a rug that ties the room together this holiday season.</h1>
+              <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
               <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
               <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
             </div>
@@ -52,16 +65,7 @@ class Home extends React.Component {
           <div className="margin--top-10">
             <HomeFeaturedItems />
           </div>
-          <div className="slim-box">
-            <div className="flex-parent flex-justify-start flex-align-center">
-              <h2 className="margin--right-5">Popular</h2>
-              <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
-            </div>
-            <ProductList products={this.props.products} />
-            <div className="flex-parent flex-align-center flex-justify-center margin--bottom-10">
-              <Link to="/shop" className="btn--primary--inverse"><span className="text">Shop All</span></Link>
-            </div>
-          </div>
+
           <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>
           <p className="align--center margin--top-3">Archadon is made with love in the beautiful city of San Francisco and we have a warehouse underneath the slopes in Northern Utah.</p>
