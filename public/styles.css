@@ -7336,19 +7336,30 @@ a.link--gold, .link--gold {
   top: 0;
   z-index: 99; }
 
-.product-list-wrap {
+.product-list-wrap, .product-list-wrap--5 {
   display: grid;
   position: relative;
   grid-template-columns: repeat(4, 1fr); }
   @media (max-width: 1000px) {
-    .product-list-wrap {
+    .product-list-wrap, .product-list-wrap--5 {
       grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 700px) {
-    .product-list-wrap {
+    .product-list-wrap, .product-list-wrap--5 {
       grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 483px) {
-    .product-list-wrap {
+    .product-list-wrap, .product-list-wrap--5 {
       grid-template-columns: repeat(1, 1fr); } }
+  .product-list-wrap--5 {
+    grid-template-columns: repeat(5, 1fr); }
+    @media (max-width: 1000px) {
+      .product-list-wrap--5 {
+        grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 700px) {
+      .product-list-wrap--5 {
+        grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 483px) {
+      .product-list-wrap--5 {
+        grid-template-columns: repeat(1, 1fr); } }
 
 .heart {
   width: 20px;

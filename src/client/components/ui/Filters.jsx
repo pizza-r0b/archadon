@@ -3,86 +3,11 @@ import { connect } from 'react-redux';
 import actions from 'Actions';
 import ClearFilterButton from 'Ui/ClearFilterButton';
 import { action } from 'Utils';
+import { FILTERS_ARR as filtersArr } from 'Constants';
 
 const { ON_FILTER_UPDATE } = actions;
 
-const FILTERS_ARR = [
-  {
-    name: 'Sort',
-    options: [
-      {
-        copy: 'Price: Highest to Lowest',
-        queries: ['product_desc'],
-        type: 'r',
-      },
-      {
-        copy: 'Price: Lowest to Highest',
-        queries: ['product_asc'],
-        type: 'r',
-      },
-    ],
-  },
-  // {
-  //   name: 'Price',
-  //   options: [
-  //     {
-  //       copy: 'Under $80',
-  //       queries: ['< 80'],
-  //       type: 'p',
-  //     },
-  //     {
-  //       copy: '$80 - $150',
-  //       queries: ['>= 80', '<= 150'],
-  //       type: 'p',
-  //     },
-  //     {
-  //       copy: '$150 - $300',
-  //       queries: ['>= 150', '<= 300'],
-  //       type: 'p',
-  //     },
-  //     {
-  //       copy: '$300 - $800',
-  //       queries: ['>= 300', '<= 800'],
-  //       type: 'p',
-  //     },
-  //     {
-  //       copy: '$800+',
-  //       queries: ['>= 800'],
-  //       type: 'p',
-  //     },
-  //   ],
-  // },
-  {
-    name: 'Size',
-    options: [
-      {
-        copy: `2 x 3`,
-        queries: ['Width >= 1 AND Width <= 2.9 AND Height >= 3 AND Height <= 4.9'],
-        type: 'raw',
-      },
-      {
-        copy: `3 x 5`,
-        queries: ['Width >= 3 AND Width <= 4.9 AND Height >= 4 AND Height <= 5.9'],
-        type: 'raw',
-      },
-      {
-        copy: `4 x 6`,
-        queries: ['Width >= 4 AND Width <= 4.9 AND Height >= 5 AND Height <= 6.9'],
-        type: 'raw',
-      },
-      {
-        copy: `6 x 9`,
-        queries: ['Width >= 5 AND Width <= 6.9 AND Height >= 6 AND Height <= 9.9'],
-        type: 'raw',
-      },
-      {
-        copy: `8 x 10`,
-        queries: ['Width >= 7 AND Width <= 8.9 AND Height >= 9 AND Height <= 10.9'],
-        type: 'raw',
-      },
-    ],
-  },
-];
+const FILTERS_ARR = [...filtersArr];
 
 FILTERS_ARR.reverse();
 
@@ -98,6 +23,8 @@ function FilterOption({ filter, onChange, filters, defaultIndex }: FilterProps) 
   if (defaultIndex === 0) {
     selectProps.value = 0;
   }
+
+  console.log(filter);
 
   const [selectedOfType] = filters.filter(f => f.field === filter.name);
   if (selectedOfType) {

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { IMAGE_ORIGIN } from 'Constants';
 import LazyLoad from './LazyLoad';
 import { Helmet } from 'react-helmet';
+import ShopBySize from 'Components/ShopBySize';
 import { action } from 'Utils';
 import actions from 'Actions';
 const { LOAD_MORE } = actions;
@@ -47,6 +48,9 @@ class Home extends React.Component {
           </div>
 
           <hr />
+          <ShopBySize />
+
+          <hr />
 
           <div className="slim-box">
             <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
@@ -80,19 +84,19 @@ class Home extends React.Component {
 
 
           <div className="flex-parent flex-col-break hp-christmas ">
-          <div className="align--center">
-            <Link to="/shop?tid=hp2">
-              <LazyLoad>
-                <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
-              </LazyLoad>
-            </Link>
+            <div className="align--center">
+              <Link to="/shop?tid=hp2">
+                <LazyLoad>
+                  <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
+                </LazyLoad>
+              </Link>
+            </div>
+            <div>
+              <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
+              <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
+              <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
+            </div>
           </div>
-          <div>
-            <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
-            <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
-            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
-          </div>
-        </div>
 
           <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>
