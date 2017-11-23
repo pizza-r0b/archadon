@@ -36,14 +36,14 @@ class Home extends React.Component {
         </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
-            <h1 className="align--center">Art for your floors</h1>
-            <h3 className="font-color--lighter">Handcrafted fine wool rugs</h3>
+            <h1 className="align--center">Hand-knotted fine wool rugs</h1>
+            <h3 className="font-color--lighter">Rugs that last a lifetime</h3>
           </div>
           <HomeSlider />
 
           <div className="margin--bottom-10" style={{ width: '100%', maxWidth: '650px', margin: 'auto' }}>
             <h2 className="align--center">Hello there, and welcome!</h2>
-            <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
+            <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of hand-knotted, heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
           </div>
 
           <hr />
@@ -72,25 +72,27 @@ class Home extends React.Component {
 
           <hr />
 
-          <div className="flex-parent flex-col-break hp-christmas ">
-            <div className="align--center">
-              <Link to="/shop?tid=hp2">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-            <div>
-              <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
-              <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
-              <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
-            </div>
-          </div>
-
-          <hr />
           <div className="margin--top-10">
             <HomeFeaturedItems />
           </div>
+
+          <hr />
+
+
+          <div className="flex-parent flex-col-break hp-christmas ">
+          <div className="align--center">
+            <Link to="/shop?tid=hp2">
+              <LazyLoad>
+                <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
+              </LazyLoad>
+            </Link>
+          </div>
+          <div>
+            <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
+            <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
+            <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
+          </div>
+        </div>
 
           <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>

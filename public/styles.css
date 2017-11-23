@@ -7156,6 +7156,9 @@ h1, .h1 {
   font-family: Montserrat, sans-serif;
   font-weight: normal; }
 
+.linethrough {
+  text-decoration: line-through; }
+
 .title {
   margin: 15px 0;
   padding-top: 5;

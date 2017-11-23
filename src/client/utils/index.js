@@ -16,6 +16,15 @@ export function keyMirror(obj) {
   return out;
 }
 
+export function toCurrency(num) {
+  return num.toLocaleString('USD', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function request(method, url, data, headers, meta) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

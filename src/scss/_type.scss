@@ -23,6 +23,10 @@ h1, .h1 {
   font-weight: normal;
 }
 
+.linethrough {
+  text-decoration: line-through;
+}
+
 .title {
   margin: $spacer * 3px 0;
   padding-top: $spacer;

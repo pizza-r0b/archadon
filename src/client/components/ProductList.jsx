@@ -3,6 +3,7 @@ import { IMAGE_ORIGIN } from 'Constants';
 import FavoriteBtn from 'Ui/FavoriteBtn';
 import ProductDetailLink from 'Components/ProductDetailLink';
 import LazyLoad from './LazyLoad';
+import { toCurrency } from 'Utils';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/${sku}.${ext} 1315w`;
 
@@ -28,9 +29,13 @@ function ProductList({ products, loading }) {
               </div>
             </ProductDetailLink>
 
-            <div className="margin--top-2 flex-parent flex-justify-between">
-              <p className="product-tile-title font-color--light">{(product.Price).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
-              <FavoriteBtn className="heart" productId={product._id} />
+            <div>
+              <div className="margin--top-2 flex-parent flex-justify-between">
+                <p className="product-tile-title font-color--danger">Sale {(product.Price).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
+                <FavoriteBtn className="heart" productId={product._id} />
+              </div>
+              <p className="product-tile-title font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 1.5)}</span><br /> {toCurrency(product.Price * 1.5 - product.Price)} OFF</p>
+
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { IMAGE_ORIGIN, DEFAULT_ITEM } from 'Constants';
 import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
 import { Helmet } from 'react-helmet';
+import { toCurrency } from 'Utils';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_landscape_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/landscape_${sku}.${ext} 1315w`;
 
@@ -178,16 +179,11 @@ class ProductDetail extends React.Component {
 
                 </div>
                 <h2 className="margin--y-3">{product.Name}</h2>
-                <p className="font-color--copyColor margin--bottom-1">Handmade - {product.LongDescription}</p>
+                <p className="font-color--copyColor margin--bottom-1">Hand-knotted {product.LongDescription}</p>
                 <p className="font-color--copyColor">{product.ShortDescription}</p>
                 <div className="line-break" />
-
-                <h2 className="font-color--dark font-weight--normal">{product.Price.toLocaleString('USD', {
-                  style: 'currency',
-                  currency: 'USD',
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}</h2>
+                <h2 className="font-weight--normal font-color--danger">Sale Price: {toCurrency(product.Price)}</h2>
+                <h3 className="font-color--dark font-weight--normal font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 1.5)}</span> - {toCurrency(product.Price * 1.5 - product.Price)} OFF</h3>
               </div>
               <div className="product-details-btns">
                 <div>
