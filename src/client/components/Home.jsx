@@ -52,7 +52,7 @@ class Home extends React.Component {
             <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
               <div className="flex-parent flex-justify-start flex-align-center">
                 <h2 className="margin--right-5">Popular</h2>
-                <Link to="/shop" className="link--lighter small-caps">Shop All</Link>
+                <Link to="/shop" className="link small-caps">Shop All</Link>
               </div>
               <div className="flex-parent">
 
