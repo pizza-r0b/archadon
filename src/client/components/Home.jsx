@@ -13,13 +13,17 @@ import actions from 'Actions';
 const { LOAD_MORE } = actions;
 
 class Home extends React.Component {
+  loadNext = page => {
+    window.scrollTo(0, this.popularBox.offsetTop - 100);
+    this.props.loadMore(page);
+  }
   render() {
     const { page, loadMore, nbPages, loading } = this.props;
     const nextProps = {
       style: { cursor: page === nbPages ? 'auto' : 'pointer' },
       className: `small-caps margin--left-3 ${page + 1 === nbPages ? 'font-color--lighter' : ''}`,
       onClick: page + 1 === nbPages ? null : () => {
-        loadMore(page + 1);
+        this.loadNext(page + 1);
       },
     };
 
@@ -27,7 +31,7 @@ class Home extends React.Component {
       className: `small-caps ${page === 0 ? 'font-color--lighter' : ''}`,
       style: { cursor: page === 0 ? 'auto' : 'pointer' },
       onClick: page === 0 ? null : () => {
-        loadMore(page - 1);
+        this.loadNext(page - 1);
       },
     };
     return (
@@ -37,8 +41,8 @@ class Home extends React.Component {
         </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
-            <h1 className="align--center">Hand-knotted fine wool rugs</h1>
-            <h3 className="font-color--lighter">Rugs that last a lifetime</h3>
+            <h1 className="align--center">Rugs that last a lifetime</h1>
+            <h3 className="font-color--lighter">Hand-knotted fine wool rugs</h3>
           </div>
           <HomeSlider />
 
@@ -52,7 +56,7 @@ class Home extends React.Component {
 
           <hr />
 
-          <div className="slim-box">
+          <div ref={c => { this.popularBox = c; }} className="slim-box">
             <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
               <div className="flex-parent flex-justify-start flex-align-center">
                 <h2 className="margin--right-5">Popular</h2>
