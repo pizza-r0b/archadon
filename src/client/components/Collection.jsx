@@ -4,7 +4,7 @@ import LoadingIndicator from './LoadingIndicator';
 import { connect } from 'react-redux';
 import Actions from 'Actions';
 import { action } from 'Utils';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 
 const { GET_COLLECTION_START } = Actions;
 
@@ -57,6 +57,8 @@ class Collection extends React.Component {
           <h1>{TITLES[name].main}</h1>
           <h3 className="font-color--lighter">{TITLES[name].sub}</h3>
           <ProductList products={this.props.collections[name].collection.hits} />
+          <h2 className="align--center margin--y-5">Not seeing something you love?</h2>
+          <div className="flex-parent flex-align-center flex-justify-center"><Link className="btn--primary" to="/shop">Shop All Rugs</Link></div>
         </div>
       );
     } else if (this.state.loading) {

@@ -150,12 +150,14 @@ class HomeSlider extends React.Component {
               component="div"
               className="featured-img"
             >
-              <ProductDetailLink
+              <Link
                 key={images[this.state.current].id}
-                product={{ _id: images[this.state.current].id }}
-                className="inner"
-                style={{ backgroundImage: `url(${images[this.state.current].image})` }}
-              />
+                to={`/collection/${images[this.state.current].name}`}>
+                <div
+                  className="inner"
+                  style={{ backgroundImage: `url(${images[this.state.current].image})` }}
+                />
+              </Link>
             </CSSTransitionGroup>
           </div>
           <div className="home-slider-item">
@@ -185,7 +187,7 @@ class HomeSlider extends React.Component {
             <div key={item.id} onClick={this.headlineClick(i)} className={classnames('ball', { active: images[this.state.current].id === item.id })} />
           ))}
         </div>
-      </div>
+      </div >
     );
   }
 }
