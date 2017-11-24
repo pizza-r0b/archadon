@@ -28,6 +28,8 @@ const {
   PRODUCT_DETAIL_LOADED,
   ON_CLEAR_FILTERS,
   CLEAR_REDIRECT_PATH,
+  GET_COLLECTION_END,
+  GET_COLLECTION_START,
   REQUEST_START,
   REQUEST_DONE,
   REQUEST_ERROR,
@@ -54,6 +56,7 @@ import {
   requestUpdatePassword,
   requestProductData,
   requestPurchase,
+  getCollectionByName,
   requestUpdateUserData,
 } from './api';
 
@@ -451,6 +454,11 @@ export function* onNavOpenSaga() {
   document.body.style.overflow = navOpen ? 'hidden' : 'auto';
 }
 
+export function* getCollectionSaga({ payload: collection }) {
+  const { response } = yield call(getCollectionByName, collection);
+  yield put(action(GET_COLLECTION_END, { name: collection, collection: response}));
+}
+
 export default function* rootSaga() {
   yield [
     takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
@@ -462,6 +470,7 @@ export default function* rootSaga() {
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
     takeLatest(UPDATE_USER_DATA, updateUserDataSaga),
+    takeLatest(GET_COLLECTION_START, getCollectionSaga),
     takeLatest(GET_PRODUCT_DETAILS, getProductDetailSaga),
     takeLatest(ON_NAV_OPEN, onNavOpenSaga),
     takeLatest(SIGN_UP, signUpSaga),

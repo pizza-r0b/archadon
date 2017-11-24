@@ -42,6 +42,8 @@ export default keyMirror({
   REQUEST_START: null,
   REQUEST_DONE: null,
   REQUEST_ERROR: null,
+  GET_COLLECTION_END: null,
+  GET_COLLECTION_START: null,
   GET_USER_DATA_START: null,
   GET_USER_DATA_END: null,
 });

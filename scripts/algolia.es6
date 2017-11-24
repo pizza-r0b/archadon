@@ -3,10 +3,12 @@ import path from 'path';
 import algolia from 'algoliasearch';
 import mongoose from 'mongoose';
 import { fromPaths } from 'dollidb';
-var ObjectId = require('mongodb').ObjectId;
+// var ObjectId = require('mongodb').ObjectId;
 // import { ProductItem, mongoose } from '../serverless/schemas/Product';
 dotenv.config();
 mongoose.Promise = global.Promise;
+
+console.log(process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI);
 
@@ -20,39 +22,39 @@ mongoose.connect(process.env.MONGO_URI);
 //   })
 // })
 
-mongoose.connection.once('open', () => {
-  const ProductItem = mongoose.connection.db.collection('productitems');
+// mongoose.connection.once('open', () => {
+//   const ProductItem = mongoose.connection.db.collection('productitems');
 
-  ProductItem.find({ Price: { $type: "string" } }).toArray().then(items => {
-    const updates = items.map(item => {
-      return {
-        updateOne: {
-          filter: { _id: ObjectId(item._id) },
-          update: {
-            $set: {
-              Price: parseInt(item.Price),
-            },
-          },
-        },
-      };
-    });
-    ProductItem.bulkWrite(updates);
-    console.log('done');
-  });
-});
+//   ProductItem.find({ Price: { $type: "string" } }).toArray().then(items => {
+//     const updates = items.map(item => {
+//       return {
+//         updateOne: {
+//           filter: { _id: ObjectId(item._id) },
+//           update: {
+//             $set: {
+//               Price: parseInt(item.Price),
+//             },
+//           },
+//         },
+//       };
+//     });
+//     ProductItem.bulkWrite(updates);
+//     console.log('done');
+//   });
+// });
 
 
 async function getData() {
   const p1 = Date.now();
   const ProductItem = mongoose.connection.db.collection('productitems');
   const ProductData = mongoose.connection.db.collection('productdatas');
-  let items = await ProductItem.find().toArray();
-  items = items.map(i => {
-    if (typeof i.Price === 'string') {
-      i.Price = Number(i.Price);
-    }
-    return i;
-  });
+  const items = await ProductItem.find().toArray();
+  // items = items.map(i => {
+  //   if (typeof i.Price === 'string') {
+  //     i.Price = Number(i.Price);
+  //   }
+  //   return i;
+  // });
   const promises = items.map(item => {
     const { _id } = item;
     return ProductData.find({ Item: _id }).toArray().then(docs => ({
@@ -112,4 +114,4 @@ function getProducts() {
   });
 }
 
-// getProducts();
+getProducts();

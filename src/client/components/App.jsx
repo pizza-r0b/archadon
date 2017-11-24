@@ -21,6 +21,7 @@ import classnames from 'classnames';
 import Loader from 'Components/Loader';
 import About from 'Components/About';
 import Contact from 'Components/Contact';
+import Collection from 'Components/Collection';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
 import SignOut from 'Components/SignOut';
@@ -127,6 +128,7 @@ class App extends Component {
           <div className="flex-grow-1 flex-justify-center flex-parent">
             <Switch>
               <Route path="/shop" component={Shop} />
+              <Route path="/collection/:name" component={Collection} />
               <Route path="/about" component={About} />
               <Route path="/" exact component={Home} />
               <Route path="/(login|signup)" render={({ location }) => <SignInForm path={location.pathname} />} />

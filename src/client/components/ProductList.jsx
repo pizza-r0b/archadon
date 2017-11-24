@@ -14,7 +14,7 @@ function ProductList({ products, loading }) {
         <div className="loading-indicator" />
         <h2 className="align--center">Loading</h2>
       </div>
-      {products.map(product => (
+      {products && products.map(product => (
         <div key={product._id} className="product-tile">
           <div className="product-tile-inner">
             <ProductDetailLink product={product}>
@@ -34,7 +34,7 @@ function ProductList({ products, loading }) {
                 <p className="product-tile-title font-color--danger">Sale {(product.Price).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
                 <FavoriteBtn className="heart" productId={product._id} />
               </div>
-              <p className="product-tile-title font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 1.5)}</span><br /> {toCurrency(product.Price * 1.5 - product.Price)} OFF</p>
+              <p className="product-tile-title font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 2.5)}</span><br /> {toCurrency(product.Price * 2.5 - product.Price)} OFF</p>
 
             </div>
           </div>

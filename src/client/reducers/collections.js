@@ -1,14 +1,17 @@
 // @flow
 import actions from 'Actions';
-const { ON_COLLECTION_SUCCESS } = actions;
+const { GET_COLLECTION_END } = actions;
 
 export default function filters(state = {}, action) {
   switch (action.type) {
-    case ON_COLLECTION_SUCCESS:
-
+    case GET_COLLECTION_END:
+      console.log(action);
       return {
         ...state,
-        ...action.payload,
+        [action.payload.name]: {
+          time: Date.now(),
+          collection: action.payload.collection,
+        },
       };
     default:
       return state;

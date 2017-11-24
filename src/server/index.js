@@ -12,6 +12,7 @@ import fetch from 'node-fetch';
 import searchRoute, { search } from '../search';
 import batchItems from '../search/batchItems';
 import bodyParser from 'body-parser';
+import collection from '../search/collection';
 
 const API_URL = process.env.NODE_ENV !== 'production' ? 'https://gnr9itw1e2.execute-api.us-east-1.amazonaws.com/dev/' : 'https://api.archadon.com/prod/';
 
@@ -23,6 +24,7 @@ app.use(express.static('public'));
 
 app.post('/search/products', searchRoute);
 app.post('/search/batch', batchItems);
+app.post('/search/collection', collection);
 
 let productDetails = [];
 

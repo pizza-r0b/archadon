@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const images = [
   {
     headline: 'Arty',
+    name: 'arty',
     title: 'Floor Art',
     subtitle: 'Bold, beautiful',
     image: `${IMAGE_ORIGIN}/6x9_32963_29737.jpg`,
@@ -16,6 +17,7 @@ const images = [
   },
   {
     headline: 'Abstract',
+    name: 'abstract',
     title: 'Wild imaginations',
     subtitle: 'A canvas for',
     image: `${IMAGE_ORIGIN}/6x9.1_32929_3694.jpg`,
@@ -23,6 +25,7 @@ const images = [
   },
   {
     headline: 'Classic',
+    name: 'classic',
     title: 'For classic people',
     subtitle: 'Classic styles',
     image: `${IMAGE_ORIGIN}/6.2.x9.2_S_1964_1235.jpg`,
@@ -30,6 +33,7 @@ const images = [
   },
   {
     headline: 'Contemporary',
+    name: 'contemporary',
     title: 'Off the beaten path',
     subtitle: 'A little bit',
     image: `${IMAGE_ORIGIN}/6x8.11_27318_25588.jpg`,
@@ -171,7 +175,7 @@ class HomeSlider extends React.Component {
                 </CSSTransitionGroup>
               </div>
               <div>
-                <ProductDetailLink product={{ Name: 'featured', _id: images[this.state.current].id }} className="btn btn--primary">View Rug</ProductDetailLink>
+                <Link to={`/collection/${images[this.state.current].name}`} className="btn btn--primary">View Collection</Link>
               </div>
             </div>
           </div>

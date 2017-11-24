@@ -32,6 +32,8 @@ export const requestBatch = (Items: Array<string>) => request('POST', url('produ
 
 export const requestCollection = (ids, name) => request('POST', '/search/batch', { ids }, null, { name });
 
+export const getCollectionByName = (collection) => request('POST', '/search/collection', { collection });
+
 export const requestPurchase = ((payload: {
   Items: Array<Object>,
   UserID: ?string,

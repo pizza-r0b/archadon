@@ -183,7 +183,7 @@ class ProductDetail extends React.Component {
                 <p className="font-color--copyColor">{product.ShortDescription}</p>
                 <div className="line-break" />
                 <h2 className="font-weight--normal font-color--danger">Sale Price: {toCurrency(product.Price)}</h2>
-                <h3 className="font-color--dark font-weight--normal font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 1.5)}</span> - {toCurrency(product.Price * 1.5 - product.Price)} OFF</h3>
+                <h3 className="font-color--dark font-weight--normal font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 2.5)}</span> - {toCurrency(product.Price * 2.5 - product.Price)} OFF</h3>
               </div>
               <div className="product-details-btns">
                 <div>
@@ -225,7 +225,7 @@ class ProductDetail extends React.Component {
             <h2 className="margin--top-5 margin--bottom-4">Why Buy from Us?</h2>
             <p className="small-caps margin--bottom-2">• Risk-free rug buying — free shipping and free returns</p>
             <p className="small-caps margin--bottom-2">• Established and experienced</p>
-            <p className="small-caps margin--bottom-2">• Fair Pricing</p>
+            <p className="small-caps margin--bottom-2">• Amazing Prices</p>
             <p className="small-caps margin--bottom-2">• Community-focused giving</p>
             <p className="small-caps margin--bottom-2">• Ethical sourcing</p>
             <p className="small-caps margin--bottom-2">• Extensive selection</p>
