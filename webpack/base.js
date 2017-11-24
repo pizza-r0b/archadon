@@ -64,7 +64,7 @@ const base = extend => {
       path: path.resolve(__dirname, '../build'),
       filename: '[name].js',
     },
-    devtool: 'eval',
+    devtool: 'source-map',
     resolve: {
       extensions: ['.js', '.jsx', '.scss'],
       modules: [src, 'node_modules'],
