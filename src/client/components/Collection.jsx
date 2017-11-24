@@ -35,8 +35,8 @@ class Collection extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const current = this.props.collection[this.props.match.params.name];
-    const next = nextProps.collection[this.props.match.params.name];
+    const current = this.props.collections[this.props.match.params.name];
+    const next = nextProps.collections[this.props.match.params.name];
     if (!current && next) {
       this.setState({ loading: false });
     }
@@ -51,16 +51,16 @@ class Collection extends React.Component {
     if (!COLLECTION_WHITELIST.includes(name)) {
       return <Redirect to="/" />
     }
-    if (this.state.loading) {
-      return <LoadingIndicator loading={true} />;
-    } else {
+    if (this.props.collections[name]) {
       return (
         <div className="wrap">
           <h1>{TITLES[name].main}</h1>
           <h3 className="font-color--lighter">{TITLES[name].sub}</h3>
-          <ProductList products={this.props.collection[name].collection.hits} />
+          <ProductList products={this.props.collections[name].collection.hits} />
         </div>
       );
+    } else if (this.state.loading) {
+      return <LoadingIndicator loading={true} />;
     }
   }
 }
