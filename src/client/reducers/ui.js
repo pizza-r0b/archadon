@@ -1,5 +1,6 @@
 // @flow
 import actions from 'Actions';
+import { LOCATION_CHANGE } from 'react-router-redux';
 const {
   HOME_LOADED,
   NAV_STATE,
@@ -24,6 +25,13 @@ export default function products(state = {}, action) {
       return {
         ...state,
         pageChange: action.payload,
+      };
+    case LOCATION_CHANGE:
+      const prevPath = state.currentPath || '';
+      return {
+        ...state,
+        prevPath,
+        currentPath: action.payload.pathname,
       };
     default:
       return state;

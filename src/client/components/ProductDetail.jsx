@@ -50,7 +50,7 @@ class ImageZoom extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.show && !this.props.show && !this.state.img) {
+    if (nextProps.show && !this.props.show && !this.state.img) {
       const img = new Image();
       const src = this.props.img;
       new Promise((resolve, reject) => {
@@ -109,6 +109,10 @@ class ProductDetail extends React.Component {
     this.setState({ showImgZoom: false });
   }
 
+  onBack = () => {
+    this.props.history.push(this.props.prevPath);
+  }
+
   componentDidMount() {
 
   }
@@ -150,14 +154,12 @@ class ProductDetail extends React.Component {
         </Helmet>
         <ImageZoom show={this.state.showImgZoom} img={imgSrc} onClose={this.onZoomClose} />
         <div className="wrap margin--bottom-10">
-          <Link to="/shop">
-            <div className="inline-flex flex-parent flex-align-center">
-              <div style={{ width: '20px', height: '20px', transform: 'rotate(180deg)' }}>
-                <Icon color="#000" variant="icon-right-arrow" />
-              </div>
-              <p className="small-caps margin--left-5">Back To Store</p>
+          <div onClick={this.onBack} style={{ cursor: 'pointer' }} className="inline-flex flex-parent flex-align-center">
+            <div style={{ width: '20px', height: '20px', transform: 'rotate(180deg)' }}>
+              <Icon color="#000" variant="icon-right-arrow" />
             </div>
-          </Link>
+            <p className="small-caps margin--left-5">Back</p>
+          </div>
         </div>
         <section className="product-details-section">
           <div className="wrap product-details-wrap">
@@ -169,7 +171,7 @@ class ProductDetail extends React.Component {
                       style={{ cursor: 'pointer' }}
                       onClick={this.onImageClick}
                       data-srcset={returnSrcSet(product.SKU)}
-                      />
+                    />
                   </LazyLoad>
                 </div>
               </div>
@@ -242,7 +244,7 @@ class ProductDetail extends React.Component {
             <div className="flex-parent flex-justify-center">
               <Link to="/shop" className="btn--alt margin--y-5"><span className="text">Shop All Rugs</span></Link>
             </div>
-            </div>
+          </div>
         </section>
       </div>
     );
@@ -270,6 +272,7 @@ const mapStateToProps = (state, ownProps) => {
     product: state.productDetails.find(product => product._id === id),
     loading: state.loading.page === 'detail',
     products: state.products.hits,
+    prevPath: state.ui.prevPath || '/shop',
   };
 };
 
