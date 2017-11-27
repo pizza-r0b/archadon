@@ -10,6 +10,7 @@ import ProductList from 'Components/ProductList';
 import classnames from 'classnames';
 import { Helmet } from 'react-helmet';
 import { toCurrency } from 'Utils';
+import LazyLoad from 'Components/LazyLoad';
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_landscape_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/landscape_${sku}.${ext} 1315w`;
 
@@ -163,11 +164,13 @@ class ProductDetail extends React.Component {
             <div className="product-details-left">
               <div className="product-details-image">
                 <div className="stripe-image--left">
-                  <img
-                    style={{ cursor: 'pointer' }}
-                    onClick={this.onImageClick}
-                    srcSet={returnSrcSet(product.SKU)}
-                  />
+                  <LazyLoad>
+                    <img
+                      style={{ cursor: 'pointer' }}
+                      onClick={this.onImageClick}
+                      data-srcset={returnSrcSet(product.SKU)}
+                      />
+                  </LazyLoad>
                 </div>
               </div>
             </div>

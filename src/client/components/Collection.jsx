@@ -8,7 +8,7 @@ import { withRouter, Redirect, Link } from 'react-router-dom';
 
 const { GET_COLLECTION_START } = Actions;
 
-const COLLECTION_WHITELIST = ['arty', 'contemporary', 'abstract', 'classic'];
+const COLLECTION_WHITELIST = ['arty', 'contemporary', 'abstract', 'classic', 'welcome'];
 
 const TITLES = {
   arty: {
@@ -26,6 +26,10 @@ const TITLES = {
   classic: {
     main: 'Classic Collection',
     sub: 'Classic styles for classic people',
+  },
+  welcome: {
+    main: 'Welcome Rug Collection',
+    sub: 'Give the gift of the perfect small rug this holiday season.',
   },
 };
 

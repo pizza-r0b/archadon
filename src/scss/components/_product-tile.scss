@@ -22,7 +22,7 @@
   }
 
   @media (max-width: 483px) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   &--5 {
@@ -38,7 +38,10 @@
       }
 
       @media (max-width: 483px) {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        .product-tile-inner {
+          padding: 0;
+        }
       }
   }
 }

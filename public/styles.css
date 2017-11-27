@@ -7348,7 +7348,7 @@ a.link--gold, .link--gold {
       grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 483px) {
     .product-list-wrap, .product-list-wrap--5 {
-      grid-template-columns: repeat(1, 1fr); } }
+      grid-template-columns: repeat(2, 1fr); } }
   .product-list-wrap--5 {
     grid-template-columns: repeat(5, 1fr); }
     @media (max-width: 1000px) {
@@ -7359,7 +7359,9 @@ a.link--gold, .link--gold {
         grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 483px) {
       .product-list-wrap--5 {
-        grid-template-columns: repeat(1, 1fr); } }
+        grid-template-columns: repeat(2, 1fr); }
+        .product-list-wrap--5 .product-tile-inner {
+          padding: 0; } }
 
 .heart {
   width: 20px;

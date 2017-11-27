@@ -46,14 +46,30 @@ class Home extends React.Component {
           </div>
           <HomeSlider />
 
-          <div className="margin--bottom-10" style={{ width: '100%', maxWidth: '650px', margin: 'auto' }}>
+          {/*<div className="margin--bottom-10" style={{ width: '100%', maxWidth: '650px', margin: 'auto' }}>
             <h2 className="align--center">Hello there, and welcome!</h2>
             <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of hand-knotted, heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
+    </div>*/}
+
+          <div style={{ margin: '0 auto', maxWidth: '1000px' }} className="flex-col-break flex-parent">
+            <div>
+              <Link to="/collection/welcome">
+                <LazyLoad>
+                  <img data-src="https://assets.archadon.com/welcome-rugs-collection-christmas.jpg" />
+                </LazyLoad>
+              </Link>
+            </div>
+            <div className="flex-col-break--m">
+              <Link to="/shop">
+                <LazyLoad>
+                  <img data-src="https://assets.archadon.com/christmas-shop-all-rugs.jpg" />
+                </LazyLoad>
+              </Link>
+            </div>
           </div>
 
           <hr />
           <ShopBySize />
-
           <hr />
 
           <div ref={c => { this.popularBox = c; }} className="slim-box">
@@ -82,24 +98,6 @@ class Home extends React.Component {
 
           <div className="margin--top-10">
             <HomeFeaturedItems />
-          </div>
-
-          <hr />
-
-
-          <div className="flex-parent flex-col-break hp-christmas ">
-            <div className="align--center">
-              <Link to="/shop?tid=hp2">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/christmas_v2.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-            <div>
-              <h2>Give the gift of a rug that ties the room together this holiday season.</h2>
-              <h3 className="font-color--lighter">We won't tell if you buy one for you, too.</h3>
-              <Link className="btn--primary--inverse margin--top-5" to="/shop?tid=hp1">Find the Perfect Rug</Link>
-            </div>
           </div>
 
           <hr className="margin--bottom-20" />
