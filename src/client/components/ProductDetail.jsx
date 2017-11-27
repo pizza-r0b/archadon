@@ -113,10 +113,6 @@ class ProductDetail extends React.Component {
     this.props.history.push(this.props.prevPath);
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
     if (this.props.loading) {
       return (
@@ -158,7 +154,7 @@ class ProductDetail extends React.Component {
             <div style={{ width: '20px', height: '20px', transform: 'rotate(180deg)' }}>
               <Icon color="#000" variant="icon-right-arrow" />
             </div>
-            <p className="small-caps margin--left-5">Back</p>
+            <p className="small-caps margin--left-5">Back To Store</p>
           </div>
         </div>
         <section className="product-details-section">
@@ -166,7 +162,7 @@ class ProductDetail extends React.Component {
             <div className="product-details-left">
               <div className="product-details-image">
                 <div className="stripe-image--left">
-                  <LazyLoad>
+                  <LazyLoad key={product.SKU}>
                     <img
                       style={{ cursor: 'pointer' }}
                       onClick={this.onImageClick}
