@@ -1,0 +1,30 @@
+$firstSliderBreak: 999px;
+$smallBreak: 500px;
+
+@import "homeslider";
+
+
+.slim-box {
+  width: 100%;
+  margin: auto;
+}
+
+
+.hp-christmas {
+  padding: 5px * $spacer 0;
+
+  div {
+    width: 50%;
+  }
+  img {
+    transform: rotate(180deg);
+    width: 80%;
+    height: auto;
+  }
+
+  @media (max-width: 640px) {
+    div, img {
+      width: 100%;
+    }
+  }
+}

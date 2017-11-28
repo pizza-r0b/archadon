@@ -1,0 +1,52 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translate(0, 20px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+
+    &.open {
+      display: block;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: 0.25s background-color;
+      animation: fadeIn 0.3s forwards;
+
+      & .modal-content {
+        animation: moveUp 0.3s forwards;
+      }
+    }
+
+    &-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background-color: $white;
+      // box-shadow: 0 0 45px opacify($highlight, 0.1);
+      // border: 1px solid $dark;
+    }
+
+}
+

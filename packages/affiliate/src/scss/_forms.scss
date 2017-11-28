@@ -1,0 +1,39 @@
+%input {
+  padding: 20px;
+  box-sizing: border-box;
+  @include font-size(1.6);
+  background-color: $damnNearWhite;
+  border: none;
+  outline: none;
+  color: $copyColor;
+  width: 100%;
+}
+
+.form-component {
+  position: relative;
+  flex-grow: 1;
+  @extend .margin--top-3;
+
+  label {
+    left: 20px;
+    position: absolute;
+    transform: translateY(100%);
+    transition: 0.25s transform;
+    transform-origin: left;
+    pointer-events: none;
+  }
+
+  input:focus + label, .input-filled + label {
+    transform: translateY(0) scale(0.5);
+  }
+
+  input {
+    @extend %input;
+    &.input-error {
+      border: 1px solid $danger;
+      background-color: transparentize($danger, 0.8);
+    }
+  }
+}
+
+

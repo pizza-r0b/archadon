@@ -1,0 +1,158 @@
+$maxWidthProductDetail: 958px;
+
+.accordian {
+  $padding: 15px;
+  @include font-size(1.4);
+  border: 1px solid $dark;
+
+  &-group {
+    &-title {
+      padding: $padding;
+      color: $dark;
+      font-weight: 400;
+      text-transform: uppercase;
+      border-bottom: 1px solid $dark;
+    }
+
+    &:nth-child(1n+2) {
+      .accordian-group-title {
+        border-top: 1px solid $dark;
+      }
+    }
+
+    &-content {
+      padding: $padding;
+    }
+  }
+}
+
+
+.product-details {
+  &-section {
+    background-color: $damnNearWhite;
+    width: 100%;
+    padding: 65px 0;
+    margin-bottom: 50px;
+    @media (max-width: $maxWidthProductDetail) {
+      padding: 40px 0;
+    }
+
+  }
+
+  &-about-wrap {
+    display: flex;
+
+    @media (max-width: $maxWidthProductDetail) {
+      flex-direction: column;
+    }
+  }
+
+  &-materials {
+    @media (max-width: $maxWidthProductDetail) {
+      margin: 25px 0;
+    }
+    flex-grow: 1;
+    .accordian {
+      max-width: 350px;
+      width: 100%;
+      @media (max-width: $maxWidthProductDetail) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  &-about {
+    max-width: 635px;
+    margin-right: 50px;
+    @media (max-width: $maxWidthProductDetail) {
+      max-width: 100%;
+      margin-right: 0;
+    }
+    p {
+      line-height: 2;
+    }
+  }
+
+  &-wrap {
+    display: flex;
+
+    @media (max-width: $maxWidthProductDetail) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &-left {
+    width: 100%;
+    max-width: 635px;
+    flex-shrink: 0;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    margin-right: 50px;
+    @media (max-width: $maxWidthProductDetail) {
+      max-width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  &-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @media (max-width: $maxWidthProductDetail) {
+      margin-top: $spacer * 8px;
+    }
+  }
+
+  &-title {
+
+  }
+
+  &-btns {
+    @media (max-width: $maxWidthProductDetail) {
+      margin-top: $spacer * 5px;
+    }
+  }
+}
+
+.heart-parent {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: $maxWidthProductDetail) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    p {
+      margin-left: 0!important;
+    }
+
+  }
+}
+
+.image-zoom {
+  opacity: 0;
+  transition: 0.25s opacity;
+  pointer-events: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: $damnNearWhite;
+  z-index: 9999;
+  overflow: scroll;
+
+  img {
+    min-width: 100%;
+    height: auto;
+  }
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+}

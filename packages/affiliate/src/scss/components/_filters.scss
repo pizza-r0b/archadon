@@ -1,0 +1,44 @@
+.filter-wrap {
+  box-sizing: border-box;
+  margin-top: $spacer * 5;
+  display: none;
+  &.show {
+    display: block
+  }
+
+  .filters {
+
+  }
+
+  .filter-option {
+    flex-grow: 1;
+    label {
+      display: block;
+
+    }
+
+    margin: $spacer * 3 0;
+
+    select {
+      background: $white;
+      border: 1px solid $light;
+      height: 35px;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+  }
+}
+
+@include tablet() {
+  .filter-wrap {
+
+    .filters {
+    display: flex;
+
+    }
+
+    .filter-option {
+      margin-right: 25px;
+    }
+  }
+}

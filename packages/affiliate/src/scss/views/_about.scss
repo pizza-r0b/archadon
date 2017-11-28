@@ -1,0 +1,42 @@
+.top-content-left {
+  padding-right: 10px;
+  width: 80%;
+
+  img.max-width-100 {
+    margin-top: $spacer * 10;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+    padding-right: 0;
+
+    img.max-width-100 {
+      margin-top: $spacer * 5;
+    }
+
+  }
+}
+
+.about-blurb-a {
+  @media (min-width: 1000px) {
+    max-width: 50%;
+  }
+}
+
+.top-content-right {
+  padding-left: 10px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .about-content-bottom {
+    flex-direction: column;
+
+    .stripe-image--left {
+      margin-top: $spacer * 10;
+    }
+  }
+}

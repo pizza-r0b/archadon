@@ -1,0 +1,55 @@
+Arguments: 
+  /Users/realseanp1/.nvm/versions/node/v9.2.0/bin/node /usr/local/Cellar/yarn/1.2.1/libexec/bin/yarn.js dev:start
+
+PATH: 
+  /Users/realseanp1/.nvm/versions/node/v9.2.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Wireshark.app/Contents/MacOS:/Users/realseanp1/.yarn/bin:/Users/realseanp1/.yarn/bin
+
+Yarn version: 
+  1.2.1
+
+Node version: 
+  9.2.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "affiliate",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev:predeploy:build": "npm run dev:server:command; npm run dev:client:command",
+      "start": "npm run prod:start",
+      "dev:start": "NODE_ENV=development DEV_SERVER_PORT=3001 run-p dev:client:build dev:server:build dev:server:delay",
+      "dev:server:delay": "run-s delay dev:server:start",
+      "delay": "node ./node_modules/npm-delay 10000",
+      "dev:server:command": "webpack --config ./webpack/server.deploy.js",
+      "dev:client:command": "webpack --config ./webpack/client.deploy.js",
+      "dev:server:build": "webpack --config ./webpack/server.js --watch --colors --display-error-details",
+      "dev:server:start": "NODE_ENV=development DEV_SERVER_PORT=3001 nodemon ./build/server.js --watch ./src/server --ignore ./src/client",
+      "dev:client:build": "NODE_ENV=development DEV_SERVER_PORT=3001 node webpack/dev-server.js",
+      "prod:build": "npm run sprite && npm run prod:client && PORT=8081 npm run prod:server",
+      "prod:server": "NODE_ENV=production webpack --config ./webpack/server.prod.js",
+      "prod:client": "NODE_ENV=production webpack --config ./webpack/client.prod.js",
+      "prod:start": "NODE_ENV=production node build/server.js",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  SyntaxError: /Users/realseanp1/Projects/archadon/packages/affiliate/package.json: Unexpected token } in JSON at position 1338
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:770:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:92:30)
+      at /usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:103:13
+      at <anonymous>
