@@ -8,11 +8,9 @@ import { fromPaths } from 'dollidb';
 dotenv.config();
 mongoose.Promise = global.Promise;
 
-console.log(process.env.MONGO_URI);
+const mongoUri = process.env.NODE_ENV === 'production' ? process.env.PROD_MONGO_URI : process.env.DEV_MONGO_URI;
 
-mongoose.connect(process.env.MONGO_URI);
-
-
+mongoose.connect(mongoUri);
 
 // const ProductItem = mongoose.connection.db.collection('productitems');
 // ProductItem.findById('59c8631b907d2a0d06a4d573').then(doc => {

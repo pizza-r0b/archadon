@@ -4,6 +4,8 @@ import actions from 'Actions';
 import ClearFilterButton from 'Ui/ClearFilterButton';
 import { action } from 'Utils';
 import { FILTERS_ARR as filtersArr } from 'Constants';
+import ColorPicker from 'Components/ColorPicker';
+import classnames from 'classnames';
 
 const { ON_FILTER_UPDATE } = actions;
 
@@ -50,6 +52,17 @@ class Filters extends Component {
     filters: Array<Object>,
   }
 
+  state = {
+    showColorPicker: false,
+    showFilter: false,
+  }
+
+  onShowColorPicker = () => {
+    this.setState({
+      showColorPicker: !this.state.showColorPicker,
+    });
+  }
+
   onChange = (e) => {
     const select = e.currentTarget;
     const option = select.options[select.selectedIndex];
@@ -66,16 +79,21 @@ class Filters extends Component {
   }
   render() {
     return (
+      <div className="wrap">
+        {!this.state.showFilter && <div onClick={() => { this.setState({ showFilter: true }) }} className="btn--alt"><span className="text">+ Show Filters</span></div>}
+        <div className={classnames('filter-wrap', { show: this.state.showFilter })}>
+          <div className="margin--bottom-3">
+            {this.props.filters.length > 0 && <ClearFilterButton />}
+          </div>
 
-      <div className="filter-wrap wrap">
-        <div className="margin--bottom-3">
-          {this.props.filters.length > 0 && <ClearFilterButton />}
-        </div>
-        <div className="filters">
-          {FILTERS_ARR.map((filter, i) => {
-            filter.index = i;
-            return <FilterOption filters={this.props.filters} defaultIndex={this.props.filters.length} key={i} onChange={this.onChange} filter={filter} />;
-          })}
+          <div className="filters">
+            {FILTERS_ARR.map((filter, i) => {
+              filter.index = i;
+              return <FilterOption filters={this.props.filters} defaultIndex={this.props.filters.length} key={i} onChange={this.onChange} filter={filter} />;
+            })}
+          </div>
+          <div onClick={this.onShowColorPicker} className="btn--primary--inverse">Filter By Color</div>
+          {this.state.showColorPicker && <ColorPicker applyColorFilter={this.props.updateFilter} toggle={this.onShowColorPicker} />}
         </div>
       </div>
     );

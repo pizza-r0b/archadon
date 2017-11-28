@@ -7744,7 +7744,10 @@ a.link--gold, .link--gold {
 
 .filter-wrap {
   box-sizing: border-box;
-  margin-top: 25; }
+  margin-top: 25;
+  display: none; }
+  .filter-wrap.show {
+    display: block; }
   .filter-wrap .filter-option {
     flex-grow: 1;
     margin: 15 0; }
@@ -8165,6 +8168,34 @@ a.link--gold, .link--gold {
       .featured-box--gold .inner {
         height: 415px;
         transform: translateY(10px); } }
+
+.color-picker {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  overflow-x: hidden;
+  overflow-y: auto; }
+  .color-picker-inner {
+    width: 100%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #FFF; }
+  .color-picker .color-box {
+    display: inline-block;
+    width: 50px;
+    margin: 5px;
+    border: 1px solid #afafaf;
+    height: 50px;
+    cursor: pointer; }
+    .color-picker .color-box.selected {
+      border: 1px solid #000;
+      box-shadow: 0px 0px 5px #000 inset; }
 
 .align-baseline {
   vertical-align: baseline !important; }

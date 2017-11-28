@@ -1,6 +1,10 @@
 .filter-wrap {
   box-sizing: border-box;
   margin-top: $spacer * 5;
+  display: none;
+  &.show {
+    display: block
+  }
 
   .filters {
 

@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "dollidb": "^1.0.5",
+    "get-image-colors": "^1.8.1",
     "mongoose": "^4.11.12",
+    "nearest-color": "^0.4.2",
     "node-fetch": "^1.6.3"
   }
 }

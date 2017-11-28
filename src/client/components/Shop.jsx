@@ -35,7 +35,6 @@ function Shop({ products, page, nbPages, loadMore, loading }) {
       {products.length === 0 && (
         <div className="margin--top-5">
           <h2 key="1" className="align--center">Your search returned zero results! Try clearing your filters.</h2>
-          <h3 key="2" className="align--center font-color--lighter">We are working hard to make filtering better for you.</h3>
           <p className="align--center margin--top-5">Provide feedback at hello@archadon.com</p>
         </div>
       )}
