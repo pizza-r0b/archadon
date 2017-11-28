@@ -22,6 +22,7 @@ class ColorPicker extends React.Component {
       field: 'Color',
       queries: [this.state.selectedColors.map(color => `Colors:${color}`).join(' OR ')],
     });
+    this.props.toggle();
   }
 
   render() {
