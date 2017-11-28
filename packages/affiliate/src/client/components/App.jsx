@@ -5,6 +5,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+
         <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />
       </div>
     );

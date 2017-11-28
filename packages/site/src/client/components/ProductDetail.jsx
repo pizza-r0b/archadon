@@ -235,8 +235,12 @@ class ProductDetail extends React.Component {
         </section>
         <section className="product-details-section margin--top-5">
           <div className="wrap">
-            <h2>You Might Also Like...</h2>
-            <ProductList {...{ products: this.recs }} />
+            {this.recs.length > 0 &&
+              <div>
+                <h2>You Might Also Like...</h2>
+                <ProductList {...{ products: this.recs }} />
+              </div>
+            }
             <div className="flex-parent flex-justify-center">
               <Link to="/shop" className="btn--alt margin--y-5"><span className="text">Shop All Rugs</span></Link>
             </div>
@@ -252,7 +256,7 @@ function getRandom(arr, n) {
   let len = arr.length;
   const taken = new Array(len);
   if (n > len) {
-    throw new RangeError('getRandom: more elements taken than available');
+    return [];
   }
   while (n--) {
     const x = Math.floor(Math.random() * len);
