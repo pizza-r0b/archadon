@@ -10,7 +10,6 @@ const test = async () => {
   } catch (e) {
     throw new Error(e);
   }
-  console.log('DATA', data);
 };
 
 test();

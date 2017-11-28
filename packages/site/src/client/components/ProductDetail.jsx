@@ -11,6 +11,10 @@ import classnames from 'classnames';
 import { Helmet } from 'react-helmet';
 import { toCurrency } from 'Utils';
 import LazyLoad from 'Components/LazyLoad';
+import { action } from 'Utils';
+import actions from 'Actions';
+
+const { ON_CLEAR_FILTERS } = actions;
 
 const returnSrcSet = (sku, ext = 'jpg') => `${IMAGE_ORIGIN}/sm_landscape_${sku}.${ext} 329w, ${IMAGE_ORIGIN}/md_landscape_${sku}.${ext} 658w, ${IMAGE_ORIGIN}/landscape_${sku}.${ext} 1315w`;
 
@@ -111,6 +115,12 @@ class ProductDetail extends React.Component {
 
   onBack = () => {
     this.props.history.push(this.props.prevPath);
+  }
+
+  shopAll = (e) => {
+    e.preventDefault();
+    this.props.clearFilters();
+    this.props.history.push('/shop');
   }
 
   render() {
@@ -242,7 +252,7 @@ class ProductDetail extends React.Component {
               </div>
             }
             <div className="flex-parent flex-justify-center">
-              <Link to="/shop" className="btn--alt margin--y-5"><span className="text">Shop All Rugs</span></Link>
+              <button onClick={this.shopAll} to="/shop" className="btn--alt margin--y-5"><span className="text">Shop All Rugs</span></button>
             </div>
           </div>
         </section>
@@ -266,6 +276,12 @@ function getRandom(arr, n) {
   return result;
 }
 
+const mapDispatchToProps = dispatch => ({
+  clearFilters() {
+    dispatch(action(ON_CLEAR_FILTERS));
+  },
+});
+
 const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   return {
@@ -276,4 +292,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(ProductDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

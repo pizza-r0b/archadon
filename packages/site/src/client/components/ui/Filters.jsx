@@ -7,7 +7,7 @@ import { FILTERS_ARR as filtersArr } from 'Constants';
 import ColorPicker from 'Components/ColorPicker';
 import classnames from 'classnames';
 
-const { ON_FILTER_UPDATE } = actions;
+const { ON_FILTER_UPDATE, ON_CLEAR_FILTERS } = actions;
 
 const FILTERS_ARR = [...filtersArr];
 
@@ -103,6 +103,9 @@ class Filters extends Component {
 const mapDispatchToProps = dispatch => ({
   updateFilter(filter) {
     dispatch(action(ON_FILTER_UPDATE, { filter }));
+  },
+  clearFilters() {
+    dispatch(action(ON_CLEAR_FILTERS));
   },
 });
 
