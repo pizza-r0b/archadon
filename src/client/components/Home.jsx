@@ -71,9 +71,7 @@ class Home extends React.Component {
          <hr />
           <ShopBySize />
           <hr />
-          <h2>Why hand-knotted?</h2>
-          <p>Many companies advertise "handmade" rugs when really their rugs are hand-tufted - so by "handmade" they actually mean made by a machine that someone is holding in their hand. Each of our rugs is a hand-knotted, one-of-a-kind, heirloom-quality piece that will last for generations. In a time when so much of what we consume is machine-made, owning something handcrafted is a point of pride. Not only are these rugs beautiful, they are also beautifully durable. Hand-knotted rugs made from high-quality wool have a denser pile, which means they’re thicker and tougher than any machine-made rug. They’re more stain and soil resistant, and they stand up to foot traffic, so you can put them anywhere in your home.</p>
-          <hr />
+
 
           <div ref={c => { this.popularBox = c; }} className="slim-box">
             <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
@@ -102,6 +100,9 @@ class Home extends React.Component {
           <div className="margin--top-10">
             <HomeFeaturedItems />
           </div>
+          <hr />
+          <h2>Why hand-knotted?</h2>
+          <p>Many companies advertise "handmade" rugs when really their rugs are hand-tufted - so by "handmade" they actually mean made by a machine that someone is holding in their hand. Each of our rugs is a hand-knotted, one-of-a-kind, heirloom-quality piece that will last for generations. In a time when so much of what we consume is machine-made, owning something handcrafted is a point of pride. Not only are these rugs beautiful, they are also beautifully durable. Hand-knotted rugs made from high-quality wool have a denser pile, which means they’re thicker and tougher than any machine-made rug. They’re more stain and soil resistant, and they stand up to foot traffic, so you can put them anywhere in your home.</p>
 
           <hr className="margin--bottom-20" />
           <h2 className="align--center">About Us</h2>
