@@ -97,6 +97,31 @@ class Home extends React.Component {
 
           <hr />
 
+          <h2>Testimonials</h2>
+
+          <div className="flex-col-break flex-parent margin--top-5">
+            <div className="flex-1">
+              <p>Archadon has the best quality rugs for the absolute best prices. Try to find a hand-knotted Tibetan wool rug for a better price. You CAN'T!</p>
+              <p className="strong">- Aaron, California</p>
+            </div>
+            <div className="flex-col-break--m flex-1">
+              <p>My family has bought rugs from Tibet Rug Company for 20 years! I have several in my home and they are still like new! These are the best quality rugs.</p>
+              <p className="strong">- Emily, Utah</p>
+            </div>
+          </div>
+          <div className="flex-col-break flex-parent margin--top-3">
+          <div className="flex-1">
+            <p>Found a great rug for my living room. Great price and they shipped it right to me. No problems!</p>
+            <p className="strong">- Natalie, California</p>
+          </div>
+          <div className="flex-col-break--m flex-1">
+            <p>Returned a rug I bought from Archadon for a new one. They sent me a return label and I was able to easily send it back. Within two weeks I had my new rug.</p>
+            <p className="strong">- David, California</p>
+          </div>
+        </div>
+
+          <hr />
+
           <div className="margin--top-10">
             <HomeFeaturedItems />
           </div>

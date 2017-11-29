@@ -179,6 +179,7 @@ class ProductDetail extends React.Component {
                       data-srcset={returnSrcSet(product.SKU)}
                     />
                   </LazyLoad>
+                  <p style={{ background: '#f8f8f8', zIndex: 9, position: 'relative' }} className="small-caps font-color--light">Tap image to zoom</p>
                 </div>
               </div>
             </div>
