@@ -149,6 +149,23 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
 
+  createAffiliateUser:
+    handler: functions/affiliate/user/createUser.createAffiliateUser
+    events:
+      - http:
+          path: affiliate/v1/create
+          method: post
+          cors:
+            origins:
+              - '*'
+            headers:
+              - authtoken
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+
   getUserFavorites:
     handler: functions/user/read/getFavorites.getUserFavorites
     events:

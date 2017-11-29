@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AWS_PROFILE=archadon \
-serverless invoke \
+serverless invoke local \
 --function $1 \
 --env dev \
 --secrets './secrets-dev.yml' \
