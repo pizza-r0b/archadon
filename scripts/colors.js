@@ -1,3 +1,12 @@
+// export default [
+//     { hex: '#ff0000' },
+//     { hex: '#ff9900' },
+//     { hex: '#663300' },
+//     { hex: '#33cc33' },
+//     { hex: '#0066ff' },
+//     { hex: '#ffff00' },
+// ];
+
 export default [
   {
       "hex": "#EFDECD",

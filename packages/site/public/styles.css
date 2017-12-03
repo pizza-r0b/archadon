@@ -6942,19 +6942,19 @@ hr {
         height: 45px; } }
 
 .cart-qty {
-  width: 18px;
-  height: 18px;
-  background-color: #BEDBED;
+  width: 14px;
+  height: 14px;
+  background-color: #E85353;
   border-radius: 25px;
   display: flex;
-  font-size: 14px;
-  font-size: 1.4rem;
+  font-size: 10px;
+  font-size: 1rem;
   position: absolute;
-  right: -13px;
-  top: -10px;
+  left: -5px;
+  top: 6px;
   align-items: center;
   justify-content: center;
-  color: #000; }
+  color: #FFFFFF; }
 
 .ham-inner, .ham-inner:after {
   width: 60%;
@@ -8169,33 +8169,23 @@ a.link--gold, .link--gold {
         height: 415px;
         transform: translateY(10px); } }
 
-.color-picker {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-  overflow-x: hidden;
-  overflow-y: auto; }
-  .color-picker-inner {
-    width: 100%;
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 10px;
-    box-sizing: border-box;
-    background: #FFF; }
-  .color-picker .color-box {
-    display: inline-block;
-    width: 50px;
-    margin: 5px;
-    border: 1px solid #afafaf;
-    height: 50px;
-    cursor: pointer; }
-    .color-picker .color-box.selected {
-      border: 1px solid #000;
-      box-shadow: 0px 0px 5px #000 inset; }
+.color-picker-inner {
+  width: 100%;
+  margin: 30px auto;
+  box-sizing: border-box;
+  background: #FFF; }
+
+.color-picker .color-box {
+  display: inline-block;
+  width: 50px;
+  margin: 5px;
+  border-radius: 50px;
+  border: 1px solid #afafaf;
+  height: 50px;
+  cursor: pointer; }
+  .color-picker .color-box.selected {
+    border: 1px solid #000;
+    box-shadow: 0px 0px 5px #000 inset; }
 
 .align-baseline {
   vertical-align: baseline !important; }

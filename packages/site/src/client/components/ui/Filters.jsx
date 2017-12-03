@@ -26,8 +26,6 @@ function FilterOption({ filter, onChange, filters, defaultIndex }: FilterProps) 
     selectProps.value = 0;
   }
 
-  console.log(filter);
-
   const [selectedOfType] = filters.filter(f => f.field === filter.name);
   if (selectedOfType) {
     selectProps.value = filter.options[selectedOfType.optionindex].copy;

@@ -32,6 +32,7 @@ const getObject = key => new Promise((resolve, reject) => {
 const getColorsFromBuffer = async (key) => {
   const buffer = await getObject(key);
   const colorsFromBuffer = await getColors(buffer, 'image/jpeg');
+  colorsFromBuffer.splice(3);
   return colorsFromBuffer.map(color => color.hex());
 };
 

@@ -51,27 +51,9 @@ class Home extends React.Component {
             <p className="align--center">We’ve rolled out the welcome mat, so stay awhile. Browse our extensive collection of hand-knotted, heirloom-quality rugs, save your faves, and imagine how a stunning rug will tie the room together.</p>
     </div>*/}
 
-          <div style={{ margin: '0 auto', maxWidth: '1000px' }} className="flex-col-break flex-parent">
-            <div>
-              <Link to="/collection/welcome">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/welcome-rugs-collection-christmas.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-            <div className="flex-col-break--m">
-              <Link to="/shop">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/christmas-shop-all-rugs.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-          </div>
-
-         <hr />
+          <hr />
           <ShopBySize />
           <hr />
-
 
           <div ref={c => { this.popularBox = c; }} className="slim-box">
             <div className="flex-parent flex-wrap flex-justify-between flex-align-center">
@@ -97,6 +79,25 @@ class Home extends React.Component {
 
           <hr />
 
+          <div style={{ margin: '0 auto', maxWidth: '1000px' }} className="flex-col-break flex-parent">
+            <div>
+              <Link to="/collection/welcome">
+                <LazyLoad>
+                  <img data-src="https://assets.archadon.com/welcome-rugs-collection-christmas.jpg" />
+                </LazyLoad>
+              </Link>
+            </div>
+            <div className="flex-col-break--m">
+              <Link to="/shop">
+                <LazyLoad>
+                  <img data-src="https://assets.archadon.com/christmas-shop-all-rugs.jpg" />
+                </LazyLoad>
+              </Link>
+            </div>
+          </div>
+
+          <hr />
+
           <h2>Testimonials</h2>
 
           <div className="flex-col-break flex-parent margin--top-5">
@@ -110,15 +111,15 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="flex-col-break flex-parent margin--top-3">
-          <div className="flex-1">
-            <p>Found a great rug for my living room. Great price and they shipped it right to me. No problems!</p>
-            <p className="strong">- Natalie, California</p>
+            <div className="flex-1">
+              <p>Found a great rug for my living room. Great price and they shipped it right to me. No problems!</p>
+              <p className="strong">- Natalie, California</p>
+            </div>
+            <div className="flex-col-break--m flex-1">
+              <p>Returned a rug I bought from Archadon for a new one. They sent me a return label and I was able to easily send it back. Within two weeks I had my new rug.</p>
+              <p className="strong">- David, California</p>
+            </div>
           </div>
-          <div className="flex-col-break--m flex-1">
-            <p>Returned a rug I bought from Archadon for a new one. They sent me a return label and I was able to easily send it back. Within two weeks I had my new rug.</p>
-            <p className="strong">- David, California</p>
-          </div>
-        </div>
 
           <hr />
 

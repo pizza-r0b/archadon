@@ -35,18 +35,18 @@ $transitionVal: 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 
 
 .cart-qty {
-  width: 18px;
-  height: 18px;
-  background-color: $first;
+  width: 14px;
+  height: 14px;
+  background-color: $danger;
   border-radius: 25px;
   display: flex;
-  @include font-size(1.4);
+  @include font-size(1);
   position: absolute;
-  right: -13px;
-  top: -10px;
+  left: -5px;
+  top: 6px;
   align-items: center;
   justify-content: center;
-  color: $dark;
+  color: $white;
 }
 
 %inner {
