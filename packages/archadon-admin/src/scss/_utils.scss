@@ -1,0 +1,54 @@
+.text-align-center {
+    text-align: center;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.wrap {
+    max-width: 800px;
+    margin: auto;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+$spacer: 5;
+
+@each $direction in top, left, right, bottom {
+    @for $num from 0 through 100 {
+        .margin--x-#{$num} {
+            margin: 0 #{$spacer * $num}px!important;
+        }
+        .margin--y-#{$num} {
+            margin: #{$spacer * $num}px 0!important;
+        }
+        .margin--#{$direction}-#{$num} {
+            margin-#{$direction}: #{$spacer * $num}px!important;
+        }
+        .padding--#{$direction}-#{$num} {
+            padding-#{$direction}: #{$spacer * $num}px!important;
+        }
+        .padding--x-#{$num} {
+            padding: 0 #{$spacer * $num}px!important;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: UserProfileTable-${self:service}
+  KeySchema:
+    -
+      AttributeName: ItemID
+      KeyType: HASH
+  AttributeDefinitions:
+    -
+      AttributeName: ItemID
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 1
+    WriteCapacityUnits: 1
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY

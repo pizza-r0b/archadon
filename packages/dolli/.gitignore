@@ -1,0 +1,13 @@
+# package directories
+node_modules
+jspm_packages
+CERT.crt
+KEY.key
+secrets-prod.yml
+secrets-dev.yml
+
+# Serverless directories
+.serverless
+deployDev.sh
+*.env
+build

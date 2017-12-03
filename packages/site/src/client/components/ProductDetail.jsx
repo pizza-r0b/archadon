@@ -199,7 +199,13 @@ class ProductDetail extends React.Component {
               </div>
               <div className="product-details-btns">
                 <div>
-                  <AddToCartBtn id={product._id} />
+                  {product.Qty > 0 && <AddToCartBtn id={product._id} />}
+                  {product.Qty === 0 && (
+                    <div>
+                      <p className="strong">This item has been sold.</p>
+                      <Link to="/shop" className="btn btn--primary--inverse margin--top-3">Shop All</Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

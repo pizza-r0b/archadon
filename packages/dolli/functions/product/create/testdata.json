@@ -1,0 +1,13 @@
+{
+  "body": {
+    "Name": "Test Product 3",
+    "Price": 100,
+    "ShortDescription": "This is a short description",
+    "LongDescription": "This is a long description",
+    "Width": 8,
+    "Height": 10.2
+  },
+  "headers": {
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjU5YjQ2NTZiZTRjMjYwNGZjMWY3ZmUyNCIsImlhdCI6MTUwNTU5NTEzMywiZXhwIjoxNTA1NjAyMzMzfQ.Q9CCJvabZl8DKY9OKQTGQUia9WLhdhooDgJUb3c0-5Q"
+  }
+}

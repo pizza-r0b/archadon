@@ -1,0 +1,47 @@
+.edit-form {
+  width: 500px;
+  max-width: 100%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  padding: 10px;
+  z-index: 9999999;
+  box-sizing: border-box;
+
+  form {
+    z-index: 999;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+
+    background: #fff;
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      margin: 10px 0 2px;
+    }
+  }
+  &::before {
+    position: fixed;
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    top: 50%;
+    z-index: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.button-group {
+  margin-top: 10px;
+  button {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}

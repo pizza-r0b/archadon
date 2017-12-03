@@ -1,0 +1,38 @@
+.item-row {
+  margin: 25px 0;
+  border: 1px solid #eee;
+  padding: 5px;
+  box-sizing: border-box;
+  img {
+    max-width: 150px;
+    height: auto;
+    margin-right: 5px;
+  }
+
+  p{
+    margin: 5px 0;
+  }
+
+  button {
+    display: block;
+  }
+}
+
+.img-prev {
+  position: fixed;
+  top: 0;
+  display: flex;
+  overflow: scroll;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  img {
+    flex-grow: 1;
+    max-width: 60%;
+    max-height: auto;
+
+  }
+}

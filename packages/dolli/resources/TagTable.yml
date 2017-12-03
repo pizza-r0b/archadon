@@ -1,0 +1,22 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: TagTable-${self:service}
+  KeySchema:
+    -
+      AttributeName: ItemID
+      KeyType: HASH
+    -
+      AttributeName: Name
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: ItemID
+      AttributeType: S
+    -
+      AttributeName: Name
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 1
+    WriteCapacityUnits: 1
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY

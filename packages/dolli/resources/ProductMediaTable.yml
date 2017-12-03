@@ -1,0 +1,22 @@
+Type: AWS::DynamoDB::Table
+Properties:
+  TableName: ProductMediaTable-${self:service}
+  KeySchema:
+    -
+      AttributeName: ItemID
+      KeyType: HASH
+    -
+      AttributeName: FileName
+      KeyType: RANGE
+  AttributeDefinitions:
+    -
+      AttributeName: ItemID
+      AttributeType: S
+    -
+      AttributeName: FileName
+      AttributeType: S
+  ProvisionedThroughput:
+    ReadCapacityUnits: 5
+    WriteCapacityUnits: 5
+  StreamSpecification:
+    StreamViewType: KEYS_ONLY
