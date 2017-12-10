@@ -24,6 +24,7 @@ import Contact from 'Components/Contact';
 import Collection from 'Components/Collection';
 import Shipping from 'Components/Shipping';
 import AbstractCollection from 'Components/AbstractCollection';
+import PairRoom from 'Components/PairRoom';
 import SignOut from 'Components/SignOut';
 import { Link } from 'react-router-dom';
 
@@ -141,6 +142,7 @@ class App extends Component {
               <Route path="/checkout" component={Checkout} />
               <Route path="/product/:id" component={ProductDetail} />
               <Route path="/order-confirmation" component={OrderConfirmation} />
+              <Route path="/pair-room" component={PairRoom} />
               <Route path="/signout" component={SignOut} />
             </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />

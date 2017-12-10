@@ -8,29 +8,40 @@
     "deploy:dev": "sls deploy --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'",
     "dev:start": "webpack --config ./webpack/dev.js --watch",
     "prod:start": "webpack --config ./webpack/prod.js -p",
-    "deploy:devfunction": "sls deploy function --function updateUserPassword --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
+    "deploy:devfunction": "sls deploy function --function pairRoom --env dev --secrets './secrets-dev.yml' --assetUrl 'https://assets.archadon.com'"
   },
   "dependencies": {
     "algoliasearch": "^3.24.0",
-    "aws-sdk": "^2.125.0",
+    "aws-lambda-multipart-parser": "^0.0.4",
+    "aws-sdk": "^2.32.0",
     "bcrypt-nodejs": "^0.0.3",
+    "busboy": "^0.2.14",
+    "cheerio": "^1.0.0-rc.2",
+    "color-scheme": "^1.0.0",
     "dotenv-webpack": "^1.5.4",
     "express-handlebars": "^3.0.0",
+    "get-image-colors": "^1.8.1",
     "jsonwebtoken": "^7.3.0",
+    "mime": "^2.0.3",
+    "moment": "^2.18.1",
     "mongoose": "^4.11.10",
+    "nearest-color": "^0.4.2",
     "nodemailer": "^4.0.1",
     "nodemailer-express-handlebars": "^2.0.0",
+    "nodemon": "^1.11.0",
     "serverless-plugin-warmup": "^3.3.0-rc.1",
     "serverless-webpack": "^3.1.0",
     "stripe": "^4.19.1",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "devDependencies": {
+    "babel-loader": "^7.1.2",
     "chai": "^3.5.0",
     "raw-loader": "^0.5.1",
     "serverless-webpack": "^3.1.0",
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony-v2.8.22",
-    "uglifyjs-webpack-plugin": "^0.4.6",
+    "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^3.5.6",
     "webpack-plugin-copy": "https://github.com/boazdejong/webpack-plugin-copy.git"
   }

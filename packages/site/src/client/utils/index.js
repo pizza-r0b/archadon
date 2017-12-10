@@ -25,17 +25,14 @@ export function toCurrency(num) {
   });
 }
 
-export function request(method, url, data, headers, meta) {
+export function request(method, url, data, headers = Object.assign({ 'Content-Type': 'application/json; charset=UTF-8' }, headers), meta, doNotStringify) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-    if (headers) {
-      Object.entries(headers).forEach(([header, val]) => {
-        xhr.setRequestHeader(header, val);
-      });
-    }
+    Object.entries(headers).forEach(([header, val]) => {
+      xhr.setRequestHeader(header, val);
+    });
 
     xhr.addEventListener('load', () => {
       const { response, status } = xhr;
@@ -57,8 +54,9 @@ export function request(method, url, data, headers, meta) {
       reject({ response, status });
     });
 
+
     if (data) {
-      xhr.send(JSON.stringify(data));
+      xhr.send(doNotStringify ? data : JSON.stringify(data));
     } else {
       xhr.send();
     }

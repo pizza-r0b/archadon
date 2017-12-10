@@ -65,6 +65,9 @@ const base = extend => {
       filename: '[name].js',
     },
     devtool: 'source-map',
+    stats: {
+      warnings: false,
+    },
     resolve: {
       extensions: ['.js', '.jsx', '.scss'],
       modules: [src, 'node_modules'],

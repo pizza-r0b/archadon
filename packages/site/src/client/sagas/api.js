@@ -34,6 +34,19 @@ export const requestCollection = (ids, name) => request('POST', '/search/batch',
 
 export const getCollectionByName = (collection) => request('POST', '/search/collection', { collection });
 
+export const requestPairedProducts = (filePath, gallery = false, mimeType) => request('POST', url('pair/v1/getItems'), {
+  filePath,
+  gallery,
+  mimeType,
+});
+
+export const getSignedUrl = (fileExt, fileType) => request('POST', url('pair/v1/getSignedUrl'), {
+  fileExt,
+  fileType,
+});
+
+export const uploadToS3 = (blob, putUrl, type) => request('PUT', putUrl, blob, { 'Content-Type': type, 'x-amz-acl': 'public-read' }, null, true);
+
 export const requestPurchase = ((payload: {
   Items: Array<Object>,
   UserID: ?string,

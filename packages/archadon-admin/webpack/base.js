@@ -24,7 +24,7 @@ const base = extend => {
       filename: '[name].js',
     },
     stats: {
-      warnings: false
+      warnings: false,
     },
     devtool: 'source-map',
     resolve: {

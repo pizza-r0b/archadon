@@ -13,6 +13,7 @@ import filters from './filters';
 import ui from './ui';
 import collections from './collections';
 import requests from './requests';
+import pairedProducts from './pairedProducts';
 
 const { ON_NAV_OPEN } = actions;
 
@@ -36,6 +37,7 @@ export default combineReducers({
   filters,
   ui,
   errors,
+  pairedProducts,
   loading,
   products,
   collections,

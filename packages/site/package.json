@@ -43,6 +43,7 @@
     "express": "^4.15.2",
     "history": "^4.6.3",
     "libxmljs": "^0.18.4",
+    "mime-types": "^2.1.17",
     "moment": "^2.18.1",
     "node-fetch": "^1.6.3",
     "react": "^15.4.2",
@@ -65,6 +66,7 @@
     "velocity-animate": "^1.5.0"
   },
   "devDependencies": {
+    "archadon-utils": "^1.0.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-loader": "^6.4.1",

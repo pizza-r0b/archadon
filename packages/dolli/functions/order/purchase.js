@@ -1,24 +1,14 @@
 // import "source-map-support/register"
 import { toPaths } from 'utils/DolliDB/build/main.min.js';
-import algolia from 'algoliasearch';
 import addCors from 'utils/corsRes';
 import _stripe from 'stripe';
 import connect from 'utils/mongoConnect';
+import index from 'utils/algolia';
 import { OrderItem, OrderData } from 'schemas/Order';
 import { ProductItem } from 'schemas/Product';
 import { sendOrderConfirmationEmailToCustomer, sendAdminEmail, sendError } from './sendEmails';
 
 const stripe = _stripe(process.env.STRIPE_SECRET_KEY);
-
-const {
-  ALGOLIA_API_KEY,
-  ALGOLIA_SECRET_KEY,
-} = process.env;
-
-const algoliaClient = algolia(ALGOLIA_API_KEY, ALGOLIA_SECRET_KEY);
-const indexPrefix = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
-const indexName = `${indexPrefix}_Products`;
-const index = algoliaClient.initIndex(indexName);
 
 let processedItems;
 

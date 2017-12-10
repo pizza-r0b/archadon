@@ -30,9 +30,8 @@ const clientConfig = base({
         },
       ]),
       new UglifyJSPlugin({
-        uglifyOptions: {
-          ecma: 5,
-        },
+        parallel: true,
+        cache: true,
       }),
     ],
   },

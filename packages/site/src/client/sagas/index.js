@@ -28,6 +28,8 @@ const {
   PRODUCT_DETAIL_LOADED,
   ON_CLEAR_FILTERS,
   CLEAR_REDIRECT_PATH,
+  REQUEST_PAIR_START,
+  REQUEST_PAIR_END,
   GET_COLLECTION_END,
   GET_COLLECTION_START,
   REQUEST_START,
@@ -57,7 +59,10 @@ import {
   requestProductData,
   requestPurchase,
   getCollectionByName,
+  uploadToS3,
+  getSignedUrl,
   requestUpdateUserData,
+  requestPairedProducts,
 } from './api';
 
 const CART_VAR = 'archadon-cart';
@@ -428,6 +433,24 @@ export function* updateUserPasswordSaga({ payload: { data: payload, id } }) {
   }
 }
 
+export function* pairSaga({ payload }) {
+  yield put(action(SET_LOADING_PAGE, 'pair'));
+  const { blob, ext, mimeType, dataURL } = payload;
+  const { response, status } = yield call(getSignedUrl, ext, mimeType);
+
+  if (status === 200) {
+    const { url, fileName } = response;
+    const { status: s3Status } = yield call(uploadToS3, blob, url, mimeType);
+    if (s3Status === 200) {
+      const { response: pairResponse, status: pairStatus } = yield call(requestPairedProducts, fileName, false, mimeType);
+      if (pairStatus === 200) {
+        yield put(action(REQUEST_PAIR_END, { dataURL, ...pairResponse }));
+      }
+    }
+  }
+  yield put(action(SET_LOADING_PAGE, ''));
+}
+
 export function* loadFavoritesSaga() {
   yield put(action(SET_LOADING_PAGE, 'favorites'));
   const { authToken, ID } = yield select(getAuthData);
@@ -462,6 +485,7 @@ export function* getCollectionSaga({ payload: collection }) {
 export default function* rootSaga() {
   yield [
     takeLatest(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE),
+    takeLatest(REQUEST_PAIR_START, pairSaga),
     takeLatest([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST),
     takeLatest(LOAD_FAVORITES, loadFavoritesSaga),
     takeLatest(LOG_IN, logInSaga),

@@ -88,6 +88,24 @@ functions:
               paths:
                 id: true
 
+# PAIR ROOM PROMO START
+  pairRoom:
+    handler: functions/pairing/index.pair
+    events:
+      - http:
+          path: pair/v1/getItems
+          method: post
+          cors: true
+
+  getSignedUrl:
+    handler: functions/pairing/index.getSignedUrl
+    events:
+      - http:
+          path: pair/v1/getSignedUrl
+          method: post
+          cors: true
+# PAIR ROOM PROMO END
+
   updateUserPassword:
     handler: functions/user/update/updateUserPassword.updateUserPassword
     events:

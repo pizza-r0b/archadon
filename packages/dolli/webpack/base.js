@@ -38,7 +38,7 @@ const base = extend => {
     externals: [nodeExternals()],
     // devtool: 'source-map',
     resolve: {
-      extensions: ['.js'],
+      extensions: ['.js', '.json'],
       modules: [src, 'node_modules'],
       alias: {
         utils: path.resolve(__dirname, '../functions/utils'),

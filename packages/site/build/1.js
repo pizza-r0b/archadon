@@ -1,1 +1,839 @@
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('5e("3q-5d-4r").4d();39.4b=[1];39.47={45:(1b(f,g,h){"2n 2p";27.28(g,"1G",{1k:1s});Z i=h(1);Z j=1e(i);Z k=h(5);Z l=h(38);Z m=1e(l);Z n=h(37);Z o=1e(n);1b 1e(a){1d a&&a.1G?a:{14:a}}1b 36(a){Z b=a.41;Z c=35 0;Z d=35 0;Z e=b===\'/1z\';1m(e){c=j.14.18(o.14,1x)}3U{c=j.14.18(k.3P,{2g:\'/1z\',1c:\'2j--2l--2m 1v--1B-3\'},\'34 3M\');d=j.14.18(\'1h\',{1c:\'1P-32 1r-26 1r-30 1r-2W-2U\'},j.14.18(\'1W\',{1c:\'2s-2S\'},\'3v\'),j.14.18(m.14,1x))}1d j.14.18(\'1h\',{1c:\'2R\'},!e&&j.14.18(\'1h\',{1c:\'1v--1Z-10\'},j.14.18(\'2P\',1x,\'3r 3p!\'),j.14.18(\'1W\',1x,\'2N\\3n 3m 3l 2g 3i 2a 3h 3g.\')),j.14.18(\'1h\',{1c:\'1r-26 1r-3f-4K\'},j.14.18(\'1h\',{1c:\'1P 1r-2K-1\'},d,e&&j.14.18(\'1h\',{1c:\'1v--1Z-5\'},j.14.18(\'2P\',1x,\'4m\\4l 2I 44\'),j.14.18(\'1W\',1x,\'43 2F 2D 2C 1H 2B 2a 2A\')),j.14.18(\'1h\',{1c:\'1P-32 1r-26\'},j.14.18(\'1h\',{1c:\'1P-2B 1r-26 1r-2K-1 1r-30 1r-2W-2U\'},j.14.18(\'1h\',1x,j.14.18(\'1W\',{1c:\'2s-2S\'},\'34 2a 2A\'),j.14.18(\'p\',1x,\'3R 3N 2D. 3J 1T 3H 2x 3E 1U 3C\\3B 3z 3y 3x 2C 1H\\3u 3t 2w 3k 2v 1T 4s. 4o\\4h 4f 4c 1H 2u 3X 1T 3V. 3T 3S 3O 3K 2F 3G 1H 2w 3s 3o 3j 40 2u 3L 42.\')),c)))))}g.14=36}),38:(1b(j,k,l){"2n 2p";27.28(k,"1G",{1k:1s});Z m=l(4);Z n=1e(m);Z o=l(21);Z p=1e(o);Z q=l(6);Z r=1e(q);Z s=l(7);Z t=1e(s);Z u=l(8);Z v=1e(u);Z w=l(10);Z x=1e(w);Z y=l(9);Z z=1e(y);Z A=l(1);Z B=1e(A);Z C=l(3);Z D=l(0);Z E=1e(D);Z F=l(2);Z G=l(5);Z H=l(11);Z I=1e(H);1b 1e(a){1d a&&a.1G?a:{14:a}}Z J=E.14.3w;Z K=/^(([^<>()\\[\\]\\.,;:\\s@\\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$/i;Z L=1b(i){(0,z.14)(L,i);1b L(){Z f;Z g,1j,29;(0,t.14)(19,L);3D(Z h=2r.1D,2q=3I(h),1K=0;1K<h;1K++){2q[1K]=2r[1K]}1d 29=(g=(1j=(0,x.14)(19,(f=L.2y||(0,r.14)(L)).2o.2z(f,[19].3Q(2q))),1j),1j.1a={1g:\'\',1f:\'\',1i:{}},1j.1o=1b(a){Z b=a.2E,1k=b.1k,1u=b.1A;1j.1E((0,p.14)({},1u,1k))},1j.2G=1b(){Z c=[];1m(!K.2H(1j.1a.1g)){c.1J({1g:1s})}1m(!1j.1a.1f){c.1J({1f:1s})}Z d=c.1D===0;1m(!d){1j.1E({1i:c.2e(1b(a,b){1d(0,n.14)({},a,b)},{})})}1d c.1D===0},1j.25=1b(e){e.2J();1j.1E({1i:{}},1b(){1m(!1j.2G())1d;1j.1w.1R(1j.1a.1g,1j.1a.1f)})},g),(0,x.14)(1j,29)}(0,v.14)(L,[{1u:\'24\',1k:1b 24(){Z a={};1m(19.1w.1C){a.2b=1s}1d B.14.18(\'1q\',{1c:\'1q 1v--1Z-0\',2L:19.25},B.14.18(\'1h\',{1c:(0,I.14)(\'1q-2M\',{\'1q-1n\':19.1w.1n})},B.14.18(\'1h\',{1c:\'1q-1N\'},B.14.18(\'1l\',{1o:19.1o,1c:(0,I.14)({\'1l-1M\':19.1a.1g,\'1l-1n\':19.1a.1i.1g}),1A:\'1g\',1k:19.1a.1g,1L:\'2O\'}),B.14.18(\'1S\',{1O:\'1g\'},\'2Q\')),B.14.18(\'1h\',{1c:\'1q-1N\'},B.14.18(\'1l\',{1o:19.1o,1c:(0,I.14)({\'1l-1M\':19.1a.1f,\'1l-1n\':19.1a.1i.1f}),1A:\'1f\',1k:19.1a.1f,1L:\'1f\'}),B.14.18(\'1S\',{1O:\'1f\'},\'2k\'))),B.14.18(\'1h\',{1c:\'1v--1B-3\'},19.1w.1n&&B.14.18(\'p\',{1c:\'1Y-1X--2T 1v--1Z-3 2h-2f\'},19.1w.1n),B.14.18(\'1h\',{1c:\'1P-3A\'},B.14.18(\'2V\',(0,n.14)({},a,{1c:\'2j--2l--2m\'}),a.2b?\'1V 2X\':\'2Y 3F\'))))}}]);1d L}(B.14.2Z);Z M=1b M(c){1d{1R:1b 1R(a,b){c((0,C.31)(J,{1g:a,1f:b}))}}};Z N=1b N(a){1d{1n:a.1i.1R,1C:a.1C.33===\'1R\'}};k.14=(0,F.2t)(N,M)(L)}),37:(1b(k,l,m){"2n 2p";27.28(l,"1G",{1k:1s});Z n=m(15);Z o=1e(n);Z p=m(12);Z q=1e(p);Z r=m(23);Z s=1e(r);Z t=m(13);Z u=1e(t);Z v=m(21);Z w=1e(v);Z x=m(4);Z y=1e(x);Z z=m(6);Z A=1e(z);Z B=m(7);Z C=1e(B);Z D=m(8);Z E=1e(D);Z F=m(10);Z G=1e(F);Z H=m(9);Z I=1e(H);Z J=m(17);Z K=1e(J);Z L=m(1);Z M=1e(L);Z N=m(3);Z O=m(0);Z P=1e(O);Z Q=m(2);Z R=m(5);Z S=m(11);Z T=1e(S);1b 1e(a){1d a&&a.1G?a:{14:a}}Z U=P.14.3W;Z V=/^(([^<>()\\[\\]\\.,;:\\s@\\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$/i;1b 1E(){1d 1b(c){Z d=19;1d 3Y K.14(1b(a,b){d.1E(c,a)})}.3Z(19)}Z W=1b(j){(0,I.14)(W,j);1b W(){Z h=19;(0,C.14)(19,W);Z i=(0,G.14)(19,(W.2y||(0,A.14)(W)).2o(19));i.1a={1g:\'\',1f:\'\',1y:\'\',1i:(0,y.14)({},i.2c),1I:[]};i.2c={1g:2d,1f:2d,1y:2d};i.1F=1E.2o(i);i.1o=1b(a){Z b=a.2E,1k=b.1k,1u=b.1A;i.1E((0,w.14)({},1u,1k))};i.25=1b(){Z g=(0,u.14)(o.14.46(1b 2i(e){Z f;1d o.14.2R(1b 2i$(d){48(1){49(d.4a=d.1t){1p 0:e.2J();f=[];d.1t=4;1d i.1F({1i:{},1I:[]});1p 4:1m(!(i.1a.1f!==i.1a.1y)){d.1t=8;1Q}d.1t=7;1d i.1F({1i:(0,y.14)({},i.1a.1i,{1f:1s})});1p 7:f.1J(\'4e 3a\\\'t 4g.\');1p 8:1m(!(i.1a.1f.3b()===\'\'||i.1a.1y.3b()===\'\'||i.1a.1g===\'\')){d.1t=13;1Q}4i.4j((0,s.14)(i.1a.1i).2e(1b(a,b){Z c=(0,q.14)(b,1),1u=c[0];1m(!i.1a[1u]){a[1u]=1s}1d a},{}));d.1t=12;1d i.1F({1i:(0,s.14)(i.2c).2e(1b(a,b){Z c=(0,q.14)(b,1),1u=c[0];a[1u]=1s;1d a},{})});1p 12:f.1J(\'1V 4k 3c 3d 4n.\');1p 13:1m(V.2H(i.1a.1g)){d.1t=17;1Q}d.1t=16;1d i.1F({1i:(0,y.14)({},i.1a.1i,{1g:1s})});1p 16:f.1J(\'1V 4p a 4q 1g.\');1p 17:1m(!(i.1a.1I.1D!==f.1D)){d.1t=20;1Q}d.1t=20;1d i.1F({1I:f});1p 20:1m(!(f.1D>0)){d.1t=22;1Q}1d d.4t(\'1d\');1p 22:i.1w.1z(i.1a.1g,i.1a.1f);1p 23:1p\'4u\':1d d.4v()}}},2i,h)}));1d 1b(a){1d g.2z(19,2r)}}();1d i}(0,E.14)(W,[{1u:\'24\',1k:1b 24(){Z a={};1m(19.1w.1C){a.2b=1s}1d M.14.18(\'1q\',{1c:\'1q\',2L:19.25},M.14.18(\'1h\',{1c:\'1q-2M\'},M.14.18(\'1h\',{1c:\'1q-1N\'},M.14.18(\'1l\',{1o:19.1o,1c:(0,T.14)({\'1l-1M\':19.1a.1g,\'1l-1n\':19.1a.1i.1g}),1A:\'1g\',1k:19.1a.1g,1L:\'2O\'}),M.14.18(\'1S\',{1O:\'1g\'},\'2Q\')),M.14.18(\'1h\',{1c:\'1q-1N 1v--1B-3\'},M.14.18(\'1l\',{1c:(0,T.14)({\'1l-1M\':19.1a.1f,\'1l-1n\':19.1a.1i.1f}),1o:19.1o,1A:\'1f\',1k:19.1a.1f,1L:\'1f\'}),M.14.18(\'1S\',{1O:\'1f\'},\'2k\')),M.14.18(\'1h\',{1c:\'1q-1N 1v--1B-3\'},M.14.18(\'1l\',{1c:(0,T.14)({\'1l-1M\':19.1a.1y,\'1l-1n\':19.1a.1i.1f}),1o:19.1o,1A:\'1y\',1k:19.1a.1y,1L:\'1f\'}),M.14.18(\'1S\',{1O:\'1y\'},\'4w 2k\'))),M.14.18(\'1h\',1x,(19.1w.1n||19.1a.1I.1D>0)&&M.14.18(\'p\',{1c:\'1Y-1X--2T 2h-2f 1v--1B-3\'},19.1w.1n||19.1a.1I.4x(\' \')),M.14.18(\'2V\',(0,y.14)({},a,{1c:\'2j--2l--2m 1v--1B-3 4y-4z\'}),19.1w.1C?\'1V 2X\':\'2Y 4A\')),M.14.18(\'p\',{1c:\'2h-2f 1Y-1X--4B 1v--1B-3\'},M.14.18(\'4C\',{1c:\'1Y-1X--4D\'},\'4E 4F:\'),\' 4G 4H a 1f 4I a 4J 1H 3e 4L 4M 4N 4O 4P 4Q 1f 1H 4R. 2N 3e 2I a 4S 1f 4T 4U 4V (4W, 4X, 4Y, 4Z). 50 3a\\\'t 51 2g 52 3d 1T 53 - 54 55 56 2v 1U 57 58 1U 59 2x 5a 1U 3c a 5b 5c.\'))}}]);1d W}(M.14.2Z);Z X=1b X(c){1d{1z:1b 1z(a,b){c((0,N.31)(U,{1g:a,1f:b}))}}};Z Y=1b Y(a){1d{1n:a.1i.1z,1C:a.1C.33===\'1z\'}};l.14=(0,Q.2t)(Y,X)(W)})};',62,325,'|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||var|||||default||||createElement|this|state|function|className|return|_interopRequireDefault|password|email|div|errors|_this|value|input|if|error|onChange|case|form|flex|true|next|key|margin|props|null|confirmPassword|signup|name|top|loading|length|setState|_setState|__esModule|you|errorMessage|push|_key|type|filled|component|htmlFor|signin|break|login|label|your|them|Please|h2|color|font|bottom|||||render|submit|parent|Object|defineProperty|_ret|an|disabled|initialErrorState|false|reduce|caps|to|small|_callee|btn|Password|primary|inverse|use|call|strict|args|arguments|underline|connect|or|of|the|and|__proto__|apply|account|create|when|easier|currentTarget|is|isValid|test|be|preventDefault|grow|onSubmit|group|It|text|h1|Email|wrap|header|danger|between|button|justify|Wait|Sign|Component|col|action|section|page|Create|void|SignInForm|97|94|exports|don|trim|in|all|should|align|friend|old|see|promo|rug|nice|always|u2019s|awesome|back|source|Welcome|occasional|found|u2019ve|Login|LOG_IN|checkout|up|speed|btns|u2014and|later|for|view|In|send|faves|Array|Save|do|cool|Account|shopping|will|Link|concat|Make|we|What|else|data|SIGN_UP|sell|new|bind|code|path|update|Shopping|sheepish|87|mark|modules|while|switch|prev|ids|spam|install|Passwords|never|match|u2019ll|console|log|fill|u2019t|Don|fields|We|enter|valid|support|dreams|abrupt|end|stop|Confirm|join|full|width|Up|lighter|span|light|Pro|Tip|When|creating|on|website|center|make|it|unique|from|any|other|have|complex|utilizing|different|characters|uppercase|lowercase|numbers|symbols|You|need|remember|passwords|just|keep|track|by|writing|down|storing|secure|location|map|require'.split('|'),0,{}))
+require("source-map-support").install();
+exports.ids = [1];
+exports.modules = {
+
+/***/ 674:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.observer = undefined;
+
+var _typeof2 = __webpack_require__(176);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _promise = __webpack_require__(42);
+
+var _promise2 = _interopRequireDefault(_promise);
+
+__webpack_require__(676);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var options = {
+  root: null,
+  rootMargin: '150px 0px',
+  threshold: 0.01
+};
+
+var webpSupport = void 0;
+
+function loadImage(src) {
+  return new _promise2.default(function (resolve, reject) {
+    var img = new Image();
+    img.addEventListener('load', resolve);
+    img.addEventListener('error', reject);
+    img.src = src;
+  });
+}
+
+//          const { webpsrcset, src, fallbacksrc, srcset } = child.dataset;
+
+function intersectionCb(entries, observer) {
+  var i = entries.length;
+
+  var _loop = function _loop() {
+    var entry = entries[i];
+    var node = entry.target;
+    if (entry.intersectionRatio > 0) {
+      if (!observer) return {
+          v: void 0
+        };
+      observer.unobserve(entry.target);
+
+      var _node$dataset = node.dataset,
+          webpsrcset = _node$dataset.webpsrcset,
+          src = _node$dataset.src,
+          fallbacksrc = _node$dataset.fallbacksrc,
+          srcset = _node$dataset.srcset;
+
+
+      if (src) {
+        loadImage(node.dataset.src).then(function () {
+          node.src = node.dataset.src;
+        }).catch(function () {
+          // noop
+        });
+      } else if (srcset || webpsrcset) {
+        node.srcset = webpSupport && webpsrcset ? webpsrcset : srcset;
+      }
+    }
+  };
+
+  for (; i--;) {
+    var _ret = _loop();
+
+    if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+  }
+}
+
+var observer = exports.observer = new IntersectionObserver(intersectionCb, options);
+
+function observe(node) {
+  if (webpSupport === void 0) {
+    checkWebP().then(function (isSupported) {
+      webpSupport = isSupported;
+      observer.observe(node);
+    });
+  } else {
+    observer.observe(node);
+  }
+}
+
+function checkWebP() {
+  var kTestImages = {
+    lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+    alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+    animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA'
+  };
+
+  return new _promise2.default(function (resolve) {
+    var img = new Image();
+    img.onload = function () {
+      var result = img.width > 0 && img.height > 0;
+      resolve(result);
+    };
+    img.onerror = function () {
+      resolve(false);
+    };
+    img.src = 'data:image/webp;base64,' + kTestImages.lossy;
+  });
+}
+
+var _default = observe;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(options, 'options', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(webpSupport, 'webpSupport', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(loadImage, 'loadImage', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(intersectionCb, 'intersectionCb', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(observer, 'observer', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(observe, 'observe', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(checkWebP, 'checkWebP', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/realseanp1/Projects/archadon/packages/archadon-utils/src/LazyLoad/observer.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ 676:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright 2016 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function (window, document) {
+  'use strict';
+
+  // Exits early if all IntersectionObserver and IntersectionObserverEntry
+  // features are natively supported.
+
+  if ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+
+    // Minimal polyfill for Edge 15's lack of `isIntersecting`
+    // See: https://github.com/w3c/IntersectionObserver/issues/211
+    if (!('isIntersecting' in window.IntersectionObserverEntry.prototype)) {
+      Object.defineProperty(window.IntersectionObserverEntry.prototype, 'isIntersecting', {
+        get: function get() {
+          return this.intersectionRatio > 0;
+        }
+      });
+    }
+    return;
+  }
+
+  /**
+   * An IntersectionObserver registry. This registry exists to hold a strong
+   * reference to IntersectionObserver instances currently observering a target
+   * element. Without this registry, instances without another reference may be
+   * garbage collected.
+   */
+  var registry = [];
+
+  /**
+   * Creates the global IntersectionObserverEntry constructor.
+   * https://w3c.github.io/IntersectionObserver/#intersection-observer-entry
+   * @param {Object} entry A dictionary of instance properties.
+   * @constructor
+   */
+  function IntersectionObserverEntry(entry) {
+    this.time = entry.time;
+    this.target = entry.target;
+    this.rootBounds = entry.rootBounds;
+    this.boundingClientRect = entry.boundingClientRect;
+    this.intersectionRect = entry.intersectionRect || getEmptyRect();
+    this.isIntersecting = !!entry.intersectionRect;
+
+    // Calculates the intersection ratio.
+    var targetRect = this.boundingClientRect;
+    var targetArea = targetRect.width * targetRect.height;
+    var intersectionRect = this.intersectionRect;
+    var intersectionArea = intersectionRect.width * intersectionRect.height;
+
+    // Sets intersection ratio.
+    if (targetArea) {
+      this.intersectionRatio = intersectionArea / targetArea;
+    } else {
+      // If area is zero and is intersecting, sets to 1, otherwise to 0
+      this.intersectionRatio = this.isIntersecting ? 1 : 0;
+    }
+  }
+
+  /**
+   * Creates the global IntersectionObserver constructor.
+   * https://w3c.github.io/IntersectionObserver/#intersection-observer-interface
+   * @param {Function} callback The function to be invoked after intersection
+   *     changes have queued. The function is not invoked if the queue has
+   *     been emptied by calling the `takeRecords` method.
+   * @param {Object=} opt_options Optional configuration options.
+   * @constructor
+   */
+  function IntersectionObserver(callback, opt_options) {
+
+    var options = opt_options || {};
+
+    if (typeof callback != 'function') {
+      throw new Error('callback must be a function');
+    }
+
+    if (options.root && options.root.nodeType != 1) {
+      throw new Error('root must be an Element');
+    }
+
+    // Binds and throttles `this._checkForIntersections`.
+    this._checkForIntersections = throttle(this._checkForIntersections.bind(this), this.THROTTLE_TIMEOUT);
+
+    // Private properties.
+    this._callback = callback;
+    this._observationTargets = [];
+    this._queuedEntries = [];
+    this._rootMarginValues = this._parseRootMargin(options.rootMargin);
+
+    // Public properties.
+    this.thresholds = this._initThresholds(options.threshold);
+    this.root = options.root || null;
+    this.rootMargin = this._rootMarginValues.map(function (margin) {
+      return margin.value + margin.unit;
+    }).join(' ');
+  }
+
+  /**
+   * The minimum interval within which the document will be checked for
+   * intersection changes.
+   */
+  IntersectionObserver.prototype.THROTTLE_TIMEOUT = 100;
+
+  /**
+   * The frequency in which the polyfill polls for intersection changes.
+   * this can be updated on a per instance basis and must be set prior to
+   * calling `observe` on the first target.
+   */
+  IntersectionObserver.prototype.POLL_INTERVAL = null;
+
+  /**
+   * Starts observing a target element for intersection changes based on
+   * the thresholds values.
+   * @param {Element} target The DOM element to observe.
+   */
+  IntersectionObserver.prototype.observe = function (target) {
+    // If the target is already being observed, do nothing.
+    if (this._observationTargets.some(function (item) {
+      return item.element == target;
+    })) {
+      return;
+    }
+
+    if (!(target && target.nodeType == 1)) {
+      throw new Error('target must be an Element');
+    }
+
+    this._registerInstance();
+    this._observationTargets.push({ element: target, entry: null });
+    this._monitorIntersections();
+    this._checkForIntersections();
+  };
+
+  /**
+   * Stops observing a target element for intersection changes.
+   * @param {Element} target The DOM element to observe.
+   */
+  IntersectionObserver.prototype.unobserve = function (target) {
+    this._observationTargets = this._observationTargets.filter(function (item) {
+
+      return item.element != target;
+    });
+    if (!this._observationTargets.length) {
+      this._unmonitorIntersections();
+      this._unregisterInstance();
+    }
+  };
+
+  /**
+   * Stops observing all target elements for intersection changes.
+   */
+  IntersectionObserver.prototype.disconnect = function () {
+    this._observationTargets = [];
+    this._unmonitorIntersections();
+    this._unregisterInstance();
+  };
+
+  /**
+   * Returns any queue entries that have not yet been reported to the
+   * callback and clears the queue. This can be used in conjunction with the
+   * callback to obtain the absolute most up-to-date intersection information.
+   * @return {Array} The currently queued entries.
+   */
+  IntersectionObserver.prototype.takeRecords = function () {
+    var records = this._queuedEntries.slice();
+    this._queuedEntries = [];
+    return records;
+  };
+
+  /**
+   * Accepts the threshold value from the user configuration object and
+   * returns a sorted array of unique threshold values. If a value is not
+   * between 0 and 1 and error is thrown.
+   * @private
+   * @param {Array|number=} opt_threshold An optional threshold value or
+   *     a list of threshold values, defaulting to [0].
+   * @return {Array} A sorted list of unique and valid threshold values.
+   */
+  IntersectionObserver.prototype._initThresholds = function (opt_threshold) {
+    var threshold = opt_threshold || [0];
+    if (!Array.isArray(threshold)) threshold = [threshold];
+
+    return threshold.sort().filter(function (t, i, a) {
+      if (typeof t != 'number' || isNaN(t) || t < 0 || t > 1) {
+        throw new Error('threshold must be a number between 0 and 1 inclusively');
+      }
+      return t !== a[i - 1];
+    });
+  };
+
+  /**
+   * Accepts the rootMargin value from the user configuration object
+   * and returns an array of the four margin values as an object containing
+   * the value and unit properties. If any of the values are not properly
+   * formatted or use a unit other than px or %, and error is thrown.
+   * @private
+   * @param {string=} opt_rootMargin An optional rootMargin value,
+   *     defaulting to '0px'.
+   * @return {Array<Object>} An array of margin objects with the keys
+   *     value and unit.
+   */
+  IntersectionObserver.prototype._parseRootMargin = function (opt_rootMargin) {
+    var marginString = opt_rootMargin || '0px';
+    var margins = marginString.split(/\s+/).map(function (margin) {
+      var parts = /^(-?\d*\.?\d+)(px|%)$/.exec(margin);
+      if (!parts) {
+        throw new Error('rootMargin must be specified in pixels or percent');
+      }
+      return { value: parseFloat(parts[1]), unit: parts[2] };
+    });
+
+    // Handles shorthand.
+    margins[1] = margins[1] || margins[0];
+    margins[2] = margins[2] || margins[0];
+    margins[3] = margins[3] || margins[1];
+
+    return margins;
+  };
+
+  /**
+   * Starts polling for intersection changes if the polling is not already
+   * happening, and if the page's visibilty state is visible.
+   * @private
+   */
+  IntersectionObserver.prototype._monitorIntersections = function () {
+    if (!this._monitoringIntersections) {
+      this._monitoringIntersections = true;
+
+      // If a poll interval is set, use polling instead of listening to
+      // resize and scroll events or DOM mutations.
+      if (this.POLL_INTERVAL) {
+        this._monitoringInterval = setInterval(this._checkForIntersections, this.POLL_INTERVAL);
+      } else {
+        addEvent(window, 'resize', this._checkForIntersections, true);
+        addEvent(document, 'scroll', this._checkForIntersections, true);
+
+        if ('MutationObserver' in window) {
+          this._domObserver = new MutationObserver(this._checkForIntersections);
+          this._domObserver.observe(document, {
+            attributes: true,
+            childList: true,
+            characterData: true,
+            subtree: true
+          });
+        }
+      }
+    }
+  };
+
+  /**
+   * Stops polling for intersection changes.
+   * @private
+   */
+  IntersectionObserver.prototype._unmonitorIntersections = function () {
+    if (this._monitoringIntersections) {
+      this._monitoringIntersections = false;
+
+      clearInterval(this._monitoringInterval);
+      this._monitoringInterval = null;
+
+      removeEvent(window, 'resize', this._checkForIntersections, true);
+      removeEvent(document, 'scroll', this._checkForIntersections, true);
+
+      if (this._domObserver) {
+        this._domObserver.disconnect();
+        this._domObserver = null;
+      }
+    }
+  };
+
+  /**
+   * Scans each observation target for intersection changes and adds them
+   * to the internal entries queue. If new entries are found, it
+   * schedules the callback to be invoked.
+   * @private
+   */
+  IntersectionObserver.prototype._checkForIntersections = function () {
+    var rootIsInDom = this._rootIsInDom();
+    var rootRect = rootIsInDom ? this._getRootRect() : getEmptyRect();
+
+    this._observationTargets.forEach(function (item) {
+      var target = item.element;
+      var targetRect = getBoundingClientRect(target);
+      var rootContainsTarget = this._rootContainsTarget(target);
+      var oldEntry = item.entry;
+      var intersectionRect = rootIsInDom && rootContainsTarget && this._computeTargetAndRootIntersection(target, rootRect);
+
+      var newEntry = item.entry = new IntersectionObserverEntry({
+        time: now(),
+        target: target,
+        boundingClientRect: targetRect,
+        rootBounds: rootRect,
+        intersectionRect: intersectionRect
+      });
+
+      if (!oldEntry) {
+        this._queuedEntries.push(newEntry);
+      } else if (rootIsInDom && rootContainsTarget) {
+        // If the new entry intersection ratio has crossed any of the
+        // thresholds, add a new entry.
+        if (this._hasCrossedThreshold(oldEntry, newEntry)) {
+          this._queuedEntries.push(newEntry);
+        }
+      } else {
+        // If the root is not in the DOM or target is not contained within
+        // root but the previous entry for this target had an intersection,
+        // add a new record indicating removal.
+        if (oldEntry && oldEntry.isIntersecting) {
+          this._queuedEntries.push(newEntry);
+        }
+      }
+    }, this);
+
+    if (this._queuedEntries.length) {
+      this._callback(this.takeRecords(), this);
+    }
+  };
+
+  /**
+   * Accepts a target and root rect computes the intersection between then
+   * following the algorithm in the spec.
+   * TODO(philipwalton): at this time clip-path is not considered.
+   * https://w3c.github.io/IntersectionObserver/#calculate-intersection-rect-algo
+   * @param {Element} target The target DOM element
+   * @param {Object} rootRect The bounding rect of the root after being
+   *     expanded by the rootMargin value.
+   * @return {?Object} The final intersection rect object or undefined if no
+   *     intersection is found.
+   * @private
+   */
+  IntersectionObserver.prototype._computeTargetAndRootIntersection = function (target, rootRect) {
+
+    // If the element isn't displayed, an intersection can't happen.
+    if (window.getComputedStyle(target).display == 'none') return;
+
+    var targetRect = getBoundingClientRect(target);
+    var intersectionRect = targetRect;
+    var parent = getParentNode(target);
+    var atRoot = false;
+
+    while (!atRoot) {
+      var parentRect = null;
+      var parentComputedStyle = parent.nodeType == 1 ? window.getComputedStyle(parent) : {};
+
+      // If the parent isn't displayed, an intersection can't happen.
+      if (parentComputedStyle.display == 'none') return;
+
+      if (parent == this.root || parent == document) {
+        atRoot = true;
+        parentRect = rootRect;
+      } else {
+        // If the element has a non-visible overflow, and it's not the <body>
+        // or <html> element, update the intersection rect.
+        // Note: <body> and <html> cannot be clipped to a rect that's not also
+        // the document rect, so no need to compute a new intersection.
+        if (parent != document.body && parent != document.documentElement && parentComputedStyle.overflow != 'visible') {
+          parentRect = getBoundingClientRect(parent);
+        }
+      }
+
+      // If either of the above conditionals set a new parentRect,
+      // calculate new intersection data.
+      if (parentRect) {
+        intersectionRect = computeRectIntersection(parentRect, intersectionRect);
+
+        if (!intersectionRect) break;
+      }
+      parent = getParentNode(parent);
+    }
+    return intersectionRect;
+  };
+
+  /**
+   * Returns the root rect after being expanded by the rootMargin value.
+   * @return {Object} The expanded root rect.
+   * @private
+   */
+  IntersectionObserver.prototype._getRootRect = function () {
+    var rootRect;
+    if (this.root) {
+      rootRect = getBoundingClientRect(this.root);
+    } else {
+      // Use <html>/<body> instead of window since scroll bars affect size.
+      var html = document.documentElement;
+      var body = document.body;
+      rootRect = {
+        top: 0,
+        left: 0,
+        right: html.clientWidth || body.clientWidth,
+        width: html.clientWidth || body.clientWidth,
+        bottom: html.clientHeight || body.clientHeight,
+        height: html.clientHeight || body.clientHeight
+      };
+    }
+    return this._expandRectByRootMargin(rootRect);
+  };
+
+  /**
+   * Accepts a rect and expands it by the rootMargin value.
+   * @param {Object} rect The rect object to expand.
+   * @return {Object} The expanded rect.
+   * @private
+   */
+  IntersectionObserver.prototype._expandRectByRootMargin = function (rect) {
+    var margins = this._rootMarginValues.map(function (margin, i) {
+      return margin.unit == 'px' ? margin.value : margin.value * (i % 2 ? rect.width : rect.height) / 100;
+    });
+    var newRect = {
+      top: rect.top - margins[0],
+      right: rect.right + margins[1],
+      bottom: rect.bottom + margins[2],
+      left: rect.left - margins[3]
+    };
+    newRect.width = newRect.right - newRect.left;
+    newRect.height = newRect.bottom - newRect.top;
+
+    return newRect;
+  };
+
+  /**
+   * Accepts an old and new entry and returns true if at least one of the
+   * threshold values has been crossed.
+   * @param {?IntersectionObserverEntry} oldEntry The previous entry for a
+   *    particular target element or null if no previous entry exists.
+   * @param {IntersectionObserverEntry} newEntry The current entry for a
+   *    particular target element.
+   * @return {boolean} Returns true if a any threshold has been crossed.
+   * @private
+   */
+  IntersectionObserver.prototype._hasCrossedThreshold = function (oldEntry, newEntry) {
+
+    // To make comparing easier, an entry that has a ratio of 0
+    // but does not actually intersect is given a value of -1
+    var oldRatio = oldEntry && oldEntry.isIntersecting ? oldEntry.intersectionRatio || 0 : -1;
+    var newRatio = newEntry.isIntersecting ? newEntry.intersectionRatio || 0 : -1;
+
+    // Ignore unchanged ratios
+    if (oldRatio === newRatio) return;
+
+    for (var i = 0; i < this.thresholds.length; i++) {
+      var threshold = this.thresholds[i];
+
+      // Return true if an entry matches a threshold or if the new ratio
+      // and the old ratio are on the opposite sides of a threshold.
+      if (threshold == oldRatio || threshold == newRatio || threshold < oldRatio !== threshold < newRatio) {
+        return true;
+      }
+    }
+  };
+
+  /**
+   * Returns whether or not the root element is an element and is in the DOM.
+   * @return {boolean} True if the root element is an element and is in the DOM.
+   * @private
+   */
+  IntersectionObserver.prototype._rootIsInDom = function () {
+    return !this.root || containsDeep(document, this.root);
+  };
+
+  /**
+   * Returns whether or not the target element is a child of root.
+   * @param {Element} target The target element to check.
+   * @return {boolean} True if the target element is a child of root.
+   * @private
+   */
+  IntersectionObserver.prototype._rootContainsTarget = function (target) {
+    return containsDeep(this.root || document, target);
+  };
+
+  /**
+   * Adds the instance to the global IntersectionObserver registry if it isn't
+   * already present.
+   * @private
+   */
+  IntersectionObserver.prototype._registerInstance = function () {
+    if (registry.indexOf(this) < 0) {
+      registry.push(this);
+    }
+  };
+
+  /**
+   * Removes the instance from the global IntersectionObserver registry.
+   * @private
+   */
+  IntersectionObserver.prototype._unregisterInstance = function () {
+    var index = registry.indexOf(this);
+    if (index != -1) registry.splice(index, 1);
+  };
+
+  /**
+   * Returns the result of the performance.now() method or null in browsers
+   * that don't support the API.
+   * @return {number} The elapsed time since the page was requested.
+   */
+  function now() {
+    return window.performance && performance.now && performance.now();
+  }
+
+  /**
+   * Throttles a function and delays its executiong, so it's only called at most
+   * once within a given time period.
+   * @param {Function} fn The function to throttle.
+   * @param {number} timeout The amount of time that must pass before the
+   *     function can be called again.
+   * @return {Function} The throttled function.
+   */
+  function throttle(fn, timeout) {
+    var timer = null;
+    return function () {
+      if (!timer) {
+        timer = setTimeout(function () {
+          fn();
+          timer = null;
+        }, timeout);
+      }
+    };
+  }
+
+  /**
+   * Adds an event handler to a DOM node ensuring cross-browser compatibility.
+   * @param {Node} node The DOM node to add the event handler to.
+   * @param {string} event The event name.
+   * @param {Function} fn The event handler to add.
+   * @param {boolean} opt_useCapture Optionally adds the even to the capture
+   *     phase. Note: this only works in modern browsers.
+   */
+  function addEvent(node, event, fn, opt_useCapture) {
+    if (typeof node.addEventListener == 'function') {
+      node.addEventListener(event, fn, opt_useCapture || false);
+    } else if (typeof node.attachEvent == 'function') {
+      node.attachEvent('on' + event, fn);
+    }
+  }
+
+  /**
+   * Removes a previously added event handler from a DOM node.
+   * @param {Node} node The DOM node to remove the event handler from.
+   * @param {string} event The event name.
+   * @param {Function} fn The event handler to remove.
+   * @param {boolean} opt_useCapture If the event handler was added with this
+   *     flag set to true, it should be set to true here in order to remove it.
+   */
+  function removeEvent(node, event, fn, opt_useCapture) {
+    if (typeof node.removeEventListener == 'function') {
+      node.removeEventListener(event, fn, opt_useCapture || false);
+    } else if (typeof node.detatchEvent == 'function') {
+      node.detatchEvent('on' + event, fn);
+    }
+  }
+
+  /**
+   * Returns the intersection between two rect objects.
+   * @param {Object} rect1 The first rect.
+   * @param {Object} rect2 The second rect.
+   * @return {?Object} The intersection rect or undefined if no intersection
+   *     is found.
+   */
+  function computeRectIntersection(rect1, rect2) {
+    var top = Math.max(rect1.top, rect2.top);
+    var bottom = Math.min(rect1.bottom, rect2.bottom);
+    var left = Math.max(rect1.left, rect2.left);
+    var right = Math.min(rect1.right, rect2.right);
+    var width = right - left;
+    var height = bottom - top;
+
+    return width >= 0 && height >= 0 && {
+      top: top,
+      bottom: bottom,
+      left: left,
+      right: right,
+      width: width,
+      height: height
+    };
+  }
+
+  /**
+   * Shims the native getBoundingClientRect for compatibility with older IE.
+   * @param {Element} el The element whose bounding rect to get.
+   * @return {Object} The (possibly shimmed) rect of the element.
+   */
+  function getBoundingClientRect(el) {
+    var rect;
+
+    try {
+      rect = el.getBoundingClientRect();
+    } catch (err) {
+      // Ignore Windows 7 IE11 "Unspecified error"
+      // https://github.com/w3c/IntersectionObserver/pull/205
+    }
+
+    if (!rect) return getEmptyRect();
+
+    // Older IE
+    if (!(rect.width && rect.height)) {
+      rect = {
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        left: rect.left,
+        width: rect.right - rect.left,
+        height: rect.bottom - rect.top
+      };
+    }
+    return rect;
+  }
+
+  /**
+   * Returns an empty rect object. An empty rect is returned when an element
+   * is not in the DOM.
+   * @return {Object} The empty rect.
+   */
+  function getEmptyRect() {
+    return {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      width: 0,
+      height: 0
+    };
+  }
+
+  /**
+   * Checks to see if a parent element contains a child elemnt (including inside
+   * shadow DOM).
+   * @param {Node} parent The parent element.
+   * @param {Node} child The child element.
+   * @return {boolean} True if the parent node contains the child node.
+   */
+  function containsDeep(parent, child) {
+    var node = child;
+    while (node) {
+      if (node == parent) return true;
+
+      node = getParentNode(node);
+    }
+    return false;
+  }
+
+  /**
+   * Gets the parent node of an element or its host element if the parent node
+   * is a shadow root.
+   * @param {Node} node The node whose parent to get.
+   * @return {Node|null} The parent node or null if no parent exists.
+   */
+  function getParentNode(node) {
+    var parent = node.parentNode;
+
+    if (parent && parent.nodeType == 11 && parent.host) {
+      // If the parent is a shadow root, return the host element.
+      return parent.host;
+    }
+    return parent;
+  }
+
+  // Exposes the constructors globally.
+  window.IntersectionObserver = IntersectionObserver;
+  window.IntersectionObserverEntry = IntersectionObserverEntry;
+})(window, document);
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+}();
+
+;
+
+/***/ })
+
+};;
+//# sourceMappingURL=1.js.map
