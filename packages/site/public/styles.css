@@ -6687,6 +6687,28 @@ img {
     margin-left: 0;
     margin-right: 0; } }
 
+.color-scheme-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+
+.color-scheme-box {
+  width: 50px;
+  height: 50px; }
+
+.pair-image-wrap img {
+  width: 100%;
+  max-width: 450px;
+  height: auto; }
+
+.pair-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 650px; }
+
 .flex-grow-0 {
   flex-grow: 0; }
 
@@ -7348,7 +7370,10 @@ a.link--gold, .link--gold {
       grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 483px) {
     .product-list-wrap, .product-list-wrap--5 {
-      grid-template-columns: repeat(2, 1fr); } }
+      grid-template-columns: repeat(2, 1fr); }
+      .product-list-wrap .product-tile, .product-list-wrap--5 .product-tile {
+        margin: 10px 0;
+        min-height: 300px; } }
   .product-list-wrap--5 {
     grid-template-columns: repeat(5, 1fr); }
     @media (max-width: 1000px) {
@@ -7370,7 +7395,8 @@ a.link--gold, .link--gold {
 .product-tile {
   display: flex;
   flex-direction: column;
-  margin: 50px 0; }
+  margin: 50px 0;
+  min-height: 380px; }
   .product-tile-title {
     font-size: 14px;
     font-size: 1.4rem; }
@@ -10176,5 +10202,39 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 @media print {
   .hidden-print {
     display: none !important; } }
+.drop-it-wrap {
+  width: 100%;
+  border: 5px dashed #ececec;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; }
+  .drop-it-wrap .loader {
+    display: none; }
+  .drop-it-wrap.uploading .loader {
+    display: block; }
+  .drop-it-wrap.uploading .default {
+    display: none; }
+  .drop-it-wrap.active {
+    border-color: blue; }
+  .drop-it-wrap:hover {
+    border: 5px dashed lightgray; }
+
+.drop-it-input {
+  position: absolute;
+  top: -99999999px; }
+
+@keyframes disco {
+  0% {
+    background: blue; }
+  100% {
+    background: red; } }
+
+.batch {
+  cursor: crosshair;
+  background: #ffffff; }
+  .batch.uploading {
+    animation: disco .1s infinite alternate; }
 
 /*# sourceMappingURL=styles.css.map*/
