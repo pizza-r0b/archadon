@@ -290,7 +290,8 @@ var _default = (0, _Utils.keyMirror)({
   GET_USER_DATA_START: null,
   GET_USER_DATA_END: null,
   REQUEST_PAIR_START: null,
-  REQUEST_PAIR_END: null
+  REQUEST_PAIR_END: null,
+  RESET_PAIR: null
 });
 
 exports.default = _default;
@@ -33904,14 +33905,14 @@ var BatchDropZone = function (_React$Component) {
       );
     }
 
-    var fileInputAttrs = {
+    var fileInputAttrs = (0, _extends3.default)({
       ref: function ref(c) {
         _this9.fileInput = c;
       },
       type: 'file',
       onChange: this.handleFilesFromInput,
       style: { position: 'absolute', left: -99999999 }
-    };
+    }, this.props.fileInputProps);
 
     if (!this.props.single) {
       fileInputAttrs.multiple = true;
@@ -33957,7 +33958,9 @@ BatchDropZone.propTypes = {
   copy: _propTypes2.default.string,
 
   // additional classes that will be added to the drop zone wrapper
-  className: _propTypes2.default.string
+  className: _propTypes2.default.string,
+
+  fileInputProps: _propTypes2.default.object
 };
 var _default = BatchDropZone;
 exports.default = _default;
@@ -38221,7 +38224,8 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var REQUEST_PAIR_START = _Actions2.default.REQUEST_PAIR_START;
+var REQUEST_PAIR_START = _Actions2.default.REQUEST_PAIR_START,
+    RESET_PAIR = _Actions2.default.RESET_PAIR;
 
 
 var dataURItoBlob = function dataURItoBlob(dataURI, type) {
@@ -38239,16 +38243,7 @@ var dataURItoBlob = function dataURItoBlob(dataURI, type) {
 
 var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-function getMimeType(encoded) {
-  var result = null;
-  var m = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
-
-  if (m && m.length) {
-    result = m[1];
-  }
-
-  return result;
-}
+var TYPE_WHITE_LIST = ['image/jpeg', 'image/png', 'image/jpeg', 'image/gif'];
 
 var PairRoom = function (_React$Component) {
   (0, _inherits3.default)(PairRoom, _React$Component);
@@ -38270,15 +38265,23 @@ var PairRoom = function (_React$Component) {
       var _this2;
 
       return (_this2 = _this).__onChange__REACT_HOT_LOADER__.apply(_this2, arguments);
-    }, _this.isValid = function () {
+    }, _this.reset = function () {
       var _this3;
 
-      return (_this3 = _this).__isValid__REACT_HOT_LOADER__.apply(_this3, arguments);
+      return (_this3 = _this).__reset__REACT_HOT_LOADER__.apply(_this3, arguments);
+    }, _this.isValid = function () {
+      var _this4;
+
+      return (_this4 = _this).__isValid__REACT_HOT_LOADER__.apply(_this4, arguments);
     }, _this.receiveFiles = _this._receiveFiles.bind(_this), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   PairRoom.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
     return this.__isValid__REACT_HOT_LOADER__.apply(this, arguments);
+  };
+
+  PairRoom.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    return this.__reset__REACT_HOT_LOADER__.apply(this, arguments);
   };
 
   PairRoom.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__() {
@@ -38289,21 +38292,31 @@ var PairRoom = function (_React$Component) {
     var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(_ref2) {
       var file = _ref2[0];
 
-      var _ref3, dataURL, mimeType, ext, blob;
+      var mimeType, _ref3, dataURL, ext, blob;
 
       return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              mimeType = file.type;
+
+              if (TYPE_WHITE_LIST.includes(mimeType)) {
+                _context.next = 4;
+                break;
+              }
+
+              this.setState({ error: 'Please upload and .jpg or .png file' });
+              return _context.abrupt('return');
+
+            case 4:
+              _context.next = 6;
               return (0, _archadonUtils.readAsBase64)(file);
 
-            case 2:
+            case 6:
               _ref3 = _context.sent;
               dataURL = _ref3.dataURL;
 
               this.setState({ dataURL: dataURL });
-              mimeType = getMimeType(dataURL);
               ext = _mimeTypes2.default.extension(mimeType);
               blob = dataURItoBlob(dataURL, mimeType);
 
@@ -38314,7 +38327,7 @@ var PairRoom = function (_React$Component) {
                 dataURL: dataURL
               });
 
-            case 9:
+            case 12:
             case 'end':
               return _context.stop();
           }
@@ -38337,6 +38350,11 @@ var PairRoom = function (_React$Component) {
         key = _ref4$currentTarget.name;
 
     this.setState((_setState = {}, _setState[key] = value, _setState));
+  };
+
+  PairRoom.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    this.setState({ dataURL: void 0 });
+    this.props.reset();
   };
 
   PairRoom.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
@@ -38389,7 +38407,12 @@ var PairRoom = function (_React$Component) {
           heading.sub
         )
       ),
-      !hasResults && !this.props.loading && _react2.default.createElement(_archadonUtils.DropZone, { single: true, copy: 'Drop an image of your room here, or click to upload', receiveFiles: this.receiveFiles }),
+      this.state.error && _react2.default.createElement(
+        'p',
+        { className: 'font-color--danger small-caps' },
+        this.state.error
+      ),
+      !hasResults && !this.props.loading && _react2.default.createElement(_archadonUtils.DropZone, { fileInputProps: { accept: '.jpg, .png, .gif' }, single: true, copy: 'Drop an image of your room here, or click to upload', receiveFiles: this.receiveFiles }),
       _react2.default.createElement(
         'div',
         { className: 'flex-parent flex-align-center flex-justify-center pair-image-wrap' },
@@ -38402,7 +38425,14 @@ var PairRoom = function (_React$Component) {
       this.props.loading && _react2.default.createElement(_LoadingIndicator2.default, { loading: this.props.loading, copy: 'Finding the perfect rugs.' }),
       hasResults && _react2.default.createElement(
         'div',
-        { className: 'color-scheme-wrap margin--top-5' },
+        { className: 'color-scheme-wrap margin--y-5' },
+        this.props.products.colors.map(function (color) {
+          return _react2.default.createElement('div', { className: 'color-scheme-box', style: { backgroundColor: '#' + color } });
+        })
+      ),
+      hasResults && _react2.default.createElement(
+        'div',
+        { className: 'color-scheme-wrap margin--y-5' },
         _react2.default.createElement(
           'form',
           { className: 'pair-form flex-col-break margin--bottom-0', onSubmit: this.submit },
@@ -38450,14 +38480,7 @@ var PairRoom = function (_React$Component) {
       ),
       hasResults && _react2.default.createElement(
         'div',
-        { className: 'color-scheme-wrap margin--y-5' },
-        this.props.products.colors.map(function (color) {
-          return _react2.default.createElement('div', { className: 'color-scheme-box', style: { backgroundColor: '#' + color } });
-        })
-      ),
-      hasResults && _react2.default.createElement(
-        'div',
-        { className: 'flex-parent flex-justify-center small-caps font-color--lighter' },
+        { onClick: this.reset, style: { cursor: 'pointer' }, className: 'flex-parent flex-justify-center small-caps font-color--lighter' },
         'Reset'
       ),
       hasResults && _react2.default.createElement(_ProductList2.default, { products: this.props.products.results.hits })
@@ -38483,6 +38506,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
           dataURL = _ref5.dataURL;
 
       dispatch((0, _Utils.action)(REQUEST_PAIR_START, { blob: blob, ext: ext, mimeType: mimeType, dataURL: dataURL }));
+    },
+    reset: function reset() {
+      dispatch((0, _Utils.action)(RESET_PAIR));
     }
   };
 };
@@ -38499,11 +38525,13 @@ var _temp2 = function () {
 
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_START, 'REQUEST_PAIR_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
+  __REACT_HOT_LOADER__.register(RESET_PAIR, 'RESET_PAIR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
+
   __REACT_HOT_LOADER__.register(dataURItoBlob, 'dataURItoBlob', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
   __REACT_HOT_LOADER__.register(emailRegex, 'emailRegex', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
-  __REACT_HOT_LOADER__.register(getMimeType, 'getMimeType', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
+  __REACT_HOT_LOADER__.register(TYPE_WHITE_LIST, 'TYPE_WHITE_LIST', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
   __REACT_HOT_LOADER__.register(PairRoom, 'PairRoom', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
@@ -42127,7 +42155,8 @@ var _Actions2 = _interopRequireDefault(_Actions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var REQUEST_PAIR_END = _Actions2.default.REQUEST_PAIR_END;
+var REQUEST_PAIR_END = _Actions2.default.REQUEST_PAIR_END,
+    RESET_PAIR = _Actions2.default.RESET_PAIR;
 
 var initialState = function initialState() {
   return {
@@ -42143,6 +42172,8 @@ function productDetails() {
   switch (action.type) {
     case REQUEST_PAIR_END:
       return action.payload;
+    case RESET_PAIR:
+      return initialState();
     default:
       return state;
   }
@@ -42155,6 +42186,8 @@ var _temp = function () {
   }
 
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_END, 'REQUEST_PAIR_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(RESET_PAIR, 'RESET_PAIR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
 
   __REACT_HOT_LOADER__.register(initialState, 'initialState', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
 

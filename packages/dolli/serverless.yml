@@ -104,6 +104,22 @@ functions:
           path: pair/v1/getSignedUrl
           method: post
           cors: true
+
+  saveLead:
+    handler: functions/pairing/saveLead.saveLead
+    events:
+      - http:
+          path: pair/v1/save
+          method: post
+          cors: true
+
+  getSavedLead:
+    handler: functions/pairing/getSavedLead.default
+    events:
+      - http:
+          path: pair/v1/getSavedCollection
+          method: post
+          cors: true
 # PAIR ROOM PROMO END
 
   updateUserPassword:

@@ -23,6 +23,8 @@ class BatchDropZone extends React.Component {
 
     // additional classes that will be added to the drop zone wrapper
     className: PropTypes.string,
+
+    fileInputProps: PropTypes.object,
   }
 
   state = {}
@@ -115,6 +117,7 @@ class BatchDropZone extends React.Component {
       type: 'file',
       onChange: this.handleFilesFromInput,
       style: { position: 'absolute', left: -99999999 },
+      ...this.props.fileInputProps,
     };
 
     if (!this.props.single) {

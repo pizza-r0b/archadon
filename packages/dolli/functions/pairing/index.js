@@ -47,7 +47,6 @@ async function _pair(event, context, callback) {
   if (!filePath || !mimeType || gallery === void 0) {
     callback(null, addCors({
       statusCode: 400,
-      body: JSON.stringify(event),
     }));
     return;
   }
@@ -84,6 +83,7 @@ async function _pair(event, context, callback) {
       body: JSON.stringify({
         results: content,
         colors: scm,
+        filters: query,
       }),
     }));
   });
@@ -101,9 +101,9 @@ export function getSignedUrl(event, context, callback) {
   } catch (e) {
     data = event.body;
   }
-
+  const TYPE_WHITE_LIST = ['image/jpeg', 'image/png', 'image/jpeg', 'image/gif'];
   const { fileExt, fileType } = data;
-  if (!fileExt || !fileType) {
+  if (!fileExt || !fileType || !TYPE_WHITE_LIST.includes(fileType)) {
     callback(null, addCors({
       statusCode: 400,
       body: JSON.stringify(event),

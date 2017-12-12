@@ -8,7 +8,7 @@ import ProductList from 'Components/ProductList';
 import LoadingIndicator from 'Components/LoadingIndicator';
 import classnames from 'classnames';
 
-const { REQUEST_PAIR_START } = actions;
+const { REQUEST_PAIR_START, RESET_PAIR } = actions;
 
 const dataURItoBlob = (dataURI, type) => {
   const byteString = atob(dataURI.split(',')[1]);
@@ -25,26 +25,22 @@ const dataURItoBlob = (dataURI, type) => {
 
 const emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-function getMimeType(encoded) {
-  let result = null;
-  const m = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
-
-  if (m && m.length) {
-    result = m[1];
-  }
-
-  return result;
-}
+const TYPE_WHITE_LIST = ['image/jpeg', 'image/png', 'image/jpeg', 'image/gif'];
 
 class PairRoom extends React.Component {
 
   state = {}
 
   async _receiveFiles([file]) {
+    const mimeType = file.type;
+    if (!TYPE_WHITE_LIST.includes(mimeType)) {
+      this.setState({ error: 'Please upload and .jpg or .png file' });
+      return;
+    }
     const { dataURL } = await readAsBase64(file);
     this.setState({ dataURL });
-    const mimeType = getMimeType(dataURL);
     const ext = mime.extension(mimeType);
+
     const blob = dataURItoBlob(dataURL, mimeType);
     this.props.requestProducts({
       blob,
@@ -62,6 +58,11 @@ class PairRoom extends React.Component {
 
   onChange = ({ currentTarget: { value, name: key } }) => {
     this.setState({ [key]: value });
+  }
+
+  reset = () => {
+    this.setState({ dataURL: void 0 });
+    this.props.reset();
   }
 
   isValid = () => {
@@ -104,7 +105,8 @@ class PairRoom extends React.Component {
           <h2 className="font-color--lighter">{heading.sub}</h2>
         </div>
         }
-        {!hasResults && !this.props.loading && <DropZone single copy="Drop an image of your room here, or click to upload" receiveFiles={this.receiveFiles} />}
+        {this.state.error && <p className="font-color--danger small-caps">{this.state.error}</p>}
+        {!hasResults && !this.props.loading && <DropZone fileInputProps={{ accept: '.jpg, .png, .gif' }} single copy="Drop an image of your room here, or click to upload" receiveFiles={this.receiveFiles} />}
         <div className="flex-parent flex-align-center flex-justify-center pair-image-wrap">
           {(this.props.products.dataURL || this.state.dataURL) && (
             <div className="">
@@ -116,10 +118,16 @@ class PairRoom extends React.Component {
           <LoadingIndicator loading={this.props.loading} copy="Finding the perfect rugs." />
         )}
 
-
+        {hasResults && (
+          <div className="color-scheme-wrap margin--y-5">
+            {this.props.products.colors.map(color => (
+              <div className="color-scheme-box" style={{ backgroundColor: `#${color}` }} />
+            ))}
+          </div>
+        )}
 
         {hasResults && (
-          <div className="color-scheme-wrap margin--top-5">
+          <div className="color-scheme-wrap margin--y-5">
             <form className="pair-form flex-col-break margin--bottom-0" onSubmit={this.submit}>
               <div style={{ width: '100%' }} className={classnames('form-group flex-1', { 'form-error': this.props.error })}>
                 <div className="form-component">
@@ -145,15 +153,9 @@ class PairRoom extends React.Component {
           </div>
         )}
 
-        {hasResults && (
-          <div className="color-scheme-wrap margin--y-5">
-            {this.props.products.colors.map(color => (
-              <div className="color-scheme-box" style={{ backgroundColor: `#${color}` }} />
-            ))}
-          </div>
-        )}
 
-        {hasResults && <div className="flex-parent flex-justify-center small-caps font-color--lighter">Reset</div>}
+
+        {hasResults && <div onClick={this.reset} style={{ cursor: 'pointer' }} className="flex-parent flex-justify-center small-caps font-color--lighter">Reset</div>}
 
 
         {hasResults && <ProductList products={this.props.products.results.hits} />}
@@ -171,6 +173,9 @@ const mapDispatchToProps = dispatch => ({
   requestProducts({ blob, ext, mimeType, dataURL }) {
     dispatch(action(REQUEST_PAIR_START, { blob, ext, mimeType, dataURL }));
   },
+  reset() {
+    dispatch(action(RESET_PAIR));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PairRoom);
