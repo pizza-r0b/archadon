@@ -44067,18 +44067,21 @@ var PairRoom = function (_React$Component) {
               mimeType = file.type;
 
               if (TYPE_WHITE_LIST.includes(mimeType)) {
-                _context.next = 4;
+                _context.next = 5;
                 break;
               }
 
+              if (window.ga) {
+                window.ga('send', 'event', 'Receive Files', 'error ' + mimeType, 'Pair Room');
+              }
               this.setState({ error: 'Please upload and .jpg or .png file' });
               return _context.abrupt('return');
 
-            case 4:
-              _context.next = 6;
+            case 5:
+              _context.next = 7;
               return (0, _archadonUtils.readAsBase64)(file);
 
-            case 6:
+            case 7:
               _ref3 = _context.sent;
               dataURL = _ref3.dataURL;
 
@@ -44086,6 +44089,9 @@ var PairRoom = function (_React$Component) {
               ext = _mimeTypes2.default.extension(mimeType);
               blob = dataURItoBlob(dataURL, mimeType);
 
+              if (window.ga) {
+                window.ga('send', 'event', 'Receive Files', 'request products', 'Pair Room');
+              }
               this.props.requestProducts({
                 blob: blob,
                 ext: ext,
@@ -44093,7 +44099,7 @@ var PairRoom = function (_React$Component) {
                 dataURL: dataURL
               });
 
-            case 12:
+            case 14:
             case 'end':
               return _context.stop();
           }
@@ -44119,6 +44125,9 @@ var PairRoom = function (_React$Component) {
   };
 
   PairRoom.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    if (window.ga) {
+      window.ga('send', 'event', 'Reset Button', 'click', 'Pair Room');
+    }
     this.setState({ dataURL: void 0, step: 'intro' });
     this.props.reset();
   };
@@ -44154,6 +44163,9 @@ var PairRoom = function (_React$Component) {
   PairRoom.prototype.__submit__REACT_HOT_LOADER__ = function __submit__REACT_HOT_LOADER__(e) {
     e.preventDefault();
     if (this.isValid()) {
+      if (window.ga) {
+        window.ga('send', 'event', 'Save Email', 'submit', 'Pair Room');
+      }
       this.props.saveCollection(this.state.email, this.props.products.fileName, this.props.products.filters, this.props.products.colors);
     }
   };
@@ -44190,6 +44202,9 @@ var PairRoom = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { onClick: function onClick() {
+              if (window.ga) {
+                window.ga('send', 'event', 'Upload Photo', 'click', 'Pair Room');
+              }
               _this7.setState({ step: 'upload' });
             }, className: 'btn--primary--inverse' },
           'Upload Photo'

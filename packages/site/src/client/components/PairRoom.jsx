@@ -38,7 +38,11 @@ class PairRoom extends React.Component {
 
   async _receiveFiles([file]) {
     const mimeType = file.type;
+
     if (!TYPE_WHITE_LIST.includes(mimeType)) {
+      if (window.ga) {
+        window.ga('send', 'event', 'Receive Files', `error ${mimeType}`, 'Pair Room');
+      }
       this.setState({ error: 'Please upload and .jpg or .png file' });
       return;
     }
@@ -47,6 +51,9 @@ class PairRoom extends React.Component {
     const ext = mime.extension(mimeType);
 
     const blob = dataURItoBlob(dataURL, mimeType);
+    if (window.ga) {
+      window.ga('send', 'event', 'Receive Files', 'request products', 'Pair Room');
+    }
     this.props.requestProducts({
       blob,
       ext,
@@ -66,6 +73,9 @@ class PairRoom extends React.Component {
   }
 
   reset = () => {
+    if (window.ga) {
+      window.ga('send', 'event', 'Reset Button', 'click', 'Pair Room');
+    }
     this.setState({ dataURL: void 0, step: 'intro' });
     this.props.reset();
   }
@@ -99,6 +109,9 @@ class PairRoom extends React.Component {
   submit = (e) => {
     e.preventDefault();
     if (this.isValid()) {
+      if (window.ga) {
+        window.ga('send', 'event', 'Save Email', 'submit', 'Pair Room');
+      }
       this.props.saveCollection(
         this.state.email,
         this.props.products.fileName,
@@ -121,6 +134,9 @@ class PairRoom extends React.Component {
         <div className="flex-parent flex-align-center flex-justify-center flex-col pair-intro-sub">
           <h2 className="margin--y-5 font-color--lighter">Upload a photo of your room and let AI pick the perfect rugs.</h2>
           <div onClick={() => {
+            if (window.ga) {
+              window.ga('send', 'event', 'Upload Photo', 'click', 'Pair Room');
+            }
             this.setState({ step: 'upload' });
           }}className="btn--primary--inverse">Upload Photo</div>
         </div>
