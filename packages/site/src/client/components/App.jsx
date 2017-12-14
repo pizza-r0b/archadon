@@ -142,7 +142,7 @@ class App extends Component {
               <Route path="/checkout" component={Checkout} />
               <Route path="/product/:id" component={ProductDetail} />
               <Route path="/order-confirmation" component={OrderConfirmation} />
-              <Route path="/pair-room" component={PairRoom} />
+              <Route path="/pair-room/:id?" component={PairRoom} />
               <Route path="/signout" component={SignOut} />
             </Switch>
             <div dangerouslySetInnerHTML={{ __html: spriteSheet }} />

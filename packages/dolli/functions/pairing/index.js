@@ -67,7 +67,7 @@ async function _pair(event, context, callback) {
 
   index.search({
     filters: `Qty > 0 AND ${query}`,
-    hitsPerPage: 100,
+    hitsPerPage: 50,
   }, (err, content) => {
     if (err) {
       callback(null, addCors({

@@ -21,7 +21,7 @@ $secondary: red;
         }
     }
     &.active{
-        border-color: $primary;
+        border-color: darken(#ececec, 20%);
     }
     &:hover{
         border: 5px dashed darken(#ececec, 10%);
@@ -32,19 +32,10 @@ $secondary: red;
     top: -99999999px;
 }
 
-@keyframes disco {
-    0% {
-        background: $primary;
-    }
-    100% {
-        background: $secondary;
-    }
-}
-
 .batch {
     cursor: crosshair;
     &.uploading {
-        animation: disco .1s infinite alternate;
+        // animation: disco .1s infinite alternate;
     }
     background: #ffffff;
 }

@@ -38,7 +38,7 @@ p {
   line-height: 1.5;
 }
 
-$weights: 300, 400, 500, 600, normal;
+$weights: 300, 400, 500, 600, 800, normal;
 
 @each $weight in $weights {
   .font-weight--#{$weight} {

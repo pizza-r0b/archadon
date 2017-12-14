@@ -27,6 +27,16 @@ $bodyFont: Montserrat, sans-serif;
 
 @font-face {
 	font-family: 'Montserrat';
+	src: url('#{$path}Montserrat-ExtraBold.eot');
+	src: url('#{$path}Montserrat-ExtraBold.eot?#iefix') format('embedded-opentype'),
+		url('#{$path}Montserrat-ExtraBold.woff') format('woff'),
+		url('#{$path}Montserrat-ExtraBold.ttf') format('truetype');
+	font-weight: 800;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
 	src: url('#{$path}Montserrat-Light.eot');
 	src: url('#{$path}Montserrat-Light.eot?#iefix') format('embedded-opentype'),
 		url('#{$path}Montserrat-Light.woff') format('woff'),

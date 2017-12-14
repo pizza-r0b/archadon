@@ -13,6 +13,7 @@ const {
   LOADING,
   PRODUCT_LIST_LOADED,
   PRODUCT_DATA_LOADED,
+  REQUEST_SAVED_COLLECTION_START,
   UPDATE_USER_PASSWORD,
   PAGE_CHANGE,
   SET_REDIRECT_PATH,
@@ -27,8 +28,8 @@ const {
   REPLACE_CART,
   PRODUCT_DETAIL_LOADED,
   ON_CLEAR_FILTERS,
-  CLEAR_REDIRECT_PATH,
   REQUEST_PAIR_START,
+  SAVE_COLLECTION_START,
   REQUEST_PAIR_END,
   GET_COLLECTION_END,
   GET_COLLECTION_START,
@@ -59,11 +60,10 @@ import {
   requestProductData,
   requestPurchase,
   getCollectionByName,
-  uploadToS3,
-  getSignedUrl,
   requestUpdateUserData,
-  requestPairedProducts,
 } from './api';
+
+import { saveCollectionSaga, getPairedCollectionSaga, pairSaga } from './pairingSagas';
 
 const CART_VAR = 'archadon-cart';
 
@@ -433,23 +433,6 @@ export function* updateUserPasswordSaga({ payload: { data: payload, id } }) {
   }
 }
 
-export function* pairSaga({ payload }) {
-  yield put(action(SET_LOADING_PAGE, 'pair'));
-  const { blob, ext, mimeType, dataURL } = payload;
-  const { response, status } = yield call(getSignedUrl, ext, mimeType);
-
-  if (status === 200) {
-    const { url, fileName } = response;
-    const { status: s3Status } = yield call(uploadToS3, blob, url, mimeType);
-    if (s3Status === 200) {
-      const { response: pairResponse, status: pairStatus } = yield call(requestPairedProducts, fileName, false, mimeType);
-      if (pairStatus === 200) {
-        yield put(action(REQUEST_PAIR_END, { dataURL, ...pairResponse }));
-      }
-    }
-  }
-  yield put(action(SET_LOADING_PAGE, ''));
-}
 
 export function* loadFavoritesSaga() {
   yield put(action(SET_LOADING_PAGE, 'favorites'));
@@ -491,6 +474,8 @@ export default function* rootSaga() {
     takeLatest(LOG_IN, logInSaga),
     takeLatest(UPDATE_USER_PASSWORD, updateUserPasswordSaga),
     takeLatest(APP_LOAD, getDataFromLocalStorage),
+    takeLatest(SAVE_COLLECTION_START, saveCollectionSaga),
+    takeLatest(REQUEST_SAVED_COLLECTION_START, getPairedCollectionSaga),
     takeLatest(ADD_TO_CART, getProductDataSaga),
     takeLatest(TOGGLE_FAVORITE, toggleFavoriteSaga),
     takeLatest(UPDATE_USER_DATA, updateUserDataSaga),

@@ -39224,7 +39224,14 @@ var _default = (0, _Utils.keyMirror)({
   GET_USER_DATA_END: null,
   REQUEST_PAIR_START: null,
   REQUEST_PAIR_END: null,
-  RESET_PAIR: null
+  RESET_PAIR: null,
+  SAVE_COLLECTION_START: null,
+  SAVE_COLLECTION_END: null,
+  SAVE_COLLECTION_ERROR: null,
+  REQUEST_SAVED_COLLECTION_START: null,
+  REQUEST_SAVED_COLLECTION_END: null,
+  REQUEST_SAVED_COLLECTION_ERROR: null,
+  REQUEST_PAIR_ERROR: null
 });
 
 exports.default = _default;
@@ -40197,7 +40204,7 @@ var App = function (_Component2) {
             _react2.default.createElement(_reactRouterDom.Route, { path: '/checkout', component: _Checkout2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/product/:id', component: _ProductDetail2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/order-confirmation', component: _OrderConfirmation2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/pair-room', component: _PairRoom2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/pair-room/:id?', component: _PairRoom2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/signout', component: _SignOut2.default })
           ),
           _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: _spritesheet2.default } })
@@ -43966,7 +43973,9 @@ var _classnames2 = _interopRequireDefault(_classnames);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var REQUEST_PAIR_START = _Actions2.default.REQUEST_PAIR_START,
-    RESET_PAIR = _Actions2.default.RESET_PAIR;
+    RESET_PAIR = _Actions2.default.RESET_PAIR,
+    SAVE_COLLECTION_START = _Actions2.default.SAVE_COLLECTION_START,
+    REQUEST_SAVED_COLLECTION_START = _Actions2.default.REQUEST_SAVED_COLLECTION_START;
 
 
 var dataURItoBlob = function dataURItoBlob(dataURI, type) {
@@ -44000,8 +44009,8 @@ var PairRoom = function (_React$Component) {
 
     return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {}, _this.state = {
       email: '',
-      password: '',
-      errors: {}
+      errors: {},
+      step: _this.props.match.params.id || _this.props.products.results.hits && _this.props.products.results.hits.length > 0 ? 'upload' : 'intro'
     }, _this.onChange = function () {
       var _this2;
 
@@ -44014,8 +44023,24 @@ var PairRoom = function (_React$Component) {
       var _this4;
 
       return (_this4 = _this).__isValid__REACT_HOT_LOADER__.apply(_this4, arguments);
-    }, _this.receiveFiles = _this._receiveFiles.bind(_this), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+    }, _this.submit = function () {
+      var _this5;
+
+      return (_this5 = _this).__submit__REACT_HOT_LOADER__.apply(_this5, arguments);
+    }, _this.receiveFiles = _this._receiveFiles.bind(_this), _this.getIntro = function () {
+      var _this6;
+
+      return (_this6 = _this).__getIntro__REACT_HOT_LOADER__.apply(_this6, arguments);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
+
+  PairRoom.prototype.__getIntro__REACT_HOT_LOADER__ = function __getIntro__REACT_HOT_LOADER__() {
+    return this.__getIntro__REACT_HOT_LOADER__.apply(this, arguments);
+  };
+
+  PairRoom.prototype.__submit__REACT_HOT_LOADER__ = function __submit__REACT_HOT_LOADER__() {
+    return this.__submit__REACT_HOT_LOADER__.apply(this, arguments);
+  };
 
   PairRoom.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
     return this.__isValid__REACT_HOT_LOADER__.apply(this, arguments);
@@ -44094,7 +44119,7 @@ var PairRoom = function (_React$Component) {
   };
 
   PairRoom.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
-    this.setState({ dataURL: void 0 });
+    this.setState({ dataURL: void 0, step: 'intro' });
     this.props.reset();
   };
 
@@ -44103,10 +44128,6 @@ var PairRoom = function (_React$Component) {
 
     if (!emailRegex.test(this.state.email)) {
       errors.push({ email: true });
-    }
-
-    if (!this.state.password) {
-      errors.push({ password: true });
     }
 
     var valid = errors.length === 0;
@@ -44122,110 +44143,181 @@ var PairRoom = function (_React$Component) {
     return errors.length === 0;
   };
 
-  PairRoom.prototype.render = function render() {
+  PairRoom.prototype.componentDidMount = function componentDidMount() {
     var hasResults = this.props.products.results.hits && this.props.products.results.hits.length > 0;
-    var heading = { title: 'Let us do the pairing for you.', sub: 'Upload an image of your room and we will show you rugs to match.' };
-    var btnProps = {};
-
-    if (this.props.loading) {
-      btnProps.disabled = true;
+    if (this.props.match.params.id && !hasResults) {
+      this.setState({ step: 'upload' });
+      this.props.requestCollection(this.props.match.params.id);
     }
+  };
+
+  PairRoom.prototype.__submit__REACT_HOT_LOADER__ = function __submit__REACT_HOT_LOADER__(e) {
+    e.preventDefault();
+    if (this.isValid()) {
+      this.props.saveCollection(this.state.email, this.props.products.fileName, this.props.products.filters, this.props.products.colors);
+    }
+  };
+
+  PairRoom.prototype.__getIntro__REACT_HOT_LOADER__ = function __getIntro__REACT_HOT_LOADER__() {
+    var _this7 = this;
 
     return _react2.default.createElement(
       'div',
-      { className: 'wrap' },
-      !this.props.loading && !hasResults && _react2.default.createElement(
-        'div',
-        { className: 'margin--bottom-10' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          heading.title
-        ),
-        _react2.default.createElement(
-          'h2',
-          { className: 'font-color--lighter' },
-          heading.sub
-        )
+      { className: 'pair-intro' },
+      _react2.default.createElement(
+        'h1',
+        { className: 'font-weight--800 align--center' },
+        'Artificial Intelligence'
       ),
-      this.state.error && _react2.default.createElement(
-        'p',
-        { className: 'font-color--danger small-caps' },
-        this.state.error
+      _react2.default.createElement(
+        'h1',
+        { className: 'font-weight--800 align--center' },
+        '+'
       ),
-      !hasResults && !this.props.loading && _react2.default.createElement(_archadonUtils.DropZone, { fileInputProps: { accept: '.jpg, .png, .gif' }, single: true, copy: 'Drop an image of your room here, or click to upload', receiveFiles: this.receiveFiles }),
+      _react2.default.createElement(
+        'h1',
+        { className: 'font-weight--800 align--center' },
+        'Rugs'
+      ),
       _react2.default.createElement(
         'div',
-        { className: 'flex-parent flex-align-center flex-justify-center pair-image-wrap' },
-        (this.props.products.dataURL || this.state.dataURL) && _react2.default.createElement(
-          'div',
-          { className: '' },
-          _react2.default.createElement('img', { src: this.state.dataURL || this.props.products.dataURL })
-        )
-      ),
-      this.props.loading && _react2.default.createElement(_LoadingIndicator2.default, { loading: this.props.loading, copy: 'Finding the perfect rugs.' }),
-      hasResults && _react2.default.createElement(
-        'div',
-        { className: 'color-scheme-wrap margin--y-5' },
-        this.props.products.colors.map(function (color) {
-          return _react2.default.createElement('div', { className: 'color-scheme-box', style: { backgroundColor: '#' + color } });
-        })
-      ),
-      hasResults && _react2.default.createElement(
-        'div',
-        { className: 'color-scheme-wrap margin--y-5' },
+        { className: 'flex-parent flex-align-center flex-justify-center flex-col pair-intro-sub' },
         _react2.default.createElement(
-          'form',
-          { className: 'pair-form flex-col-break margin--bottom-0', onSubmit: this.submit },
+          'h2',
+          { className: 'margin--y-5 font-color--lighter' },
+          'Upload a photo of your room and let AI pick the perfect rugs.'
+        ),
+        _react2.default.createElement(
+          'div',
+          { onClick: function onClick() {
+              _this7.setState({ step: 'upload' });
+            }, className: 'btn--primary--inverse' },
+          'Upload Photo'
+        )
+      )
+    );
+  };
+
+  PairRoom.prototype.render = function render() {
+    var hasResults = this.props.products.results.hits && this.props.products.results.hits.length > 0;
+    var btnProps = {};
+
+    btnProps.disabled = this.props.products.savingEmail === 'end';
+
+    var markup = void 0;
+
+    switch (this.state.step) {
+      case 'intro':
+        markup = this.getIntro();
+        break;
+      case 'upload':
+        markup = _react2.default.createElement(
+          'div',
+          { className: 'wrap' },
+          this.state.error && _react2.default.createElement(
+            'p',
+            { className: 'font-color--danger small-caps' },
+            this.state.error
+          ),
+          this.props.products.collectionRequest === 'error' && _react2.default.createElement(
+            'h2',
+            { className: 'font-color--danger margin--y-5' },
+            'Uh oh! We couldn\'t find what you\'re looking for. Upload your image again.'
+          ),
+          !hasResults && !this.props.loading && _react2.default.createElement(_archadonUtils.DropZone, { fileInputProps: { accept: '.jpg, .png, .gif' }, single: true, copy: 'Drop an image of your room here, or click to upload', receiveFiles: this.receiveFiles }),
           _react2.default.createElement(
             'div',
-            { style: { width: '100%' }, className: (0, _classnames2.default)('form-group flex-1', { 'form-error': this.props.error }) },
-            _react2.default.createElement(
+            { className: 'flex-parent flex-align-center flex-justify-center pair-image-wrap' },
+            (this.props.products.dataURL || this.state.dataURL || this.props.products.fileName) && _react2.default.createElement(
               'div',
-              { className: 'form-component' },
-              _react2.default.createElement('input', {
-                onChange: this.onChange,
-                className: (0, _classnames2.default)({
-                  'input-filled': this.state.email,
-                  'input-error': this.state.errors.email
-                }),
-                name: 'email', value: this.state.email,
-                type: 'text'
-              }),
+              { className: '' },
+              _react2.default.createElement('img', { src: this.state.dataURL || this.props.products.dataURL || 'https://s3.amazonaws.com/archadon-user/' + this.props.products.fileName })
+            )
+          ),
+          this.props.loading && _react2.default.createElement(
+            'div',
+            { className: 'margin--top-5' },
+            _react2.default.createElement(_LoadingIndicator2.default, { loading: this.props.loading, copy: 'Finding the perfect rugs.' })
+          ),
+          hasResults && _react2.default.createElement(
+            'div',
+            { className: 'color-scheme-wrap margin--y-5' },
+            this.props.products.colors.map(function (color) {
+              return _react2.default.createElement('div', { className: 'color-scheme-box', style: { backgroundColor: '#' + color } });
+            })
+          ),
+          hasResults && this.props.products.savingEmail !== 'end' && _react2.default.createElement(
+            'div',
+            { className: 'color-scheme-wrap margin--y-5' },
+            _react2.default.createElement(
+              'form',
+              { className: 'pair-form flex-col-break margin--bottom-0', onSubmit: this.submit },
               _react2.default.createElement(
-                'label',
-                { htmlFor: 'email' },
-                'Email'
+                'div',
+                { style: { width: '100%' }, className: (0, _classnames2.default)('form-group flex-1', { 'form-error': this.props.error }) },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-component' },
+                  _react2.default.createElement('input', {
+                    onChange: this.onChange,
+                    className: (0, _classnames2.default)({
+                      'input-filled': this.state.email,
+                      'input-error': this.state.errors.email
+                    }),
+                    name: 'email', value: this.state.email,
+                    type: 'text'
+                  }),
+                  _react2.default.createElement(
+                    'label',
+                    { htmlFor: 'email' },
+                    'Email'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'flex-col-break--m margin--top-3' },
+                this.props.error && _react2.default.createElement(
+                  'p',
+                  { className: 'font-color--danger margin--bottom-3 small-caps' },
+                  this.props.error
+                ),
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'button',
+                    (0, _extends3.default)({}, btnProps, { className: 'btn--primary--inverse' }),
+                    this.props.products.savingEmail ? 'Please Wait' : 'Save For Later'
+                  )
+                )
               )
             )
           ),
-          _react2.default.createElement(
+          hasResults && this.props.products.savingEmail === 'end' && _react2.default.createElement(
+            'p',
+            { className: 'align--center font-color--success margin--y-5' },
+            'We\'ve emailed you a link to return to this page!'
+          ),
+          hasResults && _react2.default.createElement(
             'div',
-            { className: 'flex-col-break--m margin--top-3' },
-            this.props.error && _react2.default.createElement(
-              'p',
-              { className: 'font-color--danger margin--bottom-3 small-caps' },
-              this.props.error
-            ),
+            { onClick: this.reset, style: { cursor: 'pointer' }, className: 'flex-parent flex-justify-center small-caps font-color--lighter' },
+            'Reset'
+          ),
+          hasResults && _react2.default.createElement(
+            'div',
+            null,
             _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'button',
-                (0, _extends3.default)({}, btnProps, { className: 'btn--primary--inverse' }),
-                btnProps.disabled ? 'Please Wait' : 'Save For Later'
-              )
-            )
+              'h2',
+              { className: 'margin--top-5 align--center' },
+              'Here\'s 50 rugs picked just for you!'
+            ),
+            _react2.default.createElement(_ProductList2.default, { products: this.props.products.results.hits })
           )
-        )
-      ),
-      hasResults && _react2.default.createElement(
-        'div',
-        { onClick: this.reset, style: { cursor: 'pointer' }, className: 'flex-parent flex-justify-center small-caps font-color--lighter' },
-        'Reset'
-      ),
-      hasResults && _react2.default.createElement(_ProductList2.default, { products: this.props.products.results.hits })
-    );
+        );
+    }
+
+    return markup;
   };
 
   return PairRoom;
@@ -44234,7 +44326,8 @@ var PairRoom = function (_React$Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     products: state.pairedProducts,
-    loading: state.loading.page === 'pair'
+    loading: state.loading.page === 'pair' || state.pairedProducts.collectionRequest === 'started',
+    savingEmail: state.pairedProducts.savingEmail
   };
 };
 
@@ -44250,6 +44343,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     reset: function reset() {
       dispatch((0, _Utils.action)(RESET_PAIR));
+    },
+    saveCollection: function saveCollection(email, imageKey, filters, colors) {
+      dispatch((0, _Utils.action)(SAVE_COLLECTION_START, {
+        email: email, imageKey: imageKey, filters: filters, colors: colors
+      }));
+    },
+    requestCollection: function requestCollection(id) {
+      dispatch((0, _Utils.action)(REQUEST_SAVED_COLLECTION_START, id));
     }
   };
 };
@@ -44267,6 +44368,10 @@ var _temp2 = function () {
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_START, 'REQUEST_PAIR_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
   __REACT_HOT_LOADER__.register(RESET_PAIR, 'RESET_PAIR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_START, 'SAVE_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_START, 'REQUEST_SAVED_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
   __REACT_HOT_LOADER__.register(dataURItoBlob, 'dataURItoBlob', '/Users/realseanp1/Projects/archadon/packages/site/src/client/components/PairRoom.jsx');
 
@@ -48477,6 +48582,11 @@ var _temp = function () {
 
 
 exports.__esModule = true;
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 exports.default = productDetails;
 
 var _Actions = __webpack_require__("./src/client/actions/index.js");
@@ -48486,12 +48596,21 @@ var _Actions2 = _interopRequireDefault(_Actions);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var REQUEST_PAIR_END = _Actions2.default.REQUEST_PAIR_END,
-    RESET_PAIR = _Actions2.default.RESET_PAIR;
+    REQUEST_PAIR_START = _Actions2.default.REQUEST_PAIR_START,
+    RESET_PAIR = _Actions2.default.RESET_PAIR,
+    REQUEST_PAIR_ERROR = _Actions2.default.REQUEST_PAIR_ERROR,
+    SAVE_COLLECTION_END = _Actions2.default.SAVE_COLLECTION_END,
+    SAVE_COLLECTION_ERROR = _Actions2.default.SAVE_COLLECTION_ERROR,
+    SAVE_COLLECTION_START = _Actions2.default.SAVE_COLLECTION_START,
+    REQUEST_SAVED_COLLECTION_START = _Actions2.default.REQUEST_SAVED_COLLECTION_START,
+    REQUEST_SAVED_COLLECTION_END = _Actions2.default.REQUEST_SAVED_COLLECTION_END,
+    REQUEST_SAVED_COLLECTION_ERROR = _Actions2.default.REQUEST_SAVED_COLLECTION_ERROR;
 
 var initialState = function initialState() {
   return {
     results: {},
-    colors: []
+    colors: [],
+    savingEmail: false
   };
 };
 
@@ -48502,8 +48621,40 @@ function productDetails() {
   switch (action.type) {
     case REQUEST_PAIR_END:
       return action.payload;
+    case REQUEST_PAIR_START:
+      return (0, _extends3.default)({}, state, {
+        error: false
+      });
     case RESET_PAIR:
       return initialState();
+    case SAVE_COLLECTION_START:
+      return (0, _extends3.default)({}, state, {
+        savingEmail: 'started'
+      });
+    case SAVE_COLLECTION_ERROR:
+      return (0, _extends3.default)({}, state, {
+        savingEmail: 'error'
+      });
+    case SAVE_COLLECTION_END:
+      return (0, _extends3.default)({}, state, {
+        savingEmail: 'end'
+      });
+    case REQUEST_SAVED_COLLECTION_START:
+      return (0, _extends3.default)({}, state, {
+        collectionRequest: 'started'
+      });
+    case REQUEST_SAVED_COLLECTION_END:
+      return (0, _extends3.default)({}, state, {
+        collectionRequest: 'end'
+      });
+    case REQUEST_PAIR_ERROR:
+      return (0, _extends3.default)({}, initialState(), {
+        error: true
+      });
+    case REQUEST_SAVED_COLLECTION_ERROR:
+      return (0, _extends3.default)({}, state, {
+        collectionRequest: 'error'
+      });
     default:
       return state;
   }
@@ -48517,7 +48668,23 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_END, 'REQUEST_PAIR_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
 
+  __REACT_HOT_LOADER__.register(REQUEST_PAIR_START, 'REQUEST_PAIR_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
   __REACT_HOT_LOADER__.register(RESET_PAIR, 'RESET_PAIR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_PAIR_ERROR, 'REQUEST_PAIR_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_END, 'SAVE_COLLECTION_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_ERROR, 'SAVE_COLLECTION_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_START, 'SAVE_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_START, 'REQUEST_SAVED_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_END, 'REQUEST_SAVED_COLLECTION_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_ERROR, 'REQUEST_SAVED_COLLECTION_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
 
   __REACT_HOT_LOADER__.register(initialState, 'initialState', '/Users/realseanp1/Projects/archadon/packages/site/src/client/reducers/pairedProducts.js');
 
@@ -48928,7 +49095,7 @@ var _temp = function () {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 exports.__esModule = true;
-exports.requestPurchase = exports.uploadToS3 = exports.getSignedUrl = exports.requestPairedProducts = exports.getCollectionByName = exports.requestCollection = exports.requestBatch = exports.requestUpdateUserData = exports.requestProductData = exports.requestProductList = exports.requestUserFavorites = exports.requestUpdatePassword = exports.requestUserData = exports.requestSignUp = exports.requestLogin = undefined;
+exports.requestPurchase = exports.uploadToS3 = exports.requestSaveCollection = exports.getSignedUrl = exports.requestPairedProducts = exports.requestSavedCollection = exports.getCollectionByName = exports.requestCollection = exports.requestBatch = exports.requestUpdateUserData = exports.requestProductData = exports.requestProductList = exports.requestUserFavorites = exports.requestUpdatePassword = exports.requestUserData = exports.requestSignUp = exports.requestLogin = undefined;
 
 var _Utils = __webpack_require__("./src/client/utils/index.js");
 
@@ -48991,6 +49158,11 @@ var getCollectionByName = exports.getCollectionByName = function getCollectionBy
   return (0, _Utils.request)('POST', '/search/collection', { collection: collection });
 };
 
+/* PAIR ROOM START */
+var requestSavedCollection = exports.requestSavedCollection = function requestSavedCollection(id) {
+  return (0, _Utils.request)('POST', url('pair/v1/getSavedCollection'), { id: id });
+};
+
 var requestPairedProducts = exports.requestPairedProducts = function requestPairedProducts(filePath) {
   var gallery = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var mimeType = arguments[2];
@@ -49008,9 +49180,14 @@ var getSignedUrl = exports.getSignedUrl = function getSignedUrl(fileExt, fileTyp
   });
 };
 
+var requestSaveCollection = exports.requestSaveCollection = function requestSaveCollection(payload) {
+  return (0, _Utils.request)('POST', url('pair/v1/save'), payload);
+};
+
 var uploadToS3 = exports.uploadToS3 = function uploadToS3(blob, putUrl, type) {
   return (0, _Utils.request)('PUT', putUrl, blob, { 'Content-Type': type, 'x-amz-acl': 'public-read' }, null, true);
 };
+/* PAIR ROOM END */
 
 var requestPurchase = exports.requestPurchase = function requestPurchase(payload) {
   return (0, _Utils.request)('POST', url('purchase/v1/charge'), payload);
@@ -49048,9 +49225,13 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(getCollectionByName, 'getCollectionByName', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
 
+  __REACT_HOT_LOADER__.register(requestSavedCollection, 'requestSavedCollection', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
+
   __REACT_HOT_LOADER__.register(requestPairedProducts, 'requestPairedProducts', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
 
   __REACT_HOT_LOADER__.register(getSignedUrl, 'getSignedUrl', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
+
+  __REACT_HOT_LOADER__.register(requestSaveCollection, 'requestSaveCollection', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
 
   __REACT_HOT_LOADER__.register(uploadToS3, 'uploadToS3', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/api.js');
 
@@ -49069,10 +49250,6 @@ var _temp = function () {
 
 
 exports.__esModule = true;
-
-var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
-
-var _extends3 = _interopRequireDefault(_extends2);
 
 var _keys = __webpack_require__("../../node_modules/babel-runtime/core-js/object/keys.js");
 
@@ -49111,7 +49288,6 @@ exports.purchaseSaga = purchaseSaga;
 exports.toggleFavoriteSaga = toggleFavoriteSaga;
 exports.updateUserDataSaga = updateUserDataSaga;
 exports.updateUserPasswordSaga = updateUserPasswordSaga;
-exports.pairSaga = pairSaga;
 exports.loadFavoritesSaga = loadFavoritesSaga;
 exports.onNavOpenSaga = onNavOpenSaga;
 exports.getCollectionSaga = getCollectionSaga;
@@ -49128,6 +49304,8 @@ var _Actions2 = _interopRequireDefault(_Actions);
 var _Utils = __webpack_require__("./src/client/utils/index.js");
 
 var _api = __webpack_require__("./src/client/sagas/api.js");
+
+var _pairingSagas = __webpack_require__("./src/client/sagas/pairingSagas.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49146,11 +49324,10 @@ var _marked = /*#__PURE__*/_regenerator2.default.mark(getDataFromLocalStorage),
     _marked13 = /*#__PURE__*/_regenerator2.default.mark(toggleFavoriteSaga),
     _marked14 = /*#__PURE__*/_regenerator2.default.mark(updateUserDataSaga),
     _marked15 = /*#__PURE__*/_regenerator2.default.mark(updateUserPasswordSaga),
-    _marked16 = /*#__PURE__*/_regenerator2.default.mark(pairSaga),
-    _marked17 = /*#__PURE__*/_regenerator2.default.mark(loadFavoritesSaga),
-    _marked18 = /*#__PURE__*/_regenerator2.default.mark(onNavOpenSaga),
-    _marked19 = /*#__PURE__*/_regenerator2.default.mark(getCollectionSaga),
-    _marked20 = /*#__PURE__*/_regenerator2.default.mark(rootSaga);
+    _marked16 = /*#__PURE__*/_regenerator2.default.mark(loadFavoritesSaga),
+    _marked17 = /*#__PURE__*/_regenerator2.default.mark(onNavOpenSaga),
+    _marked18 = /*#__PURE__*/_regenerator2.default.mark(getCollectionSaga),
+    _marked19 = /*#__PURE__*/_regenerator2.default.mark(rootSaga);
 
 var LOG_IN = _Actions2.default.LOG_IN,
     LOG_OUT = _Actions2.default.LOG_OUT,
@@ -49162,6 +49339,7 @@ var LOG_IN = _Actions2.default.LOG_IN,
     LOADING = _Actions2.default.LOADING,
     PRODUCT_LIST_LOADED = _Actions2.default.PRODUCT_LIST_LOADED,
     PRODUCT_DATA_LOADED = _Actions2.default.PRODUCT_DATA_LOADED,
+    REQUEST_SAVED_COLLECTION_START = _Actions2.default.REQUEST_SAVED_COLLECTION_START,
     UPDATE_USER_PASSWORD = _Actions2.default.UPDATE_USER_PASSWORD,
     PAGE_CHANGE = _Actions2.default.PAGE_CHANGE,
     SET_REDIRECT_PATH = _Actions2.default.SET_REDIRECT_PATH,
@@ -49176,8 +49354,8 @@ var LOG_IN = _Actions2.default.LOG_IN,
     REPLACE_CART = _Actions2.default.REPLACE_CART,
     PRODUCT_DETAIL_LOADED = _Actions2.default.PRODUCT_DETAIL_LOADED,
     ON_CLEAR_FILTERS = _Actions2.default.ON_CLEAR_FILTERS,
-    CLEAR_REDIRECT_PATH = _Actions2.default.CLEAR_REDIRECT_PATH,
     REQUEST_PAIR_START = _Actions2.default.REQUEST_PAIR_START,
+    SAVE_COLLECTION_START = _Actions2.default.SAVE_COLLECTION_START,
     REQUEST_PAIR_END = _Actions2.default.REQUEST_PAIR_END,
     GET_COLLECTION_END = _Actions2.default.GET_COLLECTION_END,
     GET_COLLECTION_START = _Actions2.default.GET_COLLECTION_START,
@@ -50217,170 +50395,128 @@ function updateUserPasswordSaga(_ref22) {
   }, _marked15, this, [[8, 15]]);
 }
 
-function pairSaga(_ref24) {
-  var payload = _ref24.payload;
+function loadFavoritesSaga() {
+  var _ref24, authToken, ID, favorites, _ref25, data;
 
-  var blob, ext, mimeType, dataURL, _ref25, response, status, url, fileName, _ref26, s3Status, _ref27, pairResponse, pairStatus;
-
-  return _regenerator2.default.wrap(function pairSaga$(_context16) {
+  return _regenerator2.default.wrap(function loadFavoritesSaga$(_context16) {
     while (1) {
       switch (_context16.prev = _context16.next) {
         case 0:
           _context16.next = 2;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, 'pair'));
-
-        case 2:
-          blob = payload.blob, ext = payload.ext, mimeType = payload.mimeType, dataURL = payload.dataURL;
-          _context16.next = 5;
-          return (0, _effects.call)(_api.getSignedUrl, ext, mimeType);
-
-        case 5:
-          _ref25 = _context16.sent;
-          response = _ref25.response;
-          status = _ref25.status;
-
-          if (!(status === 200)) {
-            _context16.next = 23;
-            break;
-          }
-
-          url = response.url, fileName = response.fileName;
-          _context16.next = 12;
-          return (0, _effects.call)(_api.uploadToS3, blob, url, mimeType);
-
-        case 12:
-          _ref26 = _context16.sent;
-          s3Status = _ref26.status;
-
-          if (!(s3Status === 200)) {
-            _context16.next = 23;
-            break;
-          }
-
-          _context16.next = 17;
-          return (0, _effects.call)(_api.requestPairedProducts, fileName, false, mimeType);
-
-        case 17:
-          _ref27 = _context16.sent;
-          pairResponse = _ref27.response;
-          pairStatus = _ref27.status;
-
-          if (!(pairStatus === 200)) {
-            _context16.next = 23;
-            break;
-          }
-
-          _context16.next = 23;
-          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_END, (0, _extends3.default)({ dataURL: dataURL }, pairResponse)));
-
-        case 23:
-          _context16.next = 25;
-          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
-
-        case 25:
-        case 'end':
-          return _context16.stop();
-      }
-    }
-  }, _marked16, this);
-}
-
-function loadFavoritesSaga() {
-  var _ref28, authToken, ID, favorites, _ref29, data;
-
-  return _regenerator2.default.wrap(function loadFavoritesSaga$(_context17) {
-    while (1) {
-      switch (_context17.prev = _context17.next) {
-        case 0:
-          _context17.next = 2;
           return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, 'favorites'));
 
         case 2:
-          _context17.next = 4;
+          _context16.next = 4;
           return (0, _effects.select)(getAuthData);
 
         case 4:
-          _ref28 = _context17.sent;
-          authToken = _ref28.authToken;
-          ID = _ref28.ID;
+          _ref24 = _context16.sent;
+          authToken = _ref24.authToken;
+          ID = _ref24.ID;
 
           if (!(!authToken || !ID)) {
-            _context17.next = 11;
+            _context16.next = 11;
             break;
           }
 
-          _context17.next = 10;
+          _context16.next = 10;
           return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
 
         case 10:
-          return _context17.abrupt('return');
+          return _context16.abrupt('return');
 
         case 11:
-          _context17.prev = 11;
-          _context17.next = 14;
+          _context16.prev = 11;
+          _context16.next = 14;
           return (0, _effects.select)(getUserFavorites);
 
         case 14:
-          favorites = _context17.sent;
+          favorites = _context16.sent;
 
           if (favorites.length) {
-            _context17.next = 19;
+            _context16.next = 19;
             break;
           }
 
-          _context17.next = 18;
+          _context16.next = 18;
           return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
 
         case 18:
-          return _context17.abrupt('return');
+          return _context16.abrupt('return');
 
         case 19:
-          _context17.next = 21;
+          _context16.next = 21;
           return (0, _effects.call)(_api.requestUserFavorites, ID, authToken);
 
         case 21:
-          _ref29 = _context17.sent;
-          data = _ref29.response.data.favorites;
-          _context17.next = 25;
+          _ref25 = _context16.sent;
+          data = _ref25.response.data.favorites;
+          _context16.next = 25;
           return (0, _effects.put)((0, _Utils.action)(FAVORITES_LOADED, data));
 
         case 25:
-          _context17.next = 31;
+          _context16.next = 31;
           break;
 
         case 27:
-          _context17.prev = 27;
-          _context17.t0 = _context17['catch'](11);
-          _context17.next = 31;
+          _context16.prev = 27;
+          _context16.t0 = _context16['catch'](11);
+          _context16.next = 31;
           return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
 
         case 31:
-          _context17.next = 33;
+          _context16.next = 33;
           return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
 
         case 33:
         case 'end':
-          return _context17.stop();
+          return _context16.stop();
       }
     }
-  }, _marked17, this, [[11, 27]]);
+  }, _marked16, this, [[11, 27]]);
 }
 
 function onNavOpenSaga() {
   var navOpen;
-  return _regenerator2.default.wrap(function onNavOpenSaga$(_context18) {
+  return _regenerator2.default.wrap(function onNavOpenSaga$(_context17) {
     while (1) {
-      switch (_context18.prev = _context18.next) {
+      switch (_context17.prev = _context17.next) {
         case 0:
-          _context18.next = 2;
+          _context17.next = 2;
           return (0, _effects.select)(getNavState);
 
         case 2:
-          navOpen = _context18.sent;
+          navOpen = _context17.sent;
 
           document.body.style.overflow = navOpen ? 'hidden' : 'auto';
 
         case 4:
+        case 'end':
+          return _context17.stop();
+      }
+    }
+  }, _marked17, this);
+}
+
+function getCollectionSaga(_ref26) {
+  var collection = _ref26.payload;
+
+  var _ref27, response;
+
+  return _regenerator2.default.wrap(function getCollectionSaga$(_context18) {
+    while (1) {
+      switch (_context18.prev = _context18.next) {
+        case 0:
+          _context18.next = 2;
+          return (0, _effects.call)(_api.getCollectionByName, collection);
+
+        case 2:
+          _ref27 = _context18.sent;
+          response = _ref27.response;
+          _context18.next = 6;
+          return (0, _effects.put)((0, _Utils.action)(GET_COLLECTION_END, { name: collection, collection: response }));
+
+        case 6:
         case 'end':
           return _context18.stop();
       }
@@ -50388,115 +50524,89 @@ function onNavOpenSaga() {
   }, _marked18, this);
 }
 
-function getCollectionSaga(_ref30) {
-  var collection = _ref30.payload;
-
-  var _ref31, response;
-
-  return _regenerator2.default.wrap(function getCollectionSaga$(_context19) {
-    while (1) {
-      switch (_context19.prev = _context19.next) {
-        case 0:
-          _context19.next = 2;
-          return (0, _effects.call)(_api.getCollectionByName, collection);
-
-        case 2:
-          _ref31 = _context19.sent;
-          response = _ref31.response;
-          _context19.next = 6;
-          return (0, _effects.put)((0, _Utils.action)(GET_COLLECTION_END, { name: collection, collection: response }));
-
-        case 6:
-        case 'end':
-          return _context19.stop();
-      }
-    }
-  }, _marked19, this);
-}
-
 function rootSaga() {
-  return _regenerator2.default.wrap(function rootSaga$(_context23) {
+  return _regenerator2.default.wrap(function rootSaga$(_context22) {
     while (1) {
-      switch (_context23.prev = _context23.next) {
+      switch (_context22.prev = _context22.next) {
         case 0:
-          _context23.next = 2;
-          return [(0, _effects.takeLatest)(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE), (0, _effects.takeLatest)(REQUEST_PAIR_START, pairSaga), (0, _effects.takeLatest)([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST), (0, _effects.takeLatest)(LOAD_FAVORITES, loadFavoritesSaga), (0, _effects.takeLatest)(LOG_IN, logInSaga), (0, _effects.takeLatest)(UPDATE_USER_PASSWORD, updateUserPasswordSaga), (0, _effects.takeLatest)(APP_LOAD, getDataFromLocalStorage), (0, _effects.takeLatest)(ADD_TO_CART, getProductDataSaga), (0, _effects.takeLatest)(TOGGLE_FAVORITE, toggleFavoriteSaga), (0, _effects.takeLatest)(UPDATE_USER_DATA, updateUserDataSaga), (0, _effects.takeLatest)(GET_COLLECTION_START, getCollectionSaga), (0, _effects.takeLatest)(GET_PRODUCT_DETAILS, getProductDetailSaga), (0, _effects.takeLatest)(ON_NAV_OPEN, onNavOpenSaga), (0, _effects.takeLatest)(SIGN_UP, signUpSaga), (0, _effects.takeLatest)(USER_AUTH_SUCCESS, getUserDataSaga), (0, _effects.takeLatest)(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga), (0, _effects.takeLatest)(LOG_OUT, logOutSaga), (0, _effects.takeLatest)(PURCHASE, purchaseSaga), (0, _effects.takeLatest)(REQUEST_COLLECTION, requestCollectionSaga), /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-            return _regenerator2.default.wrap(function _callee$(_context20) {
+          _context22.next = 2;
+          return [(0, _effects.takeLatest)(LOAD_MORE, getProductListSaga, LOAD_MORE_DONE), (0, _effects.takeLatest)(REQUEST_PAIR_START, _pairingSagas.pairSaga), (0, _effects.takeLatest)([ON_FILTER_UPDATE, ON_CLEAR_FILTERS], getProductListSaga, REPLACE_PRODUCT_LIST), (0, _effects.takeLatest)(LOAD_FAVORITES, loadFavoritesSaga), (0, _effects.takeLatest)(LOG_IN, logInSaga), (0, _effects.takeLatest)(UPDATE_USER_PASSWORD, updateUserPasswordSaga), (0, _effects.takeLatest)(APP_LOAD, getDataFromLocalStorage), (0, _effects.takeLatest)(SAVE_COLLECTION_START, _pairingSagas.saveCollectionSaga), (0, _effects.takeLatest)(REQUEST_SAVED_COLLECTION_START, _pairingSagas.getPairedCollectionSaga), (0, _effects.takeLatest)(ADD_TO_CART, getProductDataSaga), (0, _effects.takeLatest)(TOGGLE_FAVORITE, toggleFavoriteSaga), (0, _effects.takeLatest)(UPDATE_USER_DATA, updateUserDataSaga), (0, _effects.takeLatest)(GET_COLLECTION_START, getCollectionSaga), (0, _effects.takeLatest)(GET_PRODUCT_DETAILS, getProductDetailSaga), (0, _effects.takeLatest)(ON_NAV_OPEN, onNavOpenSaga), (0, _effects.takeLatest)(SIGN_UP, signUpSaga), (0, _effects.takeLatest)(USER_AUTH_SUCCESS, getUserDataSaga), (0, _effects.takeLatest)(CLEAR_AUTHENTICATION_DATA, clearAuthenticationDataSaga), (0, _effects.takeLatest)(LOG_OUT, logOutSaga), (0, _effects.takeLatest)(PURCHASE, purchaseSaga), (0, _effects.takeLatest)(REQUEST_COLLECTION, requestCollectionSaga), /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+            return _regenerator2.default.wrap(function _callee$(_context19) {
               while (1) {
-                switch (_context20.prev = _context20.next) {
+                switch (_context19.prev = _context19.next) {
                   case 0:
                     if (false) {
-                      _context20.next = 7;
+                      _context19.next = 7;
                       break;
                     }
 
-                    _context20.next = 3;
+                    _context19.next = 3;
                     return (0, _effects.take)([ADD_TO_CART, REMOVE_FROM_CART]);
 
                   case 3:
-                    _context20.next = 5;
+                    _context19.next = 5;
                     return (0, _effects.call)(addToCartLocalStorage);
 
                   case 5:
-                    _context20.next = 0;
+                    _context19.next = 0;
                     break;
 
                   case 7:
                   case 'end':
-                    return _context20.stop();
+                    return _context19.stop();
                 }
               }
             }, _callee, this);
           })(), /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
             var loading;
-            return _regenerator2.default.wrap(function _callee2$(_context21) {
+            return _regenerator2.default.wrap(function _callee2$(_context20) {
               while (1) {
-                switch (_context21.prev = _context21.next) {
+                switch (_context20.prev = _context20.next) {
                   case 0:
                     if (false) {
-                      _context21.next = 9;
+                      _context20.next = 9;
                       break;
                     }
 
-                    _context21.next = 3;
+                    _context20.next = 3;
                     return (0, _effects.take)(LOADING);
 
                   case 3:
-                    _context21.next = 5;
+                    _context20.next = 5;
                     return (0, _effects.select)(getLoadingState);
 
                   case 5:
-                    loading = _context21.sent;
+                    loading = _context20.sent;
 
                     if (loading) {
                       document.body.style.overflow = 'hidden';
                     } else {
                       document.body.style.overflow = 'initial';
                     }
-                    _context21.next = 0;
+                    _context20.next = 0;
                     break;
 
                   case 9:
                   case 'end':
-                    return _context21.stop();
+                    return _context20.stop();
                 }
               }
             }, _callee2, this);
           })(), /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
             var initialLoad, navOpen, path, search;
-            return _regenerator2.default.wrap(function _callee3$(_context22) {
+            return _regenerator2.default.wrap(function _callee3$(_context21) {
               while (1) {
-                switch (_context22.prev = _context22.next) {
+                switch (_context21.prev = _context21.next) {
                   case 0:
                     initialLoad = true;
 
                   case 1:
                     if (false) {
-                      _context22.next = 26;
+                      _context21.next = 26;
                       break;
                     }
 
-                    _context22.next = 4;
+                    _context21.next = 4;
                     return (0, _effects.take)([_reactRouterRedux.LOCATION_CHANGE]);
 
                   case 4:
@@ -50505,58 +50615,58 @@ function rootSaga() {
                     } catch (e) {}
 
                     if (initialLoad) {
-                      _context22.next = 8;
+                      _context21.next = 8;
                       break;
                     }
 
-                    _context22.next = 8;
+                    _context21.next = 8;
                     return (0, _effects.put)((0, _Utils.action)(PAGE_CHANGE, true));
 
                   case 8:
-                    _context22.next = 10;
+                    _context21.next = 10;
                     return (0, _effects.select)(getNavState);
 
                   case 10:
-                    navOpen = _context22.sent;
+                    navOpen = _context21.sent;
 
                     if (!navOpen) {
-                      _context22.next = 14;
+                      _context21.next = 14;
                       break;
                     }
 
-                    _context22.next = 14;
+                    _context21.next = 14;
                     return (0, _effects.put)((0, _Utils.action)(ON_NAV_OPEN, !navOpen));
 
                   case 14:
                     if (!(typeof window.ga !== 'undefined' && !initialLoad)) {
-                      _context22.next = 23;
+                      _context21.next = 23;
                       break;
                     }
 
-                    _context22.next = 17;
+                    _context21.next = 17;
                     return (0, _effects.select)(getCurrentPath);
 
                   case 17:
-                    path = _context22.sent;
-                    _context22.next = 20;
+                    path = _context21.sent;
+                    _context21.next = 20;
                     return (0, _effects.select)(function (state) {
                       return state.router.location.search;
                     });
 
                   case 20:
-                    search = _context22.sent;
+                    search = _context21.sent;
 
                     window.ga('set', 'page', '' + path + search);
                     window.ga('send', 'pageview');
 
                   case 23:
                     initialLoad = false;
-                    _context22.next = 1;
+                    _context21.next = 1;
                     break;
 
                   case 26:
                   case 'end':
-                    return _context22.stop();
+                    return _context21.stop();
                 }
               }
             }, _callee3, this);
@@ -50564,10 +50674,10 @@ function rootSaga() {
 
         case 2:
         case 'end':
-          return _context23.stop();
+          return _context22.stop();
       }
     }
-  }, _marked20, this);
+  }, _marked19, this);
 }
 ;
 
@@ -50595,6 +50705,8 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(PRODUCT_LIST_LOADED, 'PRODUCT_LIST_LOADED', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(PRODUCT_DATA_LOADED, 'PRODUCT_DATA_LOADED', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_START, 'REQUEST_SAVED_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(UPDATE_USER_PASSWORD, 'UPDATE_USER_PASSWORD', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
@@ -50624,9 +50736,9 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(ON_CLEAR_FILTERS, 'ON_CLEAR_FILTERS', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
-  __REACT_HOT_LOADER__.register(CLEAR_REDIRECT_PATH, 'CLEAR_REDIRECT_PATH', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
-
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_START, 'REQUEST_PAIR_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_START, 'SAVE_COLLECTION_START', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(REQUEST_PAIR_END, 'REQUEST_PAIR_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
@@ -50730,8 +50842,6 @@ var _temp = function () {
 
   __REACT_HOT_LOADER__.register(updateUserPasswordSaga, 'updateUserPasswordSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
-  __REACT_HOT_LOADER__.register(pairSaga, 'pairSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
-
   __REACT_HOT_LOADER__.register(loadFavoritesSaga, 'loadFavoritesSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(onNavOpenSaga, 'onNavOpenSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
@@ -50739,6 +50849,279 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(getCollectionSaga, 'getCollectionSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
 
   __REACT_HOT_LOADER__.register(rootSaga, 'rootSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/index.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./src/client/sagas/pairingSagas.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _regenerator = __webpack_require__("../../node_modules/babel-runtime/regenerator/index.js");
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _extends2 = __webpack_require__("../../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.pairSaga = pairSaga;
+exports.saveCollectionSaga = saveCollectionSaga;
+exports.getPairedCollectionSaga = getPairedCollectionSaga;
+
+var _effects = __webpack_require__("../../node_modules/redux-saga/es/effects.js");
+
+var _api = __webpack_require__("./src/client/sagas/api.js");
+
+var _Actions = __webpack_require__("./src/client/actions/index.js");
+
+var _Actions2 = _interopRequireDefault(_Actions);
+
+var _Utils = __webpack_require__("./src/client/utils/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _marked = /*#__PURE__*/_regenerator2.default.mark(pairSaga),
+    _marked2 = /*#__PURE__*/_regenerator2.default.mark(saveCollectionSaga),
+    _marked3 = /*#__PURE__*/_regenerator2.default.mark(getPairedCollectionSaga);
+
+var SAVE_COLLECTION_ERROR = _Actions2.default.SAVE_COLLECTION_ERROR,
+    SAVE_COLLECTION_END = _Actions2.default.SAVE_COLLECTION_END,
+    REQUEST_PAIR_END = _Actions2.default.REQUEST_PAIR_END,
+    REQUEST_SAVED_COLLECTION_END = _Actions2.default.REQUEST_SAVED_COLLECTION_END,
+    REQUEST_PAIR_ERROR = _Actions2.default.REQUEST_PAIR_ERROR,
+    SET_LOADING_PAGE = _Actions2.default.SET_LOADING_PAGE,
+    REQUEST_SAVED_COLLECTION_ERROR = _Actions2.default.REQUEST_SAVED_COLLECTION_ERROR;
+function pairSaga(_ref) {
+  var payload = _ref.payload;
+
+  var blob, ext, mimeType, dataURL, _ref2, response, status, url, fileName, _ref3, s3Status, _ref4, pairResponse, pairStatus;
+
+  return _regenerator2.default.wrap(function pairSaga$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.next = 2;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, 'pair'));
+
+        case 2:
+          blob = payload.blob, ext = payload.ext, mimeType = payload.mimeType, dataURL = payload.dataURL;
+          _context.next = 5;
+          return (0, _effects.call)(_api.getSignedUrl, ext, mimeType);
+
+        case 5:
+          _ref2 = _context.sent;
+          response = _ref2.response;
+          status = _ref2.status;
+
+          if (!(status === 200)) {
+            _context.next = 33;
+            break;
+          }
+
+          url = response.url, fileName = response.fileName;
+          _context.next = 12;
+          return (0, _effects.call)(_api.uploadToS3, blob, url, mimeType);
+
+        case 12:
+          _ref3 = _context.sent;
+          s3Status = _ref3.status;
+
+          if (!(s3Status === 200)) {
+            _context.next = 29;
+            break;
+          }
+
+          _context.next = 17;
+          return (0, _effects.call)(_api.requestPairedProducts, fileName, false, mimeType);
+
+        case 17:
+          _ref4 = _context.sent;
+          pairResponse = _ref4.response;
+          pairStatus = _ref4.status;
+
+          if (!(pairStatus === 200)) {
+            _context.next = 25;
+            break;
+          }
+
+          _context.next = 23;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_END, (0, _extends3.default)({ dataURL: dataURL, fileName: fileName }, pairResponse)));
+
+        case 23:
+          _context.next = 27;
+          break;
+
+        case 25:
+          _context.next = 27;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_ERROR));
+
+        case 27:
+          _context.next = 31;
+          break;
+
+        case 29:
+          _context.next = 31;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_ERROR));
+
+        case 31:
+          _context.next = 35;
+          break;
+
+        case 33:
+          _context.next = 35;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_ERROR));
+
+        case 35:
+          _context.next = 37;
+          return (0, _effects.put)((0, _Utils.action)(SET_LOADING_PAGE, ''));
+
+        case 37:
+        case 'end':
+          return _context.stop();
+      }
+    }
+  }, _marked, this);
+}
+
+function saveCollectionSaga(_ref5) {
+  var payload = _ref5.payload;
+
+  var _ref6, status;
+
+  return _regenerator2.default.wrap(function saveCollectionSaga$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.prev = 0;
+          _context2.next = 3;
+          return (0, _effects.call)(_api.requestSaveCollection, payload);
+
+        case 3:
+          _ref6 = _context2.sent;
+          status = _ref6.status;
+
+          if (!(status !== 200)) {
+            _context2.next = 10;
+            break;
+          }
+
+          _context2.next = 8;
+          return (0, _effects.put)((0, _Utils.action)(SAVE_COLLECTION_ERROR));
+
+        case 8:
+          _context2.next = 12;
+          break;
+
+        case 10:
+          _context2.next = 12;
+          return (0, _effects.put)((0, _Utils.action)(SAVE_COLLECTION_END));
+
+        case 12:
+          _context2.next = 18;
+          break;
+
+        case 14:
+          _context2.prev = 14;
+          _context2.t0 = _context2['catch'](0);
+          _context2.next = 18;
+          return (0, _effects.put)((0, _Utils.action)(SAVE_COLLECTION_ERROR));
+
+        case 18:
+        case 'end':
+          return _context2.stop();
+      }
+    }
+  }, _marked2, this, [[0, 14]]);
+}
+
+function getPairedCollectionSaga(_ref7) {
+  var id = _ref7.payload;
+
+  var _ref8, status, response;
+
+  return _regenerator2.default.wrap(function getPairedCollectionSaga$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return (0, _effects.call)(_api.requestSavedCollection, id);
+
+        case 3:
+          _ref8 = _context3.sent;
+          status = _ref8.status;
+          response = _ref8.response;
+
+          if (!(status === 200)) {
+            _context3.next = 13;
+            break;
+          }
+
+          _context3.next = 9;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_PAIR_END, response));
+
+        case 9:
+          _context3.next = 11;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_SAVED_COLLECTION_END));
+
+        case 11:
+          _context3.next = 15;
+          break;
+
+        case 13:
+          _context3.next = 15;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_SAVED_COLLECTION_ERROR));
+
+        case 15:
+          _context3.next = 21;
+          break;
+
+        case 17:
+          _context3.prev = 17;
+          _context3.t0 = _context3['catch'](0);
+          _context3.next = 21;
+          return (0, _effects.put)((0, _Utils.action)(REQUEST_SAVED_COLLECTION_ERROR));
+
+        case 21:
+        case 'end':
+          return _context3.stop();
+      }
+    }
+  }, _marked3, this, [[0, 17]]);
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_ERROR, 'SAVE_COLLECTION_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(SAVE_COLLECTION_END, 'SAVE_COLLECTION_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_PAIR_END, 'REQUEST_PAIR_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_END, 'REQUEST_SAVED_COLLECTION_END', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_PAIR_ERROR, 'REQUEST_PAIR_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(SET_LOADING_PAGE, 'SET_LOADING_PAGE', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(REQUEST_SAVED_COLLECTION_ERROR, 'REQUEST_SAVED_COLLECTION_ERROR', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(pairSaga, 'pairSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(saveCollectionSaga, 'saveCollectionSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
+
+  __REACT_HOT_LOADER__.register(getPairedCollectionSaga, 'getPairedCollectionSaga', '/Users/realseanp1/Projects/archadon/packages/site/src/client/sagas/pairingSagas.js');
 }();
 
 ;

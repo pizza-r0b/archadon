@@ -45,8 +45,8 @@ async function _saveLead(event, context, callback) {
 
   const existingLeads = await Lead.find({ email }).lean().exec();
   let existingLead;
-  if (Array.isArray(existingLeads) && existingLeads.length && (existingLead = existingLeads.find(doc => doc.imageKey === imageKey))) {
-    const id = existingLead.get('_id');
+  if (Array.isArray(existingLeads) && existingLeads.length && (existingLead = existingLeads.find(doc => doc.imageKey === imageKey))) { // eslint-disable-line no-cond-assign
+    const { _id: id } = existingLead;
 
     await sendPairedRugsEmail(id, email);
 

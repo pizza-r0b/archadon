@@ -51,7 +51,7 @@ async function _getSavedLead(event, context, callback) {
 
   index.search({
     filters: `Qty > 0 AND ${lead.filters}`,
-    hitsPerPage: 100,
+    hitsPerPage: 50,
   }, (err, content) => {
     callback(null, addCors({
       statusCode: 200,
@@ -59,6 +59,7 @@ async function _getSavedLead(event, context, callback) {
         results: content,
         colors: lead.colors,
         filters: lead.filters,
+        fileName: lead.imageKey,
       }),
     }));
   });

@@ -34,6 +34,10 @@ export const requestCollection = (ids, name) => request('POST', '/search/batch',
 
 export const getCollectionByName = (collection) => request('POST', '/search/collection', { collection });
 
+
+/* PAIR ROOM START */
+export const requestSavedCollection = id => request('POST', url('pair/v1/getSavedCollection'), { id });
+
 export const requestPairedProducts = (filePath, gallery = false, mimeType) => request('POST', url('pair/v1/getItems'), {
   filePath,
   gallery,
@@ -45,7 +49,10 @@ export const getSignedUrl = (fileExt, fileType) => request('POST', url('pair/v1/
   fileType,
 });
 
+export const requestSaveCollection = (payload) => request('POST', url('pair/v1/save'), payload);
+
 export const uploadToS3 = (blob, putUrl, type) => request('PUT', putUrl, blob, { 'Content-Type': type, 'x-amz-acl': 'public-read' }, null, true);
+/* PAIR ROOM END */
 
 export const requestPurchase = ((payload: {
   Items: Array<Object>,
