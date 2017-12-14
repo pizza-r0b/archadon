@@ -5,15 +5,25 @@ yarn install
 ```
 
 ```bash
-yarn run dev:start
+yarn dev:start
 ```
 
 ## Deploying to Dev Environment
 
 ```bash
-yarn run dev:predeploy:build
+yarn dev:predeploy:build
 ```
-After this step you will need to commit to github for elastic beanstalk. After committing run:
+After this step you will need to commit for elastic beanstalk. After committing run:
 ```bash
-  yarn run dev:deploy
+  yarn dev:deploy
+```
+
+## Deploy to prod
+
+```bash
+yarn prod:build
+```
+After this step you will need to commit for elastic beanstalk. After committing run:
+```bash
+  yarn prod:deploy
 ```
