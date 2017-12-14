@@ -132,7 +132,7 @@ class PairRoom extends React.Component {
         <h1 className="font-weight--800 align--center">Rugs</h1>
 
         <div className="flex-parent flex-align-center flex-justify-center flex-col pair-intro-sub">
-          <h2 className="margin--y-5 font-color--lighter">Upload a photo of your room and let AI pick the perfect rugs.</h2>
+          <h2 className="margin--y-5 font-color--lighter align--center">Upload a photo of your room and let AI pick the perfect rugs.</h2>
           <div onClick={() => {
             if (window.ga) {
               window.ga('send', 'event', 'Upload Photo', 'click', 'Pair Room');
