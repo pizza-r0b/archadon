@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
 
-let composeEnhancers = typeof window !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+let composeEnhancers = typeof window !== 'undefined' && process.env.NODE_ENV !== 'production' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
 
 if (process.NODE_ENV === 'production') {
   composeEnhancers = compose;
