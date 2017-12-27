@@ -15,7 +15,7 @@ function HomeFeaturedBoxes() {
             <h3 className="font-color--lighter uppercase">with old souls</h3>
           </div>
           <div>
-            <Link to="/about" className="btn btn--alt"><span className="text">About our rugs</span></Link>
+            <Link to="/about" className="btn btn--alt"><span className="text">About us</span></Link>
           </div>
         </div>
         <div className="inner" />
@@ -30,7 +30,7 @@ function HomeFeaturedBoxes() {
             <h3 className="font-color--lighter uppercase">Your favorite</h3>
           </div>
           <div>
-            <Link to="/shop" className="btn btn--alt"><span className="text">Shop</span></Link>
+            <Link to="/shop" className="btn btn--alt"><span className="text">Shop All</span></Link>
           </div>
         </div>
         <div className="inner" />

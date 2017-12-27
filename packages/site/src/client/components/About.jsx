@@ -40,6 +40,7 @@ function About() {
 
             <Who />
             <hr />
+            <h1>Who you are</h1>
             <p>There was a time in your life when dorm-level decorating was still cool. Remember that? Before you grew up and developed awesome taste.</p>
             <p className="margin--top-3">Now? Well, it’s time to live it up. Level up. Time to tie the room together. A handcrafted, heirloom-quality rug is a piece of art steeped in tradition, one that evokes faraway places and a whiff of the exotic.</p>
             <p className="margin--top-3">It’s classy, classic, cultured — just like you.</p>
@@ -51,21 +52,17 @@ function About() {
 
       <hr />
 
-      <div className="wrap d-flex about-content-bottom margin--bottom-10">
-        <div className="top-content-left">
-          <h1 className="margin--bottom-3">Modern classics, old souls</h1>
-          <p>Each handcrafted rug in our collection is the product of timeless, traditional craftsmanship, great attention to detail, and only the world’s finest hand-spun wool. We travel thousands of miles to far-flung places, including Tibet and India, to handpick them directly at the source. We also build relationships with the best weavers in the world, collaborating with them on vibrant, appealing designs.</p>
-          <p className="margin--top-3">The result is nothing short of art—for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.</p>
-          <p className="margin--top-3">If that’s not sophistication, we don’t know what is.</p>
-          <p className="margin--top-3">Come on—let’s go shopping.</p>
-          <Guarantee />
-        </div>
-        <div>
-          <div className="stripe-image--left">
-            <LazyLoad>
-              <img className="max-width-100" data-src={src('tibet-rugs.jpg')} />
-            </LazyLoad>
-            <p className="small-caps font-color--light">Full disclosure: this is the only picture on this site that doesn't feature an Archadon rug, but we thought you might like it. We know we do.</p>
+      <div className="wrap margin--bottom-10">
+        <div className="flex-col-break">
+          <div className="flex-1">
+            <h1 className="margin--bottom-3">Modern classics, old souls</h1>
+            <p>Each handcrafted rug in our collection is the product of timeless, traditional craftsmanship, great attention to detail, and only the world’s finest hand-spun wool. We travel thousands of miles to far-flung places, including Tibet and India, to handpick them directly at the source. We also build relationships with the best weavers in the world, collaborating with them on vibrant, appealing designs.</p>
+            <p className="margin--top-3">The result is nothing short of art—for your floors. Each one is a modern classic steeped in ancient practice. Rugs with old souls, we think.</p>
+            <p className="margin--top-3">If that’s not sophistication, we don’t know what is.</p>
+            <p className="margin--top-3">Come on—let’s go shopping.</p>
+          </div>
+          <div className="flex-col-break--m">
+            <Guarantee noMargin />
           </div>
         </div>
       </div>

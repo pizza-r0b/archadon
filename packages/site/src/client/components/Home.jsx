@@ -41,7 +41,7 @@ class Home extends React.Component {
         </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
-            <h1 className="align--center">Rugs that last a lifetime</h1>
+            <h1 className="align--center">Art for you floor</h1>
             <h3 className="font-color--lighter">Hand-knotted fine wool rugs</h3>
           </div>
           <HomeSlider />
@@ -53,6 +53,12 @@ class Home extends React.Component {
 
           <hr />
           <ShopBySize />
+          <hr />
+
+          <div className="margin--top-10">
+            <HomeFeaturedItems />
+          </div>
+
           <hr />
 
           <div ref={c => { this.popularBox = c; }} className="slim-box">
@@ -79,62 +85,17 @@ class Home extends React.Component {
 
           <hr />
 
-          <div style={{ margin: '0 auto', maxWidth: '1000px' }} className="flex-col-break flex-parent">
-            <div>
-              <Link to="/collection/welcome">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/welcome-rugs-collection-christmas.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-            <div className="flex-col-break--m">
-              <Link to="/shop">
-                <LazyLoad>
-                  <img data-src="https://assets.archadon.com/christmas-shop-all-rugs.jpg" />
-                </LazyLoad>
-              </Link>
-            </div>
-          </div>
-
-          <hr />
-
-          <h2>Testimonials</h2>
-
-          <div className="flex-col-break flex-parent margin--top-5">
+          <div className="flex-col-break">
             <div className="flex-1">
-              <p>Archadon has the best quality rugs for the absolute best prices. Try to find a hand-knotted Tibetan wool rug for a better price. You CAN'T!</p>
-              <p className="strong">- Aaron, California</p>
+              <h1>Why hand-knotted?</h1>
+              <p>Each of our rugs is a hand-knotted, one-of-a-kind, heirloom-quality piece that will last for generations. Not only are these rugs beautiful, they are also beautifully durable. Hand-knotted rugs made from high-quality wool have a denser pile, which means they’re thicker and tougher than any machine-made rug. They’re more stain and soil resistant, and they stand up to foot traffic, so you can put them anywhere in your home.</p>
             </div>
-            <div className="flex-col-break--m flex-1">
-              <p>My family has bought rugs from Tibet Rug Company for 20 years! I have several in my home and they are still like new! These are the best quality rugs.</p>
-              <p className="strong">- Emily, Utah</p>
-            </div>
-          </div>
-          <div className="flex-col-break flex-parent margin--top-3">
-            <div className="flex-1">
-              <p>Found a great rug for my living room. Great price and they shipped it right to me. No problems!</p>
-              <p className="strong">- Natalie, California</p>
-            </div>
-            <div className="flex-col-break--m flex-1">
-              <p>Returned a rug I bought from Archadon for a new one. They sent me a return label and I was able to easily send it back. Within two weeks I had my new rug.</p>
-              <p className="strong">- David, California</p>
+            <div className="flex-col-break--m flex-1 flex-parent flex-align-center flex-justify-center flex-col">
+              <h2 className="font-weight--800">Free Shipping</h2>
+              <h2 className="font-weight--800">+</h2>
+              <h2 className="font-weight--800">Free Returns</h2>
             </div>
           </div>
-
-          <hr />
-
-          <div className="margin--top-10">
-            <HomeFeaturedItems />
-          </div>
-          <hr />
-          <h2>Why hand-knotted?</h2>
-          <p>Many companies advertise "handmade" rugs when really their rugs are hand-tufted - so by "handmade" they actually mean made by a machine that someone is holding in their hand. Each of our rugs is a hand-knotted, one-of-a-kind, heirloom-quality piece that will last for generations. In a time when so much of what we consume is machine-made, owning something handcrafted is a point of pride. Not only are these rugs beautiful, they are also beautifully durable. Hand-knotted rugs made from high-quality wool have a denser pile, which means they’re thicker and tougher than any machine-made rug. They’re more stain and soil resistant, and they stand up to foot traffic, so you can put them anywhere in your home.</p>
-
-          <hr className="margin--bottom-20" />
-          <h2 className="align--center">About Us</h2>
-          <p className="align--center margin--top-3">Archadon is an online company based in San Francisco and we ship our rugs from Utah.</p>
-          <p className="align--center">Buy with confidence—learn more about risk-free rug buying with Archadon.</p>
-          <div className="flex-parent flex-align-center flex-justify-center margin--top-3"><Link to="/about" className="btn--primary">Learn More</Link></div>
           <hr className="margin--y-20" />
           <h2 className="align--center margin--top-6">Have questions or want to say hello?</h2>
           <p className="align--center margin--top-3">Email us at hello@archadon.com</p>

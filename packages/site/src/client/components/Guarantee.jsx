@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default () => (
-  <div className="margin--top-10">
+export default ({ noMargin }) => (
+  <div className={noMargin ? '' : 'margin--top-10'}>
     <h1>The Archadon Guarantee</h1>
     <h3 className="margin--bottom-3 font-color--lighter">If you’re not happy, neither are we. We offer:</h3>
     <p>• Heirloom-quality, handcrafted rugs</p>

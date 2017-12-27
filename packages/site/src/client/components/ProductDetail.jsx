@@ -117,6 +117,30 @@ class ProductDetail extends React.Component {
     this.props.history.push(this.props.prevPath);
   }
 
+  buildPin = () => {
+    setTimeout(() => {
+      try {
+        window.PinUtils.build();
+      } catch (e) { }
+    }, 100);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.product && prevProps.product && prevProps.product._id !== this.props.product._id) {
+      this.buildPin();
+    } else if (prevProps.loading && !this.props.loading) {
+      this.buildPin();
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      pinterest: true,
+    }, () => {
+      this.buildPin();
+    });
+  }
+
   shopAll = (e) => {
     e.preventDefault();
     this.props.clearFilters();
@@ -190,6 +214,16 @@ class ProductDetail extends React.Component {
                   <p className="small-caps font-color--light margin--left-3">Click the heart to save this rug to your favorites!</p>
 
                 </div>
+                {this.state.pinterest && (
+                  <div className="margin--top-3">
+                    <a
+                      href="https://www.pinterest.com/pin/create/button/"
+                      data-pin-do="buttonPin"
+                      data-pin-url={`https://www.archadon.com/product/${product._id}`}
+                      data-pin-media={`${IMAGE_ORIGIN}/${product.SKU}.jpg`}
+                    />
+                  </div>
+                )}
                 <h2 className="margin--y-3">{product.Name}</h2>
                 <p className="font-color--copyColor margin--bottom-1">Hand-knotted {product.LongDescription}</p>
                 <p className="font-color--copyColor">{product.ShortDescription}</p>

@@ -35,13 +35,13 @@ function ProductList({ products, loading }) {
                 <FavoriteBtn className="heart" productId={product._id} />
               </div>
               <p className="product-tile-title font-color--light">Was <span className="linethrough">{toCurrency(product.Price * 2.5)}</span><br /> {toCurrency(product.Price * 2.5 - product.Price)} OFF</p>
-
             </div>
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
+
 
 export default ProductList;
