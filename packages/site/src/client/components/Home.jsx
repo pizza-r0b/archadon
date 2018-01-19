@@ -41,7 +41,7 @@ class Home extends React.Component {
         </Helmet>
         <div className="wrap">
           <div className="flex-parent flex-align-center flex-justify-center flex-col margin--bottom-10">
-            <h1 className="align--center">Art for you floor</h1>
+            <h1 className="align--center">Art for your floors</h1>
             <h3 className="font-color--lighter">Hand-knotted fine wool rugs</h3>
           </div>
           <HomeSlider />
